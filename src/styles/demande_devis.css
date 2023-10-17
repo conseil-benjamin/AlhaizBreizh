@@ -48,10 +48,8 @@ h2 {
 
     background: #FFFFFF;
     border-radius: 10px;
-    position: absolute;
     width: 176px;
     height: 60px;
-
 
 
 }
@@ -89,4 +87,10 @@ button {
     border-radius: 30px;
     border-style: none;
 
+}
+
+.supplement {
+    display: flex;
+    justify-content: space-between;
+    
 }
