@@ -1,0 +1,40 @@
+#localisation {
+    background-color: #16A1EF;
+}
+
+
+/* Réinitialiser les puces par défaut de la liste */
+ul.infos_loge {
+    list-stye:none;
+    padding-left: 0;
+}
+
+/* Utiliser des icônes personnalisées pour chaque élément de la liste */
+li.item-1 {
+    background-image: url('icone1.png');
+    background-repeat: no-repeat;
+    background-position: left center;
+    padding-left: 20px; /* Ajuster la marge à gauche pour que le texte n'entre pas en collision avec l'icône */
+}
+
+li.item-2 {
+    background-image: url('public/icons/double-bed.svg');
+
+}
+
+li.item-3 {
+    background-image: url('icone3.png');
+    background-repeat: no-repeat;
+    background-position: left center;
+    padding-left: 20px;
+}
+
+
+
+/*
+#16A1EF couleur5
+#65E3FF couleur4
+#7EBCF2 couleur3
+#D7F0FF couleur2
+#515D5E couleur1
+*/
