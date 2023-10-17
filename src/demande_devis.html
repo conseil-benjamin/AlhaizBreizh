@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <link href="./styles/styles.css" rel="stylesheet" type="text/css">
     <link href="./styles/demande_devis.css" rel="stylesheet" type="text/css">
+    <link href="./styles/styles.css" rel="stylesheet" type="text/css">
     <title>Demande de devis</title>
 </head>
 <body>
@@ -24,46 +24,55 @@
         <img src="/public/icons/user-blue.svg">
     </a>
 </header>
+<div style="height: 75px"></div>
 <div id="fond">
     <section id="entete">
         <h1>
-            Réservation de Superbe maison au bord de la plage
+            Réservation de "Superbe maison au bord de la plage"
         </h1>
     </section>
     <section id="corpsTexte">
-        <form method="post">
-            <div>
-                <h2>Prix de base X€/nuit</h2>
-
-                <label for="arrivee">
-                    Date d'arrivée
-                </label>
-                <input class="input1" id="arrivee" placeholder="JJ/MM/YYYY" type="date">
-                <label for="depart">
-                    Date de depart
-                </label>
-                <input class="input1" id="depart" placeholder="JJ/MM/YYYY" type="date">
-                <label for="nbpersonne">
-                    Nombre de personne
-                </label>
-                <input class="input1" id="nbpersonne" max="10" min="0" placeholder="nbpersonne" type="number">
-
-                <label for="demande">Autre demande</label>
-                <textarea id="demande" placeholder="Votre demande"></textarea>
-            </div>
-            <div>
-                <h2>Services complémentaires : (cocher ce les services que vous souhaitez)</h2>
-                <ul>
-                    <li>
-                        <div class="supplement">
-                            <input type="checkbox" id="checkBox1">
-                            <label for="checkBox1">Service 01</label>
-                            <p class="prix">66,6€</p>
+        <form method="get">
+            <div id="formulaire">
+                <div id="prix">
+                    <h2>Prix de base X€/nuit</h2>
+                    <div>
+                        <div>
+                            <label for="arrivee">
+                                Date d'arrivée
+                            </label>
+                            <input class="input1" id="arrivee" placeholder="JJ/MM/YYYY" type="date" name="date_arrivee">
                         </div>
-                    </li>
-                </ul>
+                        <div>
+                        <label for="depart">
+                            Date de depart
+                        </label>
+                        <input class="input1" id="depart" placeholder="JJ/MM/YYYY" type="date" name="date_depart">
+                        </div>
+                        <div>
+                        <label for="nbpersonne">
+                            Nombre de personne
+                        </label>
+                        <input class="input1" id="nbpersonne" max="10" min="0" placeholder="nbpersonne" type="number" name="nb_personne">
+                        </div>
+                    </div>
+                    <label for="demande">Autre demande</label>
+                    <textarea id="demande" placeholder="Votre demande"></textarea>
+                </div>
+                <div id="service">
+                    <h2>Services complémentaires : (cocher ce les services que vous souhaitez)</h2>
+                    <ul>
+                        <li>
+                            <div class="supplement">
+                                <input id="checkBox1" type="checkbox">
+                                <label for="checkBox1">Service 01</label>
+                                <p class="prix">66,6€</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div>
+            <div id="total">
                 <h2> Total de la réservation : 9989879€</h2>
                 <button type="submit">Confirmer la réservation et demander un devis</button>
             </div>

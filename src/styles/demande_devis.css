@@ -1,3 +1,92 @@
 #fond {
-    margin-top: 75px;
+    background: #D7F0FF;
+}
+
+section#entete {
+    margin: 5vh 2vw;
+    background: #515D5E;
+    border-radius: 20px;
+    width: 96vw;
+    height: 15vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+section#entete>h1 {
+
+    font-family: 'Montserrat', serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 29px;
+
+    color: #FFFFFF;
+}
+
+h2 {
+    color: #FFFFFF;
+    font-family: 'Montserrat', serif;
+    font-style: normal;
+}
+
+#corpsTexte {
+    margin: 0 2vw;
+    padding:5vh 1vw ;
+    background: #515D5E;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+#formulaire {
+    display: flex;
+    flex-direction: row;
+}
+
+.input1 {
+
+    background: #FFFFFF;
+    border-radius: 10px;
+    position: absolute;
+    width: 176px;
+    height: 60px;
+
+
+
+}
+
+.input1::placeholder {
+    color: gray;
+
+}
+
+#prix > div {
+    display: flex;
+    flex-direction: column;
+    width: 50vw;
+}
+
+#prix > div > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#total {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 25vh;
+}
+
+button {
+    width: 685px;
+    height: 70px;
+    font-size: large;
+    background: #B6D0F2;
+    border-radius: 30px;
+    border-style: none;
+
 }
