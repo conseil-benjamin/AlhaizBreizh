@@ -8,6 +8,7 @@
 body{
     background-color: #D7F0FF;
     min-height: calc(100vh + 20em);
+    font-family: "Montserrat", Arial, sans-serif;
 }
 
 ul{
@@ -22,6 +23,27 @@ a{
 
 a:hover{
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+/*****************************************************/
+/*Bouttons*/
+.boutton{
+    border-radius: 50px;
+    border: #ffffff00 1px solid;
+    color: #515D5E;
+    height: 50px;
+    width: fit-content;
+    font-size: 20px;
+    line-height: 50px;
+    text-align: center;
+    padding: 0 1em;
+    transition: all .3s ease-in-out;
+    margin-top: 50%;
+}
+
+.boutton-bleu-clair:hover{
+    filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.25));
+    border: #fff 1px solid;
 }
 
 /*****************************************************/
@@ -144,7 +166,7 @@ a:hover{
 }
 
 #footer > img{
-    transform: translateY(4px);
+    transform: translateY(5px);
 }
 
 #footer > div{
