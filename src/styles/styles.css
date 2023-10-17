@@ -7,7 +7,7 @@
 
 body{
     background-color: #D7F0FF;
-    min-height: calc(100vh + 220px);
+    min-height: calc(100vh + 20em);
 }
 
 ul{
@@ -28,16 +28,32 @@ a:hover{
 /*Fonts*/
 @font-face {
     font-family: "NoirPro";
-    src: url("fonts/NoirPro-Regular.woff2") format("woff2"),
-    url("fonts/NoirPro-Regular.woff") format("woff");
+    src: url("/fonts/NoirPro-Regular.woff2") format("woff2"),
+    url("/fonts/NoirPro-Regular.woff") format("woff");
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: "NoirProLight";
-    src: url("fonts/NoirPro-Light.woff2") format("woff2"),
-    url("fonts/NoirPro-Light.woff") format("woff");
+    src: url("/fonts/NoirPro-Light.woff2") format("woff2"),
+    url("/fonts/NoirPro-Light.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Montserrat";
+    src: url("/fonts/Montserrat-Regular.woff2") format("woff2"),
+    url("/fonts/Montserrat-Regular.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "MontserratBold";
+    src: url("/fonts/Montserrat-Bold.woff2") format("woff2"),
+    url("/fonts/Montserrat-Bold.woff") format("woff");
     font-weight: normal;
     font-style: normal;
 }
@@ -128,18 +144,35 @@ a:hover{
 }
 
 #footer > img{
-    transform: translateY(10px);
+    transform: translateY(4px);
 }
 
 #footer > div{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
     background-color: #515D5E;
-    height: 100px;
+    height: fit-content;
     width: 100%;
     z-index: 100;
     font-family: "NoirPro", Arial, sans-serif;
-    font-size: 24px;
+    font-size: 16px;
+}
+
+#footer > div > div{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items:baseline;
+    width: 100%;
+    height: fit-content;
+    padding-bottom: 4em;
+}
+
+#footer > div > div ul > p{
+    font-family: "Montserrat-Bold", Arial, sans-serif;
+}
+
+#footer > div > p{
+    position: absolute;
+    bottom: .1em;
+    right: .1em;
+    font-size: 16px;
 }
