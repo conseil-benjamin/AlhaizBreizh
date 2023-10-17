@@ -1,0 +1,145 @@
+/*****************************************************/
+/*Définitions principales*/
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background-color: #D7F0FF;
+    min-height: calc(100vh + 220px);
+}
+
+ul{
+    list-style-type: none;
+}
+
+a{
+    text-decoration: none;
+    color: inherit;
+    transition: all .3s ease-in-out;
+}
+
+a:hover{
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+/*****************************************************/
+/*Fonts*/
+@font-face {
+    font-family: "NoirPro";
+    src: url("fonts/NoirPro-Regular.woff2") format("woff2"),
+    url("fonts/NoirPro-Regular.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "NoirProLight";
+    src: url("fonts/NoirPro-Light.woff2") format("woff2"),
+    url("fonts/NoirPro-Light.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
+/********************************************/
+/*Header*/
+#header {
+    display: flex;
+    flex-direction: row;
+    justify-content: stretch;
+    background-color: #7EBCF2;
+    height: 75px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    font-family: "NoirPro", Arial, sans-serif;
+    font-size: 24px;
+}
+/*Logo*/
+#header .logo{
+    display: block;
+}
+
+#header .logo img{
+    height: 100%;
+}
+/*Menu de navigation*/
+#header nav {
+    width: fit-content;
+    height: 100%;
+    margin-left: 2em;
+    overflow: hidden;
+}
+
+#header nav ul{
+    display: flex;
+    flex-direction: row;
+    gap: 2em;    
+}
+
+#header nav ul li{
+    text-align: center;
+    line-height: 75px;
+    color: #515D5E;
+}
+/*Compte*/
+#header .compte{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: .5em;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 300px;
+    background-color: #515D5E;
+    color: #65E3FF;
+    font-size: 20px;
+}
+
+#header > .compte:hover{
+    background-color: #394142;
+}
+/*Fleche*/
+#header .compte > img:first-child{
+    rotate: 90deg;
+    height: 50%;
+}
+/*Icone user*/
+#header .compte > img:last-child{
+    height: 75%;
+}
+
+/********************************************/
+/*Footer*/
+
+#footer{
+    position: sticky;
+    top: 100%;
+    left: 0;
+    height: fit-content;
+    width: 100%;
+    color: #fff;
+}
+
+#footer > img{
+    transform: translateY(10px);
+}
+
+#footer > div{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #515D5E;
+    height: 100px;
+    width: 100%;
+    z-index: 100;
+    font-family: "NoirPro", Arial, sans-serif;
+    font-size: 24px;
+}
