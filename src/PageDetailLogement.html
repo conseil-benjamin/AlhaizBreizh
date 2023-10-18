@@ -4,13 +4,13 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="./src/styles/styles.css">
-        <link rel="stylesheet" type="text/css" href="./src/styles/stylePageDetailLogement.css">
+        <link rel="stylesheet" type="text/css" href="./styles/styles.css">
+        <link rel="stylesheet" type="text/css" href="./styles/stylePageDetailLogement.css">
         <title>ALHaiz Breizh</title>
     </head>
     <body>
         <header id="header">
-            <a href="index.html" class="logo"><img src="public/logos/logo-grey.svg"></a>
+            <a href="index.html" class="logo"><img src="../public/logos/logo-grey.svg"></a>
             <nav>
                 <ul>
                     <li><a href="">Logements</a></li>
@@ -19,9 +19,9 @@
                 </ul>
             </nav>
             <a href="" class="compte">
-                <img src="public/icons/arrow-blue.svg">
+                <img src="../public/icons/arrow-blue.svg">
                 <p>Se connecter</p>
-                <img src="public/icons/user-blue.svg">
+                <img src="../public/icons/user-blue.svg">
             </a>
         </header>
 
@@ -55,134 +55,139 @@
                 -contact
             -->
             <section class="tete_offre">
-                <img src="src/img/maison.png" alt="image maison">
+                <img src="./img/maison.png" alt="image maison">
                 <div>
                 <p id="localisation_haut_page">
                     Localisation <br>
                     Localisation specifique
                 </p>
                 <ul class="infos_loge">
-                    <p><img src="public/icons/etoile.svg" id="icone" alt="icone etoile">Note</p>
+                    <p><img src="../public/icons/star_fill.svg" id="icone" alt="icone etoile"> Note</p>
 
 
-                    <li><div><img src="public/icons/maison.svg" id="icone" alt="icone maison">Maison</div></li>
-                    <li><div><img src="public/icons/personnes.svg" id="icone" alt="icone personnes">Personnes</div></li>
-                    <li><div><img src="public/icons/double-bed.svg" id="icone" alt="icone lit"> Chambre(s)</div></li>
-                    <li><div><img src="public/icons/salle_bain.svg" id="icone" alt="icone salle de bain">Salles de bains</div></li>
+                    <li><div><img src="../public/icons/type_logement.svg" id="icone" alt="icone maison"> Maison</div></li>
+                    <li><div><img src="../public/icons/nb_personnes.svg" id="icone" alt="icone personnes"> Personnes</div></li>
+                    <li><div><img src="../public/icons/double-bed.svg" id="icone" alt="icone lit"> Chambre(s)</div></li>
+                    <li><div><img src="../public/icons/salle_de_bains.svg" id="icone" alt="icone salle de bain"> Salles de bains</div></li>
                 </ul>
                 </div>
             </section>
             <div class="div_corps">
                 <section class="corps_offre">
-                    <h1>
-                        Titre de l'offre
-                    </h1>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan
-                    </p>
-                    <br>
-                    <h2>
-                        Hôte
-                    </h2>
-                    <div id="hote">
-                        <img src="photo_de_profil_proprio" id="photo_profil" alt="photo de profil du propriétaire">
-                        <p>Prénom Nom</p>
-                    </div>
-                    <br>
-                    <h2>
-                        Détails de l'offre
-                    </h2>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent auctor purus luctus enim egestas, ac scelerisque ante pulvinar. Donec ut rhoncus ex. Suspendisse ac rhoncus nisl, eu tempor urna. Curabitur vel bibendum lorem. Morbi convallis convallis diam sit amet lacinia. Aliquam in elementum tellus.
-                Curabitur tempor quis eros tempus lacinia. Nam bibendum pellentesque quam a convallis. Sed ut vulputate nisi. Integer in felis sed leo vestibulum venenatis. Suspendisse quis arcu sem. Aenean feugiat ex eu vestibulum vestibulum. Morbi a eleifend magna. Nam metus lacus, porttitor eu mauris a, blandit ultrices nibh. Mauris sit amet magna non ligula vestibulum eleifend. Nulla varius volutpat turpis sed lacinia. Nam eget mi in purus lobortis eleifend. Sed nec ante dictum sem condimentum ullamcorper quis venenatis nisi. Proin vitae facilisis nisi, ac posuere leo.
-                    </p>
-                    <h2>
-                        Chambres :
-                    </h2>
-                    <ul class="infos_chambres">
-                        <li>
-                            <ul class="chambre">
-                                Chambre 1 :
-                                <li>
-                                    <img src="public/icons/simle-bed.svg" id="icone" alt="icone">
-                                </li>
-                                <li id="nb_lit"><p>Lit simple</p><p>1</p></li>
-                                <li><img src="public/icons/double-bed.svg" id="icone" alt="icone">
-                                </li>
-                                <li id="nb_lit"><p>Lit double</p><p>2</p></li>
-                                
-                            </ul>
-                        </li>
-                        <li>
-                            <ul class="chambre">
-                                Chambre 2 :
-                                <li><img src="public/icons/double-bed.svg" id="icone" alt="icone">
-                                </li>
-                                <li id="nb_lit"><p>Lit double</p><p>1</p></li>
-                                
-                            </ul>
-                        </li>
-                        <p>En savoir plus</p>
-                    </ul>
-                    <br>
-                    <h2>
-                        Installations disponibles :
-                    </h2>
-                    <ul class="liste_corps">
-                        <li>
-                            Installation 01
-                        </li>
-                        <li>
-                            Installation 02
-                        </li>
-                        <li>
-                            Installation 03
-                        </li>
-                    </ul>
-                    <br>
+                        <h1>
+                            Titre de l'offre
+                        </h1>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan
+                        </p>
+                        <br>
+                        <h2>
+                            Hôte
+                        </h2>
+                        <div id="hote">
+                            <img src="photo_de_profil_proprio" id="photo_profil" alt="photo de profil du propriétaire">
+                            <p>Prénom Nom</p>
+                        </div>
+                        <br>
+                        <h2>
+                            Détails de l'offre
+                        </h2>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent auctor purus luctus enim egestas, ac scelerisque ante pulvinar. Donec ut rhoncus ex. Suspendisse ac rhoncus nisl, eu tempor urna. Curabitur vel bibendum lorem. Morbi convallis convallis diam sit amet lacinia. Aliquam in elementum tellus.
+                    Curabitur tempor quis eros tempus lacinia. Nam bibendum pellentesque quam a convallis. Sed ut vulputate nisi. Integer in felis sed leo vestibulum venenatis. Suspendisse quis arcu sem. Aenean feugiat ex eu vestibulum vestibulum. Morbi a eleifend magna. Nam metus lacus, porttitor eu mauris a, blandit ultrices nibh. Mauris sit amet magna non ligula vestibulum eleifend. Nulla varius volutpat turpis sed lacinia. Nam eget mi in purus lobortis eleifend. Sed nec ante dictum sem condimentum ullamcorper quis venenatis nisi. Proin vitae facilisis nisi, ac posuere leo.
+                        </p>
+                        <h2>
+                            Chambres :
+                        </h2>
+                        <ul class="infos_chambres">
+                            <li>
+                                <ul class="chambre">
+                                    Chambre 1 :
+                                    <li>
+                                        <img src="../public/icons/single-bed.svg" id="icone" alt="icone">
+                                    </li>
+                                    <li id="nb_lit"><p>Lit simple</p><p>1</p></li>
+                                    <li><img src="../public/icons/double-bed.svg" id="icone" alt="icone">
+                                    </li>
+                                    <li id="nb_lit"><p>Lit double</p><p>2</p></li>
+                                    
+                                </ul>
+                            </li>
+                            <li>
+                                <ul class="chambre">
+                                    Chambre 2 :
+                                    <li><img src="../public/icons/double-bed.svg" id="icone" alt="icone">
+                                    </li>
+                                    <li id="nb_lit"><p>Lit double</p><p>1</p></li>
+                                    
+                                </ul>
+                            </li>
+                            <p>En savoir plus</p>
+                        </ul>
+                        <br>
+                        <h2>
+                            Installations disponibles :
+                        </h2>
+                        <ul class="liste_corps">
+                            <li>
+                                Installation 01
+                            </li>
+                            <li>
+                                Installation 02
+                            </li>
+                            <li>
+                                Installation 03
+                            </li>
+                        </ul>
+                        <br>
 
-                    <h2>
-                        Equipements disponibles :
-                    </h2>
-                    <ul class="liste_corps">
-                        <li>
-                            Equipement 01
-                        </li>
-                        <li>
-                            Equipement 02
-                        </li>
-                        <li>
-                            Equipement 03
-                        </li>
-                    </ul>
-                    <br>
+                        <h2>
+                            Equipements disponibles :
+                        </h2>
+                        <ul class="liste_corps">
+                            <li>
+                                Equipement 01
+                            </li>
+                            <li>
+                                Equipement 02
+                            </li>
+                            <li>
+                                Equipement 03
+                            </li>
+                        </ul>
+                        <br>
 
-                    <h2>
-                    Services :
-                    </h2>
-                    <ul class="liste_corps">
-                        <li>
-                            Service 01
-                        </li>
-                        <li>
-                            Service 02
-                        </li>
-                        <li>
-                            Service 03
-                        </li>
-                    </ul>
-                    <br>
+                        <h2>
+                        Services :
+                        </h2>
+                        <ul class="liste_corps">
+                            <li>
+                                Service 01
+                            </li>
+                            <li>
+                                Service 02
+                            </li>
+                            <li>
+                                Service 03
+                            </li>
+                        </ul>
+                        <br>
                 </section>
                 <section class="reserve_contact">
-                    <article class="reserve">
-                        Prix de base
-                    </article>
-                    <article class="contact">
+                        <article class="reserve">
+                            <div id="prix_base">
+                            <p id="prix">Prix de base</p>
+                            <p1> par nuit</p1>
+                            </div>
+                            
+                        </article>
 
-                    </article>
+                        <article class="contact">
+                            Prénom Nom
+
+                        </article>
 
                 </section>
-
             </div>
             <section class="commentaires">
                 <br>
@@ -195,21 +200,10 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
         </main>
 
         <footer id="footer">
-            <img src="public/icons/wave.svg">
+            <img src="../public/icons/wave.svg">
             <div>
                 <div>
                     <div>
