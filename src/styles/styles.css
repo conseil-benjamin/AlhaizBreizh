@@ -38,7 +38,6 @@ a:hover{
     text-align: center;
     padding: 0 1em;
     transition: all .3s ease-in-out;
-    margin-top: 50%;
 }
 
 .boutton-bleu-clair:hover{
@@ -127,7 +126,7 @@ a:hover{
 #header .compte{
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     gap: .5em;
     position: absolute;
@@ -151,6 +150,38 @@ a:hover{
 /*Icone user*/
 #header .compte > img:last-child{
     height: 75%;
+    border-radius: 50px;
+}
+
+#header div.compte > img:last-child{
+    border: 1px #65E3FF solid;
+}
+
+/*Options du compte*/
+#header div.compte{
+    cursor: pointer;
+
+}
+
+#header .compte-options{
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 75px;
+    width: 300px;
+    text-align: center;
+    background-color: #515D5E;
+    color: #65E3FF;
+}
+
+#header .compte-options li{
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+}
+
+#header .compte-options li:hover{
+    background-color: #394142;
 }
 
 /********************************************/
