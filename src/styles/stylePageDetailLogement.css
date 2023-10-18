@@ -1,5 +1,5 @@
 main{
-    margin: 80px;
+    margin:5%;
     margin-top: 100px;
 }
 
@@ -10,6 +10,7 @@ main{
     border-radius: 20px;
     height: 10%;
     padding: 2%;
+    margin-left: 2%;
 
 }
 
@@ -17,6 +18,9 @@ main{
     width: 20px;
 }
 
+.infos_loge{
+    margin: 5%;
+}
 
 .infos_loge>li{
     background-color: #7EBCF2;
@@ -36,6 +40,11 @@ main{
     flex-direction: row;
 }
 
+.tete_offre>img{
+    border-radius: 20px;
+    width: 70%;
+}
+
 .tete_offre>div{
     display: flex;
     flex-direction: column;
@@ -46,6 +55,8 @@ main{
     color: white;
     padding: 8px;
     border-radius: 20px;
+    width: 70%;
+    min-height: 500px;
 }
 
 #hote {
@@ -83,19 +94,38 @@ main{
 .div_corps{
     display: flex;
     flex-direction: row;
+    margin-top: 10px;
+}
+
+
+.resa_colle{
+    position: sticky;
+    top: 0px;
 }
 
 .reserve_contact{
-
+    display: flex;
+    flex-direction: column;
+    width:30%;
 }
 
 .reserve{
-
+    background-color: #16A1EF;
 }
 
 .contact{
-    
+    background-color: #7EBCF2;    
 }
+
+#prix_base{
+    display: flex;
+    flex-direction: row;
+}
+
+#prix{
+    color: red;
+}
+
 
 
 couleur{
