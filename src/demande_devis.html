@@ -32,7 +32,7 @@
         </h1>
     </section>
     <section id="corpsTexte">
-        <form method="get">
+        <form method="post">
             <div id="formulaire">
                 <div id="prix">
                     <h2>Prix de base X€/nuit</h2>
@@ -72,7 +72,7 @@
                     <div>
                         <label for="demande">Autre demande (1000 caractères maximum)</label>
                         <textarea id="demande" maxlength="1000" placeholder="Votre demande"
-                                  spellcheck="true"></textarea>
+                                  spellcheck="true" name="demande"></textarea>
                     </div>
                 </div>
                 <div id="service">
@@ -80,7 +80,7 @@
                     <ul>
                         <li>
                             <div class="supplement first">
-                                <input id="checkBox1" type="checkbox">
+                                <input id="checkBox1" type="checkbox" name="service1">
                                 <label for="checkBox1">Service 01</label>
                                 <p class="prix">66,6€</p>
                             </div>
