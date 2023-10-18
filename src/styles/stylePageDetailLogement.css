@@ -1,40 +1,107 @@
-#localisation {
+main{
+    margin: 80px;
+    margin-top: 100px;
+}
+
+#localisation_haut_page {
+    display: flex;
+    align-items: center;
     background-color: #16A1EF;
-}
-
-
-/* Réinitialiser les puces par défaut de la liste */
-ul.infos_loge {
-    list-stye:none;
-    padding-left: 0;
-}
-
-/* Utiliser des icônes personnalisées pour chaque élément de la liste */
-li.item-1 {
-    background-image: url('icone1.png');
-    background-repeat: no-repeat;
-    background-position: left center;
-    padding-left: 20px; /* Ajuster la marge à gauche pour que le texte n'entre pas en collision avec l'icône */
-}
-
-li.item-2 {
-    background-image: url('public/icons/double-bed.svg');
+    border-radius: 20px;
+    height: 10%;
+    padding: 2%;
 
 }
 
-li.item-3 {
-    background-image: url('icone3.png');
-    background-repeat: no-repeat;
-    background-position: left center;
-    padding-left: 20px;
+#icone{
+    width: 20px;
 }
 
 
+.infos_loge>li{
+    background-color: #7EBCF2;
+    margin: 5px;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+}
 
-/*
-#16A1EF couleur5
-#65E3FF couleur4
-#7EBCF2 couleur3
-#D7F0FF couleur2
-#515D5E couleur1
-*/
+.infos_loge>li>div{
+    flex-direction: row;
+}
+
+.tete_offre{
+    display: flex;
+    flex-direction: row;
+}
+
+.tete_offre>div{
+    display: flex;
+    flex-direction: column;
+}
+
+.corps_offre{
+    background-color: #515D5E;
+    color: white;
+    padding: 8px;
+    border-radius: 20px;
+}
+
+#hote {
+    background-color: #7EBCF2;
+    display: flex;
+    color: black;
+    flex-direction: row;
+    border-radius: 20px;
+}
+
+.infos_chambres{
+    padding:20px;
+}
+
+
+.chambre{
+    margin:10px ;
+    background-color: #7EBCF2;
+    color:black;
+    display: flex;
+    flex-direction: row;
+    border-radius: 10px;
+}
+
+#nb_lit{
+    display:flex;
+    flex-direction: column;
+}
+
+.liste_corps{
+    list-style: disc;
+    margin: 30px;
+}
+
+.div_corps{
+    display: flex;
+    flex-direction: row;
+}
+
+.reserve_contact{
+
+}
+
+.reserve{
+
+}
+
+.contact{
+    
+}
+
+
+couleur{
+color:#16A1EF /*couleur5*/
+#65E3FF /*couleur4*/
+#7EBCF2 /*couleur3*/
+#D7F0FF /*couleur2*/
+#515D5E /*couleur1*/
+}
