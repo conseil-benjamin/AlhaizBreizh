@@ -21,7 +21,7 @@
 }
 
 #icone{
-    width: 20px;
+    width: 30px;
 }
 
 .infos_loge{
@@ -92,21 +92,32 @@ body{
 
 .infos_chambres{
     padding:20px;
+    padding-top: 0;
 }
 
 
 .chambre{
-    margin:10px ;
+    margin-left:10% ;
+    margin-right:10% ;
+    margin-bottom: 5%;
+    padding: 5px;
+    width: 50%;
     background-color: #7EBCF2;
     color:black;
     display: flex;
     flex-direction: row;
-    border-radius: 10px;
+    align-items: center;
+}
+
+.chambre>p{
+    margin-right:10px;
 }
 
 #nb_lit{
     display:flex;
     flex-direction: column;
+    text-align: center;
+    margin-right: 5%;
 }
 
 .liste_corps{
@@ -159,12 +170,13 @@ body{
 .arrivee_depart{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    
 }
 
 .date_resa{
     display: flex;
     flex-direction: column;
+
 }
 
 .bouton_reserve{
@@ -187,6 +199,9 @@ form{
 
 form>input{
     border-radius: 10px;
+    border: 1px solid #000;
+    width: 100px;
+    height: 30px;
 }
 
 .bouton_contact{
