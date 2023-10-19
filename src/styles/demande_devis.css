@@ -56,7 +56,7 @@ h2 {
     color: rgb(128, 128, 128);
 }
 
-#prix {
+#prixDiv {
     margin-right: 2vw;
 }
 
@@ -68,17 +68,17 @@ h2 {
     margin-top:3vh ;
 }
 
-#prix > h2 {
+#prixDiv > h2 {
     margin: 10px;
 }
 
-#prix > ul  {
+#prixDiv > ul  {
     display: flex;
     flex-direction: column;
     width: 50vw;
 }
 
-#prix >ul >li {
+#prixDiv >ul >li {
     margin-top: 2vh;
     display: flex;
     flex-direction: row;
@@ -86,7 +86,7 @@ h2 {
     height: 7vh;
 }
 
-#prix >ul >li > div {
+#prixDiv >ul >li > div {
     width: 50%;
     align-items: center;
     display: flex;
@@ -98,25 +98,25 @@ h2 {
     margin-right: 20px ;
 }
 
-#prix >ul >li label {
+#prixDiv >ul >li label {
     color: #FFFFFF;
     font-family:'Montserrat', serif;
 }
 
-#prix > div {
+#prixDiv > div {
     display: flex;
     flex-direction: column;
     margin-top: 8vh;
 }
 
-#prix > div > label {
+#prixDiv > div > label {
     color: #FFFFFF;
     font-family:'Montserrat', serif;
     font-weight: bold;
     margin: 10px;
 }
 
-#prix > div > textarea {
+#prixDiv > div > textarea {
     resize: none;
     background: #FFFFFF;
     border-radius: 10px;

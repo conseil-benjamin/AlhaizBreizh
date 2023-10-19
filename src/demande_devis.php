@@ -37,8 +37,8 @@ $nom = $_SESSION["nom_bien"];
     <section id="corpsTexte">
         <form method="post">
             <div id="formulaire">
-                <div id="prix">
-                    <h2>Prix de base X€/nuit</h2>
+                <div id="prixDiv">
+                    <h2>Prix de base <span id="prixSpan">6</span>€/nuit</h2>
                     <ul>
                         <li>
                             <div class="labelPrix">
@@ -87,14 +87,14 @@ $nom = $_SESSION["nom_bien"];
                             <div class="supplement first">
                                 <input id="checkBox1" type="checkbox" name="service1">
                                 <label for="checkBox1">Service 01</label>
-                                <p class="prix">66,6€</p>
+                                <p class="prix"><span>66,6</span>€</p>
                             </div>
                         </li>
                     </ul>
                 </div>
             </div>
             <div id="total">
-                <h2> Total de la réservation : <span id="prixTotal"></span></h2>
+                <h2> Total de la réservation : <span id="prixTotal"></span>€</h2>
                 <button type="submit">Confirmer la réservation et demander un devis</button>
             </div>
         </form>
