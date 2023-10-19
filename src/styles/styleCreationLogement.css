@@ -1,0 +1,40 @@
+body {
+  margin-top: 10%;
+  --main-bg-color: #515d5e;
+  --color-btn-submit: #7ebcf2;
+}
+
+.container-main {
+  display: flex;
+  background-color: var(--main-bg-color);
+  border-radius: 25px;
+  margin: 2em;
+}
+
+.container-left {
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin: 0 2em 0 0;
+}
+
+.container-right {
+  margin: 0 0 0 2em;
+}
+
+input {
+  margin: 1em;
+  border-radius: 5px;
+  padding: 0.5em;
+}
+
+label {
+  margin: 0.5em;
+}
+
+h1 {
+  text-align: center;
+}
+
+.creerAnnonce {
+  background-color: var(--color-btn-submit);
+}
