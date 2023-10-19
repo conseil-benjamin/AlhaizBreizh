@@ -1,16 +1,22 @@
-main{
+.corps{
     margin:5%;
-    margin-top: 100px;
+    margin-top: 0;
+    margin-bottom: 0;
+    background-color: white;
+}
+
+.degrade{
+    background: linear-gradient(to bottom, #D7F0FF, #FFFFFF);
+    height: 10%;
 }
 
 #localisation_haut_page {
     display: flex;
     align-items: center;
     background-color: #16A1EF;
-    border-radius: 20px;
-    height: 10%;
-    padding: 2%;
-    margin-left: 2%;
+    border-radius: 15px;
+    padding: 5%;
+    margin-left: 10%;
 
 }
 
@@ -19,13 +25,30 @@ main{
 }
 
 .infos_loge{
-    margin: 5%;
+    margin: 10%;
+    
+}
+
+body{
+    background-color: white;
+}
+
+.tete_offre{
+    background-color: #D7F0FF;
+    padding: 5%;
+    padding-bottom: 1%;
+    margin-top: 50px;
+
+}
+
+.tete_offre>div{
+    width: 30%;
 }
 
 .infos_loge>li{
     background-color: #7EBCF2;
-    margin: 5px;
-    padding: 5px;
+    margin-top: 10%;
+    padding: 5%;
     display: flex;
     flex-direction: column;
     border-radius: 20px;
@@ -35,14 +58,14 @@ main{
     flex-direction: row;
 }
 
-.tete_offre{
+.tete_offre, .photo_profil_contact{
     display: flex;
     flex-direction: row;
 }
 
 .tete_offre>img{
     border-radius: 20px;
-    width: 70%;
+    width: 60%;
 }
 
 .tete_offre>div{
@@ -111,10 +134,17 @@ main{
 
 .reserve{
     background-color: #16A1EF;
+    padding: 5px;
+    border-radius: 15px;
+    margin: 5px;
+
 }
 
 .contact{
-    background-color: #7EBCF2;    
+    background-color: #7EBCF2;
+    padding: 5px;
+    border-radius: 15px;
+   margin: 5px;
 }
 
 #prix_base{
@@ -126,7 +156,67 @@ main{
     color: red;
 }
 
+.arrivee_depart{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
 
+.date_resa{
+    display: flex;
+    flex-direction: column;
+}
+
+.bouton_reserve{
+    background-color: #515D5E;
+    color: white;
+    text-align: center;
+    border-radius: 20px;
+    padding: 2%;
+    margin: 5%;
+    margin-left:15%;
+    margin-right: 15%;
+
+
+}
+
+form{
+    margin: 5%;
+    margin-bottom:0 ;
+}
+
+form>input{
+    border-radius: 10px;
+}
+
+.bouton_contact{
+    background-color: #16A1EF;
+    color: white;
+    text-align: center;
+    border-radius: 20px;
+    padding: 5px;
+}
+
+.photo_profil_contact{
+display: flex;
+align-items: center;
+}
+
+.commentaires{
+    background: linear-gradient(to top, #D7F0FF, #FFFFFF);
+
+}
+
+footer{
+    background-color: #D7F0FF;
+}
+
+.comment{
+    margin: 5%;
+    margin-bottom:0;
+    margin-top: 0;
+    padding-top: 2%;
+}
 
 couleur{
 color:#16A1EF /*couleur5*/
