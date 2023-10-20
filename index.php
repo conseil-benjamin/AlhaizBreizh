@@ -11,7 +11,9 @@
     </head>
     <body>
         <?php include './src/php/header.php'; ?>
-        <img id="background" src="/public/backgrounds/bg1.png">
+        <video id="background" autoplay loop muted>
+            <source src="/public/videos/video-bretagne.mp4" type="video/mp4">
+        </video>
         <div id="titre">
             <h1>Envie de découvrir la Bretagne ?</h1>
             <p>Nous avons tout pour vous mettre ALHaIZ</p>
