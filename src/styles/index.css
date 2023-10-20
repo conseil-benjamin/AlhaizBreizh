@@ -3,6 +3,7 @@
 
 #header {
     background-color: #7EBCF200;
+    backdrop-filter: blur(10px);
     transition: all 0.5s ease;
 }
 
@@ -25,14 +26,6 @@
 
 #header.scrolled .logo{
     content: url(/public/logos/logo-grey.svg);
-    filter: none;
-}
-
-#header .compte{
-    filter: drop-shadow(-1px 1px 5px rgba(0, 0, 0, 0.75));
-}
-
-#header.scrolled .compte{
     filter: none;
 }
 
