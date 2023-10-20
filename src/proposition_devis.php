@@ -13,7 +13,7 @@ $nom = $_SESSION["nom_bien"];
 </head>
 <body>
 <header id="header">
-    <a class="logo" href="/index.html"><img src="/public/logos/logo-grey.svg"></a>
+    <a class="logo" href="/index.html"><img src="/public/logos/logo-grey.svg" alt="logo"></a>
     <nav>
         <ul>
             <li><a href="">Logements</a></li>
@@ -46,8 +46,8 @@ $nom = $_SESSION["nom_bien"];
                                 </label>
                             </div>
                             <div>
-                                <input class="input1" id="arrivee" name="date_arrivee" placeholder="JJ/MM/YYYY"
-                                       type="date">
+                                <input class="input1" id="arrivee" name="date_arrivee"
+                                       type="date" value="2023-10-19" readonly>
                             </div>
                         </li>
                         <li>
@@ -58,7 +58,7 @@ $nom = $_SESSION["nom_bien"];
                             </div>
                             <div>
                                 <input class="input1" id="depart" name="date_depart" placeholder="JJ/MM/YYYY"
-                                       type="date">
+                                       type="date" value="2023-10-19" readonly>
                             </div>
                         </li>
                         <li>
@@ -69,14 +69,14 @@ $nom = $_SESSION["nom_bien"];
                             </div>
                             <div>
                                 <input class="input1" id="nbpersonne" max="10" min="0" name="nb_personne"
-                                       placeholder="nbpersonne" type="number" value="0">
+                                       placeholder="nbpersonne" type="number" value="10" readonly>
                             </div>
                         </li>
                     </ul>
                     <div>
                         <label for="demande">Autre demande (1000 caractères maximum)</label>
                         <textarea id="demande" maxlength="1000" placeholder="Votre demande"
-                                  spellcheck="true" name="demande"></textarea>
+                                  spellcheck="true" name="demande" readonly></textarea>
                     </div>
                     <div>
                         <label for="devis">Upload votre devis</label>
@@ -88,7 +88,6 @@ $nom = $_SESSION["nom_bien"];
                     <ul>
                         <li>
                             <div class="supplement first">
-                                <input id="checkBox1" type="checkbox" name="service1">
                                 <label for="checkBox1">Service 01</label>
                                 <p class="prix"><span>66,6</span>€</p>
                             </div>

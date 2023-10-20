@@ -45,7 +45,6 @@ h2 {
 }
 
 .input1 {
-
     background: #FFFFFF;
     border-radius: 10px;
     width: 7vw;
@@ -62,6 +61,7 @@ h2 {
 
 #service {
     margin-right: 2vw ;
+    width: 100%;
 }
 
 #service > ul {
@@ -130,6 +130,7 @@ h2 {
     color: rgba(0, 0, 0, 0.45);
     padding: 10px;
     border-style: none;
+    min-height: 75px;
 }
 
 textarea:focus {
