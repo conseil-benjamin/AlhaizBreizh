@@ -25,27 +25,51 @@ session_start();
             <a href="" class="compte">
                 <img src="../public/icons/arrow-blue.svg">
                 <p>Se connecter</p>
-                <img src="../public/icons/user-blue.svg">
+                <?php 
+                if ($_SESSION==null) {
+                    echo " <img src=\"../public/icons/user-blue.svg\">";
+                }
+                else{
+                    echo $photo_profil;
+                }
+                
+                ?>
             </a>
         </header>
 
         <main>
 
             <section class="tete_offre">
-                <img src="./img/maison.png" alt="image maison">
+                <?php
+                if ($photo_logement==null) {
+                echo "<img src=\"./img/maison.png\" alt=\"image maison\">";
+                }
+                else {
+                    echo $photo_logement;
+                }
+                ?>
                 <div>
                 <p id="localisation_haut_page">
-                    Localisation <br>
-                    Localisation specifique
-                </p>
+                <?php
+                if ($localisation==null) {
+                    echo "Localisation <br>";          
+                }
+                else {
+                    echo $localisation;
+                }
+                # gestion localisation specifique
+                ?>
+                Localisation specifique
+                    </p>
                 <ul class="infos_loge">
                     <p><img src="../public/icons/star_fill.svg" id="icone" alt="icone etoile"> Note</p>
 
 
-                    <li><div><img src="../public/icons/type_logement.svg" id="icone" alt="icone maison"> Maison</div></li>
-                    <li><div><img src="../public/icons/nb_personnes.svg" id="icone" alt="icone personnes"> Personnes</div></li>
-                    <li><div><img src="../public/icons/double-bed.svg" id="icone" alt="icone lit"> Chambre(s)</div></li>
-                    <li><div><img src="../public/icons/salle_de_bains.svg" id="icone" alt="icone salle de bain"> Salles de bains</div></li>
+                    <li><div><img src="../public/icons/type_logement.svg" id="icone" alt="icone maison"> <?php echo $type_logement?></div></li>
+                    <li><div><img src="../public/icons/nb_personnes.svg" id="icone" alt="icone personnes">  <?php echo $nb_personnes?> Personnes</div></li>
+                    
+                    <li><div><a href="#sinfos_chambre"><img src="../public/icons/double-bed.svg" id="icone" alt="icone lit"> <?php echo $nb_chambres?> Chambre(s)</a></div></li>
+                    <li><div><img src="../public/icons/salle_de_bains.svg" id="icone" alt="icone salle de bain"> <?php echo $nb_sdb?> Salles de bains</div></li>
                 </ul>
                 </div>
             </section>
@@ -54,17 +78,38 @@ session_start();
                 <div class="div_corps">
                     <section class="corps_offre">
                             <h1>
-                                Titre de l'offre
+                                <?php
+                                if ($titre_offre==null) {
+                                    echo "Titre de l'offre";          
+                                }
+                                else {
+                                    echo $titre_offre;
+                                }
+                                ?>
                             </h1>
                             <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan
+                            <?php
+                                if ($phrase_accroche==null) {
+                                    echo "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan";          
+                                }
+                                else {
+                                    echo $phrase_accroche;
+                                }
+                                ?>
                             </p>
                             <br>
                             <h2>
                                 Hôte
                             </h2>
                             <div id="hote">
-                                <img src="../public/icons/user.svg" id="photo_profil" alt="photo de profil du propriétaire">
+                                <?php
+                                if ($photo_profil_proprio==null) {
+                                    echo "<img src=\"../public/icons/user.svg\" id=\"photo_profil\" alt=\"photo de profil du propriétaire\">";          
+                                }
+                                else {
+                                    echo $photo_profil_proprio;
+                                }
+                                ?>
                                 <p>Prénom Nom</p>
                             </div>
                             <br>
@@ -75,7 +120,7 @@ session_start();
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent auctor purus luctus enim egestas, ac scelerisque ante pulvinar. Donec ut rhoncus ex. Suspendisse ac rhoncus nisl, eu tempor urna. Curabitur vel bibendum lorem. Morbi convallis convallis diam sit amet lacinia. Aliquam in elementum tellus.
                         Curabitur tempor quis eros tempus lacinia. Nam bibendum pellentesque quam a convallis. Sed ut vulputate nisi. Integer in felis sed leo vestibulum venenatis. Suspendisse quis arcu sem. Aenean feugiat ex eu vestibulum vestibulum. Morbi a eleifend magna. Nam metus lacus, porttitor eu mauris a, blandit ultrices nibh. Mauris sit amet magna non ligula vestibulum eleifend. Nulla varius volutpat turpis sed lacinia. Nam eget mi in purus lobortis eleifend. Sed nec ante dictum sem condimentum ullamcorper quis venenatis nisi. Proin vitae facilisis nisi, ac posuere leo.
                             </p>
-                            <ul class="infos_chambres"></ul>
+                            <ul class="infos_chambres" id="infos_chambres"></ul>
                             <h2>
                                 Chambres :
                             </h2>
