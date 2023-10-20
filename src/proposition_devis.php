@@ -7,6 +7,7 @@ $nom = $_SESSION["nom_bien"];
     <meta charset="UTF-8">
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="./styles/proposition_devis.css" rel="stylesheet" type="text/css">
     <link href="./styles/demande_devis.css" rel="stylesheet" type="text/css">
     <link href="./styles/styles.css" rel="stylesheet" type="text/css">
     <title>Demande de devis</title>
@@ -78,8 +79,8 @@ $nom = $_SESSION["nom_bien"];
                         <textarea id="demande" maxlength="1000" placeholder="Votre demande"
                                   spellcheck="true" name="demande" readonly></textarea>
                     </div>
-                    <div>
-                        <label for="devis">Upload votre devis</label>
+                    <div id="upload">
+                        <label for="devis" id="devisLabel">Upload votre devis</label>
                         <input type="file" accept="application/pdf" name="devis" id="devis">
                     </div>
                 </div>

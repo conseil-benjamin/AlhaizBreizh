@@ -1,0 +1,23 @@
+input[type='file'] {
+    display: none;
+}
+
+
+#devisLabel {
+    display: block;
+    margin: 12px !important;
+    color: black !important;
+}
+
+#upload:hover {
+    cursor: pointer;
+}
+
+#upload {
+    height: 8vh;
+    width: 10vw;
+
+    background: #7EBCF2;
+    border-radius: 20px;
+
+}
