@@ -14,7 +14,7 @@ session_start();
     </head>
     <body>
         <header id="header">
-            <a href="index.php" class="logo"><img src="../../public/logos/logo-grey.svg"></a>
+            <a href="../../index.php" class="logo"><img src="../../public/logos/logo-grey.svg"></a>
             <nav>
                 <ul>
                     <li><a href="">Logements</a></li>
@@ -62,13 +62,14 @@ session_start();
                 Localisation specifique
                     </p>
                 <ul class="infos_loge">
-                    <p><img src="../../public/icons/star_fill.svg" id="icone" alt="icone etoile"> Note</p>
+                    <p>
+                        <a href="#comment" class="logo"><img src="../../public/icons/star_fill.svg" id="icone" alt="icone etoile"> Note</p></a>
 
 
                     <li><div><img src="../../public/icons/type_logement.svg" id="icone" alt="icone maison"> <?php echo $type_logement?></div></li>
                     <li><div><img src="../../public/icons/nb_personnes.svg" id="icone" alt="icone personnes">  <?php echo $nb_personnes?> Personnes</div></li>
                     
-                    <li><div><a href="#sinfos_chambre"><img src="../../public/icons/double-bed.svg" id="icone" alt="icone lit"> <?php echo $nb_chambres?> Chambre(s)</a></div></li>
+                    <li><div><a href="#infos_chambres"><img src="../../public/icons/double-bed.svg" id="icone" alt="icone lit"> <?php echo $nb_chambres?> Chambre(s)</a></div></li>
                     <li><div><img src="../../public/icons/salle_de_bains.svg" id="icone" alt="icone salle de bain"> <?php echo $nb_sdb?> Salles de bains</div></li>
                 </ul>
                 </div>
@@ -143,79 +144,104 @@ session_start();
                                 
                                 ?>
                              </p>
-                            <ul class="infos_chambres" id="infos_chambres"></ul>
-                            <h2>
-                                Chambres :
+                            <ul class="infos_chambres"></ul>
+                            <h2 id="infos_chambres">
+                            Chambres :
                             </h2>
-                                <li>
-                                    <ul class="chambre">
-                                        <p>Chambre 1 :</p>
-                                        <li>
-                                            <img src="../../public/icons/single-bed.svg" id="icone" alt="icone">
-                                        </li>
-                                        <li id="nb_lit"><p>Lit simple</p><p>1</p></li>
-                                        <li><img src="../../public/icons/double-bed.svg" id="icone" alt="icone">
-                                        </li>
-                                        <li id="nb_lit"><p>Lit double</p><p>2</p></li>
-                                        
-                                    </ul>
-                                </li>
-                                <li>
-                                    <ul class="chambre">
-                                        <p>Chambre 2 :</p>
-                                        <li><img src="../../public/icons/double-bed.svg" id="icone" alt="icone">
-                                        </li>
-                                        <li id="nb_lit"><p>Lit double</p><p>1</p></li>
-                                        
-                                    </ul>
-                                </li>
-                            </ul>
+                            <?php
+                                /*
+                                $liste_chambres = array(
+                                    array(
+                                        'nom' => 'Chambre 1',
+                                        'lits' => array(
+                                            array('type' => 'simple', 'quantite' => 5),
+                                            array('type' => 'double', 'quantite' => 2)
+                                        )
+                                    ),
+                                    array(
+                                        'nom' => 'Chambre 2',
+                                        'lits' => array(
+                                            array('type' => 'double', 'quantite' => 1)
+                                        )
+                                    )
+                                ); 
+                                */
+                                if (empty($liste_chambres)|| $liste_chambres == null) {
+                                    echo "<p> Cette section est vide.</p>";
+                                } else {
+                                    echo "<ul class='chambres'>";
+                                    foreach ($liste_chambres as $chambre) {
+                                        echo "<li>";
+                                        echo "<ul class='chambre'>";
+                                        echo "<p>" . $chambre['nom'] . " : </p>";
+                                        foreach ($chambre['lits'] as $lit) {
+                                            echo "<li>";
+                                            if ($lit['type'] == 'simple') {
+                                                echo "<img src='../../public/icons/single-bed.svg' id='icone' alt='icone'>";
+                                            } elseif ($lit['type'] == 'double') {
+                                                echo "<img src='../../public/icons/double-bed.svg' id='icone' alt='icone'>";
+                                            }
+                                            echo "</li>";
+                                            echo "<li id='nb_lit'>";
+                                            echo "<p>" . ($lit['type'] == 'simple' ? 'Lit simple' : 'Lit double') . "</p>";
+                                            echo "<p>" . $lit['quantite'] . "</p>";
+                                            echo "</li>";
+                                        }
+                                        echo "</ul>";
+                                        echo "</li>";
+                                    }
+                                    echo "</ul>";
+                                }
+?>
+
                             <br>
                             <h2>
                                 Installations disponibles :
                             </h2>
-                            <ul class="liste_corps">
-                                <li>
-                                    Installation 01
-                                </li>
-                                <li>
-                                    Installation 02
-                                </li>
-                                <li>
-                                    Installation 03
-                                </li>
-                            </ul>
+                                <?php
+                                if ($liste_installation==null || empty($liste_installation)) {
+                                    echo "<p class='section_vide'>Cette section est vide.</p>";
+                                } else {
+                                    echo "<ul class='liste_corps'>";
+                                    foreach ($liste_installation as $installation) {
+                                        echo "<li>$installation</li>";
+                                    }
+                                    echo "</ul>";
+                                }
+                                ?>
+
                             <br>
 
                             <h2>
                                 Equipements disponibles :
                             </h2>
-                            <ul class="liste_corps">
-                                <li>
-                                    Equipement 01
-                                </li>
-                                <li>
-                                    Equipement 02
-                                </li>
-                                <li>
-                                    Equipement 03
-                                </li>
-                            </ul>
+                            <?php
+                                if ($liste_equipements==null || empty($liste_installation)) {
+                                    echo "<p class='section_vide'>Cette section est vide.</p>";
+                                } else {
+                                    echo "<ul class='liste_corps'>";
+                                    foreach ($liste_equipements as $equipement) {
+                                        echo "<li>$equipement</li>";
+                                    }
+                                    echo "</ul>";
+                                }
+                                ?>
                             <br>
 
                             <h2>
                             Services :
                             </h2>
-                            <ul class="liste_corps">
-                                <li>
-                                    Service 01
-                                </li>
-                                <li>
-                                    Service 02
-                                </li>
-                                <li>
-                                    Service 03
-                                </li>
+                            <?php
+                                if ($liste_services==null || empty($liste_installation)) {
+                                    echo "<p class='section_vide'>Cette section est vide.</p>";
+                                } else {
+                                    echo "<ul class='liste_corps'>";
+                                    foreach ($liste_services as $service) {
+                                        echo "<li>$service</li>";
+                                    }
+                                    echo "</ul>";
+                                }
+                                ?>
                             </ul>
                             <br>
                     </section>
@@ -223,7 +249,14 @@ session_start();
                             <div class="resa_colle">
                                 <article class="reserve">
                                     <div id="prix_base">
-                                    <p id="prix">Prix de base</p>
+                                    <p id="prix"><?php
+                                        if ($prix==null) {
+                                            echo "Prix ";          
+                                        }
+                                        else {
+                                            echo $prix;
+                                        }
+                                ?></p>
                                     <p1> par nuit</p1>
                                     </div>
                                     <div class="arrivee_depart">
@@ -263,7 +296,7 @@ session_start();
 
                 <section class="commentaires">
                     <br>
-                <div class="comment">
+                <div id="comment">
                     <h2>
                         Commentaires
                     </h2>
