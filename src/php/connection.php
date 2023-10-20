@@ -18,11 +18,11 @@
                 <form id="connection-form" action="login.php" method="post">
                     <div class="form">
                         <div>
-                            <label for="identifiant">Identifiant</label>
+                            <label <?php if (isset($_GET['error']) && $_GET['error'] == 'id') echo 'class="error"' ?> for="identifiant">Identifiant</label>
                             <input type="text" name="identifiant" id="identifiant" placeholder="Entrez votre identifiant" required>
                         </div>
                         <div>
-                            <label for="mdp">Mot de passe</label>
+                            <label <?php if (isset($_GET['error']) && $_GET['error'] == 'mdp') echo 'class="error"' ?> for="mdp">Mot de passe</label>
                             <input type="password" name="mdp" id="mdp" placeholder="Entrez votre mot de passe" required>
                             <a href="">Mot de passe oublié ?</a>
                         </div>

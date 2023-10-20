@@ -15,8 +15,10 @@ if (isset($_GET['deconnexion'])) {
     } elseif ($identifiant == "propro" && $mdp == "azerty") {
         $_SESSION['id'] = $identifiant;
         $_SESSION['proprio'] = true;
+    } elseif ($identifiant == "gege" || $identifiant == "propro") {
+        $header = "Location: /src/php/connection.php?error=mdp";
     } else{
-        $header = "Location: /src/php/connection.php";
+        $header = "Location: /src/php/connection.php?error=id";
     }
 }
 
