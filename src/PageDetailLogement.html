@@ -26,34 +26,6 @@
         </header>
 
         <main>
-             <!--
-                    -image
-                    -localisation
-                    -note
-                        -liste infos logement
-
-                    - titre offre
-                    - phrase accroche
-                    -detail
-                        -chambres
-                        -lits
-                    -instalionts
-                        -liste installations
-                    -equipements
-                        -liste installations
-                    -service
-                        -liste installations
-                
-                -commentaires
-                -carte
-
-                    -condition
-                    -reglement
-                    -infos
-                
-                -prix
-                -contact
-            -->
             <section class="tete_offre">
                 <img src="./img/maison.png" alt="image maison">
                 <div>
@@ -87,7 +59,7 @@
                                 Hôte
                             </h2>
                             <div id="hote">
-                                <img src="photo_de_profil_proprio" id="photo_profil" alt="photo de profil du propriétaire">
+                                <img src="../public/icons/user.svg" id="photo_profil" alt="photo de profil du propriétaire">
                                 <p>Prénom Nom</p>
                             </div>
                             <br>
@@ -175,43 +147,45 @@
                             </ul>
                             <br>
                     </section>
-                    <section class="reserve_contact">
-                            <article class="reserve">
-                                <div id="prix_base">
-                                <p id="prix">Prix de base</p>
-                                <p1> par nuit</p1>
-                                </div>
-                                <div class="arrivee_depart">
-                                    <form class="date_resa">
-                                        <label for="date_arrivee">Arrivée :</label>
-                                        <input type="text" id="date_arrivee" name="date_arrivee">
-                                    </form>
-                                    <form class="date_resa">
-                                        <label for="date_depart">Départ :</label>
-                                        <input type="text" id="date_depart" name="date_depart">
-                                    </form>
-                                </div>
-                                <div class="bouton_reserve">
-                                    <a href="#">Réserver</a>
-                                </div>
+                        <section class="reserve_contact">
+                            <div class="resa_colle">
+                                <article class="reserve">
+                                    <div id="prix_base">
+                                    <p id="prix">Prix de base</p>
+                                    <p1> par nuit</p1>
+                                    </div>
+                                    <div class="arrivee_depart">
+                                        <form class="date_resa">
+                                            <label for="date_arrivee">Arrivée :</label>
+                                            <input type="text" id="date_arrivee" name="date_arrivee">
+                                        </form>
+                                        <form class="date_resa">
+                                            <label for="date_depart">Départ :</label>
+                                            <input type="text" id="date_depart" name="date_depart">
+                                        </form>
+                                    </div>
+                                    <div class="bouton_reserve">
+                                        <a href="#">Réserver</a>
+                                    </div>
 
-                            </article>
+                                </article>
 
-                            <article class="contact">
-                                <div class="photo_profil_contact">
-                                    <img src="photo_de_profil_proprio" id="photo_profil" alt="photo de profil du propriétaire">
-                                    <div class="contact_nom_bouton">
-                                        <p>Prénom Nom</p>
-                                        <p><img src="../public/icons/star_fill.svg" id="icone" alt="icone etoile"> Note</p>
-                                        <div class="bouton_contact">
-                                            <a href="#">Contacter</a>
+                                <article class="contact">
+                                    <div class="photo_profil_contact">
+                                        <img src="../public/icons/user.svg" id="photo_profil" alt="photo de profil du propriétaire">
+                                        <div class="contact_nom_bouton">
+                                            <p>Prénom Nom</p>
+                                            <p><img src="../public/icons/star_fill.svg" id="icone" alt="icone etoile"> Note</p>
+                                            <div class="bouton_contact">
+                                                <a href="#">Contacter</a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                Langues parlées : 
-                            </article>
-
-                    </section>
+                                    <br>
+                                    Langues parlées : 
+                                </article>
+                            </div>
+                        </section>
                 </div>
             </div>
 
