@@ -38,7 +38,6 @@ $nom = $_SESSION["nom_bien"];
         <form method="post" action="submitPropositionDevis.php">
             <div id="formulaire">
                 <div id="prixDiv">
-                    <h2>Prix de base <span id="prixSpan">6</span>€/nuit</h2>
                     <ul>
                         <li>
                             <div class="labelPrix">
@@ -79,9 +78,13 @@ $nom = $_SESSION["nom_bien"];
                         <textarea id="demande" maxlength="1000" placeholder="Votre demande"
                                   spellcheck="true" name="demande"></textarea>
                     </div>
+                    <div>
+                        <label for="devis">Upload votre devis</label>
+                        <input type="file" accept="application/pdf" name="devis" id="devis">
+                    </div>
                 </div>
                 <div id="service">
-                    <h2>Services complémentaires : (cocher les services que vous souhaitez)</h2>
+                    <h2>Services complémentaires :</h2>
                     <ul>
                         <li>
                             <div class="supplement first">
@@ -94,8 +97,7 @@ $nom = $_SESSION["nom_bien"];
                 </div>
             </div>
             <div id="total">
-                <h2> Total de la réservation : <span id="prixTotal">0</span>€</h2>
-                <button type="submit">Confirmer la réservation et demander un devis</button>
+                <button type="submit">Envoyer le devis</button>
             </div>
         </form>
     </section>
