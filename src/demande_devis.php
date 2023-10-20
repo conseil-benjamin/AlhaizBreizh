@@ -35,7 +35,7 @@ $nom = $_SESSION["nom_bien"];
         </h1>
     </section>
     <section id="corpsTexte">
-        <form method="post" action="submitDevis.php">
+        <form method="post" action="submitDemandeDevis.php">
             <div id="formulaire">
                 <div id="prixDiv">
                     <h2>Prix de base <span id="prixSpan">6</span>€/nuit</h2>
@@ -132,6 +132,6 @@ $nom = $_SESSION["nom_bien"];
     </div>
 </footer>
 </body>
-<script src="script/devis.js">
+<script src="js/devis.js">
     </html>
 
