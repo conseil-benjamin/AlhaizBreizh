@@ -113,7 +113,7 @@ session_start();
                                 ?>
                                 <p><?php
                                 if ($prenom_proprio==null) {
-                                    echo "Prénom";          
+                                    echo "Prénom ";          
                                 }
                                 else {
                                     echo $prenom_proprio;
@@ -192,7 +192,7 @@ session_start();
                                     }
                                     echo "</ul>";
                                 }
-?>
+                            ?>
 
                             <br>
                             <h2>
@@ -261,12 +261,8 @@ session_start();
                                     </div>
                                     <div class="arrivee_depart">
                                         <form class="date_resa" id="date_arri">
-                                            <label for="date_arrivee">Arrivée :</label>
+                                            <label for="date_arrivee">Nombre de nuit :</label>
                                             <input type="text" id="date_arrivee" name="date_arrivee">
-                                        </form>
-                                        <form class="date_resa">
-                                            <label for="date_depart">Départ :</label>
-                                            <input type="text" id="date_depart" name="date_depart">
                                         </form>
                                     </div>
                                     <div class="bouton_reserve">
@@ -277,9 +273,28 @@ session_start();
 
                                 <article class="contact">
                                     <div class="photo_profil_contact">
-                                        <img src="../../public/icons/user.svg" id="photo_profil" alt="photo de profil du propriétaire">
-                                        <div class="contact_nom_bouton">
-                                            <p>Prénom Nom</p>
+                                        <?php
+                                            if ($photo_profil_proprio==null) {
+                                                echo "<img src=\"../../public/icons/user.svg\" id=\"photo_profil\" alt=\"photo de profil du propriétaire\">";          
+                                            }
+                                            else {
+                                                echo $photo_profil_proprio;
+                                            }
+                                            ?>                                        <div class="contact_nom_bouton">
+                                            <p><?php
+                                            if ($prenom_proprio==null) {
+                                                echo "Prénom ";          
+                                            }
+                                            else {
+                                                echo $prenom_proprio;
+                                            }
+                                            if ($nom_proprio==null) {
+                                                echo "Nom";          
+                                            }
+                                            else {
+                                                echo $nom_proprio;
+                                            }
+                                            ?></p>
                                             <p><img src="../../public/icons/star_fill.svg" id="icone" alt="icone etoile"> Note</p>
                                             <div class="bouton_contact">
                                                 <a href="#">Contacter</a>
@@ -287,7 +302,16 @@ session_start();
                                         </div>
                                     </div>
                                     <br>
-                                    Langues parlées : 
+                                    Langues parlées :
+                                        <?php
+                                        //$liste_langue_parle = array("Français", "Anglais", "Espagnol"); 
+
+                                        if (empty($liste_langue_parle)|| $liste_langue_parle == null){
+                                            echo "non renseigné";
+                                        } else {
+                                            echo implode(', ', $liste_langue_parle);
+                                        }
+                                        ?>
                                 </article>
                             </div>
                         </section>
