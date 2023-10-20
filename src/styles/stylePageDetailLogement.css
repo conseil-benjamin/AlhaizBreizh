@@ -199,7 +199,11 @@ body{
 .date_resa{
     display: flex;
     flex-direction: column;
+    margin-right: 50px;
+}
 
+#date_arri{
+    margin-right: 5px;
 }
 
 .bouton_reserve{
@@ -241,7 +245,7 @@ form>input{
 .photo_profil_contact{
 display: flex;
 align-items: center;
-margin-left: 25%;}
+margin-left: 15%;}
 
 .commentaires{
     background: linear-gradient(to top, #D7F0FF, #FFFFFF);
