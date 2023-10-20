@@ -35,7 +35,7 @@ $nom = $_SESSION["nom_bien"];
         </h1>
     </section>
     <section id="corpsTexte">
-        <form method="post">
+        <form method="post" action="submitDevis.php">
             <div id="formulaire">
                 <div id="prixDiv">
                     <h2>Prix de base <span id="prixSpan">6</span>€/nuit</h2>
@@ -94,7 +94,7 @@ $nom = $_SESSION["nom_bien"];
                 </div>
             </div>
             <div id="total">
-                <h2> Total de la réservation : <span id="prixTotal"></span>€</h2>
+                <h2> Total de la réservation : <span id="prixTotal">0</span>€</h2>
                 <button type="submit">Confirmer la réservation et demander un devis</button>
             </div>
         </form>

@@ -1,6 +1,5 @@
 <?php
 ?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -34,10 +33,12 @@
             Réservation de "Superbe maison au bord de la plage"
         </h1>
     </section>
+    <section id="corpsTexte">
     <?php
     include("submitDevisDB.php");
-
     ?>
+        <h2> Votre devis à bien été envoyée</h2>
+    </section>
 </div>
 <footer id="footer">
     <img src="/public/icons/wave.svg">

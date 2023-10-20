@@ -2,22 +2,29 @@ const inputDateDepart = document.getElementById('depart')
 const inputDateArivee = document.getElementById('arrivee')
 const services = document.getElementsByClassName('supplement')
 const prixTotal = document.getElementById('prixTotal')
-const prixHTMLelem = document.getElementById('prixSpan')
-const prix = parseInt(prixHTMLelem.innerText,10)
-
-const today = new Date();
-// Format the date as YYYY-MM-DD
-const yyyy = today.getFullYear();
-const mm = (today.getMonth() + 1).toString().padStart(2, '0');
-const dd = today.getDate().toString().padStart(2, '0');
-const formattedDate = yyyy + '-' + mm + '-' + dd;
-
-inputDateArivee.min = formattedDate
-inputDateArivee.default = formattedDate
+const prixHTMLelement = document.getElementById('prixSpan')
+const nbpersonne = document.getElementById('nbpersonne')
+const PRIX = parseInt(prixHTMLelement.innerText,10)
 
 
-inputDateDepart.min = formattedDate
-inputDateDepart.default = formattedDate
+const DATE_MIN = new Date();
+const YYYY = DATE_MIN.getFullYear();
+const MM = (DATE_MIN.getMonth() + 1).toString().padStart(2, '0');
+const DD = (DATE_MIN.getDate()+5).toString().padStart(2, '0');
+const DATEFORMAT = YYYY + '-' + MM + '-' + DD;
+
+nbpersonne.addEventListener('change',()=> {
+    if (this.value > this.max) {
+        this.value = this.max
+    }
+})
+
+inputDateArivee.min = DATEFORMAT
+inputDateArivee.value = DATEFORMAT
+
+
+inputDateDepart.min = DATEFORMAT
+inputDateDepart.value = DATEFORMAT
 
 
 for (const service of services) {
@@ -39,6 +46,12 @@ inputDateArivee.addEventListener("change", function () {
 
 });
 
+/**
+ *  Compte le nombre de jours du séjour
+ * @param dateDepart la date de départ
+ * @param dateArriver la date d'arriver
+ * @returns {number} le nombre de jours entre les deux dates
+ */
 function compteJour(dateDepart,dateArriver) {
     const dateArr = new Date(dateArriver);
     const dateDep = new Date(dateDepart);
@@ -47,11 +60,20 @@ function compteJour(dateDepart,dateArriver) {
     return (differenceEnMillisecondes / (1000 * 60 * 60 * 24));
 }
 
+/**
+ * Met à jour le prix total estimé
+ * @param dateArriver
+ * @param dateDepart
+ */
 function updatePrix(dateArriver,dateDepart) {
     const nbjour = compteJour(dateArriver,dateDepart)
-    prixTotal.innerHTML =  ((nbjour*prix)+getTotalService()).toFixed(2).toString().replace('.', ',')
+    prixTotal.innerHTML =  ((nbjour*PRIX)+getTotalService()).toFixed(2).toString().replace('.', ',')
 }
 
+/**
+ * Revoie le prix total de tous les services seléctionnés
+ * @returns {number}
+ */
 function getTotalService() {
     let total = 0.0
     for (const service of services) {
