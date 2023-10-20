@@ -10,6 +10,11 @@
     height: 10%;
 }
 
+p{
+    margin-top: 10px;
+    margin-left: 15px;
+}
+
 #localisation_haut_page {
     display: flex;
     align-items: center;
@@ -76,7 +81,7 @@ body{
 .corps_offre{
     background-color: #515D5E;
     color: white;
-    padding: 8px;
+    padding: 25px;
     border-radius: 20px;
     width: 70%;
     min-height: 500px;
@@ -87,13 +92,22 @@ body{
     display: flex;
     color: black;
     flex-direction: row;
-    border-radius: 20px;
+    width: fit-content;
+    padding: 5%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-left: 5%;
+    align-items: center;
+    margin-top: 10px;
 }
 
 .infos_chambres{
     padding:20px;
     padding-top: 0;
+    
 }
+
+
 
 
 .chambre{
@@ -102,6 +116,7 @@ body{
     margin-bottom: 5%;
     padding: 5px;
     width: 50%;
+    min-width: fit-content;;
     background-color: #7EBCF2;
     color:black;
     display: flex;
@@ -122,7 +137,12 @@ body{
 
 .liste_corps{
     list-style: disc;
-    margin: 30px;
+    margin: 50px;
+    margin-top: 15px;
+}
+
+.liste_corps>li{
+    margin-top: 5px;
 }
 
 .div_corps{
@@ -134,13 +154,15 @@ body{
 
 .resa_colle{
     position: sticky;
-    top: 0px;
+    top: 75px;
 }
 
 .reserve_contact{
     display: flex;
     flex-direction: column;
     width:30%;
+    min-width: fit-content;
+    margin-left: 20px;
 }
 
 .reserve{
@@ -148,6 +170,7 @@ body{
     padding: 5px;
     border-radius: 15px;
     margin: 5px;
+    min-width: fit-content;
 
 }
 
@@ -195,6 +218,7 @@ body{
 form{
     margin: 5%;
     margin-bottom:0 ;
+    padding: 2%;
 }
 
 form>input{
@@ -202,6 +226,7 @@ form>input{
     border: 1px solid #000;
     width: 100px;
     height: 30px;
+    margin-right: 5px;
 }
 
 .bouton_contact{
@@ -210,12 +235,13 @@ form>input{
     text-align: center;
     border-radius: 20px;
     padding: 5px;
+    margin-top: 10px;
 }
 
 .photo_profil_contact{
 display: flex;
 align-items: center;
-}
+margin-left: 25%;}
 
 .commentaires{
     background: linear-gradient(to top, #D7F0FF, #FFFFFF);
@@ -233,10 +259,7 @@ footer{
     padding-top: 2%;
 }
 
-couleur{
-color:#16A1EF /*couleur5*/
-#65E3FF /*couleur4*/
-#7EBCF2 /*couleur3*/
-#D7F0FF /*couleur2*/
-#515D5E /*couleur1*/
+#photo_profil{
+    width: 50px;
 }
+
