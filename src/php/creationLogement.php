@@ -8,9 +8,7 @@
     <title>Creation Logement</title>
 </head>
 <body>
-    <?php
-        include './header.php';
-    ?>
+    <?php include './header.php'; ?>
     <h1>Création d’un nouveau logement</h1>
     <hr>
     <div class="container-main">
@@ -70,5 +68,6 @@
         </div>
         <button class="creerAnnonce" type="submit">Créer annonce</button>
     </div>
+    <?php include './footer.php'; ?>
 </body>
 </html>
