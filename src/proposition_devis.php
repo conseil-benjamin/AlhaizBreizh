@@ -133,6 +133,6 @@ $nom = $_SESSION["nom_bien"];
     </div>
 </footer>
 </body>
-<script src="script/proposition_devis.js">
+<script src="js/proposition_devis.js">
     </html>
 
