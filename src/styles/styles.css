@@ -3,6 +3,7 @@
 *{
     margin: 0;
     padding: 0;
+    scroll-padding-top: 75px;
 }
 
 body{
@@ -50,32 +51,32 @@ a:hover{
 /*Fonts*/
 @font-face {
     font-family: "NoirPro";
-    src: url("/fonts/NoirPro-Regular.woff2") format("woff2"),
-    url("/fonts/NoirPro-Regular.woff") format("woff");
+    src: url("../../fonts/NoirPro-Regular.woff2") format("woff2"),
+    url("../../fonts/NoirPro-Regular.woff") format("woff");
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: "NoirProLight";
-    src: url("/fonts/NoirPro-Light.woff2") format("woff2"),
-    url("/fonts/NoirPro-Light.woff") format("woff");
+    src: url("../../fonts/NoirPro-Light.woff2") format("woff2"),
+    url("../../fonts/NoirPro-Light.woff") format("woff");
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: "Montserrat";
-    src: url("/fonts/Montserrat-Regular.woff2") format("woff2"),
-    url("/fonts/Montserrat-Regular.woff") format("woff");
+    src: url("../../fonts/Montserrat-Regular.woff2") format("woff2"),
+    url("../../fonts/Montserrat-Regular.woff") format("woff");
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: "MontserratBold";
-    src: url("/fonts/Montserrat-Bold.woff2") format("woff2"),
-    url("/fonts/Montserrat-Bold.woff") format("woff");
+    src: url("../../fonts/Montserrat-Bold.woff2") format("woff2"),
+    url("../../fonts/Montserrat-Bold.woff") format("woff");
     font-weight: normal;
     font-style: normal;
 }
