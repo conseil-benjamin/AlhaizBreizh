@@ -2,33 +2,48 @@ body {
   margin-top: 10%;
   --main-bg-color: #515d5e;
   --color-btn-submit: #7ebcf2;
+  --main-font-color: #ffffff;
 }
 
 .container-main {
   display: flex;
   background-color: var(--main-bg-color);
   border-radius: 25px;
-  margin: 2em;
+  margin: 10em;
+  color: var(--main-font-color);
 }
 
 .container-left {
+  flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  margin: 0 2em 0 0;
+  margin: 1em 5em 1em 10em;
+  max-width: 40em;
 }
 
 .container-right {
-  margin: 0 0 0 2em;
+  align-items: flex-end;
+  justify-content: flex-end;
+  margin: 1em 5em 1em 5em;
+  max-width: 40em;
 }
 
-input {
+input,
+select,
+button {
   margin: 1em;
   border-radius: 5px;
   padding: 0.5em;
+  display: block;
 }
 
 label {
-  margin: 0.5em;
+  margin: 3em 0 0 1em;
+  display: block;
+}
+
+textarea {
+  border-radius: 15px;
 }
 
 h1 {
@@ -37,4 +52,31 @@ h1 {
 
 .creerAnnonce {
   background-color: var(--color-btn-submit);
+  height: 4em;
+}
+
+.conditionsGenerale {
+}
+
+.villeDiv {
+  display: flex;
+  flex-direction: row;
+}
+
+.nbChambreEtBainsDiv,
+.nbPrixEtPersonnesDiv,
+.typeLogementDiv {
+  display: flex;
+}
+
+.nbChambreEtBainsDiv,
+.nbPrixEtPersonnesDiv,
+.typeLogementDiv [type="number"] {
+  height: 5em;
+}
+
+hr {
+  width: 20%;
+  margin: auto;
+  border: 1.52px solid black;
 }
