@@ -2,7 +2,7 @@
 /*Header*/
 
 #header {
-    background-color: #7EBCF200;
+    background: #00000050;
     backdrop-filter: blur(5px);
     transition: all 0.5s ease;
 }
@@ -27,6 +27,43 @@
 #header.scrolled .logo{
     content: url(/public/logos/logo-grey.svg);
     filter: none;
+}
+
+/*Compte*/
+#header .compte{
+    filter: drop-shadow(1px 0px 5px rgba(0, 0, 0, 0.55));
+    background-color: #00000050;
+}
+
+#header .compte:hover{
+    filter: none;
+    background-color: #000000A0;
+}
+
+#header .compte-options{
+    background-color: #000000A0;
+}
+
+#header .compte-options li:hover{
+    background-color: #000000F0;
+}
+
+#header.scrolled .compte{
+    filter: none;
+    background-color: #515D5E;
+}
+
+#header.scrolled .compte:hover{
+    filter: none;
+    background-color: #394142;
+}
+
+#header.scrolled .compte-options{
+    background-color: #515D5E;
+}
+
+#header.scrolled .compte-options li:hover{
+    background-color: #394142;
 }
 
 /********************************************/

@@ -99,8 +99,10 @@ a:hover{
 #header {
     display: flex;
     flex-direction: row;
+    align-items: center;
     justify-content: stretch;
     background-color: #7EBCF2;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.75);
     height: 75px;
     width: 100%;
     position: fixed;
@@ -114,6 +116,8 @@ a:hover{
 /*Logo*/
 #header .logo{
     display: block;
+    height: 80%;
+    margin-left: 1em;
 }
 
 #header .logo img{
@@ -153,6 +157,7 @@ a:hover{
     background-color: #515D5E;
     color: #65E3FF;
     font-size: 20px;
+    transition: all .3s ease-in-out;
 }
 
 #header > .compte:hover{
@@ -176,7 +181,6 @@ a:hover{
 /*Options du compte*/
 #header div.compte{
     cursor: pointer;
-
 }
 
 #header .compte-options{
@@ -188,6 +192,11 @@ a:hover{
     text-align: center;
     background-color: #515D5E;
     color: #65E3FF;
+    transition: all .3s ease-in-out;
+}
+
+#header div.compte.shown > img:first-child{
+    rotate: -90deg;
 }
 
 #header .compte-options li{
