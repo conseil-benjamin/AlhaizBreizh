@@ -190,12 +190,13 @@ body{
     color: white;
     margin-top: 0;
     margin-right: 5px;
+    font-size: 1.5em;
 }
 
 .arrivee_depart{
     display: flex;
     flex-direction: row;
-    
+    justify-content: center;
 }
 
 .date_resa{
@@ -204,9 +205,6 @@ body{
     margin-right: 50px;
 }
 
-#date_arri{
-    margin-right: 5px;
-}
 
 .bouton_reserve{
     background-color: #515D5E;
@@ -230,7 +228,7 @@ form{
 form>input{
     border-radius: 10px;
     border: 1px solid #000;
-    width: 100px;
+    width: 150px;
     height: 30px;
     margin-right: 5px;
 }
