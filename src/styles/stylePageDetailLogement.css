@@ -187,7 +187,9 @@ body{
 }
 
 #prix{
-    color: red;
+    color: white;
+    margin-top: 0;
+    margin-right: 5px;
 }
 
 .arrivee_depart{
@@ -256,7 +258,7 @@ footer{
     background-color: #D7F0FF;
 }
 
-.comment{
+#comment{
     margin: 5%;
     margin-bottom:0;
     margin-top: 0;
@@ -267,3 +269,6 @@ footer{
     width: 50px;
 }
 
+.section_vide{
+    margin: 10px;
+}
