@@ -1,5 +1,5 @@
 <?php
-    if (file_exists($_SERVER['DOCUMENT_ROOT'].'/public/img/'.$_SESSION['id'].'.png')) {
+    if ((isset($_SESSION['id'])) && (file_exists($_SERVER['DOCUMENT_ROOT'].'/public/img/'.$_SESSION['id'].'.png'))) {
         $image = '/public/img/'.$_SESSION['id'].'.png';
     } else {
         $image = '/public/icons/user-blue.svg';
@@ -9,7 +9,7 @@
     <a href="/index.php" class="logo"><img src="/public/logos/logo-grey.svg"></a>
     <nav>
         <ul>
-            <li><a href="">Logements</a></li>
+            <li><a href="/index.php#logements">Logements</a></li>
             <li><a href="">Réservations</a></li>
             <li><a href="">Qui sommes-nous</a></li>
         </ul>
