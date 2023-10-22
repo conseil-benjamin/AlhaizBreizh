@@ -38,7 +38,7 @@ $nom = $_SESSION["nom_bien"];
         <form method="post" action="submitDemandeDevis.php">
             <div id="formulaire">
                 <div id="prixDiv">
-                    <h2>Prix de base <span id="prixSpan">6</span>€/nuit</h2>
+                    <h2>Prix de base <span id="prixSpan">6</span>€/nuit - <span id="nbNuit">7</span> nuit</h2>
                     <ul>
                         <li>
                             <div class="labelPrix">

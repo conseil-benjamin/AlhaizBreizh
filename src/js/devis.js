@@ -4,13 +4,22 @@ const services = document.getElementsByClassName('supplement')
 const prixTotal = document.getElementById('prixTotal')
 const prixHTMLelement = document.getElementById('prixSpan')
 const nbpersonne = document.getElementById('nbpersonne')
+const nbNuit = document.getElementById('nbNuit')
 const PRIX = parseInt(prixHTMLelement.innerText,10)
+
+
+function nbJourDansLeMois(annee, mois) {
+    const dernierJourDuMois = new Date(annee, mois, 0);
+    return dernierJourDuMois.getDate();
+}
 
 
 const DATE_MIN = new Date();
 const YYYY = DATE_MIN.getFullYear();
-const MM = (DATE_MIN.getMonth() + 1).toString().padStart(2, '0');
-const DD = (DATE_MIN.getDate()+5).toString().padStart(2, '0');
+const MM = (DATE_MIN.getMonth()+1).toString().padStart(2, '0');
+
+
+const DD = ((DATE_MIN.getDate()+5)%nbJourDansLeMois(YYYY,MM)).toString().padStart(2, '0');
 const DATEFORMAT = YYYY + '-' + MM + '-' + DD;
 
 nbpersonne.addEventListener('change',()=> {
