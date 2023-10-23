@@ -4,9 +4,9 @@ const services = document.getElementsByClassName('supplement')
 const prixTotal = document.getElementById('prixTotal')
 const prixHTMLelement = document.getElementById('prixSpan')
 const nbpersonne = document.getElementById('nbpersonne')
-const nbNuit = document.getElementById('nbNuit')
+const nbNuitHTMLelement = document.getElementById('nbNuit')
 const PRIX = parseInt(prixHTMLelement.innerText,10)
-const NBNUIT = parseInt(nbNuit.innerText, 10)
+const NBNUIT = parseInt(nbNuitHTMLelement.innerText, 10)
 
 function nbJourDansLeMois(annee, mois) {
     const dernierJourDuMois = new Date(annee, mois, 0);
@@ -19,14 +19,17 @@ const DATE_MIN = new Date();
 function formaterDate(decalage) {
     const YYYY = DATE_MIN.getFullYear();
     const MOIS_DATE = (DATE_MIN.getMonth() + 1).toString().padStart(2, '0');
-    const DECALAGEMOIS = 1 + Math.floor((DATE_MIN.getDate() + 5) / nbJourDansLeMois(YYYY, MOIS_DATE))
+    const JOUR = DATE_MIN.getDate() + decalage;
+    console.log(JOUR)
+    const DECALAGEMOIS = 1 + Math.floor(JOUR / nbJourDansLeMois(YYYY, MOIS_DATE))
     const MM = (DATE_MIN.getMonth() + DECALAGEMOIS).toString().padStart(2, '0');
-    const DD = ((DATE_MIN.getDate() + decalage) % nbJourDansLeMois(YYYY, MM)).toString().padStart(2, '0');
+    console.log(decalage)
+    const DD = (JOUR % nbJourDansLeMois(YYYY, MM)).toString().padStart(2, '0');
     return YYYY + '-' + MM + '-' + DD;
 }
 
 const DATEFORMAT_DEP = formaterDate(5);
-const DATEFORMAT_ARR = formaterDate(nbNuit + 5)
+const DATEFORMAT_ARR = formaterDate(NBNUIT + 5)
 
 nbpersonne.addEventListener('change',()=> {
     if (this.value > this.max) {
@@ -37,9 +40,8 @@ nbpersonne.addEventListener('change',()=> {
 inputDateArivee.min = DATEFORMAT_DEP
 inputDateArivee.value = DATEFORMAT_DEP
 
-
-inputDateDepart.min = DATEFORMAT
-inputDateDepart.value = DATEFORMAT
+inputDateDepart.min = DATEFORMAT_ARR
+inputDateDepart.value = DATEFORMAT_ARR
 
 
 for (const service of services) {

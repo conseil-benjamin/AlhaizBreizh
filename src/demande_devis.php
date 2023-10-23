@@ -1,5 +1,11 @@
 <?php
-$nom = $_SESSION["nom_bien"];
+if (isset($_SESSION)) {
+    $nom = $_SESSION["nom_bien"];
+    $nbNuit = $_SESSION["nbNuit"];
+} else {
+    $nom = "Superbe Maison au bord de la plage";
+    $nbNuit = "6";
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -31,14 +37,15 @@ $nom = $_SESSION["nom_bien"];
 <div id="fond">
     <section id="entete">
         <h1>
-            Réservation de "Superbe maison au bord de la plage"
+            Réservation de <?php echo $nom ?>
         </h1>
     </section>
     <section id="corpsTexte">
         <form method="post" action="submitDemandeDevis.php">
             <div id="formulaire">
                 <div id="prixDiv">
-                    <h2>Prix de base <span id="prixSpan">6</span>€/nuit - <span id="nbNuit">7</span> nuit</h2>
+                    <h2>Prix de base <span id="prixSpan">6</span>€/nuit - <span id="nbNuit"><?php echo $nbNuit ?></span>
+                        nuit</h2>
                     <ul>
                         <li>
                             <div class="labelPrix">

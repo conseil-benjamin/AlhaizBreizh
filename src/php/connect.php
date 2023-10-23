@@ -1,9 +1,9 @@
 <?php
-$server = 'servbdd.iutlan.etu.univ-rennes1.fr';
+$server = 'postgresdb';
 $driver = 'pgsql';
-$dbname = 'test';
-$user = 'test';
-$pass = 'test';
+$dbname = 'sae';
+$user = 'sae';
+$pass = 'Phiegoosequ9en9o';
 try {
 $dbh = new PDO("$driver:host=$server;dbname=$dbname",
     $user, $pass);
