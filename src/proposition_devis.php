@@ -85,7 +85,7 @@ $nom = $_SESSION["nom_bien"];
                             <input type="file" accept="application/pdf" name="devis" id="devis">
                         </div>
                         <div id="ficUpload">
-                            <button id="annulerFicUpload">Annuler</button>
+                            <button id="annulerFicUpload" type="button">Annuler</button>
                             <label id="ficUploadNom"></label></div>
                     </div>
                 </div>
