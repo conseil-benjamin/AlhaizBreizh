@@ -3,6 +3,7 @@ body {
   --main-bg-color: #515d5e;
   --color-btn-submit: #7ebcf2;
   --main-font-color: #ffffff;
+  --h1-font-color: #16a1ef;
 }
 
 .container-main {
@@ -11,21 +12,22 @@ body {
   border-radius: 25px;
   margin: 10em;
   color: var(--main-font-color);
+  flex-wrap: wrap;
 }
 
 .container-left {
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  margin: 1em 5em 1em 10em;
-  max-width: 40em;
+  margin: 1em 5em 1em 15em;
+  width: 40%;
 }
 
 .container-right {
   align-items: flex-end;
   justify-content: flex-end;
-  margin: 1em 5em 1em 5em;
-  max-width: 40em;
+  margin: 1em 0 0 0;
+  width: 40%;
 }
 
 input,
@@ -37,8 +39,12 @@ button {
   display: block;
 }
 
+#surface {
+  height: 1.3em;
+}
+
 label {
-  margin: 3em 0 0 1em;
+  margin: 2em 0 0 1em;
   display: block;
 }
 
@@ -48,21 +54,22 @@ textarea {
 
 h1 {
   text-align: center;
+  font-size: clamp(1rem, 2.5vw, 2rem);
+  color: #16a1ef;
 }
 
 .creerAnnonce {
   background-color: var(--color-btn-submit);
   height: 4em;
-}
-
-.conditionsGenerale {
+  cursor: pointer
+  ;
 }
 
 .villeDiv {
   display: flex;
   flex-direction: row;
 }
-
+  
 .nbChambreEtBainsDiv,
 .nbPrixEtPersonnesDiv,
 .typeLogementDiv {
@@ -72,11 +79,70 @@ h1 {
 .nbChambreEtBainsDiv,
 .nbPrixEtPersonnesDiv,
 .typeLogementDiv [type="number"] {
-  height: 5em;
+  height: 4em;
+}
+
+.nbChambreEtBainsDiv {
+  margin-bottom: 2em;
+}
+
+.nbPrixEtPersonnesDiv {
+  margin-bottom: 6em;
+  width: 27rem;
 }
 
 hr {
   width: 20%;
   margin: auto;
   border: 1.52px solid black;
+}
+
+.inputPlusIconeSupprimer {
+  display: flex;
+  flex-direction: row;
+  max-width: 100px;
+}
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  margin-top: 3em;
+  text-align: center;
+}
+
+.bottom > p {
+  margin: 0 0 2em 0;
+}
+
+.bottom > input[type="checkbox"] {
+  height: 30px;
+  width: 30px;
+}
+
+#iconSupprimer:hover {
+  cursor: pointer;
+}
+
+@media (max-width: 1250px) {
+  .container-main {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .container-left {
+    margin: 1em 5em 1em 5em;
+  }
+}
+
+@media (max-width: 830px) {
+  h1 {
+    margin: 10em 0 0 0;
+  }
+  .container-main {
+    margin: 3em;
+    min-width: 30rem;
+  }
 }

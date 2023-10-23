@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="/src/styles/styles.css">
-    <link rel="stylesheet" type="text/css" href="/src/styles/styleCreationLogement.css">
+    <link rel="stylesheet" type="text/css" href="../styles/styles.css">
+    <link rel="stylesheet" type="text/css" href="../styles/styleCreationLogement.css">
     <script src="../js/addInputElement.js"></script>
     <title>Creation Logement</title>
 </head>
@@ -19,9 +19,9 @@
             <label for="">Titre de l'annonce (*)</label>
             <input type="text" id="title" name="title" size="50">
             <label for="description">Description de l'annonce (*)</label>
-            <textarea name="description" id="description" cols="40" rows="20"></textarea>
+            <textarea name="description" id="description" cols="55" rows="20"></textarea>
             <label for="photos">Photos (*)</label>
-            <input type="file" id="photos" name="photos">
+            <input type="file" id="photos" name="photos" multiple>
             <div class="typeLogementDiv">
                 <div>
                     <label for="typeLogement">Type de logement (*)</label>
@@ -34,7 +34,7 @@
                 </div>
                 <div>
                     <label for="surface">Surface en m² (*)</label>
-                    <input type="number" id="surface" name="surface" size="10">
+                    <input type="number" id="surface" name="surface">
                 </div>
             </div>
             <div class="servicesElement">
@@ -67,10 +67,10 @@
                 </div>
             </div>
             <label for="accroche">Phrase d'accroche</label>
-            <textarea name="accroche" id="accroche" cols="50" rows="15"></textarea>
+            <textarea name="accroche" id="accroche" cols="55" rows="10"></textarea>
             <div class="nbChambreEtBainsDiv">
                 <div>
-                    <label for="nbChambres">Nombres de chambres (*)</label>
+                    <label for="nbChambres">Nombres de chambres (*)</label> 
                     <input type="number" id="nbChambres" name="nbChambres">
                 </div>
                 <div>
@@ -81,7 +81,7 @@
             <div class="nbPrixEtPersonnesDiv">
                 <div>
                     <label for="nbMaxPers">Nombre de personnes max (*)</label>
-                    <input type="number" id="nbMaxPers" name="nbMaxPers" size="50">
+                    <input type="number" id="nbMaxPers" name="nbMaxPers">
                 </div>
                 <div>
                     <label for="prixParNuit">Prix de base par nuit (*)</label>
@@ -91,23 +91,23 @@
 
             <div class="installationsElement">
                 <label for="installDispo">Installations disponibles</label>
-                <input type="number" id="installDispo" name="installDispo">
+                <input type="text" id="installDispo" name="installDispo">
             </div>
             <button class="addButton" id="btnInstallations" type="button">Ajouter installations disponibles</button>
             <div class="equipementsElement">
                 <label for="equipementDispo">Equipements disponibles</label>
-                <input type="number" id="equipementDispo" name="equipementDispo">
+                <input type="text" id="equipementDispo" name="equipementDispo">
             </div>
             <button class="addButton" id="btnAddEquipements" type="button">Ajouter Equipements disponibles</button>
             <button class="addChambre" id="btnAddChambre" type="button">Ajouter une chambre</button>
     </div>
     <div class="bottom">
     <p>Les champs marqués par (*) sont obligatoire</p>
-            <input type="checkbox" name="conditionsGenerale" id="conditionsGenerale">
             <span class="conditionsGenerale">J'ai lu et j'accepte les Conditions Générales d'Utilisation, la Politique des données personnelles et les Conditions Générales de Ventes d’Alhaiz Breizh (*)</label>
             </span>
+            <input type="checkbox" name="conditionsGenerale" id="conditionsGenerale">
             <label class="conditionsGenerale" for="conditionsGenerale">
-        <button class="creerAnnonce" type="submit">Créer annonce</button>
+        <button class="creerAnnonce" type="submit" id="creerAnnonce">Créer annonce</button>
     </div>
     </div>
 </body>
