@@ -249,7 +249,7 @@ VALUES
 INSERT INTO Client (firstName, lastName, mail, numeroTel, photoProfil, civilite, adressePostale, pseudoCompte, motDePasse, dateNaissance, notationMoyenne)
 VALUES
     ('Thierry', 'Richard', 'thierry.richard@email.com', '123456789', 'photo1.jpg', 'Monsieur', '123 Rue des lilas', 'gege', '1234', '15-01-2000', 4.5),
-    ('Jeanne', 'Robert', 'jeanne.robert@email.com', '987654321', 'photo2.jpg', 'Madame', '456 Avenue Charles de Gaule', 'jrob', '1234', '25-07-1998', 4.0);
+    ('Jeanne', 'Robert', 'jeanne.robert@email.com', '987654321', 'photo2.jpg', 'Madame', '456 Avenue Charles de Gaule', 'propro', '1234', '25-07-1998', 4.0);
 
 
 -- Insertion de données dans la table Message
@@ -289,7 +289,6 @@ VALUES
 -- Insertion de données dans la table Proprietaire
 INSERT INTO Proprietaire (idCompte, pieceIdentite, RIB, languesParlees, messageType)
 VALUES
-    (1, TRUE, '123456789', 'Français, Anglais', 'Message A'),
     (2, TRUE, '987654321', 'Espagnol, Français, Anglais', 'Message B');
 
 -- Insertion de données dans la table Localisation
@@ -301,7 +300,7 @@ VALUES
 -- Insertion de données dans la table Logement
 INSERT INTO Logement (surfaceHabitable, libelle, accroche, description, natureLogement, proprio, photoCouverture, LogementEnLigne, nbPersMax, nbChambres, nbLitsSimples, nbLitsDoubles, detailsLitsDispos, nbSalleDeBain)
 VALUES
-    (80.5, 'Appartement cozy', 'Un adorable appartement dans les bois', 'Cet appartement est parfait pour un weekend en amoureux.', 'appartement', 1, 'appartement.jpg', TRUE, 4, 2, 2, 1, '1 lit double, 2 lits simples', '1'),
+    (80.5, 'Appartement cozy', 'Un adorable appartement dans les bois', 'Cet appartement est parfait pour un weekend en amoureux.', 'appartement', 2, 'appartement.jpg', TRUE, 4, 2, 2, 1, '1 lit double, 2 lits simples', '1'),
     (100.2, 'Cave spacieuse', 'Au coeur de la ville', 'Profitez de la vie urbaine grâce à cette magnifique cave.', 'cave', 2, 'cave.jpg', TRUE, 3, 1, 2, 1, '2 lits simples', '2');
 
 -- Insertion de données dans la table Reservation
