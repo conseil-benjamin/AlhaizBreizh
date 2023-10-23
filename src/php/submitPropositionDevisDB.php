@@ -3,14 +3,8 @@ $id_client = $_SESSION['id_client'];
 
 print_r($_POST);
 
-
-$dateArr = new DateTime($_POST['date_arrivee']);
-$sqlDateArr = $dateArr->format('Y-m-d');
-$dateArr = new DateTime($_POST['date_depart']);
-$sqlDateArr = $dateArr->format('Y-m-d');
-$nb_personne = $_POST['nb_personne'];
-
-$num_devis = time();
+$dateDevis = new DateTime();
+$durreeAcceptation = 300;
 
 global $dbh;
 try {

@@ -1,5 +1,14 @@
 <?php
-$nom = $_SESSION["nom_bien"];
+
+if (isset($_SESSION)) {
+    $nomBien = $_SESSION["nom_bien"];
+} else {
+    $nomBien = "Superbe Maison à la plage";
+    $dateArrivee = "2023-10-19";
+    $dateDepart = "2023-10-19";
+    $nbPersonne = 10;
+    $demande = "Petit dejeuner au lit";
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -32,7 +41,7 @@ $nom = $_SESSION["nom_bien"];
 <div id="fond">
     <section id="entete">
         <h1>
-            Réservation de "Superbe maison au bord de la plage"
+            Réservation de "<?php echo $nomBien ?>"
         </h1>
     </section>
     <section id="corpsTexte">
@@ -48,7 +57,7 @@ $nom = $_SESSION["nom_bien"];
                             </div>
                             <div>
                                 <input class="input1" id="arrivee" name="date_arrivee"
-                                       type="date" value="2023-10-19" readonly>
+                                       type="date" value="<?php echo $dateArrivee ?>"" readonly>
                             </div>
                         </li>
                         <li>
@@ -59,7 +68,7 @@ $nom = $_SESSION["nom_bien"];
                             </div>
                             <div>
                                 <input class="input1" id="depart" name="date_depart" placeholder="JJ/MM/YYYY"
-                                       type="date" value="2023-10-19" readonly>
+                                       type="date" value="<?php echo $dateDepart ?>" readonly>
                             </div>
                         </li>
                         <li>
@@ -70,13 +79,14 @@ $nom = $_SESSION["nom_bien"];
                             </div>
                             <div>
                                 <input class="input1" id="nbpersonne" max="10" min="0" name="nb_personne"
-                                       placeholder="nbpersonne" type="number" value="10" readonly>
+                                       placeholder="nbpersonne" type="number" value="<?php echo $nbPersonne ?>"
+                                       readonly>
                             </div>
                         </li>
                     </ul>
                     <div>
                         <label for="demande">Autre demande (1000 caractères maximum)</label>
-                        <textarea id="demande" maxlength="1000" placeholder="Votre demande"
+                        <textarea id="demande" maxlength="1000" content="<?php echo $demande ?>"
                                   spellcheck="true" name="demande" readonly></textarea>
                     </div>
                     <div id="upload">
