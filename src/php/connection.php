@@ -19,7 +19,7 @@
                     <div class="form">
                         <div>
                             <label <?php if (isset($_GET['error']) && $_GET['error'] == 'id') echo 'class="error"' ?> for="identifiant">Identifiant</label>
-                            <input type="text" name="identifiant" id="identifiant" placeholder="Entrez votre identifiant" required>
+                            <input type="text" name="identifiant" id="identifiant" value="<?php if (isset($_GET['identifiant'])) echo $_GET['identifiant']; ?>" placeholder="Entrez votre identifiant"  required>
                         </div>
                         <div>
                             <label <?php if (isset($_GET['error']) && $_GET['error'] == 'mdp') echo 'class="error"' ?> for="mdp">Mot de passe</label>
