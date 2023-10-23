@@ -2,9 +2,11 @@
 if (isset($_SESSION)) {
     $nom = $_SESSION["nom_bien"];
     $nbNuit = $_SESSION["nbNuit"];
+    $prixNuit = $_SESSION["prixNuit"];
 } else {
     $nom = "Superbe Maison au bord de la plage";
     $nbNuit = "6";
+    $prixNuit = "6,8";
 }
 ?>
 <!DOCTYPE html>
@@ -44,7 +46,8 @@ if (isset($_SESSION)) {
         <form method="post" action="submitDemandeDevis.php">
             <div id="formulaire">
                 <div id="prixDiv">
-                    <h2>Prix de base <span id="prixSpan">6</span>€/nuit - <span id="nbNuit"><?php echo $nbNuit ?></span>
+                    <h2>Prix de base <span id="prixSpan"><?php echo $prixNuit ?></span>€/nuit - <span
+                                id="nbNuit"><?php echo $nbNuit ?></span>
                         nuit</h2>
                     <ul>
                         <li>
@@ -90,13 +93,28 @@ if (isset($_SESSION)) {
                 <div id="service">
                     <h2>Services complémentaires : (cocher les services que vous souhaitez)</h2>
                     <ul>
-                        <li>
-                            <div class="supplement first">
-                                <input id="checkBox1" type="checkbox" name="service1">
-                                <label for="checkBox1">Service 01</label>
-                                <p class="prix"><span>66,6</span>€</p>
+                        <?php
+                        $MAX = 6;
+                        for ($i = 1; $i <= $MAX; $i++) {
+                            if ($i === 1) {
+                                $classe = "supplement first";
+                            } else if ($i === $MAX) {
+                                $classe = "supplement last";
+                            } else {
+                                $classe = "supplement";
+                            }
+                            $id = 'checkBox' . $i;
+                            $name = 'service' . $i;
+                            echo "<li>
+                            <div class='$classe'>
+                                <input id='$id' type='checkbox' name='$name'>
+                                <label for='$id'>Service 01</label>
+                                <p class='prix''><span>66,6</span>€</p>
                             </div>
                         </li>
+                    ";
+                        }
+                        ?>
                     </ul>
                 </div>
             </div>

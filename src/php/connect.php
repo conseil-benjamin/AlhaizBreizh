@@ -1,4 +1,5 @@
 <?php
+// Fichier PHP pour se connecter à la base de données
 $server = 'postgresdb';
 $driver = 'pgsql';
 $dbname = 'sae';

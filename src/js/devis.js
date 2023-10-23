@@ -5,7 +5,7 @@ const prixTotal = document.getElementById('prixTotal')
 const prixHTMLelement = document.getElementById('prixSpan')
 const nbpersonne = document.getElementById('nbpersonne')
 const nbNuitHTMLelement = document.getElementById('nbNuit')
-const PRIX = parseInt(prixHTMLelement.innerText,10)
+const PRIX = parseFloat(prixHTMLelement.innerText.replace(",", "."))
 const NBNUIT = parseInt(nbNuitHTMLelement.innerText, 10)
 
 function nbJourDansLeMois(annee, mois) {

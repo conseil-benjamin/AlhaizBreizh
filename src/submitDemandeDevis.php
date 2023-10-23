@@ -1,4 +1,7 @@
 <?php
+unset($_SESSION["prixNuit"]);
+unset($_SESSION["nbNuit"]);
+unset($_SESSION["nomBien"]);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -37,7 +40,7 @@
     <?php
     include("php/submitDevisDB.php");
     ?>
-        <h2> Votre devis à bien été envoyée</h2>
+        <h2> Votre devis a bien été envoyé</h2>
     </section>
 </div>
 <footer id="footer">

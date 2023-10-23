@@ -13,7 +13,7 @@ section#entete {
     justify-content: center;
 }
 
-section#entete>h1 {
+section#entete > h1 {
 
     font-family: 'Montserrat', serif;
     font-style: normal;
@@ -32,7 +32,7 @@ h2 {
 
 #corpsTexte {
     margin: 0 2vw;
-    padding:5vh 1vw ;
+    padding: 5vh 1vw;
     background: #515D5E;
     border-radius: 20px;
     display: flex;
@@ -45,7 +45,6 @@ h2 {
 }
 
 .input1 {
-
     background: #FFFFFF;
     border-radius: 10px;
     width: 7vw;
@@ -61,24 +60,25 @@ h2 {
 }
 
 #service {
-    margin-right: 2vw ;
+    margin-right: 2vw;
+    width: 100%;
 }
 
 #service > ul {
-    margin-top:3vh ;
+    margin-top: 3vh;
 }
 
 #prixDiv > h2 {
     margin: 10px;
 }
 
-#prixDiv > ul  {
+#prixDiv > ul {
     display: flex;
     flex-direction: column;
     width: 50vw;
 }
 
-#prixDiv >ul >li {
+#prixDiv > ul > li {
     margin-top: 2vh;
     display: flex;
     flex-direction: row;
@@ -86,7 +86,7 @@ h2 {
     height: 7vh;
 }
 
-#prixDiv >ul >li > div {
+#prixDiv > ul > li > div {
     width: 50%;
     align-items: center;
     display: flex;
@@ -95,12 +95,12 @@ h2 {
 .labelPrix {
     justify-content: end;
 
-    margin-right: 20px ;
+    margin-right: 20px;
 }
 
-#prixDiv >ul >li label {
+#prixDiv > ul > li label {
     color: #FFFFFF;
-    font-family:'Montserrat', serif;
+    font-family: 'Montserrat', serif;
 }
 
 #prixDiv > div {
@@ -109,9 +109,9 @@ h2 {
     margin-top: 8vh;
 }
 
-#prixDiv > div > label {
+#prixDiv > div label {
     color: #FFFFFF;
-    font-family:'Montserrat', serif;
+    font-family: 'Montserrat', serif;
     font-weight: bold;
     margin: 10px;
 }
@@ -130,6 +130,7 @@ h2 {
     color: rgba(0, 0, 0, 0.45);
     padding: 10px;
     border-style: none;
+    min-height: 75px;
 }
 
 textarea:focus {
@@ -147,7 +148,7 @@ textarea:invalid {
     justify-content: space-around;
     align-items: center;
     height: 25vh;
-    margin-top:10vh ;
+    margin-top: 10vh;
 }
 
 button {
@@ -164,7 +165,7 @@ button {
 .supplement {
     display: flex;
     justify-content: space-between;
-    background-color: #7EBCF2 ;
+    background-color: #7EBCF2;
     padding: 10px;
 }
 
