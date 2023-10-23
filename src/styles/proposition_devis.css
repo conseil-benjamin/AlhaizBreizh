@@ -9,15 +9,26 @@ input[type='file'] {
     color: black !important;
 }
 
-#upload:hover {
+#upload:hover, #devisLabel:hover {
     cursor: pointer;
 }
 
 #upload {
     height: 8vh;
-    width: 10vw;
-
     background: #7EBCF2;
     border-radius: 20px;
+    width: max-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
+#ficUpload {
+    display: none;
+}
+
+#annulerFicUpload {
+    background: transparent;
+    width: auto;
+    height: auto;
 }

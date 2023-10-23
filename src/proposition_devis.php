@@ -80,19 +80,40 @@ $nom = $_SESSION["nom_bien"];
                                   spellcheck="true" name="demande" readonly></textarea>
                     </div>
                     <div id="upload">
-                        <label for="devis" id="devisLabel">Upload votre devis</label>
-                        <input type="file" accept="application/pdf" name="devis" id="devis">
+                        <div id="uploadInput">
+                            <label for="devis" id="devisLabel">Upload votre devis</label>
+                            <input type="file" accept="application/pdf" name="devis" id="devis">
+                        </div>
+                        <div id="ficUpload">
+                            <button id="annulerFicUpload">Annuler</button>
+                            <label id="ficUploadNom"></label></div>
                     </div>
                 </div>
                 <div id="service">
                     <h2>Services complémentaires :</h2>
                     <ul>
-                        <li>
-                            <div class="supplement first">
-                                <label for="checkBox1">Service 01</label>
-                                <p class="prix"><span>66,6</span>€</p>
+                        <?php
+                        $MAX = 6;
+                        for ($i = 1; $i <= $MAX; $i++) {
+                            if ($i === 1) {
+                                $classe = "supplement first";
+                            } else if ($i === $MAX) {
+                                $classe = "supplement last";
+                            } else {
+                                $classe = "supplement";
+                            }
+                            $id = 'checkBox' . $i;
+                            $name = 'service' . $i;
+                            echo "<li>
+                            <div class='$classe'>
+                                <input id='$id' type='checkbox' name='$name'>
+                                <label for='$id'>Service 01</label>
+                                <p class='prix''><span>66,6</span>€</p>
                             </div>
                         </li>
+                    ";
+                        }
+                        ?>
                     </ul>
                 </div>
             </div>
@@ -134,6 +155,6 @@ $nom = $_SESSION["nom_bien"];
     </div>
 </footer>
 </body>
-<script src="js/proposition_devis.js">
-    </html>
+<script src="js/proposition_devis.js"></script>
+</html>
 
