@@ -255,9 +255,9 @@ VALUES
 -- Insertion de données dans la table Message
 INSERT INTO Message (destinataire, expediteur, dateExpedition, contenu)
 VALUES
-    (1, 2, '15-10-2023', 'Bonjour, je viens pour une réservation...'),
-    (2, 1, '16-10-2023', 'Bonsoir, j''adore votre cave'),
-    (1, 2, '16-10-2023', 'Merci !...');
+    (1, 2, '2023-10-15', 'Bonjour, je viens pour une réservation...'),
+    (2, 1, '2023-10-16', 'Bonsoir, j''adore votre cave'),
+    (1, 2, '2023-10-16', 'Merci !...');
 
 -- Insertion de données dans la table Conversation
 INSERT INTO Conversation (titreConversation)
@@ -312,8 +312,8 @@ VALUES
 -- Insertion de données dans la table Devis
 INSERT INTO Devis (nbPersonnes, numReservation, numLogement, dateDebut, dateFin, dateDevis, dateValid, optionAnnulation, dureeDelaisAcceptation)
 VALUES
-    (2, 1, 1, '2023-11-01', '07-11-2023', '15-10-2023', '20-10-2023', 'Stricte', 48),
-    (3, 2, 2, '2023-11-05', '10-11-2023', '16-10-2023', '22-10-2023', 'Flexible', 72);
+    (2, 1, 1, '2023-11-01', '2023-11-07', '2023-10-15', '2023-10-20', 'Stricte', 48),
+    (3, 2, 2, '2023-11-05', '2023-11-10', '2023-10-16', '2023-10-22', 'Flexible', 72);
     
 -- Insertion de données dans la table Calendrier
 INSERT INTO Calendrier (statutDispo, dureeMinLoc, delaisEntreResArrivee, contrainteArriveeDepart, numLogement)
@@ -324,8 +324,8 @@ VALUES
 -- Insertion de données dans la table PlageDeDisponibilite
 INSERT INTO PlageDeDisponibilite (numCal, dateDebutPlage, dateFinPlage, tarifJournalier)
 VALUES
-    (1, '01-11-2023', '2023-11-07', 100),
-    (2, '05-11-2023', '2023-11-10', 120);
+    (1, '2023-11-01', '2023-11-07', 100),
+    (2, '2023-11-05', '2023-11-10', 120);
 
 -- Insertion de données dans la table Favoris
 INSERT INTO FavorisClient (idCompte, numLogement)
