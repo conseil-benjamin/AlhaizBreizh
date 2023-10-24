@@ -20,23 +20,35 @@ body {
   align-items: flex-start;
   justify-content: flex-start;
   margin: 1em 5em 1em 15em;
-  width: 40%;
+  width: 35%;
 }
 
 .container-right {
   align-items: flex-end;
   justify-content: flex-end;
   margin: 1em 0 0 0;
-  width: 40%;
+  width: 35%;
 }
 
 input,
-select,
-button {
+select{
   margin: 1em;
   border-radius: 5px;
-  padding: 0.5em;
+  padding: 0.8em;
   display: block;
+}
+
+button{
+  margin: 1em;
+  border-radius: 45px;
+  padding: 0.8em;
+  display: block;
+  cursor: pointer;
+}
+
+button:hover{
+  background-color: #7ebcf2;
+  transition: 0.7s;
 }
 
 #surface {
@@ -49,7 +61,9 @@ label {
 }
 
 textarea {
+  margin-left: 1em;
   border-radius: 15px;
+  padding: 1em;
 }
 
 h1 {
@@ -61,8 +75,7 @@ h1 {
 .creerAnnonce {
   background-color: var(--color-btn-submit);
   height: 4em;
-  cursor: pointer
-  ;
+  cursor: pointer;
 }
 
 .villeDiv {
@@ -80,6 +93,10 @@ h1 {
 .nbPrixEtPersonnesDiv,
 .typeLogementDiv [type="number"] {
   height: 4em;
+}
+
+#typeLogement{
+  width: 220px;
 }
 
 .nbChambreEtBainsDiv {
@@ -100,7 +117,7 @@ hr {
 .inputPlusIconeSupprimer {
   display: flex;
   flex-direction: row;
-  max-width: 100px;
+  max-width: 25rem;
 }
 
 .bottom {
@@ -120,10 +137,19 @@ hr {
 .bottom > input[type="checkbox"] {
   height: 30px;
   width: 30px;
+  cursor: pointer;
 }
 
 #iconSupprimer:hover {
   cursor: pointer;
+}
+
+#lits{
+  width: 20rem;
+}
+
+.testValeurInputAnnonce{
+  color: red;
 }
 
 @media (max-width: 1250px) {
