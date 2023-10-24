@@ -11,7 +11,7 @@
         <ul>
             <li><a href="/index.php#logements">Logements</a></li>
             <li><a href="">Réservations</a></li>
-            <li><a href="">Qui sommes-nous</a></li>
+            <li><a href="">À propos</a></li>
         </ul>
     </nav>
     <?php
@@ -39,7 +39,6 @@
             </div> <?php
         } else { ?>
             <a href="/src/php/connection.php" class="compte">
-                <img src="/public/icons/arrow-blue.svg">
                 <p>Se connecter</p>
                 <img src="/public/icons/user-blue.svg">
             </a> <?php
