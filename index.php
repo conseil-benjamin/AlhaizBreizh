@@ -1,7 +1,7 @@
 <?php 
     session_start(); 
     //Connection à la base de donnée
-    $pdo = new PDO("pgsql:host=localhost;port=5432;dbname=postgres;user=postgres;password=root");
+    $pdo = new PDO("pgsql:host=postgresdb;port=5432;dbname=sae;user=sae;password=Phiegoosequ9en9o");
     $stmt = $pdo->prepare("SELECT * FROM ldc.Logement");
 
     //Recherche des logements dans la base de données
