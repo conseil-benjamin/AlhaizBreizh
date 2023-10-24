@@ -1,16 +1,21 @@
 <?php 
     session_start(); 
     //Connection à la base de donnée
-    $pdo = new PDO("pgsql:host=localhost;port=5432;dbname=postgres;user=postgres;password=root");
-    $stmt = $pdo->prepare("SELECT * FROM ldc.Logement");
+    try{
+        $pdo = new PDO("pgsql:host=localhost;port=5432;dbname=postgres;user=postgres;password=root");
+        $stmt = $pdo->prepare("SELECT * FROM ldc.Logement");
 
-    //Recherche des logements dans la base de données
-    $stmt->execute();
-    $logements = array();
-    while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-        $logements[] = $row;
+        //Recherche des logements dans la base de données
+        $stmt->execute();
+        $logements = array();
+        while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+            $logements[] = $row;
+        }
+        $pdo = null;
+    } catch (PDOException $e) {
+        $logements = array();
     }
-    $pdo = null;
+    
 ?>
 <!DOCTYPE html>
 <html lang="fr-fr">
