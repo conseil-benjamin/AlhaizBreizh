@@ -1,4 +1,17 @@
-<?php session_start(); ?>
+<?php 
+    session_start(); 
+    //Connection à la base de donnée
+    $pdo = new PDO("pgsql:host=localhost;port=5432;dbname=postgres;user=postgres;password=root");
+    $stmt = $pdo->prepare("SELECT * FROM ldc.Logement");
+
+    //Recherche des logements dans la base de données
+    $stmt->execute();
+    $logements = array();
+    while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+        $logements[] = $row;
+    }
+    $pdo = null;
+?>
 <!DOCTYPE html>
 <html lang="fr-fr">
     <head>
@@ -24,23 +37,23 @@
                 <?php
                 /*Créations de carte pour chaque logements*/
                 $dir = './public/img/logements';
-                $folders = array_diff(scandir($dir), array('..', '.'));
 
-                if ($folders == null) { ?>
+                if (count($logements) === 0) { ?>
                     <h2>Aucun logement n'est disponible pour le moment :/</h2> <?php
                 }
 
-                foreach ($folders as $folder) {
-                    $img = $dir . '/' . $folder . '/1.png'; ?>
+                foreach ($logements as $logement) {
+                    $lien = '/src/php/PageDetailLogement?numLogement=' . $logement[0];
+                    $img = $dir . '/' . $logement[0] . '/1.png'; ?>
 
                     <div class="logement">
-                        <a href=""><img src="<?php echo $img ?>"></a>
-                        <button type="button"><img src="/public/icons/heart.svg"></button>
-                        <a href=""><div>
-                            <h3>Maison à Plestin les grèves</h3>
-                            <div id="rating">4.9<img src="/public/icons/star_fill.svg"></div>
-                            <div><img src="/public/icons/nb_personnes.svg">6 personnes</div>
-                            <div><strong>999€</strong> / nuit</div>
+                        <a href="<?php echo $lien ?>"><img src="<?php echo $img ?>"></a> <!-- Image du logement -->
+                        <button type="button"><img src="/public/icons/heart.svg"></button> <!-- Coeur pour liker -->
+                        <a href="<?php echo $lien ?>"><div> 
+                            <h3><?php echo $logement[2] ?></h3> <!-- Titre du logement -->
+                            <div id="rating">4.9<img src="/public/icons/star_fill.svg"></div> <!-- Notation -->
+                            <div><img src="/public/icons/nb_personnes.svg"><?php echo $logement[9] ?> personnes</div> <!-- Nombre de personnes -->
+                            <div><strong><?php echo $logement[15] ?>€</strong> / nuit</div> <!-- Prix du logement -->
                         </div></a>
                     </div> <?php
                 }
