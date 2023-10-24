@@ -15,7 +15,6 @@
     } catch (PDOException $e) {
         $logements = array();
     }
-    
 ?>
 <!DOCTYPE html>
 <html lang="fr-fr">
@@ -41,29 +40,44 @@
             <div>
                 <?php
                 /*Créations de carte pour chaque logements*/
-                $dir = './public/img/logements';
 
                 if (count($logements) === 0) { ?>
                     <h2>Aucun logement n'est disponible pour le moment :/</h2> <?php
-                }
+                } else{
+                    $dir = './public/img/logements';
+                    $logements = array_reverse($logements); //Obtenir les derniers logements ajoutés en premier
 
-                foreach ($logements as $logement) {
-                    $lien = '/src/php/PageDetailLogement?numLogement=' . $logement[0];
-                    $img = $dir . '/' . $logement[0] . '/1.png'; ?>
+                    $pdo = new PDO("pgsql:host=localhost;port=5432;dbname=postgres;user=postgres;password=root");
+                    $stmt = $pdo->prepare("SELECT numLogement,ville FROM ldc.Localisation");
 
-                    <div class="logement">
-                        <a href="<?php echo $lien ?>"><img src="<?php echo $img ?>"></a> <!-- Image du logement -->
-                        <button type="button"><img src="/public/icons/heart.svg"></button> <!-- Coeur pour liker -->
-                        <a href="<?php echo $lien ?>"><div> 
-                            <h3><?php echo $logement[2] ?></h3> <!-- Titre du logement -->
-                            <div id="rating">4.9<img src="/public/icons/star_fill.svg"></div> <!-- Notation -->
-                            <div><img src="/public/icons/nb_personnes.svg"><?php echo $logement[9] ?> personnes</div> <!-- Nombre de personnes -->
-                            <div><strong><?php echo $logement[15] ?>€</strong> / nuit</div> <!-- Prix du logement -->
-                        </div></a>
-                    </div> <?php
-                }
+                    //Recherche des localisations dans la base de données
+                    $stmt->execute();
+                    $localisations = array();
+                    while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+                        $localisations[] = $row;
+                    }
+                    $pdo = null;
 
-                ?>
+                    foreach ($logements as $logement) {
+                        $lien = '/src/php/PageDetailLogement?numLogement=' . $logement[0];
+                        $localisation = $localisations[$logement[0] - 1][1];
+                        $img = $dir . '/' . $logement[0] . '/1.png'; ?>
+    
+                        <div class="logement">
+                            <a href="<?php echo $lien ?>"><img src="<?php echo $img ?>"></a> <!-- Image du logement -->
+                            <div>
+                                <div id="rating"><img src="/public/icons/star_fill.svg">4.9</div> <!-- Notation -->
+                                <button type="button"><img src="/public/icons/heart_white.svg"></button> <!-- Coeur pour liker -->
+                            </div>   
+                            <a id="description" href="<?php echo $lien ?>"><div> 
+                                <h3><?php echo $logement[2] ?></h3> <!-- Titre du logement -->
+                                <div><img src="/public/icons/nb_personnes.svg"><?php echo $logement[9] ?> personnes</div> <!-- Nombre de personnes -->
+                                <div><img src="/public/icons/map.svg"><?php echo $localisation ?></div> <!-- Localisation -->
+                                <div><strong><?php echo $logement[15] ?>€</strong> / nuit</div> <!-- Prix du logement -->
+                            </div></a>
+                        </div> <?php
+                    } 
+                } ?>
             </div> 
         </div>   
         <?php include './src/php/footer.php'; ?>

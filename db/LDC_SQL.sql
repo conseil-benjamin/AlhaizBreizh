@@ -295,8 +295,8 @@ VALUES
 -- Insertion de données dans la table Localisation
 INSERT INTO Localisation (numLogement, gps, rue, cp, ville)
 VALUES
-    (1, '546498', '123 Rue des Roses', '12345', 'Ville A'),
-    (2, '489445', '456 Avenue des Soldats', '67890', 'Ville B');
+    (1, '546498', '123 Rue des Roses', '22310', 'Plestin-les-Grèves'),
+    (2, '489445', '456 Avenue des Soldats', '29000', 'Quimper');
     
 -- Insertion de données dans la table Logement
 INSERT INTO Logement (surfaceHabitable, libelle, accroche, description, natureLogement, proprio, photoCouverture, LogementEnLigne, nbPersMax, nbChambres, nbLitsSimples, nbLitsDoubles, detailsLitsDispos, nbSalleDeBain, tarifNuitees)
