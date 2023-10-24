@@ -83,7 +83,8 @@ CREATE TABLE Logement (
     nbLitsSimples INTEGER,
     nbLitsDoubles INTEGER,
     detailsLitsDispos VARCHAR(100),
-    nbSalleDeBain INTEGER
+    nbSalleDeBain INTEGER,
+    tarifNuitees DOUBLE PRECISION
 );
 
 -- Table PhotosComplementairesLogement
@@ -298,10 +299,10 @@ VALUES
     (2, '489445', '456 Avenue des Soldats', '67890', 'Ville B');
     
 -- Insertion de données dans la table Logement
-INSERT INTO Logement (surfaceHabitable, libelle, accroche, description, natureLogement, proprio, photoCouverture, LogementEnLigne, nbPersMax, nbChambres, nbLitsSimples, nbLitsDoubles, detailsLitsDispos, nbSalleDeBain)
+INSERT INTO Logement (surfaceHabitable, libelle, accroche, description, natureLogement, proprio, photoCouverture, LogementEnLigne, nbPersMax, nbChambres, nbLitsSimples, nbLitsDoubles, detailsLitsDispos, nbSalleDeBain, tarifNuitees)
 VALUES
-    (80.5, 'Appartement cozy', 'Un adorable appartement dans les bois', 'Cet appartement est parfait pour un weekend en amoureux.', 'appartement', 2, 'appartement.jpg', TRUE, 4, 2, 2, 1, '1 lit double, 2 lits simples', '1'),
-    (100.2, 'Cave spacieuse', 'Au coeur de la ville', 'Profitez de la vie urbaine grâce à cette magnifique cave.', 'cave', 2, 'cave.jpg', TRUE, 3, 1, 2, 1, '2 lits simples', '2');
+    (80.5, 'Maison cozy', 'Une adorable maison dans la campagne', 'Cett maison est parfaite pour un weekend en amoureux.', 'maison', 2, 'maison.jpg', TRUE, 4, 2, 2, 1, '1 lit double, 2 lits simples', 1, 150.0),
+    (100.2, 'Cave spacieuse', 'Au cœur de la ville', 'Profitez de la vie urbaine grâce à cette magnifique cave.', 'cave', 2, 'cave.jpg', TRUE, 3, 1, 2, 1, '2 lits simples', 2, 120.0);
 
 -- Insertion de données dans la table Reservation
 INSERT INTO Reservation (numClient, numLogement, dateReservation, nbPersonnes, dateDebut, dateFin, dateDevis, nbJours, optionAnnulation)
