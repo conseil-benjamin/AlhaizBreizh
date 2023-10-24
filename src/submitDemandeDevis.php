@@ -38,9 +38,9 @@ unset($_SESSION["nomBien"]);
     </section>
     <section id="corpsTexte">
     <?php
-    include("php/submitDevisDB.php");
+    //include("php/submitDevisDB.php");
     ?>
-        <h2> Votre devis a bien été envoyé</h2>
+        <h2 id="succesDevis"> Votre devis a bien été envoyé</h2>
     </section>
 </div>
 <footer id="footer">

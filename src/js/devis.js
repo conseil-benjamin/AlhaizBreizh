@@ -14,15 +14,21 @@ function nbJourDansLeMois(annee, mois) {
 }
 
 
-const DATE_MIN = new Date();
+const AUJ = new Date();
 
+
+/**
+ * Permet de formater une date afin de l'utiliser comme valeur par default pour un input date
+ * @param decalage le nombre de jours de decalage avec la date d'aujourd'hui
+ * @returns {string} la date formatter
+ */
 function formaterDate(decalage) {
-    const YYYY = DATE_MIN.getFullYear();
-    const MOIS_DATE = (DATE_MIN.getMonth() + 1).toString().padStart(2, '0');
-    const JOUR = DATE_MIN.getDate() + decalage;
+    const YYYY = AUJ.getFullYear();
+    const MOIS_DATE = (AUJ.getMonth() + 1).toString().padStart(2, '0');
+    const JOUR = AUJ.getDate() + decalage;
     console.log(JOUR)
     const DECALAGEMOIS = 1 + Math.floor(JOUR / nbJourDansLeMois(YYYY, MOIS_DATE))
-    const MM = (DATE_MIN.getMonth() + DECALAGEMOIS).toString().padStart(2, '0');
+    const MM = (AUJ.getMonth() + DECALAGEMOIS).toString().padStart(2, '0');
     console.log(decalage)
     const DD = (JOUR % nbJourDansLeMois(YYYY, MM)).toString().padStart(2, '0');
     return YYYY + '-' + MM + '-' + DD;
@@ -44,6 +50,15 @@ inputDateDepart.min = DATEFORMAT_ARR
 inputDateDepart.value = DATEFORMAT_ARR
 
 
+function updateNBNuit() {
+    const dateInput1 = new Date(inputDateArivee.value);
+    const dateInput2 = new Date(inputDateDepart.value);
+    const timeDifference = Math.abs(dateInput1 - dateInput2);
+    const daysDifference = timeDifference / (1000 * 3600 * 24);
+    nbNuitHTMLelement.innerText = daysDifference.toString();
+
+}
+
 for (const service of services) {
     service.children[0].addEventListener("change",function () {
         updatePrix(inputDateDepart.value,inputDateArivee.value);
@@ -54,13 +69,14 @@ inputDateDepart.addEventListener("change", function () {
     const dateDepart = this.value;
     const dateArrivee = inputDateArivee.value
     updatePrix(dateDepart,dateArrivee)
+    updateNBNuit()
 });
 
 inputDateArivee.addEventListener("change", function () {
     const dateArrivee = this.value;
     const dateDepart = inputDateDepart.value
     updatePrix(dateDepart,dateArrivee)
-
+    updateNBNuit()
 });
 
 /**
@@ -73,7 +89,7 @@ function compteJour(dateDepart,dateArriver) {
     const dateArr = new Date(dateArriver);
     const dateDep = new Date(dateDepart);
 
-    const differenceEnMillisecondes =  dateDep-dateArr;
+    const differenceEnMillisecondes =  (dateDep-dateArr)-1;
     return (differenceEnMillisecondes / (1000 * 60 * 60 * 24));
 }
 
@@ -100,3 +116,5 @@ function getTotalService() {
     }
     return total
 }
+
+updatePrix(inputDateDepart.value,inputDateArivee.value)

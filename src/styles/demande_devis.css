@@ -44,6 +44,10 @@ h2 {
     flex-direction: row;
 }
 
+#succesDevis {
+    text-align: center;
+}
+
 .input1 {
     background: #FFFFFF;
     border-radius: 10px;

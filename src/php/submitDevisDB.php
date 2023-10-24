@@ -1,26 +1,50 @@
 <?php
-$id_client = $_SESSION['id_client'];
 
-print_r($_POST);
+// Verifie que la session est bien initialisée
+if(isset($_SESSION)) {
+    $id_client = $_SESSION['id_client'];
+    $numLogement = $_SESSION['num_logement'];
+}
+else {
+    $id_client = 1;
+    $numLogement = 1;
+}
+
+// Verifie si le formulaire est bien soumis
+if (isset($_POST)) {
+    $dateArr = new DateTime($_POST['date_arrivee']);
+    $sqlDateArr = $dateArr->format('Y-m-d');
+    $dateDep = new DateTime($_POST['date_depart']);
+    $sqlDateDep = $dateDep->format('Y-m-d');
+    $nb_personne = $_POST['nb_personne'];
+}
+else {
+    $sqlDateArr = new DateTime("2023-10-24");
+    $sqlDateArr = $sqlDateArr->format('Y-m-d');
+    $sqlDateDep = new DateTime("2023-10-24");
+    $sqlDateDep = $sqlDateDep->format('Y-m-d');
+    $nb_personne = 0;
+
+}
 
 
-$dateArr = new DateTime($_POST['date_arrivee']);
-$sqlDateArr = $dateArr->format('Y-m-d');
-$dateArr = new DateTime($_POST['date_depart']);
-$sqlDateArr = $dateArr->format('Y-m-d');
-$nb_personne = $_POST['nb_personne'];
+$numReservation = time();
 
-$num_devis = time();
+$optionAnnulation = "";
+$dateValid = "";
+
+$EPOCH ="2000-01-01";
 
 global $dbh;
 try {
     include('connect.php');
     $stmt = $dbh->prepare(
-        "SELECT tarifNuitees FROM Tarification"
+        "INSERT INTO ldc.Devis (nbPersonnes, numReservation, numLogement, dateDebut, dateFin, dateDevis, dateValid, optionAnnulation, dureeDelaisAcceptation) 
+VALUES('$nb_personne','$numReservation','$numLogement','$sqlDateArr','$sqlDateDep','$EPOCH','$EPOCH','\"\"','0')"
     );
     $stmt->execute();
     $dbh = null;
 } catch (PDOException $e) {
-    print "Erreur !: " . $e->getMessage() . "<br/>";
+    print "Erreur une !: " . $e->getMessage() . "<br/>";
     die();
 }

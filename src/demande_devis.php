@@ -1,4 +1,13 @@
 <?php
+
+// a supprimer pour la prod
+include "start_session.php";
+
+if (!isset($_SESSION["id"])) {
+    echo "Page Innaccessible";
+    die();
+}
+
 if (isset($_SESSION)) {
     $nom = $_SESSION["nom_bien"];
     $nbNuit = $_SESSION["nbNuit"];
