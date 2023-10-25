@@ -1,7 +1,7 @@
 /*****************************************************/
-/*Page de connection*/
+/*Page de connexion*/
 
-/*Formulaire de connection*/
+/*Formulaire de connexion*/
 
 #content{
     display: flex;
@@ -15,7 +15,7 @@
     padding: 2em;
 }
 
-#connection{
+#connexion{
     display: flex;
     flex-direction: column;
     align-items: center;

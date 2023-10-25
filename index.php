@@ -1,7 +1,7 @@
 <?php 
     session_start(); 
-    //Connection à la base de donnée
-    try{
+    //connexion à la base de donnée
+    try {
         $pdo = new PDO("pgsql:host=localhost;port=5432;dbname=postgres;user=postgres;password=root");
         $stmt = $pdo->prepare("SELECT * FROM ldc.Logement");
 
