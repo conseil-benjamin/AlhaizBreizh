@@ -18,7 +18,7 @@
         if (isset($_SESSION['id'])) { ?>
             <div class="compte">
                 <img src="/public/icons/arrow-blue.svg">
-                <p><?php echo $_SESSION['id'] ?></p>
+                <p><?php echo $_SESSION['pseudo'] ?></p>
                 <img src="<?php echo $image ?>">
             </div>
             <div class="compte-options">
