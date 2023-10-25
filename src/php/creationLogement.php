@@ -16,7 +16,7 @@
 
         try {
             // Connexion à la base de données
-            $pdo = new PDO("pgsql:host=servbdd;port=5432;dbname=pg_bconseil;user=bconseil;password=Anneso73!");
+            $pdo = new PDO("pgsql:host=localhost;port=5432;dbname=postgres;user=postgres;password=root");
         
             // Préparez la requête SQL pour récupérer les données de la table "Client"
             $query = "SELECT * FROM ldc.Client";
