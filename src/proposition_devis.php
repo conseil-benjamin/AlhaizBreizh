@@ -57,7 +57,7 @@ require_once("php/propositionGetDb.php");
         </h1>
     </section>
     <section id="corpsTexte">
-        <form method="post" action="submitPropositionDevis.php">
+        <form method="POST" action="submitPropositionDevis.php">
             <div id="formulaire">
                 <div id="prixDiv">
                     <ul>
