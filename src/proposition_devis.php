@@ -1,5 +1,6 @@
 <?php
 
+global $dateDebut, $dateFin, $nbpersonne, $demande;
 include "start_session.php";
 
 if (!isset($_SESSION["id"])) {
@@ -15,6 +16,9 @@ if (isset($_SESSION)) {
     $nom = "Superbe Maison au bord de la plage";
     $nbNuit = "6";
 }
+
+require_once("php/propositionGetDb.php");
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -63,7 +67,7 @@ if (isset($_SESSION)) {
                             </div>
                             <div>
                                 <input class="input1" id="arrivee" name="date_arrivee"
-                                       type="date" value="<?php echo $dateArrivee ?>"" readonly>
+                                       type="date" value="<?php echo $dateDebut ?>"" readonly>
                             </div>
                         </li>
                         <li>
@@ -74,7 +78,7 @@ if (isset($_SESSION)) {
                             </div>
                             <div>
                                 <input class="input1" id="depart" name="date_depart" placeholder="JJ/MM/YYYY"
-                                       type="date" value="<?php echo $dateDepart ?>" readonly>
+                                       type="date" value="<?php echo $dateFin ?>" readonly>
                             </div>
                         </li>
                         <li>
@@ -85,7 +89,7 @@ if (isset($_SESSION)) {
                             </div>
                             <div>
                                 <input class="input1" id="nbpersonne" max="10" min="0" name="nb_personne"
-                                       placeholder="nbpersonne" type="number" value="<?php echo $nbPersonne ?>"
+                                       placeholder="nbpersonne" type="number" value="<?php echo $nbpersonne ?>"
                                        readonly>
                             </div>
                         </li>

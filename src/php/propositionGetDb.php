@@ -11,7 +11,8 @@ try {
     $result = $stmt->fetchAll();
     $dateDebut = $result[0]["datedebut"];
     $dateFin = $result[0]["datefin"];
-    $nbpersonne = $dateDebut = $result[0]["nbpersonnes"];
+    $nbpersonne = $result[0]["nbpersonnes"];
+    $demande = $result[0]["demande"];
     print_r($result);
     $dbh = null;
 } catch (PDOException $e) {
