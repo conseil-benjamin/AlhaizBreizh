@@ -35,10 +35,10 @@ $optionAnnulation = "";
 $dateValid = "";
 
 $EPOCH ="2000-01-01";
-global $dbh;
-try {
-    include('connect.php');
 
+try {
+    /*include('connect.php');*/
+    $dbh = new PDO("pgsql:host=postgresdb;port=5432;dbname=sae;user=sae;password=Phiegoosequ9en9o");
     $stmt = $dbh->prepare(
         "INSERT INTO ldc.devis(nbPersonnes, numReservation, numLogement, dateDebut, dateFin, dateDevis, dateValid, optionAnnulation, dureeDelaisAcceptation,demande) 
 VALUES('$nb_personne','$numReservation','$numLogement','$sqlDateArr','$sqlDateDep','$EPOCH','$EPOCH','\"\"','0','$demande')"
