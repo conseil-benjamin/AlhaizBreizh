@@ -59,7 +59,7 @@
                     $pdo = null;
 
                     foreach ($logements as $logement) {
-                        $lien = '/src/php/PageDetailLogement?numLogement=' . $logement[0];
+                        $lien = '/src/php/PageDetailLogement.php?numLogement=' . $logement[0];
                         $localisation = $localisations[$logement[0] - 1][1];
                         $img = $dir . '/' . $logement[0] . '/1.png'; ?>
     
