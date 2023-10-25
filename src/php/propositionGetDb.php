@@ -8,7 +8,7 @@ try {
     include('connect.php');
     $dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     $stmt = $dbh->prepare(
-        "SELECT * FROM ldc.Devis where numlogement=1 order by numdevis ASC "
+        "SELECT * FROM ldc.Devis where numlogement=1 order by numdevis ASC"
     );
     $stmt->execute();
     $result = $stmt->fetchAll();
