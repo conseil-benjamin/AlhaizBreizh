@@ -168,6 +168,6 @@ if (isset($_SESSION)) {
     </div>
 </footer>
 </body>
-<script src="js/devis.js">
-    </html>
+<script src="js/devis.js"></script>
+</html>
 
