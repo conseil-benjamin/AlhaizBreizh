@@ -3,88 +3,112 @@
 session_start();
 
 // Connexion à la base de données
-//$pdo = new PDO("pgsql:host=servbdd;port=5432;dbname=pg_fnormand;user=fnormand;password=");
-//$pdo = new PDO("pgsql:host=postgresdb;port=5432;dbname=sae;user=sae;password=Phiegoosequ9en9o");
+try {
+    $pdo = new PDO("pgsql:host=servbdd;port=5432;dbname=pg_fnormand;user=fnormand;password=#");
+    //$pdo = new PDO("pgsql:host=postgresdb;port=5432;dbname=sae;user=sae;password=Phiegoosequ9en9o");
 
 
+
+
+
+
+} catch (PDOException $e) {
+    $error_message = "Erreur de connexion à la base de données : " . $e->getMessage();
+}
+
+if (isset($_GET['numLogement'])) {
     $numLogement = $_GET['numLogement'];
-if (!empty($numLogement)|| !empty($pdo)) {
 
+    if (isset($pdo)) {
+        // Vérifier si numLogement existe dans la base de données
+        $sql = "SELECT COUNT(*) FROM ldc.Logement WHERE numLogement = $numLogement";
+        $numLogementExists = getSingleValue($pdo, $sql);
 
-    // Fonction pour récupérer une valeur unique d'une colonne
-    function getSingleValue($pdo, $sql) {
+        if ($numLogementExists) {
+            // Fonction pour récupérer une valeur unique d'une colonne
+        function getSingleValue($pdo, $sql) {
         $stmt = $pdo->query($sql);
         return $stmt ? $stmt->fetchColumn() : null;
+        }
+
+        // Récupération des données
+        $localisation = getSingleValue($pdo, "SELECT ville FROM ldc.localisation WHERE numLogement = $numLogement");
+        $localisation_speci = getSingleValue($pdo, "SELECT rue FROM ldc.localisation WHERE numLogement = $numLogement");
+
+        $type_logement = getSingleValue($pdo, "SELECT natureLogement FROM ldc.Logement WHERE numLogement = $numLogement");
+        $type_logement = ucfirst($type_logement);
+
+        $nb_personnes = getSingleValue($pdo, "SELECT nbPersMax FROM ldc.Logement WHERE numLogement = $numLogement");
+        $nb_chambres = getSingleValue($pdo, "SELECT nbChambres FROM ldc.Logement WHERE numLogement = $numLogement");
+        $nb_sdb = getSingleValue($pdo, "SELECT nbSalleDeBain FROM ldc.Logement WHERE numLogement = $numLogement");
+        $proprio = getSingleValue($pdo, "SELECT proprio FROM ldc.Logement WHERE numLogement = $numLogement");
+
+
+        $sql = "SELECT 
+                    C.firstName AS prenom,
+                    C.lastName AS nom,
+                    P.languesParlees,
+                    C.photoProfil AS photo_profil
+                FROM ldc.LogementProprio LP
+                JOIN ldc.Proprietaire P ON LP.idCompte = P.idCompte
+                JOIN ldc.Client C ON LP.idCompte = C.idCompte
+                WHERE LP.numLogement = $numLogement";
+
+        $stmt = $pdo->query($sql);
+        $row = $stmt ? $stmt->fetch(PDO::FETCH_ASSOC) : null;
+
+        $prenom_proprio = $row ? $row['prenom'] : null;
+        $nom_proprio = $row ? $row['nom'] : null;
+        $liste_langue_parle = $row ? $row['languesParlees'] : null;
+        $photo_profil_proprio = $row ? $row['photo_profil'] : null;
+
+        $sql = "SELECT installationsOffertes, equipementsProposes, servicesComplementaires
+                FROM ldc.Services
+                WHERE numLogement = $numLogement";
+
+        $stmt = $pdo->query($sql);
+        $row = $stmt ? $stmt->fetch(PDO::FETCH_ASSOC) : null;
+
+        $liste_installation = $row ? $row['installationsOffertes'] : null;
+        $liste_equipements = $row ? $row['equipementsProposes'] : null;
+        $liste_services = $row ? $row['servicesComplementaires'] : null;
+
+        $prix = getSingleValue($pdo, "SELECT tarifNuitees FROM ldc.Tarification WHERE numDevis = (SELECT numDevis FROM ldc.Devis WHERE numLogement = $numLogement)");
+
+        $titre_offre = getSingleValue($pdo, "SELECT libelle FROM ldc.Logement WHERE numLogement = $numLogement");
+
+        $sql = "SELECT * FROM ldc.Logement WHERE numLogement = $numLogement";
+        $row = $pdo->query($sql)->fetch(PDO::FETCH_ASSOC);
+
+        $photo_logement = $row ? $row['photoCouverture'] : null;
+        $surfaceHabitable = $row ? $row['surfaceHabitable'] : null;
+        $detail_description = $row ? $row['description'] : null;
+        $phrase_accroche = $row ? $row['accroche'] : null;
+        $proprio = $row ? $row['proprio'] : null;
+        $photoCouverture = $row ? $row['photoCouverture'] : null;
+        $LogementEnLigne = $row ? $row['LogementEnLigne'] : null;
+        $nbLitsSimples = $row ? $row['nbLitsSimples'] : null;
+        $nbLitsDoubles = $row ? $row['nbLitsDoubles'] : null;
+        $detailsLitsDispos = $row ? $row['detailsLitsDispos'] : null;
+        } else {
+            $error_message = "Le numéro de logement spécifié n'existe pas.";
+        }
     }
-
-    // Récupération des données
-    $localisation = getSingleValue($pdo, "SELECT ville FROM ldc.localisation WHERE numLogement = $numLogement");
-    $localisation_speci = getSingleValue($pdo, "SELECT rue FROM ldc.localisation WHERE numLogement = $numLogement");
-
-    $type_logement = getSingleValue($pdo, "SELECT natureLogement FROM ldc.Logement WHERE numLogement = $numLogement");
-    $type_logement = ucfirst($type_logement);
-
-    $nb_personnes = getSingleValue($pdo, "SELECT nbPersMax FROM ldc.Logement WHERE numLogement = $numLogement");
-    $nb_chambres = getSingleValue($pdo, "SELECT nbChambres FROM ldc.Logement WHERE numLogement = $numLogement");
-    $nb_sdb = getSingleValue($pdo, "SELECT nbSalleDeBain FROM ldc.Logement WHERE numLogement = $numLogement");
-
-    $sql = "SELECT 
-                C.firstName AS prenom,
-                C.lastName AS nom,
-                P.languesParlees,
-                C.photoProfil AS photo_profil
-            FROM ldc.LogementProprio LP
-            JOIN ldc.Proprietaire P ON LP.idCompte = P.idCompte
-            JOIN ldc.Client C ON LP.idCompte = C.idCompte
-            WHERE LP.numLogement = $numLogement";
-
-    $stmt = $pdo->query($sql);
-    $row = $stmt ? $stmt->fetch(PDO::FETCH_ASSOC) : null;
-
-    $prenom_proprio = $row ? $row['prenom'] : null;
-    $nom_proprio = $row ? $row['nom'] : null;
-    $liste_langue_parle = $row ? $row['languesParlees'] : null;
-    $photo_profil_proprio = $row ? $row['photo_profil'] : null;
-
-    $sql = "SELECT installationsOffertes, equipementsProposes, servicesComplementaires
-            FROM ldc.Services
-            WHERE numLogement = $numLogement";
-
-    $stmt = $pdo->query($sql);
-    $row = $stmt ? $stmt->fetch(PDO::FETCH_ASSOC) : null;
-
-    $liste_installation = $row ? $row['installationsOffertes'] : null;
-    $liste_equipements = $row ? $row['equipementsProposes'] : null;
-    $liste_services = $row ? $row['servicesComplementaires'] : null;
-
-    $prix = getSingleValue($pdo, "SELECT tarifNuitees FROM ldc.Tarification WHERE numDevis = (SELECT numDevis FROM ldc.Devis WHERE numLogement = $numLogement)");
-
-    $titre_offre = getSingleValue($pdo, "SELECT libelle FROM ldc.Logement WHERE numLogement = $numLogement");
-
-    $sql = "SELECT * FROM ldc.Logement WHERE numLogement = $numLogement";
-    $row = $pdo->query($sql)->fetch(PDO::FETCH_ASSOC);
-
-    $photo_logement = $row ? $row['photoCouverture'] : null;
-    $surfaceHabitable = $row ? $row['surfaceHabitable'] : null;
-    $detail_description = $row ? $row['description'] : null;
-    $phrase_accroche = $row ? $row['accroche'] : null;
-    $proprio = $row ? $row['proprio'] : null;
-    $photoCouverture = $row ? $row['photoCouverture'] : null;
-    $LogementEnLigne = $row ? $row['LogementEnLigne'] : null;
-    $nbLitsSimples = $row ? $row['nbLitsSimples'] : null;
-    $nbLitsDoubles = $row ? $row['nbLitsDoubles'] : null;
-    $detailsLitsDispos = $row ? $row['detailsLitsDispos'] : null;
 }
+
+
+
 
 
 /* Ce qui manque a afficher
 
-    $liste_chambres,
+    $liste_chambres, probleme base de donnees, il faut une liste de chambres avec un l'intérieur une liste pour chaque chambre pour specifier le nombre de lit simple et lit double/ par chambre
     $liste_installation,
     $liste_equipements
     $liste_services
     $liste_langue_parle,
     les images
+    la localisation specifique (l'adresse) pour les clients connectés qui ont réservé ce logement
 */
 
 ?>
@@ -126,6 +150,18 @@ if (!empty($numLogement)|| !empty($pdo)) {
 
         <main>
 
+                <?php
+
+                if (isset($_SESSION['id']) && isset($_GET['numLogement'])) {
+                    if ($_SESSION['id'] == $proprio) {
+                        // L'utilisateur est connecté et est le propriétaire du logement
+                        echo "<p class=\"proprio\">
+                        <a href=\"#\" class=\"bouton_modification\">Modifier l'annonce</a>
+                        <a href=\"#\" class=\"bouton_modification\">Supprimer l'annonce</a>
+                        </p>";
+                    }
+                }
+                ?>
             <section class="tete_offre">
                 <?php
                 if ($photo_logement==null) {
@@ -152,7 +188,13 @@ if (!empty($numLogement)|| !empty($pdo)) {
                     echo "Localisation specifique";          
                 }
                 else {
-                    echo $localisation_speci;
+                    if (isset($_SESSION['id']) && isset($_GET['numLogement'])) {
+                        // L'utilisateur est connecté
+                        if ($_SESSION['id'] == $proprio) {
+                            // L'utilisateur est connecté et est le propriétaire du logement
+                            echo $localisation_speci;
+                        }
+                    }
                 }
 
                 ?>
@@ -162,7 +204,12 @@ if (!empty($numLogement)|| !empty($pdo)) {
                         <a href="#comment" class="logo"><img src="../../public/icons/star_fill.svg" id="icone" alt="icone etoile"> Note</p></a>
 
 
-                    <li><div><img src="../../public/icons/type_logement.svg" id="icone" alt="icone maison"> <?php echo $type_logement?></div></li>
+                    <li><div><img src="../../public/icons/type_logement.svg" id="icone" alt="icone maison"> <?php if ($type_logement==null) {
+                                    echo "Type de logement";          
+                                }
+                                else {
+                                    echo $type_logement;
+                                }?></div></li>
                     <li><div><img src="../../public/icons/nb_personnes.svg" id="icone" alt="icone personnes">  <?php echo $nb_personnes?> Personnes</div></li>
                     
                     <li><div><a href="#infos_chambres"><img src="../../public/icons/double-bed.svg" id="icone" alt="icone lit"> <?php echo $nb_chambres?> Chambre(s)</a></div></li>
