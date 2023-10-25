@@ -31,6 +31,13 @@ if (isset($_GET['numLogement'])) {
         return $stmt ? $stmt->fetchColumn() : null;
         }
 
+        $etat_logement = "SELECT LogementEnLigne FROM ldc.Logement WHERE numLogement = $numLogement";
+        $etat_logement = $pdo->query($etat_logement)->fetchColumn();
+
+        $proprio = getSingleValue($pdo, "SELECT proprio FROM ldc.Logement WHERE numLogement = $numLogement");
+
+        if ($etat_logement || $_SESSION['id'] == $proprio) {
+        
         // Récupération des données
         $localisation = getSingleValue($pdo, "SELECT ville FROM ldc.localisation WHERE numLogement = $numLogement");
         $localisation_speci = getSingleValue($pdo, "SELECT rue FROM ldc.localisation WHERE numLogement = $numLogement");
@@ -41,7 +48,6 @@ if (isset($_GET['numLogement'])) {
         $nb_personnes = getSingleValue($pdo, "SELECT nbPersMax FROM ldc.Logement WHERE numLogement = $numLogement");
         $nb_chambres = getSingleValue($pdo, "SELECT nbChambres FROM ldc.Logement WHERE numLogement = $numLogement");
         $nb_sdb = getSingleValue($pdo, "SELECT nbSalleDeBain FROM ldc.Logement WHERE numLogement = $numLogement");
-        $proprio = getSingleValue($pdo, "SELECT proprio FROM ldc.Logement WHERE numLogement = $numLogement");
 
 
         $sql = "SELECT 
@@ -90,6 +96,7 @@ if (isset($_GET['numLogement'])) {
         $nbLitsSimples = $row ? $row['nbLitsSimples'] : null;
         $nbLitsDoubles = $row ? $row['nbLitsDoubles'] : null;
         $detailsLitsDispos = $row ? $row['detailsLitsDispos'] : null;
+        }
         } else {
             $error_message = "Le numéro de logement spécifié n'existe pas.";
         }
@@ -151,14 +158,26 @@ if (isset($_GET['numLogement'])) {
         <main>
 
                 <?php
-
+//TODO gérer la mise en ligne/hors ligne de la page
                 if (isset($_SESSION['id']) && isset($_GET['numLogement'])) {
                     if ($_SESSION['id'] == $proprio) {
                         // L'utilisateur est connecté et est le propriétaire du logement
+                        if ($etat_logement) { 
+                            echo "<p class=\"proprio\">
+                            <hs>Le logement est en ligne</hs>
+                            <a href=\"#\" class=\"bouton_modification\">Mettre l'annonce hors ligne</a>
+                            <a href=\"#\" class=\"bouton_modification\">Modifier l'annonce</a>
+                            <a href=\"#\" class=\"bouton_modification\">Supprimer l'annonce</a>
+                            </p>";
+                        }else {
+                        
                         echo "<p class=\"proprio\">
+                        <hs>Le logement est hors ligne</hs>
+                        <a href=\"#\" class=\"bouton_modification\">Mettre l'annonce en ligne</a>
                         <a href=\"#\" class=\"bouton_modification\">Modifier l'annonce</a>
                         <a href=\"#\" class=\"bouton_modification\">Supprimer l'annonce</a>
                         </p>";
+                        }
                     }
                 }
                 ?>
