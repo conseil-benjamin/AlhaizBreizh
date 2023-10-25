@@ -1,0 +1,56 @@
+/*****************************************************/
+/*Conteneur principal*/
+
+#content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: calc(1em + 75px) 1em 1em 1em;
+}
+
+/*****************************************************/
+/*Logements*/
+
+#content #logements{
+    width: 80%;
+    margin-top: 1em;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+#content #logements > h3{
+    text-align: center;
+}
+
+#content #logements .logement:hover{
+    scale: 1.05;
+}
+
+/*****************************************************/
+/*Un logement*/
+
+#content .logement{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 150px;
+    background-color: white;
+}
+
+#content .logement > img{
+    height: 100%;
+    width: 30%;
+    object-fit: cover;
+    image-rendering: optimizeQuality;
+}
+
+/*Informations*/
+#content .logement > div{
+    margin: 1em;
+}
+
+#content .logement > div img{
+    width: 25px;
+    height: 25px;
+}

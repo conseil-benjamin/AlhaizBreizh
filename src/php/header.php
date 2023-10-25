@@ -28,7 +28,7 @@
                     <a href=""><li>Mes Réservations</li></a>
                     <?php
                         if ($_SESSION['proprio']) { ?>
-                            <a href=""><li>Mes Logements</li></a> <?php
+                            <a href="/src/php/mesLogements.php"><li>Mes Logements</li></a> <?php
                         } else { ?>
                             <a href=""><li>Devenir propriétaire</li></a> <?php
                         } ?>

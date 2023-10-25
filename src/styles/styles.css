@@ -40,6 +40,10 @@ a:hover{
     z-index: -1;
 }
 
+h1, h2, h3{
+    font-family: "NoirPro", Arial, sans-serif;
+}
+
 /*Custom scrollbar*/
 /* width */
 ::-webkit-scrollbar {
