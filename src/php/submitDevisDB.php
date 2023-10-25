@@ -40,7 +40,7 @@ try {
     include('connect.php');
 
     $stmt = $dbh->prepare(
-        "INSERT INTO ldc.Devis (nbPersonnes, numReservation, numLogement, dateDebut, dateFin, dateDevis, dateValid, optionAnnulation, dureeDelaisAcceptation,demande) 
+        "INSERT INTO ldc.devis(nbPersonnes, numReservation, numLogement, dateDebut, dateFin, dateDevis, dateValid, optionAnnulation, dureeDelaisAcceptation,demande) 
 VALUES('$nb_personne','$numReservation','$numLogement','$sqlDateArr','$sqlDateDep','$EPOCH','$EPOCH','\"\"','0','$demande')"
     );
     $stmt->execute();

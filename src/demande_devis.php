@@ -12,10 +12,12 @@ if (isset($_SESSION)) {
     $nom = $_SESSION["nom_bien"];
     $nbNuit = $_SESSION["nbNuit"];
     $prixNuit = $_SESSION["prixNuit"];
+    $nbPersonneMax = $_SESSION["nbPersonneMax"];
 } else {
     $nom = "Superbe Maison au bord de la plage";
     $nbNuit = "6";
     $prixNuit = "6,8";
+    $nbPersonneMax = 10;
 }
 ?>
 <!DOCTYPE html>
@@ -88,7 +90,7 @@ if (isset($_SESSION)) {
                                 </label>
                             </div>
                             <div>
-                                <input class="input1" id="nbpersonne" max="10" min="0" name="nb_personne"
+                                <input class="input1" id="nbpersonne" max="<?php echo $nbPersonneMax ?>" min="0" name="nb_personne"
                                        placeholder="nbpersonne" type="number" value="0">
                             </div>
                         </li>
