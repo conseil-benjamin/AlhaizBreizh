@@ -4,7 +4,7 @@ session_start();
 
 // Connexion à la base de données
 try {
-    $pdo = new PDO("pgsql:host=servbdd;port=5432;dbname=pg_fnormand;user=fnormand;password=Tennisdetable1#");
+    $pdo = new PDO("pgsql:host=servbdd;port=5432;dbname=pg_fnormand;user=fnormand;password=");
     //$pdo = new PDO("pgsql:host=postgresdb;port=5432;dbname=sae;user=sae;password=Phiegoosequ9en9o");
 
 
