@@ -40,6 +40,31 @@ a:hover{
     z-index: -1;
 }
 
+h1, h2, h3{
+    font-family: "NoirPro", Arial, sans-serif;
+}
+
+/*Custom scrollbar*/
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
 /*****************************************************/
 /*Bouttons*/
 .boutton{
@@ -140,6 +165,10 @@ a:hover{
     text-align: center;
     line-height: 75px;
     color: #515D5E;
+}
+
+#header nav ul li:hover{
+    transform: translateY(1px);
 }
 /*Compte*/
 #header .compte{

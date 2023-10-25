@@ -18,7 +18,7 @@
         if (isset($_SESSION['id'])) { ?>
             <div class="compte">
                 <img src="/public/icons/arrow-blue.svg">
-                <p><?php echo $_SESSION['id'] ?></p>
+                <p><?php echo $_SESSION['pseudo'] ?></p>
                 <img src="<?php echo $image ?>">
             </div>
             <div class="compte-options">
@@ -28,7 +28,7 @@
                     <a href=""><li>Mes Réservations</li></a>
                     <?php
                         if ($_SESSION['proprio']) { ?>
-                            <a href=""><li>Mes Logements</li></a> <?php
+                            <a href="/src/php/mesLogements.php"><li>Mes Logements</li></a> <?php
                         } else { ?>
                             <a href=""><li>Devenir propriétaire</li></a> <?php
                         } ?>
@@ -45,3 +45,4 @@
         }
     ?>
 </header>
+<script src="/src/js/compte-click.js"></script>

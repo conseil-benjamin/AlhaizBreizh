@@ -2,39 +2,173 @@ body {
   margin-top: 10%;
   --main-bg-color: #515d5e;
   --color-btn-submit: #7ebcf2;
+  --main-font-color: #ffffff;
+  --h1-font-color: #16a1ef;
 }
 
 .container-main {
   display: flex;
   background-color: var(--main-bg-color);
   border-radius: 25px;
-  margin: 2em;
+  margin: 10em;
+  color: var(--main-font-color);
+  flex-wrap: wrap;
 }
 
 .container-left {
+  flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  margin: 0 2em 0 0;
+  margin: 1em 5em 1em 15em;
+  width: 35%;
 }
 
 .container-right {
-  margin: 0 0 0 2em;
+  align-items: flex-end;
+  justify-content: flex-end;
+  margin: 1em 0 0 0;
+  width: 35%;
 }
 
-input {
+input,
+select{
   margin: 1em;
   border-radius: 5px;
-  padding: 0.5em;
+  padding: 0.8em;
+  display: block;
+}
+
+button{
+  margin: 1em;
+  border-radius: 45px;
+  padding: 0.8em;
+  display: block;
+  cursor: pointer;
+}
+
+button:hover{
+  background-color: #7ebcf2;
+  transition: 0.7s;
+}
+
+#surface {
+  height: 1.3em;
 }
 
 label {
-  margin: 0.5em;
+  margin: 2em 0 0 1em;
+  display: block;
+}
+
+textarea {
+  margin-left: 1em;
+  border-radius: 15px;
+  padding: 1em;
 }
 
 h1 {
   text-align: center;
+  font-size: clamp(1rem, 2.5vw, 2rem);
+  color: #16a1ef;
 }
 
 .creerAnnonce {
   background-color: var(--color-btn-submit);
+  height: 4em;
+  cursor: pointer;
+}
+
+.villeDiv {
+  display: flex;
+  flex-direction: row;
+}
+  
+.nbChambreEtBainsDiv,
+.nbPrixEtPersonnesDiv,
+.typeLogementDiv {
+  display: flex;
+}
+
+.nbChambreEtBainsDiv,
+.nbPrixEtPersonnesDiv,
+.typeLogementDiv [type="number"] {
+  height: 4em;
+}
+
+#typeLogement{
+  width: 220px;
+}
+
+.nbChambreEtBainsDiv {
+  margin-bottom: 2em;
+}
+
+.nbPrixEtPersonnesDiv {
+  margin-bottom: 6em;
+  width: 27rem;
+}
+
+hr {
+  width: 20%;
+  margin: auto;
+  border: 1.52px solid black;
+}
+
+.inputPlusIconeSupprimer {
+  display: flex;
+  flex-direction: row;
+  max-width: 25rem;
+}
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  margin-top: 3em;
+  text-align: center;
+}
+
+.bottom > p {
+  margin: 0 0 2em 0;
+}
+
+.bottom > input[type="checkbox"] {
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+}
+
+#iconSupprimer:hover {
+  cursor: pointer;
+}
+
+#lits{
+  width: 20rem;
+}
+
+.testValeurInputAnnonce{
+  color: red;
+}
+
+@media (max-width: 1250px) {
+  .container-main {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .container-left {
+    margin: 1em 5em 1em 5em;
+  }
+}
+
+@media (max-width: 830px) {
+  h1 {
+    margin: 10em 0 0 0;
+  }
+  .container-main {
+    margin: 3em;
+    min-width: 30rem;
+  }
 }
