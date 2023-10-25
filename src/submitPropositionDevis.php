@@ -35,7 +35,7 @@
     </section>
     <section id="corpsTexte">
     <?php
-    include("submitPropositionDevisDB.php");
+    include("php/submitPropositionDevisDB.php");
     ?>
         <h2> Votre devis à bien été envoyée</h2>
     </section>

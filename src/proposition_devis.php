@@ -1,6 +1,8 @@
 <?php
 
 global $dateDebut, $dateFin, $nbpersonne, $demande;
+
+/** à enlever en prod */
 include "start_session.php";
 
 if (!isset($_SESSION["id"])) {

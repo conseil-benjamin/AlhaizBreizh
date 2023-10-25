@@ -1,5 +1,5 @@
 <?php
-
+$numlogement = $_SESSION["id_logement"];
 global $dbh;
 try {
     include('connect.php');
