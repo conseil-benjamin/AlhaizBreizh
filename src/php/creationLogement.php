@@ -13,56 +13,61 @@
 <body>
     <?php
         include './header.php';
-
-
         try {
             // Connexion à la base de données
             $pdo = new PDO("pgsql:host=postgresdb;port=5432;dbname=sae;user=sae;password=Phiegoosequ9en9o");
         
-            // Préparez la requête SQL pour récupérer les données de la table "Client"
-            $query = "SELECT * FROM ldc.Client";
-        
-            // Exécutez la requête
+            $query = "SELECT * FROM ldc.Logement WHERE numLogement = 2 ";
+            
             $result = $pdo->query($query);
         
-            while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                // Accédez aux colonnes de la table "Client"
-                $idCompte = $row['idCompte'];
-                $firstName = $row['firstName'];
-                $lastName = $row['lastName'];
-                $mail = $row['mail'];
-                $numeroTel = $row['numeroTel'];
-                $photoProfil = $row['photoProfil'];
-                $civilite = $row['civilite'];
-                $adressePostale = $row['adressePostale'];
-                $pseudoCompte = $row['pseudoCompte'];
-                $motDePasse = $row['motDePasse'];
-                $dateNaissance = $row['dateNaissance'];
-                $notationMoyenne = $row['notationMoyenne'];
+            while ($row = $result->fetch(PDO::FETCH_NUM)) {
+                $numLogement = $row[0];
+                $surfaceHabitable = $row[1];
+                $libelle = $row[2];
+                $accroche = $row[3];
+                $description = $row[4];
+                $natureLogement = $row[5];
+                $proprio = $row[6];
+                $photoCouverture = $row[7];
+                $LogementEnLigne = $row[8];
+                $nbPersMax = $row[9];
+                $nbChambres = $row[10];
+                $nbLitsSimples = $row[11];
+                $nbLitsDoubles = $row[12];
+                $detailsLitsDispos = $row[13];
+                $nbSalleDeBain = $row[14];
+                $tarifNuitees = $row[15];
             }
+/*
+            echo "Numéro de Logement : " . $numLogement . "<br>";
+            echo "Surface Habitable : " . $surfaceHabitable . "<br>";
+            echo "Libellé : " . $libelle . "<br>";
+            echo "Accroche : " . $accroche . "<br>";
+            echo "Description : " . $description . "<br>";
+            echo "Nature du Logement : " . $natureLogement . "<br>";
+            echo "Propriétaire : " . $proprio . "<br>";
+            echo "Photo de Couverture : " . $photoCouverture . "<br>";
+            echo "Logement en Ligne : " . $LogementEnLigne . "<br>";
+            echo "Nombre de Personnes Max : " . $nbPersMax . "<br>";
+            echo "Nombre de Chambres : " . $nbChambres . "<br>";
+            echo "Nombre de Lits Simples : " . $nbLitsSimples . "<br>";
+            echo "Nombre de Lits Doubles : " . $nbLitsDoubles . "<br>";
+            echo "Détails des Lits Disponibles : " . $detailsLitsDispos . "<br>";
+            echo "Nombre de Salles de Bain : " . $nbSalleDeBain . "<br>";
+            echo "Tarif des Nuitées : " . $tarifNuitees . "<br>";
+*/
+            // insert
 
-            echo "ID du Compte : $idCompte<br>";
-            echo "Prénom : $firstName<br>";
-            echo "Nom : $lastName<br>";
-            echo "Email : $mail<br>";
-            echo "Numéro de téléphone : $numeroTel<br>";
-            echo "Photo de profil : $photoProfil<br>";
-            echo "Civilité : $civilite<br>";
-            echo "Adresse postale : $adressePostale<br>";
-            echo "Pseudo du Compte : $pseudoCompte<br>";
-            echo "Mot de passe : $motDePasse<br>";
-            echo "Date de naissance : $dateNaissance<br>";
-            echo "Notation moyenne : $notationMoyenne<br>";
-        
             $pdo = null;
+
         } catch (PDOException $e) {
-            // Gérez les erreurs de connexion ou d'exécution de la requête
             echo "Erreur : " . $e->getMessage();
         }
-        
     ?>
     <h1>Création d’un nouveau logement</h1>
     <hr>
+    <form method="post">
     <div class="container-main">
         <div class="container-left">
             <label for="title">Titre de l'annonce (*)</label>
@@ -82,11 +87,11 @@
                 </div>
                 <div>
                     <label for="surface">Surface en m² (*)</label>
-                    <input type="number" id="surface" name="surface" maxlength="4" placeholder="Surface">
+                    <input type="number" id="surface" name="surface" maxlength="4" min="1" placeholder="Surface">
                 </div>
             </div>
             <label for="natureLogement">Nature du logement (*)</label>
-            <input type="text" id="natureLogementInput" size="60" placeholder="Nature du logement" maxlength="50">
+            <input type="text" id="natureLogementInput" name="natureLogement" size="60" placeholder="Nature du logement" maxlength="50">
             <div class="servicesElement">
                 <label for="services">Services disponibles</label>
                 <input type="text" id="services" name="services" placeholder="Service disponible" size="60" maxlength="100">
@@ -122,22 +127,22 @@
             <div class="nbChambreEtBainsDiv">
                 <div>
                     <label for="nbChambres">Nombres de chambres (*)</label> 
-                    <input type="number" id="nbChambres" name="nbChambres" placeholder="Nb Chambres">
+                    <input type="number" id="nbChambres" name="nbChambres" placeholder="Nb Chambres" min="1">
                 </div>
                 <div>
                     <label for="nbSalleBain">Nombres de salles de bain (*)</label>
-                    <input type="number" id="nbSallesBain" name="nbSallesBain" placeholder="Nb Salles de Bain">
+                    <input type="number" id="nbSallesBain" name="nbSallesBain" min="1" placeholder="Nb Salles de Bain">
                 </div>
             </div>
             <div class="nbPrixEtPersonnesDiv">
                 <div>
                     <label for="nbMaxPers">Nombre de personnes max (*)</label>
-                    <input type="number" id="nbMaxPers" name="nbMaxPers" placeholder="Nb pers max">
+                    <input type="number" id="nbMaxPers" name="nbMaxPers" placeholder="Nb pers max" min="1">
                 </div>
-                <div>
+                <div> 
                     <label for="prixParNuit">Prix de base par nuit (*)</label>
                     <br>
-                    <input type="number" id="prixParNuit" name="prixParNuit" placeholder="Prix/Nuit">
+                    <input type="number" id="prixParNuit" name="prixParNuit" placeholder="Prix/Nuit" min="1">
                 </div>
             </div>
 
@@ -159,7 +164,7 @@
             </span>
             <input type="checkbox" name="conditionsGenerale" id="conditionsGenerale">
             <label class="conditionsGenerale" for="conditionsGenerale">
-        <button class="creerAnnonce" type="submit" id="creerAnnonce">Créer annonce</button>
+            <button class="creerAnnonce" type="submit" id="creerAnnonce">Créer annonce</button>
     </div>
     </div>
     <?php include './footer.php'; ?>

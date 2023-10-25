@@ -17,15 +17,11 @@ body {
 
 .container-left {
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  margin: 1em 5em 1em 15em;
+  margin: 1em 5em 1em 8em;
   width: 35%;
 }
 
 .container-right {
-  align-items: flex-end;
-  justify-content: flex-end;
   margin: 1em 0 0 0;
   width: 35%;
 }
@@ -95,6 +91,10 @@ h1 {
   height: 4em;
 }
 
+.nbPrixEtPersonnesDiv{
+  margin: 5em 0 0 0;
+}
+
 #typeLogement{
   width: 220px;
 }
@@ -105,7 +105,6 @@ h1 {
 
 .nbPrixEtPersonnesDiv {
   margin-bottom: 6em;
-  width: 27rem;
 }
 
 hr {
@@ -139,6 +138,9 @@ hr {
   width: 30px;
   cursor: pointer;
 }
+.bottom > span{
+  margin: 0 1em 0 1em;
+}
 
 #iconSupprimer:hover {
   cursor: pointer;
@@ -152,6 +154,11 @@ hr {
   color: red;
 }
 
+.divPrixParNuit{
+  margin: 2em 0 0 0;
+}
+
+
 @media (max-width: 1250px) {
   .container-main {
     flex-direction: column;
@@ -159,7 +166,10 @@ hr {
     justify-content: center;
   }
   .container-left {
-    margin: 1em 5em 1em 5em;
+    margin: 1em 5em 1em 0em;
+  }
+  .container-right {
+    margin: 1em 5em 1em 0em;
   }
 }
 

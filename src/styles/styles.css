@@ -5,12 +5,15 @@
     padding: 0;
     scroll-behavior: smooth;
     scroll-padding-top: 75px;
+    scroll-behavior: smooth;
+    scroll-padding-top: 75px;
 }
 
 body{
     background-color: #D7F0FF;
     min-height: calc(100vh + 20em);
     font-family: "Montserrat", Arial, sans-serif;
+    overflow-x: hidden;
     overflow-x: hidden;
 }
 
@@ -125,6 +128,7 @@ h1, h2, h3{
     display: flex;
     flex-direction: row;
     align-items: center;
+    align-items: center;
     justify-content: stretch;
     background-color: #7EBCF2;
     height: 75px;
@@ -137,9 +141,12 @@ h1, h2, h3{
     font-size: 24px;
 }
 
+
 /*Logo*/
 #header .logo{
     display: block;
+    height: 80%;
+    margin-left: 1em;
     height: 80%;
     margin-left: 1em;
 }
@@ -186,6 +193,7 @@ h1, h2, h3{
     color: #65E3FF;
     font-size: 20px;
     transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
 }
 
 #header > .compte:hover{
@@ -220,6 +228,11 @@ h1, h2, h3{
     text-align: center;
     background-color: #515D5E;
     color: #65E3FF;
+    transition: all .3s ease-in-out;
+}
+
+#header div.compte.shown > img:first-child{
+    rotate: -90deg;
     transition: all .3s ease-in-out;
 }
 
@@ -277,8 +290,8 @@ h1, h2, h3{
 }
 
 #footer > div > p{
-    position: absolute;
-    bottom: .1em;
-    right: .1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 16px;
 }
