@@ -3,7 +3,7 @@
     //Connection à la base de donnée
     try{
         $pdo = new PDO("pgsql:host=localhost;port=5432;dbname=postgres;user=postgres;password=root");
-        $stmt = $pdo->prepare("SELECT * FROM ldc.Logement");
+        $stmt = $pdo->prepare("SELECT numLogement,libelle,nbPersMax,tarifNuitees FROM ldc.Logement");
 
         //Recherche des logements dans la base de données
         $stmt->execute();
@@ -11,6 +11,18 @@
         while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
             $logements[] = $row;
         }
+
+        //Obtenir la localisation de chaque logement
+        $stmt = $pdo->prepare("SELECT numLogement,ville FROM ldc.Localisation");
+        $stmt->execute();
+        $i = 0;
+        while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+            if ($row[0] == $logements[$i][0]) {
+                $logements[$i][] = $row[1];
+            }
+            $i++;
+        }
+
         $pdo = null;
     } catch (PDOException $e) {
         $logements = array();
@@ -44,24 +56,15 @@
                 if (count($logements) === 0) { ?>
                     <h2>Aucun logement n'est disponible pour le moment :/</h2> <?php
                 } else{
-                    $dir = './public/img/logements';
-                    $logements = array_reverse($logements); //Obtenir les derniers logements ajoutés en premier
-
-                    $pdo = new PDO("pgsql:host=localhost;port=5432;dbname=postgres;user=postgres;password=root");
-                    $stmt = $pdo->prepare("SELECT numLogement,ville FROM ldc.Localisation");
-
-                    //Recherche des localisations dans la base de données
-                    $stmt->execute();
-                    $localisations = array();
-                    while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-                        $localisations[] = $row;
-                    }
-                    $pdo = null;
-
+                    $logements = array_reverse($logements);
                     foreach ($logements as $logement) {
                         $lien = '/src/php/PageDetailLogement.php?numLogement=' . $logement[0];
-                        $localisation = $localisations[$logement[0] - 1][1];
-                        $img = $dir . '/' . $logement[0] . '/1.png'; ?>
+                        $img = '/public/img/logements/' . $logement[0] . '/1.png';
+
+                        $titre = $logement[1];
+                        $nombre_personnes = $logement[2];
+                        $localisation = $logement[4];
+                        $prix = $logement[3] ?>
     
                         <div class="logement">
                             <a href="<?php echo $lien ?>"><img src="<?php echo $img ?>"></a> <!-- Image du logement -->
@@ -70,10 +73,10 @@
                                 <button type="button"><img src="/public/icons/heart_white.svg"></button> <!-- Coeur pour liker -->
                             </div>   
                             <a id="description" href="<?php echo $lien ?>"><div> 
-                                <h3><?php echo $logement[2] ?></h3> <!-- Titre du logement -->
-                                <div><img src="/public/icons/nb_personnes.svg"><?php echo $logement[9] ?> personnes</div> <!-- Nombre de personnes -->
+                                <h3><?php echo $titre ?></h3> <!-- Titre du logement -->
+                                <div><img src="/public/icons/nb_personnes.svg"><?php echo $nombre_personnes ?> personnes</div> <!-- Nombre de personnes -->
                                 <div><img src="/public/icons/map.svg"><?php echo $localisation ?></div> <!-- Localisation -->
-                                <div><strong><?php echo $logement[15] ?>€</strong> / nuit</div> <!-- Prix du logement -->
+                                <div><strong><?php echo $prix ?>€</strong> / nuit</div> <!-- Prix du logement -->
                             </div></a>
                         </div> <?php
                     } 
