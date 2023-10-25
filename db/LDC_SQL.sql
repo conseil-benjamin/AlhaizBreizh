@@ -249,8 +249,9 @@ VALUES
 -- Insertion de données dans la table Client
 INSERT INTO Client (firstName, lastName, mail, numeroTel, photoProfil, civilite, adressePostale, pseudoCompte, motDePasse, dateNaissance, notationMoyenne)
 VALUES
-    ('Thierry', 'Richard', 'thierry.richard@email.com', '123456789', 'photo1.jpg', 'Monsieur', '123 Rue des lilas', 'gege', '1234', '15-01-2000', 4.5),
-    ('Jeanne', 'Robert', 'jeanne.robert@email.com', '987654321', 'photo2.jpg', 'Madame', '456 Avenue Charles de Gaule', 'propro', '1234', '25-07-1998', 4.0);
+    ('Gérard', 'LeG', 'gerard.leg@email.com', '123456789', 'photo1.jpg', 'Monsieur', '123 Rue des lilas', 'gege', '1234', '15-01-2000', 4.5),
+    ('Jeanne', 'Robert', 'jeanne.robert@email.com', '987654321', 'photo2.jpg', 'Madame', '456 Avenue Charles de Gaule', 'propro', '1234', '25-07-1998', 4.0),
+    ('Julien', 'LeBras', 'julien.lebras@email.com', '895432156', 'photo2.jpg', 'Monsieur', '2 Rue du moine', 'JuJu', '1234', '25-07-1999', 4.0);
 
 
 -- Insertion de données dans la table Message
@@ -290,7 +291,8 @@ VALUES
 -- Insertion de données dans la table Proprietaire
 INSERT INTO Proprietaire (idCompte, pieceIdentite, RIB, languesParlees, messageType)
 VALUES
-    (2, TRUE, '987654321', 'Espagnol, Français, Anglais', 'Message B');
+    (2, TRUE, '987654321', 'Espagnol, Français, Anglais', 'Message B'),
+    (3, TRUE, '789456123', 'Espagnol, Français, Anglais', 'Message C');
 
 -- Insertion de données dans la table Localisation
 INSERT INTO Localisation (numLogement, gps, rue, cp, ville)
