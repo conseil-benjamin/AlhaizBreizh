@@ -45,3 +45,4 @@
         }
     ?>
 </header>
+<script src="/src/js/compte-click.js"></script>

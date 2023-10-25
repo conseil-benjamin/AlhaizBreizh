@@ -82,6 +82,5 @@
             </div>
         </div>
         <?php include 'footer.php'; ?>
-        <script src="/src/js/compte-click.js"></script>
     </body>
 </html>

@@ -81,7 +81,6 @@
             </div> 
         </div>   
         <?php include './src/php/footer.php'; ?>
-        <script src="/src/js/compte-click.js"></script>
         <script>
             window.addEventListener("scroll", () => {
                 var header = document.querySelector("header");
