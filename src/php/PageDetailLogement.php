@@ -4,8 +4,8 @@ session_start();
 
 // Connexion à la base de données
 try {
-    $pdo = new PDO("pgsql:host=servbdd;port=5432;dbname=pg_fnormand;user=fnormand;password=");
-    //$pdo = new PDO("pgsql:host=postgresdb;port=5432;dbname=sae;user=sae;password=Phiegoosequ9en9o");
+    $pdo = new PDO("pgsql:host=servbdd;port=5432;dbname=pg_fnormand;user=fnormand;password="); //local
+    //$pdo = new PDO("pgsql:host=postgresdb;port=5432;dbname=sae;user=sae;password=Phiegoosequ9en9o");   //serveur
 
 
 
@@ -31,7 +31,7 @@ try {
 if (isset($_GET['numLogement'])) {
     $numLogement = $_GET['numLogement'];
 
-    if (isset($pdo)) {
+    if (isset($pdo)&&!empty($numLogement)) {
         function getSingleValue($pdo, $sql) {
             $stmt = $pdo->query($sql);
             return $stmt ? $stmt->fetchColumn() : null;
@@ -135,30 +135,6 @@ if (isset($_GET['numLogement'])) {
 
 
 
-<script>
-function mettreEnLigne(numLogement, nouvelEtat) {
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", "/src/php/mettre_en_ligne.php?numLogement=" + numLogement + "&nouvelEtat=" + nouvelEtat, true);
-
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            var response = xhr.responseText;
-            // Traitez la réponse si nécessaire
-            if (response === "success") {
-                // Rechargez la page actuelle pour refléter le nouvel état
-                location.reload();
-            } else {
-                // Gérez les erreurs ici
-                console.error("Erreur lors de la mise à jour de l'état du logement.");
-            }
-        }
-    };
-    
-    xhr.send();
-}
-</script>
-
-
 
 
 <!DOCTYPE html>
@@ -202,30 +178,65 @@ function mettreEnLigne(numLogement, nouvelEtat) {
                 $_SESSION['id'] =1;
                 $proprio=1;
 
-        //TODO gérer la mise en ligne/hors ligne de la page
-                
-                if (isset($_SESSION['id']) && isset($_GET['numLogement'])) {
-                    if ($_SESSION['id'] == $proprio) {
-                        // L'utilisateur est connecté et est le propriétaire du logement
-                
-                        // Vous pouvez utiliser la variable $etat_logement pour déterminer l'état actuel du logement
-                        if ($etat_logement) { 
-                            echo "<p class=\"proprio\">
-                            <hs>Le logement est en ligne</hs>
-                            <a href=\"#\" class=\"bouton_modification\" onclick=\"mettreEnLigne(<?php echo $numLogement; ?>, false)\">Mettre l'annonce hors ligne</a>
-                            <a href=\"#\" class=\"bouton_modification\">Modifier l'annonce</a>
-                            <a href=\"#\" class=\"bouton_modification\">Supprimer l'annonce</a>
-                            </p>";
-                        } else {
-                            echo "<p class=\"proprio\">
-                            <hs>Le logement est hors ligne</hs>
-                            <a href=\"#\" class=\"bouton_modification\" onclick=".mettreEnLigne($numLogement, true).">Mettre l'annonce en ligne</a>
-                            <a href=\"#\" class=\"bouton_modification\">Modifier l'annonce</a>
-                            <a href=\"#\" class=\"bouton_modification\">Supprimer l'annonce</a>
-                            </p>";
+
+                        if (isset($_SESSION['id']) && $numLogementExists) {
+                            if ($_SESSION['id'] == $proprio) {
+                                // L'utilisateur est connecté et est le propriétaire du logement
+                        
+                                if ($etat_logement) {
+                                    echo "<p class=\"proprio\">
+                                        <hs>Le logement est en ligne</hs>
+                                        <a href=\"?action=desactiver&numLogement=$numLogement\" class=\"bouton_modification\">Mettre l'annonce hors ligne</a>
+                                        <a href=\"#\" class=\"bouton_modification\">Modifier l'annonce</a>
+                                        <a href=\"#\" class=\"bouton_modification\">Supprimer l'annonce</a>
+                                    </p>";
+                                } else {
+                                    echo "<p class=\"proprio\">
+                                        <hs>Le logement est hors ligne</hs>
+                                        <a href=\"?action=activer&numLogement=$numLogement\" class=\"bouton_modification\">Mettre l'annonce en ligne</a>
+                                        <a href=\"#\" class=\"bouton_modification\">Modifier l'annonce</a>
+                                        <a href=\"#\" class=\"bouton_modification\">Supprimer l'annonce</a>
+                                    </p>";
+                                }
+                            }
                         }
-                    }
-                }
+                        
+                        if (isset($_GET['action']) && isset($_GET['numLogement'])) {
+                            $numLogement = $_GET['numLogement'];
+                        
+                            if ($_GET['action'] == 'activer') {
+                                // Mettre l'annonce en ligne (changer $etat_logement à true)
+                                $sql = "UPDATE ldc.Logement
+                                        SET LogementEnLigne = true
+                                        WHERE numLogement = :numLogement";
+                        
+                                // Préparez la requête
+                                $stmt = $pdo->prepare($sql);
+                        
+                                // Exécutez la requête avec les paramètres
+                                $stmt->execute(array(':numLogement' => $numLogement));
+                        
+                                // Changer $etat_logement
+                                $etat_logement = true;
+                            } elseif ($_GET['action'] == 'desactiver') {
+                                // Mettre l'annonce hors ligne (changer $etat_logement à false)
+                                $sql = "UPDATE ldc.Logement
+                                        SET LogementEnLigne = false
+                                        WHERE numLogement = :numLogement";
+                        
+                                // Préparez la requête
+                                $stmt = $pdo->prepare($sql);
+                        
+                                // Exécutez la requête avec les paramètres
+                                $stmt->execute(array(':numLogement' => $numLogement));
+                        
+                                // Changer $etat_logement
+                                $etat_logement = false;
+                            }
+                            // Rediriger vers la page de détails du logement
+                            header("Location: /src/php/PageDetailLogement.php?numLogement=$numLogement");
+                            exit; // Assurez-vous de terminer le script après la redirection
+                        }
                 ?>
         
             <section class="tete_offre">
