@@ -17,7 +17,7 @@
 
         try {
             // Connexion à la base de données
-            $pdo = new PDO("pgsql:host=servbdd;port=5432;dbname=pg_mbisquay;user=mbisquay;password=Ipsum22!");
+            $pdo = new PDO("pgsql:host=postgresdb;port=5432;dbname=sae;user=sae;password=Phiegoosequ9en9o");
         
             // Préparez la requête SQL pour récupérer les données de la table "Client"
             $query = "SELECT * FROM ldc.Logement WHERE numLogement = 2 ";
@@ -209,7 +209,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $servicesLogement = $serviceLogement1 . ", " . $serviceLogement2;
     try {
 
-        $pdo = new PDO("pgsql:host=servbdd;port=5432;dbname=pg_mbisquay;user=mbisquay;password=Ipsum22!");
+        $pdo = new PDO("pgsql:host=postgresdb;port=5432;dbname=sae;user=sae;password=Phiegoosequ9en9o");
         $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         $stmt = $pdo->prepare(
         //"UPDATE ldc.logement SET surfacehabitable=$surface, libelle=$title, accroche = $phraseAccroche, logement.description=$description,naturelogement=$typeLogement, photocouverture=$photos, nbpersmax=$nbPersMax, nbchambres=$nbChambres, nbsalledebain=$nbSalleDeBain WHERE logement.numLogement = $numLogement)"
