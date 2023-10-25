@@ -68,7 +68,7 @@
                 } else{
                     /*Créations de carte pour chaque logements*/
                     foreach ($logements as $logement) { ?>
-                        <a href="/src/php/pageDetailLogement.php?numLogement=<?php echo $logement[0] ?>"><div class="logement">
+                        <a href="/src/php/PageDetailLogement.php?numLogement=<?php echo $logement[0] ?>"><div class="logement">
                             <img src="/public/img/logements/<?php echo $logement[0] ?>/1.png" alt="logement">
                             <div>
                                 <h3><?php echo $logement[2] ?></h3>
