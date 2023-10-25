@@ -2,6 +2,8 @@
     session_start(); 
     if (!isset($_SESSION['id'])) {
         header('Location: /src/php/connection.php');
+    } else if ($_SESSION['proprio'] == false) {
+        header('Location: /');
     }
     //Connection à la base de donnée
     try{
@@ -51,11 +53,17 @@
         <?php include 'header.php'; ?> 
         <div id="content">
             <h2>Mes logements</h2>
+            <div id="options">
+                <div>
+                    <input type="text" placeholder="Search..">
+                    <button class="boutton">Filtrer</button>
+                    <button class="boutton">Trier</button>
+                </div>
+                <a href="/src/php/creationLogement.php" class="boutton">Ajouter un logement</a>
+            </div>
             <div id="logements">
                 <?php
-                if ($_SESSION['proprio'] == false) { ?>
-                    <h3>Vous n'êtes pas propriétaire :/</h3> <?php
-                } else if (count($logements) === 0){ ?>
+                if (count($logements) === 0){ ?>
                     <h3>Vous n'avez aucun logement pour le moment :/</h3> <?php
                 } else{
                     /*Créations de carte pour chaque logements*/
