@@ -1,13 +1,19 @@
 <?php
 
+include "start_session.php";
+
+if (!isset($_SESSION["id"])) {
+    echo "Page Innaccessible";
+    die();
+}
+
 if (isset($_SESSION)) {
+    $nom = $_SESSION["nom_bien"];
+    $nbNuit = $_SESSION["nbNuit"];
     $nomBien = $_SESSION["nom_bien"];
 } else {
-    $nomBien = "Superbe Maison à la plage";
-    $dateArrivee = "2023-10-19";
-    $dateDepart = "2023-10-19";
-    $nbPersonne = 10;
-    $demande = "Petit dejeuner au lit";
+    $nom = "Superbe Maison au bord de la plage";
+    $nbNuit = "6";
 }
 ?>
 <!DOCTYPE html>

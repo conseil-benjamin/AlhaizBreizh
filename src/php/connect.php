@@ -1,13 +1,14 @@
 <?php
-$server = 'servbdd.iutlan.etu.univ-rennes1.fr';
+// Fichier PHP pour se connecter à la base de données
+$server = 'localhost';
 $driver = 'pgsql';
-$dbname = 'test';
-$user = 'test';
-$pass = 'test';
+$dbname = 'sae';
+$user = 'Guillaume';
+$pass = '';
 try {
-$dbh = new PDO("$driver:host=$server;dbname=$dbname",
-    $user, $pass);
+    $dbh = new PDO("pgsql:host=$server;dbname=$dbname",
+        $user, $pass);
 } catch (PDOException $e) {
-    print "Erreur !: " . $e->getMessage() . "<br/>";
+    print "Erreur deux !: " . $e->getMessage() . "<br/>";
     die();
 }
