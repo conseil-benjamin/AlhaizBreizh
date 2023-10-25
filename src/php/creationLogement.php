@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="../styles/styles.css">
     <link rel="stylesheet" type="text/css" href="../styles/styleCreationLogement.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   
     <script src="../js/addInputElement.js"></script>
     <title>Creation Logement</title>
 </head>
@@ -19,49 +20,58 @@
             $pdo = new PDO("pgsql:host=servbdd;port=5432;dbname=pg_bconseil;user=bconseil;password=Anneso73!");
         
             // Préparez la requête SQL pour récupérer les données de la table "Client"
-            $query = "SELECT * FROM ldc.Client";
+            $query = "SELECT * FROM ldc.Logement WHERE numLogement = 2 ";
         
             // Exécutez la requête
             $result = $pdo->query($query);
         
-            while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                // Accédez aux colonnes de la table "Client"
-                $idCompte = $row['idCompte'];
-                $firstName = $row['firstName'];
-                $lastName = $row['lastName'];
-                $mail = $row['mail'];
-                $numeroTel = $row['numeroTel'];
-                $photoProfil = $row['photoProfil'];
-                $civilite = $row['civilite'];
-                $adressePostale = $row['adressePostale'];
-                $pseudoCompte = $row['pseudoCompte'];
-                $motDePasse = $row['motDePasse'];
-                $dateNaissance = $row['dateNaissance'];
-                $notationMoyenne = $row['notationMoyenne'];
+            while ($row = $result->fetch(PDO::FETCH_NUM)) {
+                $numLogement = $row[0];
+                $surfaceHabitable = $row[1];
+                $libelle = $row[2];
+                $accroche = $row[3];
+                $description = $row[4];
+                $natureLogement = $row[5];
+                $proprio = $row[6];
+                $photoCouverture = $row[7];
+                $LogementEnLigne = $row[8];
+                $nbPersMax = $row[9];
+                $nbChambres = $row[10];
+                $nbLitsSimples = $row[11];
+                $nbLitsDoubles = $row[12];
+                $detailsLitsDispos = $row[13];
+                $nbSalleDeBain = $row[14];
+                $tarifNuitees = $row[15];
             }
 
-            echo "ID du Compte : $idCompte<br>";
-            echo "Prénom : $firstName<br>";
-            echo "Nom : $lastName<br>";
-            echo "Email : $mail<br>";
-            echo "Numéro de téléphone : $numeroTel<br>";
-            echo "Photo de profil : $photoProfil<br>";
-            echo "Civilité : $civilite<br>";
-            echo "Adresse postale : $adressePostale<br>";
-            echo "Pseudo du Compte : $pseudoCompte<br>";
-            echo "Mot de passe : $motDePasse<br>";
-            echo "Date de naissance : $dateNaissance<br>";
-            echo "Notation moyenne : $notationMoyenne<br>";
-        
+            echo "Numéro de Logement : " . $numLogement . "<br>";
+            echo "Surface Habitable : " . $surfaceHabitable . "<br>";
+            echo "Libellé : " . $libelle . "<br>";
+            echo "Accroche : " . $accroche . "<br>";
+            echo "Description : " . $description . "<br>";
+            echo "Nature du Logement : " . $natureLogement . "<br>";
+            echo "Propriétaire : " . $proprio . "<br>";
+            echo "Photo de Couverture : " . $photoCouverture . "<br>";
+            echo "Logement en Ligne : " . $LogementEnLigne . "<br>";
+            echo "Nombre de Personnes Max : " . $nbPersMax . "<br>";
+            echo "Nombre de Chambres : " . $nbChambres . "<br>";
+            echo "Nombre de Lits Simples : " . $nbLitsSimples . "<br>";
+            echo "Nombre de Lits Doubles : " . $nbLitsDoubles . "<br>";
+            echo "Détails des Lits Disponibles : " . $detailsLitsDispos . "<br>";
+            echo "Nombre de Salles de Bain : " . $nbSalleDeBain . "<br>";
+            echo "Tarif des Nuitées : " . $tarifNuitees . "<br>";
+
+            // insert
+
             $pdo = null;
+
         } catch (PDOException $e) {
-            // Gérez les erreurs de connexion ou d'exécution de la requête
             echo "Erreur : " . $e->getMessage();
         }
-        
     ?>
     <h1>Création d’un nouveau logement</h1>
     <hr>
+    <form method="post">
     <div class="container-main">
         <div class="container-left">
             <label for="title">Titre de l'annonce (*)</label>
@@ -85,7 +95,7 @@
                 </div>
             </div>
             <label for="natureLogement">Nature du logement (*)</label>
-            <input type="text" id="natureLogementInput" size="60" placeholder="Nature du logement" maxlength="50">
+            <input type="text" id="natureLogementInput" name="natureLogement" size="60" placeholder="Nature du logement" maxlength="50">
             <div class="servicesElement">
                 <label for="services">Services disponibles</label>
                 <input type="text" id="services" name="services" placeholder="Service disponible" size="60" maxlength="100">
@@ -158,8 +168,42 @@
             </span>
             <input type="checkbox" name="conditionsGenerale" id="conditionsGenerale">
             <label class="conditionsGenerale" for="conditionsGenerale">
-        <button class="creerAnnonce" type="submit" id="creerAnnonce">Créer annonce</button>
+            <button class="creerAnnonce" type="submit" id="creerAnnonce">Créer annonce</button>
     </div>
     </div>
+    </form>
+
+
+    <?php 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $title = $_POST['title'];
+    $description = $_POST['description'];
+    $photos = $_POST['photos'];
+    $typeLogement = $_POST['typeLogement'];
+    $surface = $_POST['surface'];
+    $natureLogement = $_POST['natureLogement'];
+    // faire une boucle qui récupère tous les inputs services en récupérant la valeur de la variable nbServices
+    // pour connaitre le nombre de services tapé et tous les récupérés
+    $serviceLogement1 = $_POST['services'];
+    $serviceLogement2 = $_POST['service2'];
+    $lits = $_POST['lits'];
+    $adresse = $_POST['adresse'];
+    $codePostal = $_POST['cdPostal'];
+    $ville = $_POST['ville'];
+    $phraseAccroche = $_POST['accroche'];
+    $nbChambres = $_POST['nbChambres'];
+    $nbSalleDeBain = $_POST['nbSallesBain'];
+    $nbPersMax = $_POST['nbMaxPers'];
+    $prixParNuit = $_POST['prixParNuit'];
+    $installationsDispo = $_POST['installDispo'];
+    $equipementDispo = $_POST['equipementDispo'];
+
+    $servicesLogement = $serviceLogement1 . ", " . $serviceLogement2;
+    
+
+    echo $title . " " . $description . " " . $photos . " "  . $typeLogement . " " . $surface . " " . $natureLogement . " " . $servicesLogement . " " . $lits . " " . $adresse . " " . $codePostal . " " . $ville . " " . $phraseAccroche . " " . $nbChambres . " " . $nbSalleDeBain . " " . $nbPersMax . " " . $prixParNuit . " " . $installationsDispo . " " . $equipementDispo;
+
+}
+    ?>
 </body>
 </html>

@@ -1,6 +1,11 @@
 let nbChambres = 1;
+let nbLits = 1;
 let nbLitsSimple = 0;
 let nbLitsDoubles = 0;
+let nbInstallations = 1;
+let nbServices = 1;
+let nbEquipements = 1;
+
 const iconSupprimer = document.createElement("img");
 iconSupprimer.src = "../../public/icons/supprimer34.svg";
 iconSupprimer.alt = "Icone supprimer";
@@ -24,6 +29,8 @@ document.addEventListener("DOMContentLoaded", function () {
   let checkboxReglement = document.querySelector("#conditionsGenerale");
   let creerAnnonce = document.querySelector("#creerAnnonce");
   creerAnnonce.disabled = true;
+
+  const form = document.querySelector("form");
 
   /**
    * * Si réglement pas accepté, bouton creerAnnonce désactivé
@@ -101,39 +108,47 @@ checkFormValidity();
  * * vérifie si tous les champs ont correctement été remplis
  */
 
-creerAnnonce.addEventListener("click", () => {
-    if (checkFormValidity()) {
-        Swal.fire({
-            title: "Logement bien créé",
-            text: "Succès",
-            icon: "success"
-        });
-    } else {
-        Swal.fire({
-            title: "Veuillez remplir correctement tous les champs doté d'un *",
-            text: "Erreur",
-            icon: "error"
-        });
-    }
-});
 
+form.addEventListener("submit", function (event) {
+  event.preventDefault(); // Empêche la soumission du formulaire
+  // Vous pouvez placer le code de soumission du formulaire PHP ici si nécessaire
+  if (checkFormValidity()) {
+    Swal.fire({
+        title: "Logement bien créé",
+        text: "Succès",
+        icon: "success"
+    });
+} else {
+    Swal.fire({
+        title: "Veuillez remplir correctement tous les champs dotés d'un *",
+        text: "Erreur",
+        icon: "error"
+    });
+}
+});
     /**
      * * Permet au clic du bouton Ajouter installation,
      * * d'ajouter un nouvel input pour renseigner une nouvelle installation
      * * Pareil pour les services, équipements, lits et chambres
      */
   addInstallation.addEventListener("click", () => {
-    const inputPlusIconeSupprimer = createInputWithIconSupprimer();
+    nbInstallations++;
+    let nameInput = "InstallDispo" + nbInstallations;
+    const inputPlusIconeSupprimer = createInputWithIconSupprimer("Installation disponible", nameInput);
     installationsElement.appendChild(inputPlusIconeSupprimer);
   });
 
   addService.addEventListener("click", () => {
-    const inputPlusIconeSupprimer = createInputWithIconSupprimer();
+    nbServices++;
+    let nameInput = "service" + nbServices;
+    const inputPlusIconeSupprimer = createInputWithIconSupprimer("Service disponible", nameInput);
     servicesElement.appendChild(inputPlusIconeSupprimer);
   });
 
   addEquipements.addEventListener("click", () => {
-    const inputPlusIconeSupprimer = createInputWithIconSupprimer();
+    nbEquipements++;
+    let nameInput = "equipement" + nbEquipements;
+    const inputPlusIconeSupprimer = createInputWithIconSupprimer("Equipement disponible", nameInput);
     equipementsElement.appendChild(inputPlusIconeSupprimer);
   });
 
@@ -159,6 +174,8 @@ creerAnnonce.addEventListener("click", () => {
 
   addChambre.addEventListener("click", () => {
     nbChambres++;
+    nbLits ++;
+    console.log(nbChambres);
     let titre = document.createElement("label");
 
     let btnAddLits = document.createElement("button");
@@ -211,6 +228,7 @@ creerAnnonce.addEventListener("click", () => {
       const parentDivUp = parentDiv.parentElement;
       parentDivUp.remove();
       nbChambres --;
+      console.log(nbChambres);
     });
 
     btnAddLits.addEventListener("click", () => {
@@ -219,15 +237,18 @@ creerAnnonce.addEventListener("click", () => {
     });
   });
 
-  
   /**
    * * Fonction qui crée un input ainsi qu'une image, 
    * * les assemble dans une div, et return la div
    */
-  function createInputWithIconSupprimer() {
+  function createInputWithIconSupprimer(placeholder, name) {
     let newElement = document.createElement("input");
     newElement.setAttribute("type", "text");
     newElement.setAttribute("size", "60");
+    newElement.setAttribute("placeholder", placeholder);
+    newElement.setAttribute("name", name);
+
+    console.log(name);
 
     const iconSupprimer = document.createElement("img");
     iconSupprimer.src = "../../public/icons/supprimer34.svg";
@@ -243,6 +264,13 @@ creerAnnonce.addEventListener("click", () => {
     iconSupprimer.addEventListener("click", function () {
         const parentDiv = this.parentElement;
         parentDiv.remove();
+        if(placeholder === "Installation disponible"){
+          nbInstallations --;
+        } else if(placeholder === "Service disponible"){
+          nbServices--;
+        } else if(placeholder === "Equipement disponible"){
+          nbEquipements--;
+        }
       });
 
     return inputPlusIconeSupprimer;
@@ -255,6 +283,9 @@ creerAnnonce.addEventListener("click", () => {
    * * 
    */
   function addLitsFunction() {
+    event.preventDefault();
+    nbLits++;
+    console.log(nbLits);
     let newElement = document.createElement("select");
     newElement.setAttribute("type", "text");
     newElement.id = "lits";
@@ -287,6 +318,8 @@ creerAnnonce.addEventListener("click", () => {
     iconSupprimer.addEventListener("click", function () {
       const parentDiv = this.parentElement;
       parentDiv.remove();
+      nbLits--;
+      console.log(nbLits);
     });
 
     return inputPlusIconeSupprimer;
