@@ -6,23 +6,17 @@
     <link rel="stylesheet" type="text/css" href="../styles/styles.css">
     <link rel="stylesheet" type="text/css" href="../styles/styleCreationLogement.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-   
     <script src="../js/addInputElement.js"></script>
     <title>Creation Logement</title>
 </head>
 <body>
     <?php
         include './header.php';
-
-
         try {
-            // Connexion à la base de données
             $pdo = new PDO("pgsql:host=servbdd;port=5432;dbname=pg_bconseil;user=bconseil;password=Anneso73!");
         
-            // Préparez la requête SQL pour récupérer les données de la table "Client"
             $query = "SELECT * FROM ldc.Logement WHERE numLogement = 2 ";
-        
-            // Exécutez la requête
+            
             $result = $pdo->query($query);
         
             while ($row = $result->fetch(PDO::FETCH_NUM)) {
@@ -43,7 +37,7 @@
                 $nbSalleDeBain = $row[14];
                 $tarifNuitees = $row[15];
             }
-
+/*
             echo "Numéro de Logement : " . $numLogement . "<br>";
             echo "Surface Habitable : " . $surfaceHabitable . "<br>";
             echo "Libellé : " . $libelle . "<br>";
@@ -60,7 +54,7 @@
             echo "Détails des Lits Disponibles : " . $detailsLitsDispos . "<br>";
             echo "Nombre de Salles de Bain : " . $nbSalleDeBain . "<br>";
             echo "Tarif des Nuitées : " . $tarifNuitees . "<br>";
-
+*/
             // insert
 
             $pdo = null;
@@ -91,7 +85,7 @@
                 </div>
                 <div>
                     <label for="surface">Surface en m² (*)</label>
-                    <input type="number" id="surface" name="surface" maxlength="4" placeholder="Surface">
+                    <input type="number" id="surface" name="surface" maxlength="4" min="1" placeholder="Surface">
                 </div>
             </div>
             <label for="natureLogement">Nature du logement (*)</label>
@@ -131,22 +125,22 @@
             <div class="nbChambreEtBainsDiv">
                 <div>
                     <label for="nbChambres">Nombres de chambres (*)</label> 
-                    <input type="number" id="nbChambres" name="nbChambres" placeholder="Nb Chambres">
+                    <input type="number" id="nbChambres" name="nbChambres" placeholder="Nb Chambres" min="1">
                 </div>
                 <div>
                     <label for="nbSalleBain">Nombres de salles de bain (*)</label>
-                    <input type="number" id="nbSallesBain" name="nbSallesBain" placeholder="Nb Salles de Bain">
+                    <input type="number" id="nbSallesBain" name="nbSallesBain" min="1" placeholder="Nb Salles de Bain">
                 </div>
             </div>
             <div class="nbPrixEtPersonnesDiv">
                 <div>
                     <label for="nbMaxPers">Nombre de personnes max (*)</label>
-                    <input type="number" id="nbMaxPers" name="nbMaxPers" placeholder="Nb pers max">
+                    <input type="number" id="nbMaxPers" name="nbMaxPers" placeholder="Nb pers max" min="1">
                 </div>
-                <div>
+                <div> 
                     <label for="prixParNuit">Prix de base par nuit (*)</label>
                     <br>
-                    <input type="number" id="prixParNuit" name="prixParNuit" placeholder="Prix/Nuit">
+                    <input type="number" id="prixParNuit" name="prixParNuit" placeholder="Prix/Nuit" min="1">
                 </div>
             </div>
 
@@ -175,6 +169,8 @@
 
 
     <?php 
+            include './footer.php';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = $_POST['title'];
     $description = $_POST['description'];

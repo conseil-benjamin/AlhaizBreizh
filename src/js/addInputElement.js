@@ -88,10 +88,10 @@ function checkFormValidity() {
         natureLogementValue.length > 0 &&
         surfaceValue.length > 0 &&
         photosInput.files.length > 0 &&
-        (nbChambresValue.length > 0 && nbChambresValue >= 0) &&
-        (nbSallesBainValue.length > 0 && nbChambresValue >= 0) &&
-        (nbMaxPersValue.length > 0 && nbMaxPersValue >= 0) && 
-        (prixParNuitValue.length > 0 && prixParNuitValue >= 0)
+        (nbChambresValue.length > 0 && nbChambresValue >= 1) &&
+        (nbSallesBainValue.length > 0 && nbChambresValue >= 1) &&
+        (nbMaxPersValue.length > 0 && nbMaxPersValue >= 1) && 
+        (prixParNuitValue.length > 0 && prixParNuitValue >= 1)
     );
 }
 
@@ -108,10 +108,8 @@ checkFormValidity();
  * * vérifie si tous les champs ont correctement été remplis
  */
 
-
 form.addEventListener("submit", function (event) {
-  event.preventDefault(); // Empêche la soumission du formulaire
-  // Vous pouvez placer le code de soumission du formulaire PHP ici si nécessaire
+  event.preventDefault();
   if (checkFormValidity()) {
     Swal.fire({
         title: "Logement bien créé",

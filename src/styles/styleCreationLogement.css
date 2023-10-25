@@ -91,6 +91,10 @@ h1 {
   height: 4em;
 }
 
+.nbPrixEtPersonnesDiv{
+  margin: 5em 0 0 0;
+}
+
 #typeLogement{
   width: 220px;
 }
@@ -101,7 +105,6 @@ h1 {
 
 .nbPrixEtPersonnesDiv {
   margin-bottom: 6em;
-  width: 27rem;
 }
 
 hr {
@@ -135,6 +138,9 @@ hr {
   width: 30px;
   cursor: pointer;
 }
+.bottom > span{
+  margin: 0 1em 0 1em;
+}
 
 #iconSupprimer:hover {
   cursor: pointer;
@@ -148,9 +154,10 @@ hr {
   color: red;
 }
 
-.prixParNuit{
-  margin-right: 1em;
+.divPrixParNuit{
+  margin: 2em 0 0 0;
 }
+
 
 @media (max-width: 1250px) {
   .container-main {
@@ -159,7 +166,10 @@ hr {
     justify-content: center;
   }
   .container-left {
-    margin: 1em 5em 1em 5em;
+    margin: 1em 5em 1em 0em;
+  }
+  .container-right {
+    margin: 1em 5em 1em 0em;
   }
 }
 
