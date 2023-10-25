@@ -6,16 +6,16 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="/src/styles/styles.css">
-        <link rel="stylesheet" type="text/css" href="/src/styles/connection.css">
+        <link rel="stylesheet" type="text/css" href="/src/styles/connexion.css">
         <title>ALHaiz Breizh</title>
     </head>
     <body>
         <?php include 'header.php'; ?>
         <div id="content">
-            <div id="connection">
-                <h1>Connection</h1>
+            <div id="connexion">
+                <h1>connexion</h1>
                 
-                <form id="connection-form" action="login.php" method="post">
+                <form id="connexion-form" action="login.php" method="post">
                     <div class="form">
                         <div>
                             <label <?php if (isset($_GET['error']) && $_GET['error'] == 'id') echo 'class="error"' ?> for="identifiant">Identifiant</label>

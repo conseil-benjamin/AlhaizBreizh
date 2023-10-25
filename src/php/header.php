@@ -38,7 +38,7 @@
                 </ul>
             </div> <?php
         } else { ?>
-            <a href="/src/php/connection.php" class="compte">
+            <a href="/src/php/connexion.php" class="compte">
                 <p>Se connecter</p>
                 <img src="/public/icons/user-blue.svg">
             </a> <?php
