@@ -1,7 +1,8 @@
 <?php
 $id_client = $_SESSION['id_client'];
+$numlogement = $_SESSION["numLogement"];
 
-print_r($_POST);
+print_r($_SESSION);
 
 $dateDevis = new DateTime();
 $dateDevis = $dateDevis->format("Y-m-d");
@@ -14,11 +15,11 @@ try {
         "UPDATE ldc.devis
 SET
   dateDevis = '$dateDevis',
-WHERE numDevis = ;"
+WHERE numlogement = $numlogement ;"
     );
     $stmt->execute();
     $dbh = null;
 } catch (PDOException $e) {
-    print "Erreur !: " . $e->getMessage() . "<br/>";
+    print "Erreur !: " . $e->getMessage() . "";
     die();
 }

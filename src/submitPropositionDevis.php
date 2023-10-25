@@ -37,7 +37,7 @@
     <?php
     include("php/submitPropositionDevisDB.php");
     ?>
-        <h2> Votre devis à bien été envoyée</h2>
+        <h2> Votre devis a bien été envoyée</h2>
     </section>
 </div>
 <footer id="footer">
