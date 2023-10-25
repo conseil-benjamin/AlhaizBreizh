@@ -6,8 +6,7 @@ $dbname = 'sae';
 $user = 'Guillaume';
 $pass = '';
 try {
-    $dbh = new PDO("pgsql:host=$server;dbname=$dbname",
-        $user, $pass);
+    $dbh = new PDO("pgsql:host=postgresdb;port=5432;dbname=sae;user=sae;password=Phiegoosequ9en9o");
 } catch (PDOException $e) {
     print "Erreur deux !: " . $e->getMessage() . "<br/>";
     die();
