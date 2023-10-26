@@ -1,0 +1,93 @@
+<?php
+$nom = $_SESSION["nom_bien"];
+?>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="./styles/demande_devis.css" rel="stylesheet" type="text/css">
+    <link href="./styles/styles.css" rel="stylesheet" type="text/css">
+    <title>Demande de devis</title>
+</head>
+<body>
+<?php include("php/header.php"); ?>
+<div style="height: 75px"></div>
+<div id="fond">
+    <section id="entete">
+        <h1>
+            Réservation de "Superbe maison au bord de la plage"
+        </h1>
+    </section>
+    <section id="corpsTexte">
+        <form method="post" action="submitDevis.php">
+            <div id="formulaire">
+                <div id="prixDiv">
+                    <h2>Prix de base <span id="prixSpan">6</span>€/nuit</h2>
+                    <ul>
+                        <li>
+                            <div class="labelPrix">
+                                <label for="arrivee">
+                                    Date d'arrivée :
+                                </label>
+                            </div>
+                            <div>
+                                <input class="input1" id="arrivee" name="date_arrivee" placeholder="JJ/MM/YYYY"
+                                       type="date">
+                            </div>
+                        </li>
+                        <li>
+                            <div class="labelPrix">
+                                <label for="depart">
+                                    Date de depart :
+                                </label>
+                            </div>
+                            <div>
+                                <input class="input1" id="depart" name="date_depart" placeholder="JJ/MM/YYYY"
+                                       type="date">
+                            </div>
+                        </li>
+                        <li>
+                            <div class="labelPrix">
+                                <label for="nbpersonne">
+                                    Nombre de personnes :
+                                </label>
+                            </div>
+                            <div>
+                                <input class="input1" id="nbpersonne" max="10" min="0" name="nb_personne"
+                                       placeholder="nbpersonne" type="number" value="0">
+                            </div>
+                        </li>
+                    </ul>
+                    <div>
+                        <label for="demande">Autre demande (1000 caractères maximum)</label>
+                        <textarea id="demande" maxlength="1000" placeholder="Votre demande"
+                                  spellcheck="true" name="demande"></textarea>
+                    </div>
+                </div>
+                <div id="service">
+                    <h2>Services complémentaires : (cocher les services que vous souhaitez)</h2>
+                    <ul>
+                        <li>
+                            <div class="supplement first">
+                                <input id="checkBox1" type="checkbox" name="service1">
+                                <label for="checkBox1">Service 01</label>
+                                <p class="prix"><span>66,6</span>€</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div id="total">
+                <h2> Total de la réservation : <span id="prixTotal">0</span>€</h2>
+                <button type="submit">Confirmer la réservation et demander un devis</button>
+            </div>
+        </form>
+    </section>
+</div>
+<?php include("php/footer.php"); ?>
+</body>
+<script src="script/devis.js">
+    </html>
+

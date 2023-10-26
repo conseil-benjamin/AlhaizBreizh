@@ -27,7 +27,7 @@ session_start();
     <?php
         //include("php/submitDevisDB.php");
     ?>
-        <h2> Votre devis a bien été envoyée</h2>
+        <h2 id="succesDevis"> Votre devis a bien été envoyé</h2>
     </section>
 </div>
 <?php include("php/footer.php"); ?>
