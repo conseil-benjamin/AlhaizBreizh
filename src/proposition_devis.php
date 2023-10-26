@@ -88,6 +88,6 @@ $nom = $_SESSION["nom_bien"];
 </div>
 <?php include("php/footer.php"); ?>
 </body>
-<script src="script/devis.js">
+<script src="script/devis.js"></script>
     </html>
 
