@@ -3,8 +3,8 @@ session_start();
 
 // Connexion à la base de données
 try {
-    //$pdo = new PDO("pgsql:host=localhost;port=5432;dbname=postgres;user=postgres;password=root"); //local
-    $pdo = new PDO("pgsql:host=postgresdb;port=5432;dbname=sae;user=sae;password=Phiegoosequ9en9o");   //serveur
+    $pdo = new PDO("pgsql:host=localhost;port=5432;dbname=postgres;user=postgres;password=root"); //local
+    //$pdo = new PDO("pgsql:host=postgresdb;port=5432;dbname=sae;user=sae;password=Phiegoosequ9en9o");   //serveur
 
 } catch (PDOException $e) {
     $error_message = "Erreur de connexion à la base de données : " . $e->getMessage();
