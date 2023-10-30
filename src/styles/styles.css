@@ -6,7 +6,6 @@
     scroll-behavior: smooth;
     scroll-padding-top: 75px;
     scroll-behavior: smooth;
-    scroll-padding-top: 75px;
 }
 
 body{
@@ -207,12 +206,13 @@ h1, h2, h3{
 }
 /*Icone user*/
 #header .compte > img:last-child{
-    height: 75%;
+    height: 55px;
+    width: 55px;
     border-radius: 50px;
 }
 
 #header div.compte > img:last-child{
-    border: 1px #65E3FF solid;
+    border: 3px #65E3FF solid;
 }
 
 /*Options du compte*/

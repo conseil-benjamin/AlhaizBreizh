@@ -1,8 +1,7 @@
 <?php
-    if ((isset($_SESSION['id'])) && (file_exists($_SERVER['DOCUMENT_ROOT'].'/public/img/'.$_SESSION['id'].'.png'))) {
-        $image = '/public/img/'.$_SESSION['id'].'.png';
-    } else {
-        $image = '/public/icons/user-blue.svg';
+    $image = '/public/icons/user-blue.svg';
+    if ((isset($_SESSION['id'])) && (file_exists($_SERVER['DOCUMENT_ROOT'].$image))) { // Si l'utilisateur est connecté et qu'il a une photo de profil
+        $image = '/public/img/photos_profil/'.$_SESSION['id'].'.png';
     }
 ?>
 <header id="header">

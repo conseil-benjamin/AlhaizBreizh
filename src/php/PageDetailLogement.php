@@ -67,7 +67,7 @@ if (isset($_GET['numLogement'])) {
                 $nom_proprio = isset($row[1]) ? $row[1] : null;
                 $liste_langue_parle = isset($row[2]) ? $row[2] : null;
             }
-            $photo_profil_proprio = '/public/img/'.$proprio.'.png'; 
+            $photo_profil_proprio = '/public/img/photos_profil/'.$proprio.'.png'; 
             
             // Récupération de la localisation
             $stmt = $pdo->prepare("SELECT ville,rue FROM ldc.localisation WHERE numLogement = $numLogement");
@@ -101,8 +101,8 @@ if (isset($_GET['numLogement'])) {
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="../styles/styles.css">
-        <link rel="stylesheet" type="text/css" href="../styles/stylePageDetailLogement.css">
+        <link rel="stylesheet" type="text/css" href="/src/styles/styles.css">
+        <link rel="stylesheet" type="text/css" href="/src/styles/stylePageDetailLogement.css">
         <title>ALHaiz Breizh</title>
     </head>
     <body>
