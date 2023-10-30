@@ -15,8 +15,8 @@
         <meta charset="UTF-8">
         <meta content="IE=edge" http-equiv="X-UA-Compatible">
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
-        <link href="./styles/demande_devis.css" rel="stylesheet" type="text/css">
-        <link href="./styles/styles.css" rel="stylesheet" type="text/css">
+        <link href="/src/styles/demande_devis.css" rel="stylesheet" type="text/css">
+        <link href="/src/styles/styles.css" rel="stylesheet" type="text/css">
         <title>Demande de devis</title>
     </head>
     <body>
