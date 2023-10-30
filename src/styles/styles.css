@@ -203,6 +203,7 @@ h1, h2, h3{
 #header .compte > img:first-child{
     rotate: 90deg;
     height: 50%;
+    transition: all 0.5s ease;
 }
 /*Icone user*/
 #header .compte > img:last-child{
