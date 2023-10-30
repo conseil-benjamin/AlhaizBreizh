@@ -46,10 +46,8 @@ if (isset($_GET['deconnexion'])) {
 
     $pdo = null;
 
-    if ($error_id) {
-        $header = "Location: /src/php/connexion.php?error=id";
-    } elseif ($error_mdp){
-        $header = "Location: /src/php/connexion.php?error=mdp&identifiant=".$identifiant;
+    if ($error_id || $error_mdp) {
+        $header = "Location: /src/php/connexion.php?error";
     } else {
         $_SESSION['id'] = $id;
         $_SESSION['pseudo'] = $identifiant;

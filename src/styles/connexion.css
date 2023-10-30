@@ -1,8 +1,5 @@
 /*****************************************************/
 /*Page de connexion*/
-
-/*Formulaire de connexion*/
-
 #content{
     display: flex;
     margin: 10em auto 0 auto;
@@ -15,6 +12,7 @@
     padding: 2em;
 }
 
+/*Formulaire de connexion*/
 #connexion{
     display: flex;
     flex-direction: column;
@@ -75,6 +73,10 @@
 
 .form > input:hover{
     filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.form #submit{
+    cursor: pointer;
 }
 
 /*Inscription*/

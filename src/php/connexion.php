@@ -13,16 +13,18 @@
         <?php include 'header.php'; ?>
         <div id="content">
             <div id="connexion">
-                <h1>connexion</h1>
-                
+                <h1>Connexion</h1>
                 <form id="connexion-form" action="login.php" method="post">
                     <div class="form">
+                        <?php if (isset($_GET['error'])) { ?>
+                            <p class="error">Identifiant ou mot de passe incorrect</p>
+                        <?php } ?>
                         <div>
-                            <label <?php if (isset($_GET['error']) && $_GET['error'] == 'id') echo 'class="error"' ?> for="identifiant">Identifiant</label>
-                            <input type="text" name="identifiant" id="identifiant" value="<?php if (isset($_GET['identifiant'])) echo $_GET['identifiant']; ?>" placeholder="Entrez votre identifiant"  required>
+                            <label for="identifiant">Identifiant</label>
+                            <input type="text" name="identifiant" id="identifiant" placeholder="Entrez votre identifiant"  required>
                         </div>
                         <div>
-                            <label <?php if (isset($_GET['error']) && $_GET['error'] == 'mdp') echo 'class="error"' ?> for="mdp">Mot de passe</label>
+                            <label for="mdp">Mot de passe</label>
                             <input type="password" name="mdp" id="mdp" placeholder="Entrez votre mot de passe" required>
                             <a href="">Mot de passe oublié ?</a>
                         </div>
