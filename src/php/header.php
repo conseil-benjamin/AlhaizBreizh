@@ -23,17 +23,17 @@
             </div>
             <div class="compte-options">
                 <ul>
-                    <a href=""><li>Mon Profil</li></a>
-                    <a href=""><li>Ma Messagerie</li></a>
-                    <a href=""><li>Mes Réservations</li></a>
+                    <!--<a href=""><li>Mon Profil</li></a>-->
+                    <!--<a href=""><li>Ma Messagerie</li></a>-->
+                    <!--<a href=""><li>Mes Réservations</li></a>-->
                     <?php
                         if ($_SESSION['proprio']) { ?>
                             <a href="/src/php/mesLogements.php"><li>Mes Logements</li></a> <?php
                         } else { ?>
-                            <a href=""><li>Devenir propriétaire</li></a> <?php
+                            <!--<a href=""><li>Devenir propriétaire</li></a>--> <?php
                         } ?>
-                    <a href=""><li>Mes Favoris</li></a>
-                    <a href=""><li>Besoin d'Aide</li></a>
+                    <!--<a href=""><li>Mes Favoris</li></a>-->
+                    <!--<a href=""><li>Besoin d'Aide</li></a>-->
                     <a href="/src/php/login.php?deconnexion" id="deconnexion"><li>Déconnexion</li></a>
                 </ul>
             </div> <?php
