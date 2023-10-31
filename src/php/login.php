@@ -12,7 +12,7 @@ if (isset($_GET['deconnexion'])) {
     $error_id = true;
     $error_mdp = true;
 
-    $pdo = new PDO("pgsql:host=localhost;port=5432;dbname=postgres;user=postgres;password=root");
+    include('connect.php');
     $stmt = $pdo->prepare("SELECT * FROM ldc.Client");
 
     $stmt->execute();

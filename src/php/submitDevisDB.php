@@ -37,14 +37,13 @@ $dateValid = "";
 $EPOCH ="2000-01-01";
 
 try {
-    /*include('connect.php');*/
-    $pdo = new PDO("pgsql:host=localhost;port=5432;dbname=postgres;user=postgres;password=root");
-    $stmt = $dbh->prepare(
+    include('connect.php');
+    $stmt = $pdo->prepare(
         "INSERT INTO ldc.devis(nbPersonnes, numReservation, numLogement, dateDebut, dateFin, dateDevis, dateValid, optionAnnulation, dureeDelaisAcceptation,demande) 
 VALUES('$nb_personne','$numReservation','$numLogement','$sqlDateArr','$sqlDateDep','$EPOCH','$EPOCH','\"\"','0','$demande')"
     );
     $stmt->execute();
-    $dbh = null;
+    $pdo = null;
 } catch (PDOException $e) {
     print "Erreur une !: " . $e->getMessage();
     die();

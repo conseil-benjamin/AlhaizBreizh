@@ -15,7 +15,7 @@
         include './header.php';
         try {
             // Connexion à la base de données
-            $pdo = new PDO("pgsql:host=localhost;port=5432;dbname=postgres;user=postgres;password=root");
+            include('connect.php');
         
             $query = "SELECT * FROM ldc.Logement WHERE numLogement = 2 ";
             

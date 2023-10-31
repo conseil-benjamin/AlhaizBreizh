@@ -2,13 +2,7 @@
 session_start();
 
 // Connexion à la base de données
-try {
-    $pdo = new PDO("pgsql:host=localhost;port=5432;dbname=postgres;user=postgres;password=root"); //local
-    //$pdo = new PDO("pgsql:host=postgresdb;port=5432;dbname=sae;user=sae;password=Phiegoosequ9en9o");   //serveur
-
-} catch (PDOException $e) {
-    $error_message = "Erreur de connexion à la base de données : " . $e->getMessage();
-}
+include('connect.php');
 
 if (isset($_GET['numLogement'])) {
     $numLogement = $_GET['numLogement'];
@@ -80,6 +74,8 @@ if (isset($_GET['numLogement'])) {
             $error_message = "Le numéro de logement spécifié n'existe pas.";
         }
     }
+} else {
+    $error_message = "Aucun numéro de logement spécifié.";
 }
 
 /* Ce qui manque a afficher
