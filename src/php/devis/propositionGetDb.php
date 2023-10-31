@@ -5,7 +5,7 @@ if(isset($_SESSION)) {
 $numlogement = $_SESSION["numLogement"];
 global $pdo;
 try {
-    include('connect.php');
+    $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     $stmt = $pdo->prepare(
         "SELECT * FROM ldc.Devis where numlogement=1 order by numdevis ASC"

@@ -1,28 +1,24 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../styles/styles.css">
-    <link rel="stylesheet" type="text/css" href="../styles/styleCreationLogement.css">
+    <link rel="stylesheet" type="text/css" href="/src/styles/styles.css">
+    <link rel="stylesheet" type="text/css" href="/src/styles/styleCreationLogement.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-   
-    <script src="../js/addInputElement.js"></script>
+    <script src="/src/js/addInputElement.js"></script>
     <title>Creation Logement</title>
 </head>
 <body>
     <?php
-        include './header.php';
-
-
+        include($_SERVER['DOCUMENT_ROOT'].'/src/php/header.php');
         try {
             // Connexion à la base de données
-            include('connect.php');
+            $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
         
-            // Préparez la requête SQL pour récupérer les données de la table "Client"
             $query = "SELECT * FROM ldc.Logement WHERE numLogement = 2 ";
-        
-            // Exécutez la requête
+            
             $result = $pdo->query($query);
         
             while ($row = $result->fetch(PDO::FETCH_NUM)) {
@@ -43,16 +39,24 @@
                 $nbSalleDeBain = $row[14];
                 $tarifNuitees = $row[15];
             }
-
-            $query = "SELECT * FROM ldc.localisation WHERE numLogement = 2 ";
-            $result = $pdo->query($query);
-
-            while ($row = $result->fetch(PDO::FETCH_NUM)) {
-                $rue = $row[2];
-                $cp = $row[3];
-                $ville = $row[4];
-            }
-
+/*
+            echo "Numéro de Logement : " . $numLogement . "<br>";
+            echo "Surface Habitable : " . $surfaceHabitable . "<br>";
+            echo "Libellé : " . $libelle . "<br>";
+            echo "Accroche : " . $accroche . "<br>";
+            echo "Description : " . $description . "<br>";
+            echo "Nature du Logement : " . $natureLogement . "<br>";
+            echo "Propriétaire : " . $proprio . "<br>";
+            echo "Photo de Couverture : " . $photoCouverture . "<br>";
+            echo "Logement en Ligne : " . $LogementEnLigne . "<br>";
+            echo "Nombre de Personnes Max : " . $nbPersMax . "<br>";
+            echo "Nombre de Chambres : " . $nbChambres . "<br>";
+            echo "Nombre de Lits Simples : " . $nbLitsSimples . "<br>";
+            echo "Nombre de Lits Doubles : " . $nbLitsDoubles . "<br>";
+            echo "Détails des Lits Disponibles : " . $detailsLitsDispos . "<br>";
+            echo "Nombre de Salles de Bain : " . $nbSalleDeBain . "<br>";
+            echo "Tarif des Nuitées : " . $tarifNuitees . "<br>";
+*/
             // insert
 
             $pdo = null;
@@ -67,43 +71,27 @@
     <div class="container-main">
         <div class="container-left">
             <label for="title">Titre de l'annonce (*)</label>
-            <input type="text" id="title" name="title" size="60" placeholder="Titre" maxlength="100" value=<?php echo $libelle; ?>>
-            
+            <input type="text" id="title" name="title" size="60" placeholder="Titre" maxlength="100">
             <label for="description">Description de l'annonce (*)</label>
-            <textarea name="description" id="description" cols="46" rows="20" placeholder="Description" maxlength="500"><?php echo $description; ?></textarea>
-            
+            <textarea name="description" id="description" cols="46" rows="20" placeholder="Description" maxlength="500"></textarea>
             <label for="photos">Photos (*)</label>
             <input type="file" id="photos" name="photos" multiple>
-            
             <div class="typeLogementDiv">
                 <div>
                     <label for="typeLogement">Type de logement (*)</label>
-
                     <select id="typeLogement" name="typeLogement">
-
-                    <?php
-                    $options=array("Appartement","maison","villa","cave");
-                    foreach ($options as $option){
-                        if ($option == $natureLogement){
-                            echo "<option value='$option' selected>$option</option>";
-                        }
-                        else{
-                            echo "<option value='$option'>$option</option>";
-                        }
-                    }
-                    ?>
+                    <option>Appartement</option>
+                    <option>Maison</option>
+                    <option>Villa</option>
                     </select>
                 </div>
-
                 <div>
                     <label for="surface">Surface en m² (*)</label>
-                    <input type="number" id="surface" name="surface" maxlength="4" placeholder="Surface" min="0" value=<?php echo $surfaceHabitable; ?>>
+                    <input type="number" id="surface" name="surface" maxlength="4" min="1" placeholder="Surface">
                 </div>
             </div>
-
             <label for="natureLogement">Nature du logement (*)</label>
-            <input type="text" id="natureLogementInput" name="natureLogement" size="60" placeholder="Nature du logement" maxlength="50" value=<?php echo $natureLogement; ?>>
-            
+            <input type="text" id="natureLogementInput" name="natureLogement" size="60" placeholder="Nature du logement" maxlength="50">
             <div class="servicesElement">
                 <label for="services">Services disponibles</label>
                 <input type="text" id="services" name="services" placeholder="Service disponible" size="60" maxlength="100">
@@ -122,39 +110,39 @@
         </div>
         <div class="container-right">
             <label for="adresse">Adresse (*)</label>
-            <input type="text" id="adresse" name="adresse" size="60" placeholder="Numéro et nom de la rue" value=<?php echo $rue; ?> >
+            <input type="text" id="adresse" name="adresse" size="60" placeholder="Numéro et nom de la rue">
             <div class="villeDiv">
                 <div>
                     <label for="cdPostal">Code Postal (*)</label>
-                    <input type="text" id="cdPostal" name="cdPostal" placeholder="Code Postal" maxlength="5" value=<?php echo $cp; ?>>
+                    <input type="text" id="cdPostal" name="cdPostal" placeholder="Code Postal" maxlength="5">
                     <span id="testValeurInputCdPostal"></span>
                 </div>
                 <div>
                     <label for="ville">Ville (*)</label>
-                    <input type="text" id="ville" name="ville" placeholder="Ville" value=<?php echo $ville; ?>>
+                    <input type="text" id="ville" name="ville" placeholder="Ville">
                 </div>
             </div>
             <label for="accroche">Phrase d'accroche</label>
-            <textarea name="accroche" id="accroche" cols="45" rows="10" placeholder="Laisser une petite accroche"><?php echo $accroche; ?></textarea>
+            <textarea name="accroche" id="accroche" cols="45" rows="10" placeholder="Laisser une petite accroche"></textarea>
             <div class="nbChambreEtBainsDiv">
                 <div>
                     <label for="nbChambres">Nombres de chambres (*)</label> 
-                    <input type="number" id="nbChambres" name="nbChambres" placeholder="Nb Chambres" min="1" value=<?php echo $nbChambres; ?>>
+                    <input type="number" id="nbChambres" name="nbChambres" placeholder="Nb Chambres" min="1">
                 </div>
                 <div>
                     <label for="nbSalleBain">Nombres de salles de bain (*)</label>
-                    <input type="number" id="nbSallesBain" name="nbSallesBain" placeholder="Nb Salles de Bain" min="1" value=<?php echo $nbSalleDeBain; ?>>
+                    <input type="number" id="nbSallesBain" name="nbSallesBain" min="1" placeholder="Nb Salles de Bain">
                 </div>
             </div>
             <div class="nbPrixEtPersonnesDiv">
                 <div>
                     <label for="nbMaxPers">Nombre de personnes max (*)</label>
-                    <input type="number" id="nbMaxPers" name="nbMaxPers" placeholder="Nb pers max" min="1" value=<?php echo $nbPersMax; ?>>
+                    <input type="number" id="nbMaxPers" name="nbMaxPers" placeholder="Nb pers max" min="1">
                 </div>
-                <div>
+                <div> 
                     <label for="prixParNuit">Prix de base par nuit (*)</label>
                     <br>
-                    <input type="number" id="prixParNuit" name="prixParNuit" placeholder="Prix/Nuit" min="0" value=<?php echo $tarifNuitees; ?>>
+                    <input type="number" id="prixParNuit" name="prixParNuit" placeholder="Prix/Nuit" min="1">
                 </div>
             </div>
 
@@ -176,54 +164,9 @@
             </span>
             <input type="checkbox" name="conditionsGenerale" id="conditionsGenerale">
             <label class="conditionsGenerale" for="conditionsGenerale">
-            <button class="modifAnnonce" type="submit" id="modifAnnonce">Modifier l'annonce</button>
+            <button class="creerAnnonce" type="submit" id="creerAnnonce">Créer annonce</button>
     </div>
     </div>
-    </form>
-
-
-    <?php 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $title = $_POST['title'];
-    $description = $_POST['description'];
-    $photos = $_POST['photos'];
-    $typeLogement = $_POST['typeLogement'];
-    $surface = $_POST['surface'];
-    $natureLogement = $_POST['natureLogement'];
-    // faire une boucle qui récupère tous les inputs services en récupérant la valeur de la variable nbServices
-    // pour connaitre le nombre de services tapé et tous les récupérés
-    $serviceLogement1 = $_POST['services'];
-    $serviceLogement2 = $_POST['service2'];
-    $lits = $_POST['lits'];
-    $adresse = $_POST['adresse'];
-    $codePostal = $_POST['cdPostal'];
-    $ville = $_POST['ville'];
-    $phraseAccroche = $_POST['accroche'];
-    $nbChambres = $_POST['nbChambres'];
-    $nbSalleDeBain = $_POST['nbSallesBain'];
-    $nbPersMax = $_POST['nbMaxPers'];
-    $prixParNuit = $_POST['prixParNuit'];
-    $installationsDispo = $_POST['installDispo'];
-    $equipementDispo = $_POST['equipementDispo'];
-
-    $servicesLogement = $serviceLogement1 . ", " . $serviceLogement2;
-    try {
-
-        include('connect.php');
-        $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-        $stmt = $pdo->prepare(
-        //"UPDATE ldc.logement SET surfacehabitable=$surface, libelle=$title, accroche = $phraseAccroche, logement.description=$description,naturelogement=$typeLogement, photocouverture=$photos, nbpersmax=$nbPersMax, nbchambres=$nbChambres, nbsalledebain=$nbSalleDeBain WHERE logement.numLogement = $numLogement)"
-        //"UPDATE ldc.logement SET surfacehabitable=$surface WHERE logement.numLogement = $numLogement"
-        "UPDATE ldc.logement SET nbsalledebain=$nbSalleDeBain, surfacehabitable=$surface, nbchambres=$nbChambres, nbpersmax=$nbPersMax WHERE logement.numLogement = $numLogement"
-    );
-        $stmt->execute();
-        $pdo = null;
-    } catch (PDOException $e) {
-        print "Erreur !: " . $e->getMessage() . "<br/>";
-        die();
-    }
-
-}
-    ?>
+    <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'); ?>
 </body>
 </html>

@@ -10,7 +10,7 @@
         <title>ALHaiz Breizh</title>
     </head>
     <body>
-        <?php include 'header.php'; ?>
+        <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/header.php'); ?>
         <div id="content">
             <div id="connexion">
                 <h1>Connexion</h1>
@@ -37,6 +37,6 @@
                 <a href="/src/php/inscription.php" class="boutton">S'inscrire</a>
             </div>
         </div>
-        <?php include 'footer.php'; ?>
+        <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'); ?>
     </body>
 </html>

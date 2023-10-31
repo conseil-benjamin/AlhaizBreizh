@@ -2,7 +2,7 @@
     session_start(); 
     //connexion à la base de donnée
     try {
-        include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
+        $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
         $stmt = $pdo->prepare("SELECT numLogement,libelle,nbPersMax,tarifNuitees FROM ldc.Logement");
 
         //Recherche des logements dans la base de données
@@ -39,7 +39,7 @@
         <title>ALHaiz Breizh</title>
     </head>
     <body>
-        <?php include './src/php/header.php'; ?>
+        <?php include $_SERVER['DOCUMENT_ROOT'] .'/src/php/header.php'; ?>
         <video id="background" autoplay loop muted>
             <source src="/public/videos/video-bretagne.mp4" type="video/mp4">
         </video>
@@ -58,7 +58,7 @@
                 } else{
                     $logements = array_reverse($logements);
                     foreach ($logements as $logement) {
-                        $lien = '/src/php/PageDetailLogement.php?numLogement=' . $logement[0];
+                        $lien = '/src/php/logement/PageDetailLogement.php?numLogement=' . $logement[0];
                         $img = '/public/img/logements/' . $logement[0] . '/1.png';
 
                         $titre = $logement[1];
@@ -83,7 +83,7 @@
                 } ?>
             </div> 
         </div>   
-        <?php include './src/php/footer.php'; ?>
+        <?php include $_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'; ?>
         <script>
             window.addEventListener("scroll", () => {
                 var header = document.querySelector("header");

@@ -15,7 +15,7 @@
         <title>Demande de devis</title>
     </head>
     <body>
-        <?php include("php/header.php"); ?>
+        <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/header.php'); ?>
         <div style="height: 75px"></div>
         <div id="fond">
             <section id="entete">
@@ -30,6 +30,6 @@
                 <h2 id="succesDevis"> Votre devis a bien été envoyé</h2>
             </section>
         </div>
-        <?php include("php/footer.php"); ?>
+        <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'); ?>
     </body>
 </html>

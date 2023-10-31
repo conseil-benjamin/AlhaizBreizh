@@ -1,6 +1,6 @@
 <?php
 // Fichier PHP pour se connecter à la base de données
-
+$pdo = null;
 try {
     //$pdo = new PDO("pgsql:host=localhost;port=5432;dbname=sae;user=Guillaume;password="); //local Guillaume
     $pdo = new PDO("pgsql:host=localhost;port=5432;dbname=postgres;user=postgres;password=root"); //local
@@ -9,3 +9,4 @@ try {
     print "Erreur deux !: " . $e->getMessage() . "<br/>";
     die();
 }
+return $pdo;

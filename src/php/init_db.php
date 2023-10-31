@@ -1,7 +1,7 @@
 <?php
 try {
     // Créer une connexion PDO
-    include('connect.php');
+    $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
 
     // Début de la transaction
     $pdo->beginTransaction();

@@ -1,40 +1,38 @@
 <?php
     if (isset($_SESSION)) {
-        $nom = $_SESSION["nom_bien"];
-        $nbNuit = $_SESSION["nbNuit"];
-        $prixNuit = $_SESSION["prixNuit"];
+        $nomBien = $_SESSION["nom_bien"];
     } else {
-        $nom = "Superbe Maison au bord de la plage";
-        $nbNuit = "6";
-        $prixNuit = "6,8";
+        $nomBien = "Superbe Maison à la plage";
+        $dateArrivee = "2023-10-19";
+        $dateDepart = "2023-10-19";
+        $nbPersonne = 10;
+        $demande = "Petit dejeuner au lit";
     }
 ?>
 <!DOCTYPE html>
-<html lang="fr">
+    <html lang="fr">
     <head>
         <meta charset="UTF-8">
         <meta content="IE=edge" http-equiv="X-UA-Compatible">
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <link href="/src/styles/proposition_devis.css" rel="stylesheet" type="text/css">
         <link href="/src/styles/demande_devis.css" rel="stylesheet" type="text/css">
         <link href="/src/styles/styles.css" rel="stylesheet" type="text/css">
         <title>Demande de devis</title>
     </head>
     <body>
-        <?php include("php/header.php"); ?>
+        <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/header.php'); ?>
         <div style="height: 75px"></div>
         <div id="fond">
             <section id="entete">
                 <h1>
-                    Réservation de <?php echo $nom ?>
+                    Réservation de "<?php echo $nomBien ?>"
                 </h1>
             </section>
             <section id="corpsTexte">
-                <form method="post" action="submitDemandeDevis.php">
+                <form method="post" action="submitPropositionDevis.php">
                     <div id="formulaire">
                         <div id="prixDiv">
-                            <h2>Prix de base <span id="prixSpan"><?php echo $prixNuit ?></span>€/nuit - <span
-                                        id="nbNuit"><?php echo $nbNuit ?></span>
-                                nuit</h2>
                             <ul>
                                 <li>
                                     <div class="labelPrix">
@@ -43,8 +41,8 @@
                                         </label>
                                     </div>
                                     <div>
-                                        <input class="input1" id="arrivee" name="date_arrivee" placeholder="JJ/MM/YYYY"
-                                            type="date">
+                                        <input class="input1" id="arrivee" name="date_arrivee"
+                                            type="date" value="<?php echo $dateArrivee ?>"" readonly>
                                     </div>
                                 </li>
                                 <li>
@@ -55,7 +53,7 @@
                                     </div>
                                     <div>
                                         <input class="input1" id="depart" name="date_depart" placeholder="JJ/MM/YYYY"
-                                            type="date">
+                                            type="date" value="<?php echo $dateDepart ?>" readonly>
                                     </div>
                                 </li>
                                 <li>
@@ -66,18 +64,28 @@
                                     </div>
                                     <div>
                                         <input class="input1" id="nbpersonne" max="10" min="0" name="nb_personne"
-                                            placeholder="nbpersonne" type="number" value="0">
+                                            placeholder="nbpersonne" type="number" value="<?php echo $nbPersonne ?>"
+                                            readonly>
                                     </div>
                                 </li>
                             </ul>
                             <div>
                                 <label for="demande">Autre demande (1000 caractères maximum)</label>
-                                <textarea id="demande" maxlength="1000" placeholder="Votre demande"
-                                        spellcheck="true" name="demande"></textarea>
+                                <textarea id="demande" maxlength="1000" content="<?php echo $demande ?>"
+                                        spellcheck="true" name="demande" readonly></textarea>
+                            </div>
+                            <div id="upload">
+                                <div id="uploadInput">
+                                    <label for="devis" id="devisLabel">Upload votre devis</label>
+                                    <input type="file" accept="application/pdf" name="devis" id="devis">
+                                </div>
+                                <div id="ficUpload">
+                                    <button id="annulerFicUpload" type="button">Annuler</button>
+                                    <label id="ficUploadNom"></label></div>
                             </div>
                         </div>
                         <div id="service">
-                            <h2>Services complémentaires : (cocher les services que vous souhaitez)</h2>
+                            <h2>Services complémentaires :</h2>
                             <ul>
                                 <?php
                                 $MAX = 6;
@@ -105,13 +113,12 @@
                         </div>
                     </div>
                     <div id="total">
-                        <h2> Total de la réservation : <span id="prixTotal">0</span>€</h2>
-                        <button class="boutton" type="submit">Confirmer la réservation et demander un devis</button>
+                        <button class="boutton" type="submit">Envoyer le devis</button>
                     </div>
                 </form>
             </section>
         </div>
-        <?php include("php/footer.php"); ?>
+        <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'); ?>
     </body>
-    <script src="js/devis.js"></script>
+    <script src="js/proposition_devis.js"></script>
 </html>

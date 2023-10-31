@@ -2,7 +2,7 @@
 session_start();
 
 // Connexion à la base de données
-include('connect.php');
+$pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
 
 if (isset($_GET['numLogement'])) {
     $numLogement = $_GET['numLogement'];
@@ -102,7 +102,7 @@ if (isset($_GET['numLogement'])) {
         <title>ALHaiz Breizh</title>
     </head>
     <body>
-        <?php include './header.php'; ?>
+        <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/header.php'); ?>
         <main>
             <?php
                 if (isset($_SESSION['id']) && $numLogementExists) {
@@ -200,19 +200,19 @@ if (isset($_GET['numLogement'])) {
                     </p>
                 <ul class="infos_loge">
                     <p>
-                        <a href="#comment" class="logo"><img src="../../public/icons/star_fill.svg" id="icone" alt="icone etoile"> Note</p></a>
+                        <a href="#comment" class="logo"><img src="/public/icons/star_fill.svg" id="icone" alt="icone etoile"> Note</p></a>
 
 
-                    <li><div><img src="../../public/icons/type_logement.svg" id="icone" alt="icone maison"> <?php if ($type_logement==null) {
+                    <li><div><img src="/public/icons/type_logement.svg" id="icone" alt="icone maison"> <?php if ($type_logement==null) {
                                     echo "Type de logement";          
                                 }
                                 else {
                                     echo $type_logement;
                                 }?></div></li>
-                    <li><div><img src="../../public/icons/nb_personnes.svg" id="icone" alt="icone personnes">  <?php echo $nb_personnes?> Personnes</div></li>
+                    <li><div><img src="/public/icons/nb_personnes.svg" id="icone" alt="icone personnes">  <?php echo $nb_personnes?> Personnes</div></li>
                     
-                    <li><div><a href="#infos_chambres"><img src="../../public/icons/double-bed.svg" id="icone" alt="icone lit"> <?php echo $nb_chambres?> Chambre(s)</a></div></li>
-                    <li><div><img src="../../public/icons/salle_de_bains.svg" id="icone" alt="icone salle de bain"> <?php echo $nb_sdb?> Salles de bains</div></li>
+                    <li><div><a href="#infos_chambres"><img src="/public/icons/double-bed.svg" id="icone" alt="icone lit"> <?php echo $nb_chambres?> Chambre(s)</a></div></li>
+                    <li><div><img src="/public/icons/salle_de_bains.svg" id="icone" alt="icone salle de bain"> <?php echo $nb_sdb?> Salles de bains</div></li>
                 </ul>
                 </div>
             </section>
@@ -246,8 +246,8 @@ if (isset($_GET['numLogement'])) {
                             </h2>
                             <div id="hote">
                                 <?php
-                                if (file_exists($photo_profil_proprio)==false) { ?>
-                                    <img src="../../public/icons/user.svg" id="photo_profil" alt="photo de profil du propriétaire"> <?php          
+                                if (file_exists($_SERVER['DOCUMENT_ROOT'] . $photo_profil_proprio)==false) { ?>
+                                    <img src="/public/icons/user.svg" id="photo_profil" alt="photo de profil du propriétaire"> <?php          
                                 }
                                 else { ?>
                                     <img src="<?php echo $photo_profil_proprio ?>" id="photo_profil" alt="photo de profil du propriétaire"> <?php
@@ -319,9 +319,9 @@ if (isset($_GET['numLogement'])) {
                                         foreach ($chambre['lits'] as $lit) {
                                             echo "<li>";
                                             if ($lit['type'] == 'simple') {
-                                                echo "<img src='../../public/icons/single-bed.svg' id='icone' alt='icone'>";
+                                                echo "<img src='/public/icons/single-bed.svg' id='icone' alt='icone'>";
                                             } elseif ($lit['type'] == 'double') {
-                                                echo "<img src='../../public/icons/double-bed.svg' id='icone' alt='icone'>";
+                                                echo "<img src='/public/icons/double-bed.svg' id='icone' alt='icone'>";
                                             }
                                             echo "</li>";
                                             echo "<li id='nb_lit'>";
@@ -421,8 +421,8 @@ if (isset($_GET['numLogement'])) {
                                 <article class="contact">
                                     <div class="photo_profil_contact">
                                         <?php
-                                            if (file_exists($photo_profil_proprio)==false) { ?>
-                                                <img src="../../public/icons/user.svg" id="photo_profil" alt="photo de profil du propriétaire"> <?php          
+                                            if (file_exists($_SERVER['DOCUMENT_ROOT'] . $photo_profil_proprio)==false) { ?>
+                                                <img src="/public/icons/user.svg" id="photo_profil" alt="photo de profil du propriétaire"> <?php          
                                             }
                                             else { ?>
                                                 <img src="<?php echo $photo_profil_proprio ?>" id="photo_profil" alt="photo de profil du propriétaire"> <?php
@@ -442,7 +442,7 @@ if (isset($_GET['numLogement'])) {
                                                 echo $nom_proprio;
                                             }
                                             ?></p>
-                                            <p><img src="../../public/icons/star_fill.svg" id="icone" alt="icone etoile"> Note</p>
+                                            <p><img src="/public/icons/star_fill.svg" id="icone" alt="icone etoile"> Note</p>
                                             <div class="bouton_contact">
                                                 <a href="#">Contacter</a>
                                             </div>
@@ -475,7 +475,7 @@ if (isset($_GET['numLogement'])) {
                 </div>
             </section>
         </main>
-        <?php include './footer.php'; ?>
+        <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'); ?>
     </body>
 </html> 
                     

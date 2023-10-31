@@ -7,7 +7,7 @@
     }
     //Connection à la base de donnée
     try{
-        include('connect.php');
+        $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
         $stmt = $pdo->prepare("SELECT numLogement,proprio,libelle,accroche FROM ldc.Logement");
 
         //Recherche des logements dans la base de données
@@ -50,7 +50,7 @@
         <title>ALHaiz Breizh</title>
     </head>
     <body>
-        <?php include 'header.php'; ?> 
+        <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/header.php'); ?>
         <div id="content">
             <h2>Mes logements</h2>
             <div id="options">
@@ -59,7 +59,7 @@
                     <button class="boutton">Filtrer</button>
                     <button class="boutton">Trier</button>
                 </div>
-                <a href="/src/php/creationLogement.php" class="boutton">Ajouter un logement</a>
+                <a href="/src/php/logement/creationLogement.php" class="boutton">Ajouter un logement</a>
             </div>
             <div id="logements">
                 <?php
@@ -68,7 +68,7 @@
                 } else{
                     /*Créations de carte pour chaque logements*/
                     foreach ($logements as $logement) { ?>
-                        <a href="/src/php/PageDetailLogement.php?numLogement=<?php echo $logement[0] ?>"><div class="logement">
+                        <a href="/src/php/logement/PageDetailLogement.php?numLogement=<?php echo $logement[0] ?>"><div class="logement">
                             <img src="/public/img/logements/<?php echo $logement[0] ?>/1.png" alt="logement">
                             <div>
                                 <h3><?php echo $logement[2] ?></h3>
@@ -81,6 +81,6 @@
                 ?>
             </div>
         </div>
-        <?php include 'footer.php'; ?>
+        <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'); ?>
     </body>
 </html>

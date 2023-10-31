@@ -6,12 +6,11 @@ $durreeAcceptation = 300;
 
 global $pdo;
 try {
-    include('connect.php');
+    $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
     $stmt = $pdo->prepare(
         "UPDATE ldc.devis
-SET
-  dateDevis = '$dateDevis'
-WHERE numlogement = $numlogement;"
+        SET dateDevis = '$dateDevis'
+        WHERE numlogement = $numlogement;"
     );
     $stmt->execute();
     $pdo = null;

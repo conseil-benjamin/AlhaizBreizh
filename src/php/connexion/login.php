@@ -12,7 +12,7 @@ if (isset($_GET['deconnexion'])) {
     $error_id = true;
     $error_mdp = true;
 
-    include('connect.php');
+    $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
     $stmt = $pdo->prepare("SELECT * FROM ldc.Client");
 
     $stmt->execute();
