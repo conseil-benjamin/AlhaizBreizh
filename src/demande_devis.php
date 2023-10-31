@@ -106,7 +106,7 @@
                     </div>
                     <div id="total">
                         <h2> Total de la réservation : <span id="prixTotal">0</span>€</h2>
-                        <button type="submit">Confirmer la réservation et demander un devis</button>
+                        <button class="boutton" type="submit">Confirmer la réservation et demander un devis</button>
                     </div>
                 </form>
             </section>

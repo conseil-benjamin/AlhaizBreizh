@@ -15,7 +15,7 @@ input[type='file'] {
 
 #upload {
     height: 8vh;
-    background: #7EBCF2;
+    background: var(--col3);
     border-radius: 20px;
     width: max-content;
     display: flex;

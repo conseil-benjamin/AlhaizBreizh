@@ -1,9 +1,9 @@
 body {
   margin-top: 10%;
-  --main-bg-color: #515d5e;
-  --color-btn-submit: #7ebcf2;
+  --main-bg-color: var(--col1);
+  --color-btn-submit: var(--col3);
   --main-font-color: #ffffff;
-  --h1-font-color: #16a1ef;
+  --h1-font-color: var(--col5);
 }
 
 .container-main {
@@ -43,7 +43,7 @@ button{
 }
 
 button:hover{
-  background-color: #7ebcf2;
+  background-color: var(--col3);
   transition: 0.7s;
 }
 
@@ -65,7 +65,7 @@ textarea {
 h1 {
   text-align: center;
   font-size: clamp(1rem, 2.5vw, 2rem);
-  color: #16a1ef;
+  color: var(--col5);
 }
 
 .creerAnnonce {

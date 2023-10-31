@@ -113,7 +113,7 @@
                         </div>
                     </div>
                     <div id="total">
-                        <button type="submit">Envoyer le devis</button>
+                        <button class="boutton" type="submit">Envoyer le devis</button>
                     </div>
                 </form>
             </section>

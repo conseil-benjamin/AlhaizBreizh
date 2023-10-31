@@ -6,10 +6,18 @@
     scroll-behavior: smooth;
     scroll-padding-top: 75px;
     scroll-behavior: smooth;
+
+    /*Couleurs*/
+    --col1 : #515D5E;
+    --col2 : #D7F0FF;
+    --col3 : #7EBCF2;
+    --col4 : #627099;
+    --col5 : #16A1EF;
+    --col6 : #65E3FF;
 }
 
 body{
-    background-color: #D7F0FF;
+    background-color: var(--col2);
     min-height: calc(100vh + 20em);
     font-family: "Montserrat", Arial, sans-serif;
     overflow-x: hidden;
@@ -72,7 +80,7 @@ h1, h2, h3{
 .boutton{
     border-radius: 50px;
     border: #ffffff00 1px solid;
-    color: #515D5E;
+    color: var(--col1);
     height: 50px;
     width: fit-content;
     font-size: 20px;
@@ -80,6 +88,12 @@ h1, h2, h3{
     text-align: center;
     padding: 0 1em;
     transition: all .3s ease-in-out;
+}
+
+.boutton:hover{
+    filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.25));
+    border: #fff 1px solid;
+    transform: translateY(1px);
 }
 
 .boutton-bleu-clair:hover{
@@ -129,7 +143,7 @@ h1, h2, h3{
     align-items: center;
     align-items: center;
     justify-content: stretch;
-    background-color: #7EBCF2;
+    background-color: var(--col3);
     height: 75px;
     width: 100%;
     position: fixed;
@@ -170,7 +184,7 @@ h1, h2, h3{
 #header nav ul li{
     text-align: center;
     line-height: 75px;
-    color: #515D5E;
+    color: var(--col1);
 }
 
 #header nav ul li:hover{
@@ -188,8 +202,8 @@ h1, h2, h3{
     right: 0;
     height: 100%;
     width: 300px;
-    background-color: #515D5E;
-    color: #65E3FF;
+    background-color: var(--col1);
+    color: var(--col6);
     font-size: 20px;
     transition: all .3s ease-in-out;
     transition: all .3s ease-in-out;
@@ -212,7 +226,7 @@ h1, h2, h3{
 }
 
 #header div.compte > img:last-child{
-    border: 3px #65E3FF solid;
+    border: 3px var(--col6) solid;
 }
 
 /*Options du compte*/
@@ -227,8 +241,8 @@ h1, h2, h3{
     top: 75px;
     width: 300px;
     text-align: center;
-    background-color: #515D5E;
-    color: #65E3FF;
+    background-color: var(--col1);
+    color: var(--col6);
     transition: all .3s ease-in-out;
 }
 
@@ -268,7 +282,7 @@ h1, h2, h3{
 }
 
 #footer > div{
-    background-color: #515D5E;
+    background-color: var(--col1);
     height: fit-content;
     width: 100%;
     z-index: 100;

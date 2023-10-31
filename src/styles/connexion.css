@@ -5,7 +5,7 @@
     margin: 10em auto 0 auto;
     width: 80%;
     height: 50vh;
-    background-color: #515D5E;
+    background-color: var(--col1);
     border-radius: 7.5px;
     color: #fff;
     gap: 5em;
@@ -66,7 +66,7 @@
 }
 
 .form > input{
-    background-color: #65E3FF;
+    background-color: var(--col6);
     font-size: 20px;
     width: 100%;
 }
@@ -93,7 +93,7 @@
 
 
 #inscription a{
-    background-color: #65E3FF;
+    background-color: var(--col6);
     font-size: 20px;
     width: 75%;
 }

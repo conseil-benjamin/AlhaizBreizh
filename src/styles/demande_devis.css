@@ -1,10 +1,10 @@
 #fond {
-    background: #D7F0FF;
+    background: var(--col2);
 }
 
 section#entete {
     margin: 5vh 2vw;
-    background: #515D5E;
+    background: var(--col1);
     border-radius: 20px;
     width: 96vw;
     height: 15vh;
@@ -33,7 +33,7 @@ h2 {
 #corpsTexte {
     margin: 0 2vw;
     padding: 5vh 1vw;
-    background: #515D5E;
+    background: var(--col1);
     border-radius: 20px;
     display: flex;
     flex-direction: column;
@@ -159,10 +159,9 @@ button {
     width: 685px;
     height: 70px;
     font-size: large;
-    background: #B6D0F2;
+    background: var(--col6);
     border-radius: 30px;
     border-style: none;
-
 }
 
 button:hover {
@@ -173,7 +172,7 @@ button:hover {
 .supplement {
     display: flex;
     justify-content: space-between;
-    background-color: #7EBCF2;
+    background-color: var(--col3);
     padding: 10px;
 }
 
