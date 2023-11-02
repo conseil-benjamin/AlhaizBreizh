@@ -21,17 +21,11 @@
 
         //Récupération des localisations
         if (count($logements) !== 0) {
-            $stmt = $pdo->prepare("SELECT numLogement,ville FROM ldc.Localisation");
-            $stmt->execute();
-            $i = 0;
-            while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-                if ($row[0] === $logements[$i][0]) {
-                    $logements[$i][] = $row[1];
-                }
-                if ($i == count($logements)-1) {
-                    break;
-                }
-                $i++;
+            $stmt = $pdo->prepare("SELECT numLogement,ville FROM ldc.Localisation WHERE numLogement = ?");
+            foreach ($logements as $logement) {
+                $stmt->execute([$logement[0]]);
+                $ville = $stmt->fetch(PDO::FETCH_NUM)[1];
+                $logements[($logement[0] - 1)][] = $ville;
             }
         }
         $pdo = null;

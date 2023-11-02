@@ -3,7 +3,7 @@
     //connexion à la base de donnée
     try {
         $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
-        $stmt = $pdo->prepare("SELECT numLogement,libelle,nbPersMax,tarifNuitees FROM ldc.Logement");
+        $stmt = $pdo->prepare("SELECT numLogement,libelle,nbPersMax,tarifNuitees,LogementEnLigne FROM ldc.Logement");
 
         //Recherche des logements dans la base de données
         $stmt->execute();
@@ -13,16 +13,14 @@
         }
 
         //Obtenir la localisation de chaque logement
-        $stmt = $pdo->prepare("SELECT numLogement,ville FROM ldc.Localisation");
-        $stmt->execute();
-        $i = 0;
-        while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            if ($row[0] == $logements[$i][0]) {
-                $logements[$i][] = $row[1];
+        if (count($logements) !== 0) {
+            $stmt = $pdo->prepare("SELECT numLogement,ville FROM ldc.Localisation WHERE numLogement = ?");
+            foreach ($logements as $logement) {
+                $stmt->execute([$logement[0]]);
+                $ville = $stmt->fetch(PDO::FETCH_NUM)[1];
+                $logements[($logement[0] - 1)][] = $ville;
             }
-            $i++;
         }
-
         $pdo = null;
     } catch (PDOException $e) {
         $logements = array();
@@ -53,17 +51,17 @@
                 <?php
                 /*Créations de carte pour chaque logements*/
 
-                if (count($logements) === 0) { ?>
-                    <h2>Aucun logement n'est disponible pour le moment :/</h2> <?php
-                } else{
-                    $logements = array_reverse($logements);
-                    foreach ($logements as $logement) {
+                $nb_logements_inactifs = 0;
+                $logements = array_reverse($logements);
+                foreach ($logements as $logement) {
+                    $actif = $logement[4];
+                    if ($actif) {
                         $lien = '/src/php/logement/PageDetailLogement.php?numLogement=' . $logement[0];
                         $img = '/public/img/logements/' . $logement[0] . '/1.png';
 
                         $titre = $logement[1];
                         $nombre_personnes = $logement[2];
-                        $localisation = $logement[4];
+                        $localisation = $logement[5];
                         $prix = $logement[3] ?>
     
                         <div class="logement">
@@ -79,7 +77,12 @@
                                 <div><strong><?php echo $prix ?>€</strong> / nuit</div> <!-- Prix du logement -->
                             </div></a>
                         </div> <?php
-                    } 
+                    } else{
+                        $nb_logements_inactifs++;
+                    }
+                } 
+                if ($nb_logements_inactifs == count($logements)){ ?>
+                    <h2>Aucun logement n'est disponible pour le moment :/</h2><?php
                 } ?>
             </div> 
         </div>   
