@@ -102,6 +102,20 @@ h1, h2, h3{
 }
 
 /*****************************************************/
+/*TextFields*/
+
+.textfield{
+    height: 50px;
+    width: fit-content;
+    border-radius: 50px;
+    border: none;
+    font-family: "Montserrat", sans-serif;
+    font-size: 16px;
+    padding-left: 1em;
+    transition: all .3s ease-in-out;
+}
+
+/*****************************************************/
 /*Fonts*/
 @font-face {
     font-family: "NoirPro";

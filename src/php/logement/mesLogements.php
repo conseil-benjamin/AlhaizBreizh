@@ -49,7 +49,7 @@
             <h2>Mes logements</h2>
             <div id="options">
                 <div>
-                    <input type="text" placeholder="Search..">
+                    <input class="textfield" type="text" placeholder="Search..">
                     <button class="boutton">Filtrer</button>
                     <button class="boutton">Trier</button>
                 </div>
