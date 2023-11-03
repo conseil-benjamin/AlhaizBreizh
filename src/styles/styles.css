@@ -87,6 +87,7 @@ h1, h2, h3{
     line-height: 50px;
     text-align: center;
     padding: 0 1em;
+    cursor: pointer;
     transition: all .3s ease-in-out;
 }
 
@@ -112,7 +113,12 @@ h1, h2, h3{
     font-family: "Montserrat", sans-serif;
     font-size: 16px;
     padding-left: 1em;
+    outline: none;
     transition: all .3s ease-in-out;
+}
+
+.textfield:focus{
+    filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.25));
 }
 
 /*****************************************************/
