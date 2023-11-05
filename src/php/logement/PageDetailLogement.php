@@ -78,6 +78,83 @@ if (isset($_GET['numLogement'])) {
     $error_message = "Aucun numéro de logement spécifié.";
 }
 
+// Gestion de la mise en ligne/hors ligne du logement
+if (isset($_GET['action']) && isset($_GET['numLogement'])) {
+    $numLogement = $_GET['numLogement'];
+
+    if ($_GET['action'] == 'activer') {
+        // Mettre l'annonce en ligne (changer $etat_logement à true)
+        $sql = "UPDATE ldc.Logement
+                SET LogementEnLigne = true
+                WHERE numLogement = :numLogement";
+
+        // Préparez la requête
+        $stmt = $pdo->prepare($sql);
+
+        // Exécutez la requête avec les paramètres
+        $stmt->execute(array(':numLogement' => $numLogement));
+
+        // Changer $etat_logement
+        $etat_logement = true;
+    } elseif ($_GET['action'] == 'desactiver') {
+        // Mettre l'annonce hors ligne (changer $etat_logement à false)
+        $sql = "UPDATE ldc.Logement
+                SET LogementEnLigne = false
+                WHERE numLogement = :numLogement";
+
+        // Préparez la requête
+        $stmt = $pdo->prepare($sql);
+
+        // Exécutez la requête avec les paramètres
+        $stmt->execute(array(':numLogement' => $numLogement));
+
+        // Changer $etat_logement
+        $etat_logement = false;
+    }
+    // Rediriger vers la page de détails du logement
+    header("Location: /src/php/logement/PageDetailLogement.php?numLogement=$numLogement");
+    exit; // Assurez-vous de terminer le script après la redirection
+}
+
+// Définir les valeurs par défaut si elles ne sont pas définies
+if (!isset($type_logement)) {
+    $type_logement = 'Type de logement';
+}
+if (!isset($nb_personnes)) {
+    $nb_personnes = 1;
+}
+if (!isset($nb_chambres)) {
+    $nb_chambres = 1;
+}
+if (!isset($nb_sdb)) {
+    $nb_sdb = 1;
+}
+if (!isset($titre_offre)) {
+    $titre_offre = 'Titre de l\'offre';
+}
+if (!isset($phrase_accroche)) {
+    $phrase_accroche = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan';
+}
+if (!isset($detail_description)) {
+    $detail_description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent auctor purus luctus enim egestas, ac scelerisque ante pulvinar. Donec ut rhoncus ex. Suspendisse ac rhoncus nisl, eu tempor urna. Curabitur vel bibendum lorem. Morbi convallis convallis diam sit amet lacinia. Aliquam in elementum tellus.
+    Curabitur tempor quis eros tempus lacinia. Nam bibendum pellentesque quam a convallis. Sed ut vulputate nisi. Integer in felis sed leo vestibulum venenatis. Suspendisse quis arcu sem. Aenean feugiat ex eu vestibulum vestibulum. Morbi a eleifend magna. Nam metus lacus, porttitor eu mauris a, blandit ultrices nibh. Mauris sit amet magna non ligula vestibulum eleifend. Nulla varius volutpat turpis sed lacinia. Nam eget mi in purus lobortis eleifend. Sed nec ante dictum sem condimentum ullamcorper quis venenatis nisi. Proin vitae facilisis nisi, ac posuere leo.';
+}
+if (!isset($prix)) {
+    $prix = 0;
+}
+if (!isset($photo_profil_proprio)){
+    $photo_profil_proprio = '/public/icons/user.svg';
+}
+if (!isset($prenom_proprio)) {
+    $prenom_proprio = 'Prénom';
+}
+if (!isset($nom_proprio)) {
+    $nom_proprio = 'Nom';
+}
+if (!isset($liste_langue_parle)) {
+    $liste_langue_parle = 'Non renseigné';
+}
+
 /* Ce qui manque a afficher
 
     $liste_chambres, probleme base de donnees, il faut une liste de chambres avec un l'intérieur une liste pour chaque chambre pour specifier le nombre de lit simple et lit double/ par chambre
@@ -108,360 +185,221 @@ if (isset($_GET['numLogement'])) {
                 if (isset($_SESSION['id']) && $numLogementExists) {
                     if ($_SESSION['id'] == $proprio) {
                         // L'utilisateur est connecté et est le propriétaire du logement
-                
-                        if ($etat_logement) {
-                            echo "<p class=\"proprio\">
-                                <hs>Le logement est en ligne</hs>
-                                <a href=\"?action=desactiver&numLogement=$numLogement\" class=\"bouton_modification\">Mettre l'annonce hors ligne</a>
-                                <a href=\"#\" class=\"bouton_modification\">Modifier l'annonce</a>
-                                <a href=\"#\" class=\"bouton_modification\">Supprimer l'annonce</a>
-                            </p>";
-                        } else {
-                            echo "<p class=\"proprio\">
-                                <hs>Le logement est hors ligne</hs>
-                                <a href=\"?action=activer&numLogement=$numLogement\" class=\"bouton_modification\">Mettre l'annonce en ligne</a>
-                                <a href=\"#\" class=\"bouton_modification\">Modifier l'annonce</a>
-                                <a href=\"#\" class=\"bouton_modification\">Supprimer l'annonce</a>
-                            </p>";
-                        }
+                        ?>
+                        <p class="proprio">
+                            <hs>Le logement est 
+                                <?php if($etat_logement){ ?>en ligne
+                                <?php } else { ?>hors ligne <?php } ?>
+                            </hs>
+                            <?php
+                            if (!$etat_logement){ ?>
+                                <a href="?action=activer&numLogement=<?php echo $numLogement ?>" class="bouton_modification">Mettre l'annonce en ligne</a>
+                            <?php } else { ?>
+                                <a href="?action=desactiver&numLogement=<?php echo $numLogement ?>" class="bouton_modification">Mettre l'annonce hors ligne</a>
+                            <?php } ?>
+                            <a href="#" class="bouton_modification">Modifier l'annonce</a>
+                            <a href="#" class="bouton_modification">Supprimer l'annonce</a>
+                        </p><?php 
                     }
-                }
-                
-                if (isset($_GET['action']) && isset($_GET['numLogement'])) {
-                    $numLogement = $_GET['numLogement'];
-                
-                    if ($_GET['action'] == 'activer') {
-                        // Mettre l'annonce en ligne (changer $etat_logement à true)
-                        $sql = "UPDATE ldc.Logement
-                                SET LogementEnLigne = true
-                                WHERE numLogement = :numLogement";
-                
-                        // Préparez la requête
-                        $stmt = $pdo->prepare($sql);
-                
-                        // Exécutez la requête avec les paramètres
-                        $stmt->execute(array(':numLogement' => $numLogement));
-                
-                        // Changer $etat_logement
-                        $etat_logement = true;
-                    } elseif ($_GET['action'] == 'desactiver') {
-                        // Mettre l'annonce hors ligne (changer $etat_logement à false)
-                        $sql = "UPDATE ldc.Logement
-                                SET LogementEnLigne = false
-                                WHERE numLogement = :numLogement";
-                
-                        // Préparez la requête
-                        $stmt = $pdo->prepare($sql);
-                
-                        // Exécutez la requête avec les paramètres
-                        $stmt->execute(array(':numLogement' => $numLogement));
-                
-                        // Changer $etat_logement
-                        $etat_logement = false;
-                    }
-                    // Rediriger vers la page de détails du logement
-                    header("Location: /src/php/PageDetailLogement.php?numLogement=$numLogement");
-                    exit; // Assurez-vous de terminer le script après la redirection
                 }
             ?>
         
             <section class="tete_offre">
                 <?php
-                if ($photo_logement==null) { ?>
+                if (!isset($photo_logement)) { ?>
                     <img src="/public/img/maison.png" alt="image maison"> <?php
                 } else {?>
                     <img src="<?php echo $img ?>" alt="image maison"> <?php
                 } ?>
                 <div>
-                <p id="localisation_haut_page">
-                <?php
-                if ($localisation==null) {
-                    echo "Localisation <br>";          
-                }
-                else {
-                    echo "$localisation <br>";
-                }
+                    <ul class="infos_loge">
+                        <li><h2 id="localisation_haut_page">
+                            <?php
+                            if (!isset($localisation)) {
+                                echo "Localisation <br>";          
+                            } else {
+                                echo "$localisation <br>";
+                            }
 
-                # gestion localisation specifique
-                if ($localisation_speci==null) {
-                    echo "Localisation specifique";          
-                }
-                else {
-                    if (isset($_SESSION['id']) && isset($_GET['numLogement'])) {
-                        // L'utilisateur est connecté
-                        if ($_SESSION['id'] == $proprio) {
-                            // L'utilisateur est connecté et est le propriétaire du logement
-                            echo $localisation_speci;
-                        }
-                    }
-                }
-
-                ?>
-                    </p>
-                <ul class="infos_loge">
-                    <p>
-                        <a href="#comment" class="logo"><img src="/public/icons/star_fill.svg" id="icone" alt="icone etoile"> Note</p></a>
-
-
-                    <li><div><img src="/public/icons/type_logement.svg" id="icone" alt="icone maison"> <?php if ($type_logement==null) {
-                                    echo "Type de logement";          
+                            # gestion localisation specifique
+                            if (!isset($localisation_speci)) {
+                                echo "Localisation specifique";          
+                            } else {
+                                if (isset($_SESSION['id']) && isset($_GET['numLogement'])) {
+                                    // L'utilisateur est connecté
+                                    if ($_SESSION['id'] == $proprio) {
+                                        // L'utilisateur est connecté et est le propriétaire du logement
+                                        echo $localisation_speci;
+                                    }
                                 }
-                                else {
-                                    echo $type_logement;
-                                }?></div></li>
-                    <li><div><img src="/public/icons/nb_personnes.svg" id="icone" alt="icone personnes">  <?php echo $nb_personnes?> Personnes</div></li>
-                    
-                    <li><div><a href="#infos_chambres"><img src="/public/icons/double-bed.svg" id="icone" alt="icone lit"> <?php echo $nb_chambres?> Chambre(s)</a></div></li>
-                    <li><div><img src="/public/icons/salle_de_bains.svg" id="icone" alt="icone salle de bain"> <?php echo $nb_sdb?> Salles de bains</div></li>
-                </ul>
+                            } ?>
+                        </h2></li>
+                        <li><div><a href="#comment" class="logo"><img src="/public/icons/star_fill.svg" id="icone" alt="icone etoile"> Note</a></div></li>
+                        <li>
+                            <div>
+                                <img src="/public/icons/type_logement.svg" id="icone" alt="icone maison"> 
+                                <?php echo $type_logement; ?>
+                            </div>
+                        </li>
+                        <li><div><img src="/public/icons/nb_personnes.svg" id="icone" alt="icone personnes"><?php echo $nb_personnes?> Personne(s)</div></li>                
+                        <li><div><a href="#infos_chambres"><img src="/public/icons/double-bed.svg" id="icone" alt="icone lit"><?php echo $nb_chambres?> Chambre(s)</a></div></li>
+                        <li><div><img src="/public/icons/salle_de_bains.svg" id="icone" alt="icone salle de bain"><?php echo $nb_sdb?> Salle(s) de bains</div></li>
+                    </ul>
                 </div>
             </section>
-            <div class="degrade"><br></div>
             <div class="corps">
                 <div class="div_corps">
                     <section class="corps_offre">
-                            <h1>
-                                <?php
-                                if ($titre_offre==null) {
-                                    echo "Titre de l'offre";          
-                                }
-                                else {
-                                    echo $titre_offre;
-                                }
-                                ?>
-                            </h1>
-                            <p>
-                            <?php
-                                if ($phrase_accroche==null) {
-                                    echo "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan";          
-                                }
-                                else {
-                                    echo $phrase_accroche;
-                                }
-                                ?>
-                            </p>
-                            <br>
-                            <h2>
-                                Hôte
-                            </h2>
-                            <div id="hote">
-                                <?php
-                                if (file_exists($_SERVER['DOCUMENT_ROOT'] . $photo_profil_proprio)==false) { ?>
-                                    <img src="/public/icons/user.svg" id="photo_profil" alt="photo de profil du propriétaire"> <?php          
-                                }
-                                else { ?>
-                                    <img src="<?php echo $photo_profil_proprio ?>" id="photo_profil" alt="photo de profil du propriétaire"> <?php
-                                }
-                                ?>
-                                <p><?php
-                                if ($prenom_proprio==null) {
-                                    echo "Prénom ";          
-                                }
-                                else {
-                                    echo "$prenom_proprio ";
-                                }
-                                if ($nom_proprio==null) {
-                                    echo "Nom";          
-                                }
-                                else {
-                                    echo $nom_proprio;
-                                }
-                                ?>
-                                </p>
-                            </div>
-                            <br>
-                            <h2>
-                                Détails de l'offre
-                            </h2>
-                            <p>
-                            <?php
-                                if ($detail_description==null) {
-                                    echo "  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent auctor purus luctus enim egestas, ac scelerisque ante pulvinar. Donec ut rhoncus ex. Suspendisse ac rhoncus nisl, eu tempor urna. Curabitur vel bibendum lorem. Morbi convallis convallis diam sit amet lacinia. Aliquam in elementum tellus.
-                                    Curabitur tempor quis eros tempus lacinia. Nam bibendum pellentesque quam a convallis. Sed ut vulputate nisi. Integer in felis sed leo vestibulum venenatis. Suspendisse quis arcu sem. Aenean feugiat ex eu vestibulum vestibulum. Morbi a eleifend magna. Nam metus lacus, porttitor eu mauris a, blandit ultrices nibh. Mauris sit amet magna non ligula vestibulum eleifend. Nulla varius volutpat turpis sed lacinia. Nam eget mi in purus lobortis eleifend. Sed nec ante dictum sem condimentum ullamcorper quis venenatis nisi. Proin vitae facilisis nisi, ac posuere leo.
-                                    ";          
-                                }
-                                else {
-                                    echo $detail_description;
-                                }
-                                
-                                ?>
-                             </p>
-                            <ul class="infos_chambres"></ul>
-                            <h2 id="infos_chambres">
-                            Chambres :
-                            </h2>
-                            <?php
-                                /*
-                                $liste_chambres = array(
-                                    array(
-                                        'nom' => 'Chambre 1',
-                                        'lits' => array(
-                                            array('type' => 'simple', 'quantite' => 5),
-                                            array('type' => 'double', 'quantite' => 2)
-                                        )
-                                    ),
-                                    array(
-                                        'nom' => 'Chambre 2',
-                                        'lits' => array(
-                                            array('type' => 'double', 'quantite' => 1)
-                                        )
+                        <h1><?php echo $titre_offre; ?></h1>
+                        <p><?php echo $phrase_accroche; ?></p>
+                        <br>
+                        <h2>Détails de l'offre</h2>
+                        <p>
+                            <?php echo $detail_description; ?>
+                        </p>
+                        <ul class="infos_chambres"></ul>
+                        <h2 id="infos_chambres">
+                        Chambres :
+                        </h2>
+                        <?php
+                            /*
+                            $liste_chambres = array(
+                                array(
+                                    'nom' => 'Chambre 1',
+                                    'lits' => array(
+                                        array('type' => 'simple', 'quantite' => 5),
+                                        array('type' => 'double', 'quantite' => 2)
                                     )
-                                ); 
-                                */
-                                if (empty($liste_chambres)|| $liste_chambres == null) {
-                                    echo "<p> Cette section est vide.</p>";
-                                } else {
-                                    echo "<ul class='chambres'>";
-                                    foreach ($liste_chambres as $chambre) {
+                                ),
+                                array(
+                                    'nom' => 'Chambre 2',
+                                    'lits' => array(
+                                        array('type' => 'double', 'quantite' => 1)
+                                    )
+                                )
+                            ); 
+                            */
+                            if (empty($liste_chambres)|| $liste_chambres == null) {
+                                echo "<p> Cette section est vide.</p>";
+                            } else {
+                                echo "<ul class='chambres'>";
+                                foreach ($liste_chambres as $chambre) {
+                                    echo "<li>";
+                                    echo "<ul class='chambre'>";
+                                    echo "<p>" . $chambre['nom'] . " : </p>";
+                                    foreach ($chambre['lits'] as $lit) {
                                         echo "<li>";
-                                        echo "<ul class='chambre'>";
-                                        echo "<p>" . $chambre['nom'] . " : </p>";
-                                        foreach ($chambre['lits'] as $lit) {
-                                            echo "<li>";
-                                            if ($lit['type'] == 'simple') {
-                                                echo "<img src='/public/icons/single-bed.svg' id='icone' alt='icone'>";
-                                            } elseif ($lit['type'] == 'double') {
-                                                echo "<img src='/public/icons/double-bed.svg' id='icone' alt='icone'>";
-                                            }
-                                            echo "</li>";
-                                            echo "<li id='nb_lit'>";
-                                            echo "<p>" . ($lit['type'] == 'simple' ? 'Lit simple' : 'Lit double') . "</p>";
-                                            echo "<p>" . $lit['quantite'] . "</p>";
-                                            echo "</li>";
+                                        if ($lit['type'] == 'simple') {
+                                            echo "<img src='/public/icons/single-bed.svg' id='icone' alt='icone'>";
+                                        } elseif ($lit['type'] == 'double') {
+                                            echo "<img src='/public/icons/double-bed.svg' id='icone' alt='icone'>";
                                         }
-                                        echo "</ul>";
+                                        echo "</li>";
+                                        echo "<li id='nb_lit'>";
+                                        echo "<p>" . ($lit['type'] == 'simple' ? 'Lit simple' : 'Lit double') . "</p>";
+                                        echo "<p>" . $lit['quantite'] . "</p>";
                                         echo "</li>";
                                     }
                                     echo "</ul>";
+                                    echo "</li>";
                                 }
+                                echo "</ul>";
+                            }
+                        ?>
+                        <br>
+                        <h2>Installations disponibles :</h2>
+                            <?php
+                            if (empty($liste_installation) || $liste_installation == null) {
+                                echo "<p class='section_vide'>Cette section est vide.</p>";
+                            } else {
+                                // Divise la chaîne en un tableau en utilisant la virgule comme séparateur
+                                $installation_array = explode(', ', $liste_installation);
+                            
+                                echo "<ul class='liste_corps'>";
+                                foreach ($installation_array as $installation) {
+                                    $installation = ucfirst($installation); 
+                                    echo "<li>$installation</li>";
+                                }
+                                echo "</ul>";
+                            }
                             ?>
-
-                            <br>
-                            <h2>
-                                Installations disponibles :
-                            </h2>
-                                <?php
-                                if ($liste_installation == null || empty($liste_installation)) {
-                                    echo "<p class='section_vide'>Cette section est vide.</p>";
-                                } else {
-                                    // Divise la chaîne en un tableau en utilisant la virgule comme séparateur
-                                    $installation_array = explode(', ', $liste_installation);
-                                
-                                    echo "<ul class='liste_corps'>";
-                                    foreach ($installation_array as $installation) {
-                                        $installation = ucfirst($installation); 
-                                        echo "<li>$installation</li>";
-                                    }
-                                    echo "</ul>";
+                        <h2>
+                            Equipements disponibles :
+                        </h2>
+                        <?php
+                            if ( empty($liste_equipements) || $liste_equipements == null) {
+                                echo "<p class='section_vide'>Cette section est vide.</p>";
+                            } else {
+                                $equipements_array = explode(', ', $liste_equipements);
+                            
+                                echo "<ul class='liste_corps'>";
+                                foreach ($equipements_array as $equipement) {
+                                    $equipement = ucfirst($equipement); 
+                                    echo "<li>$equipement</li>";
                                 }
-                                ?>
-                            <h2>
-                                Equipements disponibles :
-                            </h2>
-                            <?php
-                                if ($liste_equipements == null || empty($liste_equipements)) {
-                                    echo "<p class='section_vide'>Cette section est vide.</p>";
-                                } else {
-                                    $equipements_array = explode(', ', $liste_equipements);
-                                
-                                    echo "<ul class='liste_corps'>";
-                                    foreach ($equipements_array as $equipement) {
-                                        $equipement = ucfirst($equipement); 
-                                        echo "<li>$equipement</li>";
-                                    }
-                                    echo "</ul>";
+                                echo "</ul>";
+                            }
+                            ?>
+                        <h2>Services :</h2>
+                        <?php
+                            if (empty($liste_services) || $liste_services == null) {
+                                echo "<p class='section_vide'>Cette section est vide.</p>";
+                            } else {
+                                $services_array = explode(', ', $liste_services);
+                            
+                                echo "<ul class='liste_corps'>";
+                                foreach ($services_array as $service) {
+                                    $service = ucfirst($service); 
+                                    echo "<li>$service</li>";
                                 }
-                                ?>
-                            <h2>
-                            Services :
-                            </h2>
-                            <?php
-                                if ($liste_services == null || empty($liste_services)) {
-                                    echo "<p class='section_vide'>Cette section est vide.</p>";
-                                } else {
-                                    $services_array = explode(', ', $liste_services);
-                                
-                                    echo "<ul class='liste_corps'>";
-                                    foreach ($services_array as $service) {
-                                        $service = ucfirst($service); 
-                                        echo "<li>$service</li>";
-                                    }
-                                    echo "</ul>";
-                                }
-                                ?>
-                            </ul>
-                            <br>
+                                echo "</ul>";
+                            }
+                            ?>
+                        </ul>
+                        <br>
                     </section>
-                        <section class="reserve_contact">
-                            <div class="resa_colle">
-                                <article class="reserve">
-                                    <div id="prix_base">
-                                    <p id="prix"><?php
-                                        if ($prix==null) {
-                                            echo "Prix ";          
-                                        }
-                                        else {
-                                            echo $prix;
-                                        }
-                                ?></p>
-                                    <p1>€ par nuit</p1>
-                                    </div>
-                                    <div class="arrivee_depart">
-                                        <form class="date_resa" id="date_arri">
-                                            <label for="date_arrivee">Nombre de nuit :</label>
-                                            <input type="text" id="date_arrivee" name="date_arrivee">
-                                        </form>
-                                    </div>
-                                    <div class="bouton_reserve">
-                                        <a href="#">Réserver</a>
-                                    </div>
-
-                                </article>
-
-                                <article class="contact">
-                                    <div class="photo_profil_contact">
-                                        <?php
-                                            if (file_exists($_SERVER['DOCUMENT_ROOT'] . $photo_profil_proprio)==false) { ?>
-                                                <img src="/public/icons/user.svg" id="photo_profil" alt="photo de profil du propriétaire"> <?php          
-                                            }
-                                            else { ?>
-                                                <img src="<?php echo $photo_profil_proprio ?>" id="photo_profil" alt="photo de profil du propriétaire"> <?php
-                                            }
-                                            ?>                                        <div class="contact_nom_bouton">
-                                            <p><?php
-                                            if ($prenom_proprio==null) {
-                                                echo "Prénom ";          
-                                            }
-                                            else {
-                                                echo "$prenom_proprio ";
-                                            }
-                                            if ($nom_proprio==null) {
-                                                echo "Nom";          
-                                            }
-                                            else {
-                                                echo $nom_proprio;
-                                            }
-                                            ?></p>
-                                            <p><img src="/public/icons/star_fill.svg" id="icone" alt="icone etoile"> Note</p>
-                                            <div class="bouton_contact">
-                                                <a href="#">Contacter</a>
-                                            </div>
+                    <section class="reserve_contact">
+                        <div class="resa_colle">
+                            <article class="reserve">
+                                <div>
+                                    <p><strong><?php echo $prix; ?>€</strong> / nuit</p>
+                                </div>
+                                <form class="date_resa" id="date_arri" action="/src/php/devis/demande_devis.php" method="post">
+                                    <div>
+                                        <div>
+                                            <input class="textfield" min="0" max="999" type="number" id="date_arrivee" name="date_arrivee" content required>
+                                            <label for="date_arrivee">/ nuit(s)</label>
+                                        </div>
+                                        <div>
+                                            <input class="boutton" type="submit"></input>
                                         </div>
                                     </div>
-                                    <br>
-                                    Langues parlées :
-                                        <?php
-                                        //$liste_langue_parle = array("Français", "Anglais", "Espagnol"); 
+                                </form>
+                            </article>
 
-                                        if (empty($liste_langue_parle)|| $liste_langue_parle == null){
-                                            echo " non renseigné";
-                                        } else {
-                                            echo $liste_langue_parle;
-                                        }
-                                        ?>
-                                </article>
-                            </div>
-                        </section>
+                            <article class="contact">
+                                <div class="photo_profil_contact">
+                                    <?php
+                                        if (file_exists($_SERVER['DOCUMENT_ROOT'] . $photo_profil_proprio)==false) { ?>
+                                            <img src="/public/icons/user.svg" id="photo_profil" alt="photo de profil du propriétaire"> <?php          
+                                        } else { ?>
+                                            <img src="<?php echo $photo_profil_proprio ?>" id="photo_profil" alt="photo de profil du propriétaire"> <?php
+                                        } ?>                                        
+                                        <div class="contact_nom_bouton">
+                                        <p><?php echo $prenom_proprio .' '. $nom_proprio; ?></p>
+                                        <p><img src="/public/icons/star_fill.svg" id="icone" alt="icone etoile"> Note</p>
+                                        <div class="bouton_contact"><a href="#">Contacter</a></div>
+                                    </div>
+                                </div>
+                                <br>
+                                <p>
+                                    Langues parlées :
+                                    <?php //$liste_langue_parle = array("Français", "Anglais", "Espagnol"); 
+                                    echo $liste_langue_parle; ?>
+                                </p>
+                            </article>
+                        </div>
+                    </section>
                 </div>
             </div>
 
@@ -477,5 +415,4 @@ if (isset($_GET['numLogement'])) {
         </main>
         <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'); ?>
     </body>
-</html> 
-                    
+</html>
