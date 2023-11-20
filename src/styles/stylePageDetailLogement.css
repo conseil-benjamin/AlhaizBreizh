@@ -1,40 +1,263 @@
-#localisation {
-    background-color: #16A1EF;
+/*****************************************************/
+/*Définitions principales*/
+main{
+    margin-top: 75px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.corps{
+    margin:5%;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+main p{
+    margin-top: 10px;
+    margin-left: 15px;
+}
+
+#icone{
+    width: 30px;
+}
+
+/*****************************************************/
+/*Tete de l'offre*/
+.tete_offre{
+    display: flex;
+    flex-direction: row;
+    background-color: var(--col2);
+    width: calc(100% - 10%);
+    margin: auto;
+    margin-top: calc(75px + 1em);
+    height: 500px;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.5s ease;
+}
+
+.tete_offre:hover{
+    filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.5));
+}
+
+.tete_offre > img{
+    display: block;
+    width: 80%;
+    height: calc(100% + 5px);
+    transform: translateY(-5px);
+    object-fit: cover;
+    transition: all 0.5s ease;
+    z-index: 10;
+}
+
+.tete_offre > img:hover{
+    filter: drop-shadow(5px 0px 5px rgba(0, 0, 0, 0.75));
+    transform: translateY(0px);
+}
+
+/*Div contenant les infos à droite des images*/
+.tete_offre > div{
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    background-color: #fff;
+    transition: all 0.5s ease;
+}
+
+.tete_offre > div:hover{
+    filter: drop-shadow(-5px 0px 5px rgba(0, 0, 0, 0.75));
+    z-index: 11;
+}
+
+.tete_offre > div .infos_loge{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 1em;
+    margin-top: 2em;
+    margin-left: 2em;
+    margin-right: 2em;
+}
+
+.tete_offre > div .infos_loge li{
+    list-style: none;
+    font-size: 1.2em;
+}
+
+.tete_offre > div .infos_loge li:first-child{
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.tete_offre > div .infos_loge li div, .tete_offre > div .infos_loge li div a{
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    gap: 5px;
+}
+
+.tete_offre > div .infos_loge li div, .tete_offre > div img{
+    margin-left: 5px;
+}
+
+.photo_profil_contact{
+    display: flex;
+    flex-direction: row;
+}
+
+/*****************************************************/
+/*Corps de l'offre*/
+.corps_offre{
+    padding: 25px;
+    border-radius: 20px;
+    width: 100%;
+    min-height: 500px;
+}
+
+.liste_corps{
+    list-style: disc;
+    margin: 50px;
+    margin-top: 15px;
+}
+
+.liste_corps>li{
+    margin-top: 5px;
+}
+
+.div_corps{
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+}
+
+/*****************************************************/
+/*Réservation + Contact*/
+
+.reserve_contact{
+    display: flex;
+    flex-direction: column;
+    width: 26%;
+}
+
+.reserve_contact > div {
+    position: sticky;
+    top: 75px;
+}
+
+/**************/
+/*Reservation*/
+.reserve p{
+    margin: 0;
+}
+
+.reserve{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1em;
+    background-color: var(--col2);
+    border-radius: 20px;
+    background-color: #fff;
+    width: max-content;
+    background-color: var(--col4);
+    color: #fff;
+}
+
+.reserve > div, .reserve > form > div{
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+}
+
+.reserve > form > div div{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.reserve > form input:first-child{
+    width: 3em;
+    height: 1em;
+    margin-right: 3px;
+}
+
+.reserve > form input:last-child{
+    height: fit-content;
+    line-height: normal;
+    margin-top: 5px;
+    padding: 0em;
+    width: 100%;
+    background-color: var(--col6);
+}
+
+/**********/
+/*Contact*/
+.contact{
+    display: flex;
+    flex-direction: column;
+    background-color: var(--col3);
+    border-radius: 15px;
+    padding: 1em;
+    overflow: hidden;
+    width: 100%;
+}
+
+.contact > div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    background-color: aqua;
+}
+
+.contact > div img{
+    object-fit: cover;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+#comment{
+    margin: 5%;
+    margin-bottom:0;
+    margin-top: 0;
+    padding-top: 2%;
+}
+
+#photo_profil{
+    width: 50px;
+}
+
+.section_vide{
+    margin: 10px;
 }
 
 
-/* Réinitialiser les puces par défaut de la liste */
-ul.infos_loge {
-    list-stye:none;
-    padding-left: 0;
+.proprio{
+    background-color: var(--col2);
+    padding-left: 5%;
+    padding-top: .5em;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
-/* Utiliser des icônes personnalisées pour chaque élément de la liste */
-li.item-1 {
-    background-image: url('icone1.png');
-    background-repeat: no-repeat;
-    background-position: left center;
-    padding-left: 20px; /* Ajuster la marge à gauche pour que le texte n'entre pas en collision avec l'icône */
+.bouton_modification{
+    display: flex;
+    background-color: var(--col1);
+    color: white;
+    padding: 1em;
+    border-radius: 20px;
+    margin-right: 20px;
+    min-width:30px;
+    height: 2%;
+    justify-content: center;
+    line-height: 100%;
 }
 
-li.item-2 {
-    background-image: url('public/icons/double-bed.svg');
-
+hs{
+    font-size: large;
+    margin-right: 10px;
 }
-
-li.item-3 {
-    background-image: url('icone3.png');
-    background-repeat: no-repeat;
-    background-position: left center;
-    padding-left: 20px;
-}
-
-
-
-/*
-#16A1EF couleur5
-#65E3FF couleur4
-#7EBCF2 couleur3
-#D7F0FF couleur2
-#515D5E couleur1
-*/

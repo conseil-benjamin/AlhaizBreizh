@@ -1,21 +1,19 @@
 /*****************************************************/
-/*Page de connection*/
-
-/*Formulaire de connection*/
-
+/*Page de connexion*/
 #content{
     display: flex;
     margin: 10em auto 0 auto;
     width: 80%;
     height: 50vh;
-    background-color: #515D5E;
+    background-color: var(--col1);
     border-radius: 7.5px;
     color: #fff;
     gap: 5em;
     padding: 2em;
 }
 
-#connection{
+/*Formulaire de connexion*/
+#connexion{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -68,13 +66,17 @@
 }
 
 .form > input{
-    background-color: #65E3FF;
+    background-color: var(--col6);
     font-size: 20px;
     width: 100%;
 }
 
 .form > input:hover{
     filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.form #submit{
+    cursor: pointer;
 }
 
 /*Inscription*/
@@ -91,7 +93,7 @@
 
 
 #inscription a{
-    background-color: #65E3FF;
+    background-color: var(--col6);
     font-size: 20px;
     width: 75%;
 }

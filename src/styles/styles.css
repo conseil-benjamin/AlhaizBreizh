@@ -5,12 +5,22 @@
     padding: 0;
     scroll-behavior: smooth;
     scroll-padding-top: 75px;
+    scroll-behavior: smooth;
+
+    /*Couleurs*/
+    --col1 : #515D5E;
+    --col2 : #D7F0FF;
+    --col3 : #7EBCF2;
+    --col4 : #627099;
+    --col5 : #16A1EF;
+    --col6 : #65E3FF;
 }
 
 body{
-    background-color: #D7F0FF;
+    background-color: var(--col2);
     min-height: calc(100vh + 20em);
     font-family: "Montserrat", Arial, sans-serif;
+    overflow-x: hidden;
     overflow-x: hidden;
 }
 
@@ -40,19 +50,51 @@ a:hover{
     z-index: -1;
 }
 
+h1, h2, h3{
+    font-family: "NoirPro", Arial, sans-serif;
+}
+
+/*Custom scrollbar*/
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
 /*****************************************************/
 /*Bouttons*/
 .boutton{
     border-radius: 50px;
     border: #ffffff00 1px solid;
-    color: #515D5E;
+    color: var(--col1);
     height: 50px;
     width: fit-content;
     font-size: 20px;
     line-height: 50px;
     text-align: center;
     padding: 0 1em;
+    cursor: pointer;
     transition: all .3s ease-in-out;
+}
+
+.boutton:hover{
+    filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.25));
+    border: #fff 1px solid;
+    transform: translateY(1px);
 }
 
 .boutton-bleu-clair:hover{
@@ -61,35 +103,54 @@ a:hover{
 }
 
 /*****************************************************/
+/*TextFields*/
+
+.textfield{
+    height: 50px;
+    width: fit-content;
+    border-radius: 50px;
+    border: none;
+    font-family: "Montserrat", sans-serif;
+    font-size: 16px;
+    padding-left: 1em;
+    outline: none;
+    transition: all .3s ease-in-out;
+}
+
+.textfield:focus{
+    filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+/*****************************************************/
 /*Fonts*/
 @font-face {
     font-family: "NoirPro";
-    src: url("/fonts/NoirPro-Regular.woff2") format("woff2"),
-    url("/fonts/NoirPro-Regular.woff") format("woff");
+    src: url("../../fonts/NoirPro-Regular.woff2") format("woff2"),
+    url("../../fonts/NoirPro-Regular.woff") format("woff");
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: "NoirProLight";
-    src: url("/fonts/NoirPro-Light.woff2") format("woff2"),
-    url("/fonts/NoirPro-Light.woff") format("woff");
+    src: url("../../fonts/NoirPro-Light.woff2") format("woff2"),
+    url("../../fonts/NoirPro-Light.woff") format("woff");
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: "Montserrat";
-    src: url("/fonts/Montserrat-Regular.woff2") format("woff2"),
-    url("/fonts/Montserrat-Regular.woff") format("woff");
+    src: url("../../fonts/Montserrat-Regular.woff2") format("woff2"),
+    url("../../fonts/Montserrat-Regular.woff") format("woff");
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: "MontserratBold";
-    src: url("/fonts/Montserrat-Bold.woff2") format("woff2"),
-    url("/fonts/Montserrat-Bold.woff") format("woff");
+    src: url("../../fonts/Montserrat-Bold.woff2") format("woff2"),
+    url("../../fonts/Montserrat-Bold.woff") format("woff");
     font-weight: normal;
     font-style: normal;
 }
@@ -100,8 +161,9 @@ a:hover{
     display: flex;
     flex-direction: row;
     align-items: center;
+    align-items: center;
     justify-content: stretch;
-    background-color: #7EBCF2;
+    background-color: var(--col3);
     height: 75px;
     width: 100%;
     position: fixed;
@@ -112,9 +174,12 @@ a:hover{
     font-size: 24px;
 }
 
+
 /*Logo*/
 #header .logo{
     display: block;
+    height: 80%;
+    margin-left: 1em;
     height: 80%;
     margin-left: 1em;
 }
@@ -139,7 +204,11 @@ a:hover{
 #header nav ul li{
     text-align: center;
     line-height: 75px;
-    color: #515D5E;
+    color: var(--col1);
+}
+
+#header nav ul li:hover{
+    transform: translateY(1px);
 }
 /*Compte*/
 #header .compte{
@@ -153,9 +222,10 @@ a:hover{
     right: 0;
     height: 100%;
     width: 300px;
-    background-color: #515D5E;
-    color: #65E3FF;
+    background-color: var(--col1);
+    color: var(--col6);
     font-size: 20px;
+    transition: all .3s ease-in-out;
     transition: all .3s ease-in-out;
 }
 
@@ -166,15 +236,17 @@ a:hover{
 #header .compte > img:first-child{
     rotate: 90deg;
     height: 50%;
+    transition: all 0.5s ease;
 }
 /*Icone user*/
 #header .compte > img:last-child{
-    height: 75%;
+    height: 55px;
+    width: 55px;
     border-radius: 50px;
 }
 
 #header div.compte > img:last-child{
-    border: 1px #65E3FF solid;
+    border: 3px var(--col6) solid;
 }
 
 /*Options du compte*/
@@ -189,8 +261,13 @@ a:hover{
     top: 75px;
     width: 300px;
     text-align: center;
-    background-color: #515D5E;
-    color: #65E3FF;
+    background-color: var(--col1);
+    color: var(--col6);
+    transition: all .3s ease-in-out;
+}
+
+#header div.compte.shown > img:first-child{
+    rotate: -90deg;
     transition: all .3s ease-in-out;
 }
 
@@ -225,7 +302,7 @@ a:hover{
 }
 
 #footer > div{
-    background-color: #515D5E;
+    background-color: var(--col1);
     height: fit-content;
     width: 100%;
     z-index: 100;
@@ -248,8 +325,8 @@ a:hover{
 }
 
 #footer > div > p{
-    position: absolute;
-    bottom: .1em;
-    right: .1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 16px;
 }
