@@ -4,7 +4,7 @@ const ficUploadHTMLelement = document.getElementById("ficUpload")
 const fileInputHTMLelement = document.getElementById("devis")
 const devisLabelHTMLelement = document.getElementById("devisLabel")
 const uploadHTMLelement = document.getElementById("upload")
-const annulerFicUpload = document.getElementById("annulerFicUpload")
+const annulerFicUploadHTMLelement = document.getElementById("annulerFicUpload")
 
 /**
  * Etat du bouton, par defaut normal
@@ -25,7 +25,7 @@ uploadHTMLelement.addEventListener("click", () => {
 /**
  * Permet de réinitialiser le bouton d'upload
  */
-annulerFicUpload.addEventListener("click", function (e) {
+annulerFicUploadHTMLelement.addEventListener("click", function (e) {
     fileInputHTMLelement.value = ""
     uploadInputHTMLelement.style.display = "block"
     ficUploadHTMLelement.style.display = "none"
@@ -46,7 +46,9 @@ fileInputHTMLelement.addEventListener('change', function () {
     uploadHTMLelement.style.cursor = "default"
 });
 
-
+/**
+ * Permet d'afficher la notification de succès
+ */
 function notifErr() {
     swal({
         title: "Erreur",
@@ -58,6 +60,9 @@ function notifErr() {
     )
 }
 
+/**
+ * Permet d'afficher la notification de succès
+ */
 function notifSuccess() {
     swal({
         title: "Votre proposition de devis à bien été envoyer",
