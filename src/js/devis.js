@@ -118,6 +118,26 @@ function getTotalService() {
     return total
 }
 
+function notifErr() {
+    swal({
+        title: "Erreur",
+        text: "Le serveur à rencontrer un erreur, réessayer plus tard",
+        icon: "error",
+        button : "Revenir à l\'acceuil"
+    }).then(() => {
+        window.location.href = "../../../index.php"}
+    )
+}
 
+function notifSuccess() {
+    swal({
+        title: "Votre demande de devis à bien été envoyer",
+        text: "Le propriétaire va maintenant y répondre dans les plus bref délais",
+        icon: "success",
+        button : "Revenir à l\'acceuil"
+    }).then(() => {
+        window.location.href = "../../../index.php"}
+    )
+}
 
 updatePrix(inputDateDepart.value,inputDateArivee.value)

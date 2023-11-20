@@ -45,33 +45,18 @@ VALUES('$nb_personne','$numReservation','$numLogement','$sqlDateArr','$sqlDateDe
     $stmt->execute();
     $pdo = null;
     echo '<script>
-        swal({
-            title: "Votre demande de devis à bien été envoyer",
-            text: "Le propriétaire va maintenant y répondre dans les plus bref délais",
-            icon: "success"
-        })
+        notifSuccess()
     </script>';
 } catch (PDOException $e) {
     print "Erreur submitDB !: " . $e->getMessage();
     echo '<script>
-        swal({
-            title: "Erreur",
-            text: "Le serveur à rencontrer un erreur",
-            icon: "error"
-        })
+       notifErr()
     </script>';
     die();
 }
 catch (Error $e) {
     echo '<script>
-        swal({
-            title: "Erreur",
-            text: "Le serveur à rencontrer un erreur, réessayer plus tard",
-            icon: "error",
-            button : "Revenir à l\'acceuil"
-        }).then(() => {
-            window.location.href = "../../../index.php"}
-        )
+        notifErr()
     </script>';
     die();
 }
