@@ -14,7 +14,19 @@ try {
     );
     $stmt->execute();
     $pdo = null;
+    echo '<script>
+        notifSuccess()
+    </script>';
 } catch (PDOException $e) {
-    print "Erreur !: " . $e->getMessage() . "";
+    print "Erreur submitDB !: " . $e->getMessage();
+    echo '<script>
+       notifErr()
+    </script>';
+    die();
+}
+catch (Error $e) {
+    echo '<script>
+        notifErr()
+    </script>';
     die();
 }

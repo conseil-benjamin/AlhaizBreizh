@@ -30,7 +30,7 @@
                 </h1>
             </section>
             <section id="corpsTexte">
-                <form method="post" action="submitPropositionDevis.php">
+                <form method="post"">
                     <div id="formulaire">
                         <div id="prixDiv">
                             <ul>
@@ -101,7 +101,6 @@
                                     $name = 'service' . $i;
                                     echo "<li>
                                     <div class='$classe'>
-                                        <input id='$id' type='checkbox' name='$name'>
                                         <label for='$id'>Service 01</label>
                                         <p class='prix''><span>66,6</span>€</p>
                                     </div>
@@ -120,5 +119,11 @@
         </div>
         <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'); ?>
     </body>
-    <script src="js/proposition_devis.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> <!-- Librairie pour les alertes -->
+    <script src="../../js/proposition_devis.js"></script>
+    <?php
+    if(isset($_POST[0])) {
+        require("submitPropositionDevis.php");
+    }
+    ?>
 </html>

@@ -45,3 +45,26 @@ fileInputHTMLelement.addEventListener('change', function () {
     uploaded = true
     uploadHTMLelement.style.cursor = "default"
 });
+
+
+function notifErr() {
+    swal({
+        title: "Erreur",
+        text: "Le serveur à rencontrer un erreur, réessayer plus tard",
+        icon: "error",
+        button : "Revenir à l\'acceuil"
+    }).then(() => {
+        window.location.href = "../../../index.php"}
+    )
+}
+
+function notifSuccess() {
+    swal({
+        title: "Votre proposition de devis à bien été envoyer",
+        text: "Le client va maintenant y répondre dans les plus bref délais",
+        icon: "success",
+        button : "Revenir à l\'acceuil"
+    }).then(() => {
+        window.location.href = "../../../index.php"}
+    )
+}
