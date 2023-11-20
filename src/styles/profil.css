@@ -1,0 +1,34 @@
+/*****************************************************/
+/*Content*/
+
+.content{
+    margin: calc(75px + 1em) auto 1em auto;
+    padding: 1em;
+    width: 80%;
+    background-color: aliceblue;
+}
+
+/*****************************************************/
+/*Image + message bienvenue*/
+
+.content #titre{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 2em;
+    width: fit-content;
+}
+
+.content #titre img{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 5px solid var(--col6);
+}
+
+/*****************************************************/
+/*Informations*/
+
+.content #info{
+    background-color: var(--col6);
+}
