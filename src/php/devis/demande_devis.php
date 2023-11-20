@@ -8,7 +8,7 @@
         $nbNuit = "6";
         $prixNuit = "6,8";
     }
-?>
+    ?>
 <!DOCTYPE html>
 <html lang="fr">
     <head>
@@ -29,7 +29,7 @@
                 </h1>
             </section>
             <section id="corpsTexte">
-                <form method="post" action="submitDemandeDevis.php">
+                <form method="post">
                     <div id="formulaire">
                         <div id="prixDiv">
                             <h2>Prix de base <span id="prixSpan"><?php echo $prixNuit ?></span>€/nuit - <span
@@ -106,12 +106,20 @@
                     </div>
                     <div id="total">
                         <h2> Total de la réservation : <span id="prixTotal">0</span>€</h2>
-                        <button class="boutton" type="submit">Confirmer la réservation et demander un devis</button>
+                        <button class="boutton" type="submit" id="envoyer">Envoyer la demande de devis</button>
                     </div>
                 </form>
             </section>
         </div>
         <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'); ?>
     </body>
-    <script src="js/devis.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> <!-- Librairie pour les alertes -->
+    <script src="../../js/devis.js"></script>
+
+    <?php
+    if(isset($_POST["nb_personne"])) {
+        require("submitDevisDB.php");
+    }
+    ?>
 </html>
+

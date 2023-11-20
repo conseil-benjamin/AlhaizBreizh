@@ -155,7 +155,7 @@ textarea:invalid {
     margin-top: 10vh;
 }
 
-button {
+#envoyer {
     width: 685px;
     height: 70px;
     font-size: large;
@@ -164,7 +164,7 @@ button {
     border-style: none;
 }
 
-button:hover {
+#envoyer:hover {
     cursor: pointer;
 }
 

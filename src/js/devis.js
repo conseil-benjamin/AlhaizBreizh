@@ -5,6 +5,8 @@ const prixTotal = document.getElementById('prixTotal')
 const prixHTMLelement = document.getElementById('prixSpan')
 const nbpersonne = document.getElementById('nbpersonne')
 const nbNuitHTMLelement = document.getElementById('nbNuit')
+
+
 const PRIX = parseFloat(prixHTMLelement.innerText.replace(",", "."))
 const NBNUIT = parseInt(nbNuitHTMLelement.innerText, 10)
 
@@ -23,19 +25,17 @@ const AUJ = new Date();
  * @returns {string} la date formatter
  */
 function formaterDate(decalage) {
-    const YYYY = AUJ.getFullYear();
+    const fullYear = AUJ.getFullYear();
     const MOIS_DATE = (AUJ.getMonth() + 1).toString().padStart(2, '0');
     const JOUR = AUJ.getDate() + decalage;
-    console.log(JOUR)
-    const DECALAGEMOIS = 1 + Math.floor(JOUR / nbJourDansLeMois(YYYY, MOIS_DATE))
+    const DECALAGEMOIS = 1 + Math.floor(JOUR / nbJourDansLeMois(fullYear, MOIS_DATE))
     const MM = (AUJ.getMonth() + DECALAGEMOIS).toString().padStart(2, '0');
-    console.log(decalage)
-    const DD = (JOUR % nbJourDansLeMois(YYYY, MM)).toString().padStart(2, '0');
-    return YYYY + '-' + MM + '-' + DD;
+    const DD = (JOUR % nbJourDansLeMois(fullYear, MM)+1).toString().padStart(2, '0');
+    return fullYear + '-' + MM + '-' + DD;
 }
 
-const DATEFORMAT_DEP = formaterDate(5);
-const DATEFORMAT_ARR = formaterDate(NBNUIT + 5)
+const DATEFORMAT_ARR = formaterDate(5);
+const DATEFORMAT_DEP = formaterDate(NBNUIT + 6)
 
 nbpersonne.addEventListener('change',()=> {
     if (this.value > this.max) {
@@ -43,11 +43,11 @@ nbpersonne.addEventListener('change',()=> {
     }
 })
 
-inputDateArivee.min = DATEFORMAT_DEP
-inputDateArivee.value = DATEFORMAT_DEP
+inputDateArivee.min = DATEFORMAT_ARR
+inputDateArivee.value = DATEFORMAT_ARR
 
-inputDateDepart.min = DATEFORMAT_ARR
-inputDateDepart.value = DATEFORMAT_ARR
+inputDateDepart.min = DATEFORMAT_DEP
+inputDateDepart.value = DATEFORMAT_DEP
 
 
 function updateNBNuit() {
@@ -79,6 +79,7 @@ inputDateArivee.addEventListener("change", function () {
     updateNBNuit()
 });
 
+
 /**
  *  Compte le nombre de jours du séjour
  * @param dateDepart la date de départ
@@ -100,7 +101,7 @@ function compteJour(dateDepart,dateArriver) {
  */
 function updatePrix(dateArriver,dateDepart) {
     const nbjour = compteJour(dateArriver,dateDepart)
-    prixTotal.innerHTML =  ((nbjour*PRIX)+getTotalService()).toFixed(2).toString().replace('.', ',')
+    prixTotal.innerText =  ((nbjour*PRIX)+getTotalService()).toFixed(2).toString().replace('.', ',')
 }
 
 /**
@@ -116,5 +117,7 @@ function getTotalService() {
     }
     return total
 }
+
+
 
 updatePrix(inputDateDepart.value,inputDateArivee.value)
