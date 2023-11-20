@@ -123,7 +123,7 @@
     <script src="../../js/proposition_devis.js"></script>
     <?php
     if(isset($_POST[0])) {
-        require("submitPropositionDevis.php");
+        require("submitPropositionDevisDB.php");
     }
     ?>
 </html>
