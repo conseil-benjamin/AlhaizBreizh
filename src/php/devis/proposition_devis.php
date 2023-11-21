@@ -8,6 +8,7 @@
         $nbPersonne = 10;
         $demande = "Petit déjeuner au lit";
     }
+    require "propositionGetDb.php";
 ?>
 <!DOCTYPE html>
     <html lang="fr">
@@ -70,14 +71,14 @@
                                 </li>
                             </ul>
                             <div>
-                                <label for="demande">Autre demande (1000 caractères maximum)</label>
+                                <label for="demande">Autre demande</label>
                                 <textarea id="demande" maxlength="1000" content="<?php echo $demande ?>"
                                         spellcheck="true" name="demande" readonly></textarea>
                             </div>
                             <div id="upload">
                                 <div id="uploadInput">
                                     <label for="devis" id="devisLabel">Upload votre devis</label>
-                                    <input type="file" accept="application/pdf" name="devis" id="devis">
+                                    <input type="file" accept=".pdf" name="devis" id="devis">
                                 </div>
                                 <div id="ficUpload">
                                     <button id="annulerFicUpload" type="button">Annuler</button>
@@ -122,7 +123,6 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> <!-- Librairie pour les alertes -->
     <script src="../../js/proposition_devis.js"></script>
     <?php
-    print_r($_POST);
     if(isset($_POST['devis'])) {
         require("submitPropositionDevisDB.php");
     }
