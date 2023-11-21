@@ -12,11 +12,11 @@
 }
 
 #header.scrolled{
-    background-color: #7EBCF2;
+    background-color: var(--col3);
 }
 
 #header.scrolled nav ul li{
-    color: #515D5E;
+    color: var(--col1);
 }
 
 #header .logo{
@@ -50,7 +50,7 @@
 
 #header.scrolled .compte{
     filter: none;
-    background-color: #515D5E;
+    background-color: var(--col1);
 }
 
 #header.scrolled .compte:hover{
@@ -59,7 +59,7 @@
 }
 
 #header.scrolled .compte-options{
-    background-color: #515D5E;
+    background-color: var(--col1);
 }
 
 #header.scrolled .compte-options li:hover{
@@ -98,14 +98,14 @@
 }
 
 #logements h2{
-    color: #515D5E;
+    color: var(--col1);
 }
 
 #logements > h2{
     text-align: center;
     font-size: 2em;
     font-weight: bold;
-    color: #515D5E;
+    color: var(--col1);
     text-transform: uppercase;
     letter-spacing: 0.2em;
     padding: 1em;
@@ -226,7 +226,7 @@
 .logement strong{
     font-size: 24px;
     font-weight: bold;
-    color: #16A1EF;
+    color: var(--col5);
 }
 
 .logement:hover{

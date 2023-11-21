@@ -1,7 +1,7 @@
 <?php
 try {
     // Créer une connexion PDO
-    $pdo = new PDO("pgsql:host=postgresdb;port=5432;dbname=sae;user=sae;password=Phiegoosequ9en9o");
+    $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
 
     // Début de la transaction
     $pdo->beginTransaction();

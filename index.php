@@ -1,9 +1,9 @@
 <?php 
     session_start(); 
-    //Connection à la base de donnée
+    //connexion à la base de donnée
     try {
-        $pdo = new PDO("pgsql:host=postgresdb;port=5432;dbname=sae;user=sae;password=Phiegoosequ9en9o");
-        $stmt = $pdo->prepare("SELECT numLogement,libelle,nbPersMax,tarifNuitees FROM ldc.Logement");
+        $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
+        $stmt = $pdo->prepare("SELECT numLogement,libelle,nbPersMax,tarifNuitees,LogementEnLigne FROM ldc.Logement");
 
         //Recherche des logements dans la base de données
         $stmt->execute();
@@ -13,16 +13,14 @@
         }
 
         //Obtenir la localisation de chaque logement
-        $stmt = $pdo->prepare("SELECT numLogement,ville FROM ldc.Localisation");
-        $stmt->execute();
-        $i = 0;
-        while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            if ($row[0] == $logements[$i][0]) {
-                $logements[$i][] = $row[1];
+        if (count($logements) !== 0) {
+            $stmt = $pdo->prepare("SELECT numLogement,ville FROM ldc.Localisation WHERE numLogement = ?");
+            foreach ($logements as $logement) {
+                $stmt->execute([$logement[0]]);
+                $ville = $stmt->fetch(PDO::FETCH_NUM)[1];
+                $logements[($logement[0] - 1)][] = $ville;
             }
-            $i++;
         }
-
         $pdo = null;
     } catch (PDOException $e) {
         $logements = array();
@@ -39,7 +37,7 @@
         <title>ALHaiz Breizh</title>
     </head>
     <body>
-        <?php include './src/php/header.php'; ?>
+        <?php include $_SERVER['DOCUMENT_ROOT'] .'/src/php/header.php'; ?>
         <video id="background" autoplay loop muted>
             <source src="/public/videos/video-bretagne.mp4" type="video/mp4">
         </video>
@@ -53,17 +51,17 @@
                 <?php
                 /*Créations de carte pour chaque logements*/
 
-                if (count($logements) === 0) { ?>
-                    <h2>Aucun logement n'est disponible pour le moment :/</h2> <?php
-                } else{
-                    $logements = array_reverse($logements);
-                    foreach ($logements as $logement) {
-                        $lien = '/src/php/PageDetailLogement.php?numLogement=' . $logement[0];
+                $nb_logements_inactifs = 0;
+                $logements = array_reverse($logements);
+                foreach ($logements as $logement) {
+                    $actif = $logement[4];
+                    if ($actif) {
+                        $lien = '/src/php/logement/PageDetailLogement.php?numLogement=' . $logement[0];
                         $img = '/public/img/logements/' . $logement[0] . '/1.png';
 
                         $titre = $logement[1];
                         $nombre_personnes = $logement[2];
-                        $localisation = $logement[4];
+                        $localisation = $logement[5];
                         $prix = $logement[3] ?>
     
                         <div class="logement">
@@ -79,11 +77,16 @@
                                 <div><strong><?php echo $prix ?>€</strong> / nuit</div> <!-- Prix du logement -->
                             </div></a>
                         </div> <?php
-                    } 
+                    } else{
+                        $nb_logements_inactifs++;
+                    }
+                } 
+                if ($nb_logements_inactifs == count($logements)){ ?>
+                    <h2>Aucun logement n'est disponible pour le moment :/</h2><?php
                 } ?>
             </div> 
         </div>   
-        <?php include './src/php/footer.php'; ?>
+        <?php include $_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'; ?>
         <script>
             window.addEventListener("scroll", () => {
                 var header = document.querySelector("header");

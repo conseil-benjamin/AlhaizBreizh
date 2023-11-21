@@ -101,13 +101,14 @@ function checkFormValidity() {
     titreInput.addEventListener("input", checkFormValidity);
     descriptionInput.addEventListener("input", checkFormValidity);
 
-checkFormValidity();
+//checkFormValidity();
 
 /**
  * * Listener sur le bouton creerAnnonce qui
  * * vérifie si tous les champs ont correctement été remplis
  */
 
+/*
 form.addEventListener("submit", function (event) {
   event.preventDefault();
   if (checkFormValidity()) {
@@ -124,6 +125,8 @@ form.addEventListener("submit", function (event) {
     });
 }
 });
+*/
+
     /**
      * * Permet au clic du bouton Ajouter installation,
      * * d'ajouter un nouvel input pour renseigner une nouvelle installation
@@ -270,7 +273,6 @@ form.addEventListener("submit", function (event) {
           nbEquipements--;
         }
       });
-
     return inputPlusIconeSupprimer;
   }
 

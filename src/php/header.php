@@ -1,8 +1,7 @@
 <?php
-    if ((isset($_SESSION['id'])) && (file_exists($_SERVER['DOCUMENT_ROOT'].'/public/img/'.$_SESSION['id'].'.png'))) {
-        $image = '/public/img/'.$_SESSION['id'].'.png';
-    } else {
-        $image = '/public/icons/user-blue.svg';
+    $image = '/public/icons/user-blue.svg';
+    if ((isset($_SESSION['id'])) && (file_exists($_SERVER['DOCUMENT_ROOT'].$image))) { // Si l'utilisateur est connecté et qu'il a une photo de profil
+        $image = '/public/img/photos_profil/'.$_SESSION['id'].'.png';
     }
 ?>
 <header id="header">
@@ -23,22 +22,22 @@
             </div>
             <div class="compte-options">
                 <ul>
-                    <a href=""><li>Mon Profil</li></a>
-                    <a href=""><li>Ma Messagerie</li></a>
-                    <a href=""><li>Mes Réservations</li></a>
+                    <!--<a href=""><li>Mon Profil</li></a>-->
+                    <!--<a href=""><li>Ma Messagerie</li></a>-->
+                    <!--<a href=""><li>Mes Réservations</li></a>-->
                     <?php
                         if ($_SESSION['proprio']) { ?>
-                            <a href="/src/php/mesLogements.php"><li>Mes Logements</li></a> <?php
+                            <a href="/src/php/logement/mesLogements.php"><li>Mes Logements</li></a> <?php
                         } else { ?>
-                            <a href=""><li>Devenir propriétaire</li></a> <?php
+                            <!--<a href=""><li>Devenir propriétaire</li></a>--> <?php
                         } ?>
-                    <a href=""><li>Mes Favoris</li></a>
-                    <a href=""><li>Besoin d'Aide</li></a>
-                    <a href="/src/php/login.php?deconnexion" id="deconnexion"><li>Déconnexion</li></a>
+                    <!--<a href=""><li>Mes Favoris</li></a>-->
+                    <!--<a href=""><li>Besoin d'Aide</li></a>-->
+                    <a href="/src/php/connexion/login.php?deconnexion" id="deconnexion"><li>Déconnexion</li></a>
                 </ul>
             </div> <?php
         } else { ?>
-            <a href="/src/php/connection.php" class="compte">
+            <a href="/src/php/connexion/connexion.php" class="compte">
                 <p>Se connecter</p>
                 <img src="/public/icons/user-blue.svg">
             </a> <?php

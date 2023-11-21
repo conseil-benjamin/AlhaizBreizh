@@ -1,19 +1,21 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../styles/styles.css">
-    <link rel="stylesheet" type="text/css" href="../styles/styleCreationLogement.css">
+    <link rel="stylesheet" type="text/css" href="/src/styles/styles.css">
+    <link rel="stylesheet" type="text/css" href="/src/styles/styleCreationLogement.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="../js/addInputElement.js"></script>
+    <script src="/src/js/addInputElement.js"></script>
     <title>Creation Logement</title>
 </head>
 <body>
     <?php
-        include './header.php';
-        
-        /*
+        include($_SERVER['DOCUMENT_ROOT'].'/src/php/header.php');
+        try {
+            // Connexion à la base de données
+            $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
         
             $query = "SELECT * FROM ldc.Logement WHERE numLogement = 2 ";
             
@@ -31,22 +33,13 @@
                 $LogementEnLigne = $row[8];
                 $nbPersMax = $row[9];
                 $nbChambres = $row[10];
-                $detailsLitsDispos = $row[11];
-                $nbSalleDeBain = $row[12];
-                $tarifNuitees = $row[13];
-            }   
-
-            $query2 = "SELECT * FROM ldc.Chambre WHERE numLogement = 1";
-
-            $result2 = $pdo->query($query2);
-
-            while ($row2 = $result2->fetch(PDO::FETCH_NUM)) {
-                $numLogementAssocieChambre = $row2[0];
-                $numChambre = $row2[1];
-                $nbLitsSimples = $row2[2];
-                $nbLitsDoubles = $row2[3];
+                $nbLitsSimples = $row[11];
+                $nbLitsDoubles = $row[12];
+                $detailsLitsDispos = $row[13];
+                $nbSalleDeBain = $row[14];
+                $tarifNuitees = $row[15];
             }
-
+/*
             echo "Numéro de Logement : " . $numLogement . "<br>";
             echo "Surface Habitable : " . $surfaceHabitable . "<br>";
             echo "Libellé : " . $libelle . "<br>";
@@ -58,38 +51,23 @@
             echo "Logement en Ligne : " . $LogementEnLigne . "<br>";
             echo "Nombre de Personnes Max : " . $nbPersMax . "<br>";
             echo "Nombre de Chambres : " . $nbChambres . "<br>";
+            echo "Nombre de Lits Simples : " . $nbLitsSimples . "<br>";
+            echo "Nombre de Lits Doubles : " . $nbLitsDoubles . "<br>";
             echo "Détails des Lits Disponibles : " . $detailsLitsDispos . "<br>";
             echo "Nombre de Salles de Bain : " . $nbSalleDeBain . "<br>";
             echo "Tarif des Nuitées : " . $tarifNuitees . "<br>";
+*/
+            // insert
 
-            echo "<br>";
+            $pdo = null;
 
-            echo "Num logement :" . $numLogementAssocieChambre . "<br>";
-            echo "Num chambre : " . $numChambre . "<br>";
-            echo "Nombres lits simples : " . $nbLitsSimples . "<br>";
-            echo "Nombres lits doubles : " . $nbLitsDoubles . "<br>"; 
-
-            $query5 = "INSERT INTO ldc.Chambre (numLogement, numChambre, nbLitsSimples, nbLitsDoubles) VALUES (2, $numChambre, $nbLitsSimples, $nbLitsDoubles)";
-
-            $stmt3 = $pdo->prepare($query5);
-            $stmt3->execute();
-
-            $query3 = "INSERT INTO ldc.LogementProprio (numLogement,idCompte) VALUES (2, 2)";
-
-            $stmt= $pdo->prepare($query3);
-            $stmt->execute();
-
-            
-
-            
-            $stmt2 = $pdo->prepare($query4);
-            $stmt2->execute();
-            */
-        
+        } catch (PDOException $e) {
+            echo "Erreur : " . $e->getMessage();
+        }
     ?>
     <h1>Création d’un nouveau logement</h1>
     <hr>
-    <form method="post" action="/src/php/insertDatabase.php">
+    <form method="post">
     <div class="container-main">
         <div class="container-left">
             <label for="title">Titre de l'annonce (*)</label>
@@ -141,7 +119,7 @@
                 </div>
                 <div>
                     <label for="ville">Ville (*)</label>
-                    <input type="text" id="ville" name="ville" placeholder="Ville" size="26">
+                    <input type="text" id="ville" name="ville" placeholder="Ville">
                 </div>
             </div>
             <label for="accroche">Phrase d'accroche</label>
@@ -189,7 +167,6 @@
             <button class="creerAnnonce" type="submit" id="creerAnnonce">Créer annonce</button>
     </div>
     </div>
-    </form>
-    <?php include './footer.php'; ?>
+    <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'); ?>
 </body>
 </html>
