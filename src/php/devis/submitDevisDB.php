@@ -1,6 +1,6 @@
 <?php
 
-// Verifie que la session est bien initialisée
+// Vérifie que la session est bien initialisée
 if(isset($_SESSION)) {
     $id_client = $_SESSION['id_client'];
     $numLogement = $_SESSION['num_logement'];
@@ -10,11 +10,19 @@ else {
     $numLogement = 1;
 }
 
-// Verifie si le formulaire est bien soumis
+// Vérifie si le formulaire est bien soumis
 if (isset($_POST['nb_personne'])) {
-    $dateArr = new DateTime($_POST['date_arrivee']);
+    try {
+        $dateArr = new DateTime($_POST['date_arrivee']);
+    } catch (Exception $e) {
+        die();
+    }
     $sqlDateArr = $dateArr->format('Y-m-d');
-    $dateDep = new DateTime($_POST['date_depart']);
+    try {
+        $dateDep = new DateTime($_POST['date_depart']);
+    } catch (Exception $e) {
+        die();
+    }
     $sqlDateDep = $dateDep->format('Y-m-d');
     $nb_personne = $_POST['nb_personne'];
     $demande = $_POST['demande'];
@@ -25,7 +33,7 @@ else {
     $sqlDateDep = new DateTime("2023-10-24");
     $sqlDateDep = $sqlDateDep->format('Y-m-d');
     $nb_personne = 4;
-    $demande = "Un petit dejeuner au lit";
+    $demande = "Un petit déjeuner au lit";
 }
 
 

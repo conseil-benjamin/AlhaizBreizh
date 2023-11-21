@@ -6,7 +6,7 @@
         $dateArrivee = "2023-10-19";
         $dateDepart = "2023-10-19";
         $nbPersonne = 10;
-        $demande = "Petit dejeuner au lit";
+        $demande = "Petit déjeuner au lit";
     }
 ?>
 <!DOCTYPE html>
@@ -18,7 +18,7 @@
         <link href="/src/styles/proposition_devis.css" rel="stylesheet" type="text/css">
         <link href="/src/styles/demande_devis.css" rel="stylesheet" type="text/css">
         <link href="/src/styles/styles.css" rel="stylesheet" type="text/css">
-        <title>Demande de devis</title>
+        <title>Proposition de devis</title>
     </head>
     <body>
         <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/header.php'); ?>
@@ -30,7 +30,7 @@
                 </h1>
             </section>
             <section id="corpsTexte">
-                <form method="post"">
+                <form method="post" enctype="application/x-www-form-urlencoded">
                     <div id="formulaire">
                         <div id="prixDiv">
                             <ul>
@@ -112,7 +112,7 @@
                         </div>
                     </div>
                     <div id="total">
-                        <button class="boutton" type="submit">Envoyer le devis</button>
+                        <button class="boutton" type="submit" id="envoyer">Envoyer le devis</button>
                     </div>
                 </form>
             </section>
@@ -122,7 +122,8 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> <!-- Librairie pour les alertes -->
     <script src="../../js/proposition_devis.js"></script>
     <?php
-    if(isset($_POST[0])) {
+    print_r($_POST);
+    if(isset($_POST['devis'])) {
         require("submitPropositionDevisDB.php");
     }
     ?>
