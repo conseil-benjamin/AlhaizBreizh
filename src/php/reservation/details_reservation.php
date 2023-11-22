@@ -33,11 +33,11 @@ $cheminPhoto = "../../../public/img/logements/$id/$id.png";
                     <img src="" alt="logo"/>
                     <p>Localtion localisation détaillé</p>
                 </div>
-                <div id="etatResa">En attente du devis</div>
+                <div id="etatResa" class="center"><h2> En attente du devis</h2></div>
             </div>
             <div id="dateDiv">
                 <h2 id="date"><span id="dateArr">Date 1</span> - <span id="dateDep">Date 2</span></h2>
-                <div id="nbPersonne">7</div>
+                <div id="nbPersonne" class="center"><h1>7</h1</div>
             </div>
             <div id="devisRecu">
                 <button><img src="" alt="icon devis"/></button>

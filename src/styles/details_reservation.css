@@ -98,10 +98,33 @@ body .container > .container {
 }
 
 #etatResa {
-    width: 219px;
-    height: 83px;
-
+    width: 210px;
     background: #627099;
     border-radius: 10px;
+    padding: 20px 10px;
+}
 
+#etatResa * {
+    font-family: 'Noir Pro';
+    text-align: center;
+    color: #FFFFFF;
+}
+
+#dateDiv {
+    display: flex;
+    justify-content: space-between;
+}
+
+#nbPersonne {
+    height: 10vh;
+    width: 4vw;
+
+    background: #16A1EF;
+    border-radius: 60px;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
