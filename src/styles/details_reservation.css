@@ -78,14 +78,6 @@ body {
     margin-right: 20px;
 }
 
-body .container {
-    justify-content: end;
-}
-
-body .container > .container {
-    flex-direction: column;
-    align-items: end;
-}
 
 #annulerAccepter > button {
     width: 378px;
@@ -135,10 +127,16 @@ body .container > .container {
 }
 
 #devisRecu {
-    width: 40vw;
+    width: 30vw;
     height: 15vh;
-
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
     background: var(--col2);
     border-radius: 10px;
-
 }
+
+#devisRecu h2 {
+    font-weight: normal;
+}
+

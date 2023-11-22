@@ -40,20 +40,21 @@ $cheminPhoto = "../../../public/img/logements/$id/$id.png";
                 <div id="nbPersonne" class="center"><h1>7</h1></div>
             </div>
             <div id="devisRecu">
-                <button><img src="" alt="icon devis"/></button>
-                Devis reçu le <span id="dateDevis"></span></div>
+                <button><img src="" alt="icon devis"/></button> <h2>
+                Devis reçu le <span id="dateDevis">JJ/MM/YYYY</span></h2></div>
 
-            <div id="prixDiv"><p>Total :</p>
-                <h2><span id="prixSpan">200</span>€</h2></div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="container">
-            <div id="annulerAccepter">
-                <button class="boutton">Accepter le devis et payer</button>
-                <button class="boutton">Annuler ma réservation</button>
+            <div id="prixDiv">
+                <p>Total :</p>
+                <h2><span id="prixSpan">200</span>€</h2>
             </div>
-            <p>Logement reservé le <span id="dateResa">JJ/MM/YYYY</span></p>
+            <div class="container" style="flex-direction: column;
+    align-items: end;">
+                <div id="annulerAccepter">
+                    <button class="boutton">Accepter le devis et payer</button>
+                    <button class="boutton">Annuler ma réservation</button>
+                </div>
+                <p>Logement reservé le <span id="dateResa">JJ/MM/YYYY</span></p>
+            </div>
         </div>
     </div>
 </div>
