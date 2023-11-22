@@ -8,8 +8,8 @@ $cheminPhoto = "../../../public/img/logements/$id/$id.png";
 <head>
     <meta charset="UTF-8">
     <title>Détails de la réservations</title>
-    <link href="/src/styles/details_reservation.css" rel="stylesheet" type="text/css">
     <link href="/src/styles/styles.css" rel="stylesheet" type="text/css">
+    <link href="/src/styles/details_reservation.css" rel="stylesheet" type="text/css">
 </head>
 <?php include($_SERVER['DOCUMENT_ROOT'] . '/src/php/header.php'); ?>
 <body>
@@ -37,7 +37,7 @@ $cheminPhoto = "../../../public/img/logements/$id/$id.png";
             </div>
             <div id="dateDiv">
                 <h2 id="date"><span id="dateArr">Date 1</span> - <span id="dateDep">Date 2</span></h2>
-                <div id="nbPersonne" class="center"><h1>7</h1</div>
+                <div id="nbPersonne" class="center"><h1>7</h1></div>
             </div>
             <div id="devisRecu">
                 <button><img src="" alt="icon devis"/></button>
@@ -53,7 +53,7 @@ $cheminPhoto = "../../../public/img/logements/$id/$id.png";
                 <button class="boutton">Accepter le devis et payer</button>
                 <button class="boutton">Annuler ma réservation</button>
             </div>
-            <p>Logement reservé le <span id="dateResa"></span></p>
+            <p>Logement reservé le <span id="dateResa">JJ/MM/YYYY</span></p>
         </div>
     </div>
 </div>
