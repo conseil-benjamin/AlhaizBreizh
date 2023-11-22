@@ -57,7 +57,7 @@ $nomProprio = 'Beber';
     align-items: end;">
                 <div id="annulerAccepter">
                     <button class="boutton" onclick="">Accepter le devis et payer</button>
-                    <button class="boutton" onclick="annulerResa()">Annuler ma réservation</button>
+                    <button class="boutton" onclick="confirmationAnnulerPopUp()">Annuler ma réservation</button>
                 </div>
                 <p>Logement reservé le <span id="dateResa"><?= $dateResa ?></span></p>
             </div>
