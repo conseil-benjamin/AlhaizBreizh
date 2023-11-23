@@ -1,22 +1,19 @@
-<?php session_start(); ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="/src/styles/styles.css">
-    <link rel="stylesheet" type="text/css" href="/src/styles/styleCreationLogement.css">
+    <link rel="stylesheet" type="text/css" href="../../styles/styles.css">
+    <link rel="stylesheet" type="text/css" href="../../styles/styleCreationLogement.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="/src/js/addInputElement.js"></script>
+    <script src="../../js/addInputElement.js"></script>
     <title>Creation Logement</title>
 </head>
 <body>
     <?php
-        include($_SERVER['DOCUMENT_ROOT'].'/src/php/header.php');
-        try {
-            // Connexion à la base de données
-            $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
+        include '../header.php';
         
+        /*
             $query = "SELECT * FROM ldc.Logement WHERE numLogement = 2 ";
             
             $result = $pdo->query($query);
@@ -33,13 +30,22 @@
                 $LogementEnLigne = $row[8];
                 $nbPersMax = $row[9];
                 $nbChambres = $row[10];
-                $nbLitsSimples = $row[11];
-                $nbLitsDoubles = $row[12];
-                $detailsLitsDispos = $row[13];
-                $nbSalleDeBain = $row[14];
-                $tarifNuitees = $row[15];
+                $detailsLitsDispos = $row[11];
+                $nbSalleDeBain = $row[12];
+                $tarifNuitees = $row[13];
+            }   
+
+            $query2 = "SELECT * FROM ldc.Chambre WHERE numLogement = 1";
+
+            $result2 = $pdo->query($query2);
+
+            while ($row2 = $result2->fetch(PDO::FETCH_NUM)) {
+                $numLogementAssocieChambre = $row2[0];
+                $numChambre = $row2[1];
+                $nbLitsSimples = $row2[2];
+                $nbLitsDoubles = $row2[3];
             }
-/*
+
             echo "Numéro de Logement : " . $numLogement . "<br>";
             echo "Surface Habitable : " . $surfaceHabitable . "<br>";
             echo "Libellé : " . $libelle . "<br>";
@@ -51,31 +57,49 @@
             echo "Logement en Ligne : " . $LogementEnLigne . "<br>";
             echo "Nombre de Personnes Max : " . $nbPersMax . "<br>";
             echo "Nombre de Chambres : " . $nbChambres . "<br>";
-            echo "Nombre de Lits Simples : " . $nbLitsSimples . "<br>";
-            echo "Nombre de Lits Doubles : " . $nbLitsDoubles . "<br>";
             echo "Détails des Lits Disponibles : " . $detailsLitsDispos . "<br>";
             echo "Nombre de Salles de Bain : " . $nbSalleDeBain . "<br>";
             echo "Tarif des Nuitées : " . $tarifNuitees . "<br>";
-*/
-            // insert
 
-            $pdo = null;
+            echo "<br>";
 
-        } catch (PDOException $e) {
-            echo "Erreur : " . $e->getMessage();
-        }
+            echo "Num logement :" . $numLogementAssocieChambre . "<br>";
+            echo "Num chambre : " . $numChambre . "<br>";
+            echo "Nombres lits simples : " . $nbLitsSimples . "<br>";
+            echo "Nombres lits doubles : " . $nbLitsDoubles . "<br>"; 
+
+            $query5 = "INSERT INTO ldc.Chambre (numLogement, numChambre, nbLitsSimples, nbLitsDoubles) VALUES (2, $numChambre, $nbLitsSimples, $nbLitsDoubles)";
+
+            $stmt3 = $pdo->prepare($query5);
+            $stmt3->execute();
+
+            $query3 = "INSERT INTO ldc.LogementProprio (numLogement,idCompte) VALUES (2, 2)";
+
+            $stmt= $pdo->prepare($query3);
+            $stmt->execute();
+
+            
+
+            
+            $stmt2 = $pdo->prepare($query4);
+            $stmt2->execute();
+            */
+        
     ?>
     <h1>Création d’un nouveau logement</h1>
     <hr>
-    <form method="post">
+<form method="post" action="javascript:void(0);" onsubmit="submitForm()">
     <div class="container-main">
         <div class="container-left">
             <label for="title">Titre de l'annonce (*)</label>
             <input type="text" id="title" name="title" size="60" placeholder="Titre" maxlength="100">
             <label for="description">Description de l'annonce (*)</label>
             <textarea name="description" id="description" cols="46" rows="20" placeholder="Description" maxlength="500"></textarea>
-            <label for="photos">Photos (*)</label>
-            <input type="file" id="photos" name="photos" multiple>
+            <div class="custom-file-input">
+                Ajouter photos
+                <input type="file" id="photos" name="photos" accept=".jpg, .jpeg, .png" onchange="afficherNomsPhotos()" multiple>
+            </div>
+            <div id="photosName">Noms Photos :</div>
             <div class="typeLogementDiv">
                 <div>
                     <label for="typeLogement">Type de logement (*)</label>
@@ -119,7 +143,7 @@
                 </div>
                 <div>
                     <label for="ville">Ville (*)</label>
-                    <input type="text" id="ville" name="ville" placeholder="Ville">
+                    <input type="text" id="ville" name="ville" placeholder="Ville" size="26">
                 </div>
             </div>
             <label for="accroche">Phrase d'accroche</label>
@@ -163,10 +187,10 @@
             <span class="conditionsGenerale">J'ai lu et j'accepte les Conditions Générales d'Utilisation, la Politique des données personnelles et les Conditions Générales de Ventes d’Alhaiz Breizh (*)</label>
             </span>
             <input type="checkbox" name="conditionsGenerale" id="conditionsGenerale">
-            <label class="conditionsGenerale" for="conditionsGenerale">
             <button class="creerAnnonce" type="submit" id="creerAnnonce">Créer annonce</button>
     </div>
     </div>
-    <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'); ?>
+    </form>
+    <?php include '../footer.php'; ?>
 </body>
 </html>

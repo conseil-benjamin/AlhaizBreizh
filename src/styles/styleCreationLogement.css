@@ -3,6 +3,7 @@ body {
   --main-bg-color: var(--col1);
   --color-btn-submit: var(--col3);
   --main-font-color: #ffffff;
+  --secondary-font-color : #000000;
   --h1-font-color: var(--col5);
 }
 
@@ -17,12 +18,12 @@ body {
 
 .container-left {
   flex-direction: column;
-  margin: 1em 5em 1em 8em;
+  margin: 1em 5em 1em 10em;
   width: 35%;
 }
 
 .container-right {
-  margin: 1em 0 0 0;
+  margin: 1em 5em 0 0;
   width: 35%;
 }
 
@@ -32,6 +33,35 @@ select{
   border-radius: 5px;
   padding: 0.8em;
   display: block;
+}
+
+.custom-file-input {
+  background-color: var(--col5);
+  margin: 1em 0 1em 1em;
+  color: var(--secondary-font-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  background-color: #ffffff;
+  border-radius: 10px;
+  width: 10rem;
+  height: 2em;
+  cursor: pointer;
+}
+
+/* Styles pour le bouton de type file */
+#photos {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+#photosName{
+  margin: 0 0 0 1em;
 }
 
 button{
@@ -158,15 +188,26 @@ hr {
   margin: 2em 0 0 0;
 }
 
-.addButton, .addChambre{
-  background-color: #16a1ef;
+.addButton, .addChambre, .btnAddLits{
+  background-color: var(--col5);
   border-radius: 10px;
 }
 
 .addButton:hover, .addChambre:hover{
-  background-color: white;
+  background-color: var(--main-font-color);
   color: black;
 }
+
+.conditionsGenerale{
+  margin: auto;  
+  width: 60%;
+}
+
+.creerAnnonce{
+  margin: auto;
+  margin-bottom: 2em;
+}
+
 
 
 @media (max-width: 1250px) {
