@@ -1,9 +1,15 @@
 <?php session_start(); 
 
-    if (isset($_SESSION['id'])) {
+    if (isset($_SESSION['nbInstallations'])) {
         $id = 'id';
     } else{
         echo "pas d'id trouvé";
+    }
+
+     if (isset($_SESSION['nbInstallations'])) {
+        $nbInstallations = 'nbInstallations';
+    } else{
+        echo "pas d'installations trouvé";
     }
 
     $title = $_GET['title'];
@@ -56,6 +62,29 @@
 } catch (PDOException $e) {
     echo "Erreur : " . $e->getMessage();
 }
+
+$last_inserted_id = $pdo->lastInsertId();
+echo $last_inserted_id;
+/*
+
+                $nom_dossier = $_SERVER['DOCUMENT_ROOT'] . "/public/img/logements/" . 5;
+
+                if (!is_dir($nom_dossier)) { // Vérifie si le dossier n'existe pas déjà
+                    if (mkdir($nom_dossier)) { // Crée le dossier
+                        echo "Le dossier $nom_dossier a été créé avec succès.";
+                    } else {
+                        echo "Erreur : Impossible de créer le dossier $nom_dossier.";
+                    }
+                } else {
+                    echo "Le dossier $nom_dossier existe déjà.";
+                }
+*/
+
+// créé un Dossier au nom du dernier logement créé
+// ajouter les images dans ce dossier ci
+// pareil pour service et tout le reste
+
+
 $pdo = null;
 header('Location: /src/php/logement/mesLogements.php');
 ?>

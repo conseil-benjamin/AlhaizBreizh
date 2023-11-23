@@ -7,84 +7,18 @@
     <link rel="stylesheet" type="text/css" href="../../styles/styleCreationLogement.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../../js/addInputElement.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>Creation Logement</title>
 </head>
 <body>
     <?php
         include '../header.php';
-        
-        /*
-            $query = "SELECT * FROM ldc.Logement WHERE numLogement = 2 ";
-            
-            $result = $pdo->query($query);
-        
-            while ($row = $result->fetch(PDO::FETCH_NUM)) {
-                $numLogement = $row[0];
-                $surfaceHabitable = $row[1];
-                $libelle = $row[2];
-                $accroche = $row[3];
-                $description = $row[4];
-                $natureLogement = $row[5];
-                $proprio = $row[6];
-                $photoCouverture = $row[7];
-                $LogementEnLigne = $row[8];
-                $nbPersMax = $row[9];
-                $nbChambres = $row[10];
-                $detailsLitsDispos = $row[11];
-                $nbSalleDeBain = $row[12];
-                $tarifNuitees = $row[13];
-            }   
 
-            $query2 = "SELECT * FROM ldc.Chambre WHERE numLogement = 1";
-
-            $result2 = $pdo->query($query2);
-
-            while ($row2 = $result2->fetch(PDO::FETCH_NUM)) {
-                $numLogementAssocieChambre = $row2[0];
-                $numChambre = $row2[1];
-                $nbLitsSimples = $row2[2];
-                $nbLitsDoubles = $row2[3];
-            }
-
-            echo "Numéro de Logement : " . $numLogement . "<br>";
-            echo "Surface Habitable : " . $surfaceHabitable . "<br>";
-            echo "Libellé : " . $libelle . "<br>";
-            echo "Accroche : " . $accroche . "<br>";
-            echo "Description : " . $description . "<br>";
-            echo "Nature du Logement : " . $natureLogement . "<br>";
-            echo "Propriétaire : " . $proprio . "<br>";
-            echo "Photo de Couverture : " . $photoCouverture . "<br>";
-            echo "Logement en Ligne : " . $LogementEnLigne . "<br>";
-            echo "Nombre de Personnes Max : " . $nbPersMax . "<br>";
-            echo "Nombre de Chambres : " . $nbChambres . "<br>";
-            echo "Détails des Lits Disponibles : " . $detailsLitsDispos . "<br>";
-            echo "Nombre de Salles de Bain : " . $nbSalleDeBain . "<br>";
-            echo "Tarif des Nuitées : " . $tarifNuitees . "<br>";
-
-            echo "<br>";
-
-            echo "Num logement :" . $numLogementAssocieChambre . "<br>";
-            echo "Num chambre : " . $numChambre . "<br>";
-            echo "Nombres lits simples : " . $nbLitsSimples . "<br>";
-            echo "Nombres lits doubles : " . $nbLitsDoubles . "<br>"; 
-
-            $query5 = "INSERT INTO ldc.Chambre (numLogement, numChambre, nbLitsSimples, nbLitsDoubles) VALUES (2, $numChambre, $nbLitsSimples, $nbLitsDoubles)";
-
-            $stmt3 = $pdo->prepare($query5);
-            $stmt3->execute();
-
-            $query3 = "INSERT INTO ldc.LogementProprio (numLogement,idCompte) VALUES (2, 2)";
-
-            $stmt= $pdo->prepare($query3);
-            $stmt->execute();
-
-            
-
-            
-            $stmt2 = $pdo->prepare($query4);
-            $stmt2->execute();
-            */
-        
+        if (isset($_SESSION['nbInstallations'])) {
+        $id = 'nbInstallations';
+        } else{
+        echo "pas d'id trouvé";
+        }
     ?>
     <h1>Création d’un nouveau logement</h1>
     <hr>
