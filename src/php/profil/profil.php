@@ -5,7 +5,7 @@
     //Vérifier si l'utilisateur est donné
     $user_set = true;
     if (!isset($_GET['user'])){
-        $user_set = false;
+        header('Location: profil.php?user='.$_SESSION['id']);
     } else{
         $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
         $user = $_GET['user'];
@@ -197,7 +197,7 @@
     <?php } else{ ?>
 
     <!--Cas profil personnel -->
-    <?php if ($page_personnelle){ ?>  
+    <?php if (($page_personnelle) && (!isset($_GET['edit']))){ ?>  
 
         <div id="titre">
             <img src="<?php echo $image_user ?>">
@@ -207,7 +207,7 @@
         <div id="info">
             <div>
             <?php 
-                $infos = array_slice($infos, 0, (sizeof($infos)-1), true); //Enlève le notation moyenne
+                $infos = array_slice($infos, 0, (sizeof($infos)-1), true); //Enlève la notation moyenne
                 foreach ($infos as $key => $value) {
                     echo '<ul><li>'.$key.'</li>';
                     echo '<li>'.$value.'</li></ul>';
@@ -217,7 +217,7 @@
                 }
             ?>
             </div>
-            <a class="boutton" href=""><img src="/public/icons/edit.svg" alt="Editer"></a>
+            <a class="boutton" href="profil.php?user=<?php echo $user ?>&edit"><img src="/public/icons/edit.svg" alt="Editer"></a>
         </div>
 
         <div id="options">
@@ -232,6 +232,50 @@
             ?>
             <a class="boutton" href="/src/php/connexion/login.php?deconnexion"><img id="img-disconnect" src="/public/icons/forward.svg" alt="">Déconnexion</a>
         </div>
+
+    <!--Cas profil personnel en édition -->
+    <?php } else if (($page_personnelle) && (isset($_GET['edit']))){ ?>
+        
+        <form id="form" action="profil.php?user=<?php echo $user ?>" method="post">
+            <div id="titre">
+                <input type="file" id="fileUpload" style="display: none;">
+                <label for="fileUpload" class="customFileUpload"><img id="photo" src="<?php echo $image_user; ?>"></label>
+                <h2>Editer mon profil</h2>
+            </div>
+            
+            <div id="info">
+                <div>
+                <?php 
+                    $infos = array_slice($infos, 0, (sizeof($infos)-1), true); //Enlève la notation moyenne
+                    foreach ($infos as $key => $value) {
+                        $disabled = '';
+                        echo '<ul><li>'.$key.'</li>';
+                        if ($key == 'Mot de Passe'){
+                            $type = 'password';
+                        } else if ($key == 'Date de Naissance'){
+                            $value = date('Y-m-d', mktime(0, 0, 0, substr($value, 3, 2), substr($value, 0, 2), substr($value, 6, 4)));
+                            $type = 'date';
+                            $disabled = 'disabled';
+                        } else if ($key == 'Adresse Mail'){
+                            $type = 'email';
+                        } else if ($key == 'Téléphone'){
+                            $type = 'tel';
+                        } else{
+                            $type = 'text';
+                        }
+                        echo '<li><input '.$disabled.' required class="textfield" type="'.$type.'" name="'.$key.'" value="'.$value.'"></li></ul>';
+                        if ($key != 'Mot de Passe'){ ?>
+                            <hr> <?php
+                        }
+                    }
+                ?>
+                </div>
+                <div class="bouttons">
+                    <button class="boutton" type="submit"><img style="filter: none;" src="/public/icons/check.svg" alt="Valider"></button>
+                    <a class="boutton" href="profil.php?user=<?php echo $user ?>"><img style="filter: none;" src="/public/icons/supprimer64.svg" alt="Annuler"></a>
+                </div>
+            </div>  
+        </form>   
 
     <!--Cas profil non-personnel -->
     <?php } else{ ?>
@@ -352,5 +396,6 @@
     <?php }} ?>
     </div>
     <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'); ?>
+    <script src="/src/js/profil/editImage.js"></script>
 </body>
 </html>
