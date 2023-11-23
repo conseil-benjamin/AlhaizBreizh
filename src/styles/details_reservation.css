@@ -19,6 +19,7 @@ body {
 }
 
 figure {
+    width: auto;
     width: max-content;
 }
 
@@ -102,7 +103,7 @@ body {
 }
 
 #etatResa {
-    width: 210px;
+    width: 15vw;
     background: var(--col4);
     border-radius: 10px;
     padding: 20px 10px;
@@ -173,4 +174,8 @@ body {
 
 #localisation > h2 {
     font-weight: lighter;
+}
+
+.gris {
+    opacity: 0.5;
 }

@@ -55,9 +55,13 @@ $nomProprio = 'Beber';
             </div>
             <div class="container" style="flex-direction: column;
     align-items: end;">
-                <div id="annulerAccepter">
+                <!--<div id="annulerAccepter">
                     <button class="boutton" onclick="">Accepter le devis et payer</button>
                     <button class="boutton" onclick="confirmationAnnulerPopUp()">Annuler ma réservation</button>
+                </div> -->
+                <div id="annulerAccepter">
+                    <button class="boutton gris" onclick="" disabled>Laisser un avis sur le logement</button>
+                    <button class="boutton gris" onclick="confirmationAnnulerPopUp()" disabled>Laisser un avis sur l'hôte</button>
                 </div>
                 <p>Logement reservé le <span id="dateResa"><?= $dateResa ?></span></p>
             </div>
