@@ -36,16 +36,14 @@ figure > img {
 fieldset {
     display: flex;
     justify-content: center;
-    color: #627099;
+    color: var(--col4);
     border-style: none;
     margin-top: 5px;
-
-
 }
 
 fieldset a {
     width: max-content;
-    border-bottom: 1px solid #627099;
+    border-bottom: 1px solid var(--col4);
     transform: matrix(1, 0, 0, 1, 0, 0);
 }
 
@@ -56,14 +54,14 @@ body {
 
 
 #contactPropio > button {
-    background: #16A1EF;
+    background: var(--col5);
     border-radius: 30px;
     font-style: normal;
     font-weight: 600;
     font-size: 20px;
     line-height: 24px;
     text-align: center;
-    color: #FFFFFF;
+    color: white;
     width: 40%;
 }
 
@@ -92,20 +90,20 @@ body {
 #annulerAccepter > button {
     width: 378px;
     height: 82px;
-    background: #7EBCF2;
+    background: var(--col3);
     border-radius: 10px;
     font-style: normal;
     font-weight: 600;
     font-size: 20px;
     line-height: 24px;
     text-align: center;
-    color: #000000;
+    color: black;
 
 }
 
 #etatResa {
     width: 210px;
-    background: #627099;
+    background: var(--col4);
     border-radius: 10px;
     padding: 20px 10px;
 }
@@ -125,7 +123,7 @@ body {
 #nbPersonne {
     height: 9vh;
     width: 6vw;
-    background: #16A1EF;
+    background: var(--col5);
     justify-content: space-around !important;
     border-radius: 10px;
 }
@@ -165,7 +163,7 @@ body {
 }
 
 #localisation {
-    background-color: #16A1EF;
+    background-color: var(--col5);
     border-radius: 10px;
     display: flex;
     justify-content: space-around;
