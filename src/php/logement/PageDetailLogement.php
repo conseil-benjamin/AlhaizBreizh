@@ -9,6 +9,28 @@ if (isset($_GET['numLogement'])) {
     //Récupérer l'image de couverture du logement
     $img = '/public/img/logements/'.$numLogement.'/1.png';
 
+                //Récupérer les images logement
+                $chemin_photos = $_SERVER['DOCUMENT_ROOT'] . '/public/img/logements/' . $numLogement;
+                
+
+                $liste_photos = scandir($chemin_photos);
+
+                $nombre_fichiers = 0;
+                foreach ($liste_photos as $fichier) {
+                    $chemin_fichier = $chemin_photos .'/'. $fichier;
+                    if (is_file($chemin_fichier)) {
+                        $nombre_fichiers++;
+                    }
+                }
+
+                for ($i = 1; $i <= $nombre_fichiers; $i++) {
+                    ${"img".$i}='/public/img/logements/'.$numLogement.'/'.$i.'.png';
+                    }
+
+
+
+
+
     if (isset($pdo)&&!empty($numLogement)) {
         // Vérifier si numLogement existe dans la base de données
         $stmt = $pdo->query("SELECT COUNT(*) FROM ldc.Logement WHERE numLogement = $numLogement");
@@ -70,6 +92,9 @@ if (isset($_GET['numLogement'])) {
                 $localisation = isset($row[0]) ? $row[0] : null;
                 $localisation_speci = isset($row[1]) ? $row[1] : null;
             }
+
+            
+
         } else {
             $error_message = "Le numéro de logement spécifié n'existe pas.";
         }
@@ -155,16 +180,8 @@ if (!isset($liste_langue_parle)) {
     $liste_langue_parle = 'Non renseigné';
 }
 
-/* Ce qui manque a afficher
 
-    $liste_chambres, probleme base de donnees, il faut une liste de chambres avec un l'intérieur une liste pour chaque chambre pour specifier le nombre de lit simple et lit double/ par chambre
-    $liste_installation,
-    $liste_equipements
-    $liste_services
-    $liste_langue_parle,
-    les images
-    la localisation specifique (l'adresse) pour les clients connectés qui ont réservé ce logement
-*/
+
 
 ?>
 
@@ -207,10 +224,159 @@ if (!isset($liste_langue_parle)) {
             <section class="tete_offre">
                 <?php
                 if (!isset($photo_logement)) { ?>
-                    <img src="/public/img/maison.png" alt="image maison"> <?php
-                } else {?>
-                    <img src="<?php echo $img ?>" alt="image maison"> <?php
-                } ?>
+                    
+                    <div class="carousel my-carousel carousel--translate">
+                        <input class="carousel__activator" type="radio" name="carousel" id="1" checked="checked"/><!-- slide 1 -->
+                        <input class="carousel__activator" type="radio" name="carousel" id="2"/><!-- slide 2 -->
+                        <input class="carousel__activator" type="radio" name="carousel" id="3"/><!-- slide 3 -->
+                        <input class="carousel__activator" type="radio" name="carousel" id="4"/><!-- slide 4 -->
+                        <input class="carousel__activator" type="radio" name="carousel" id="5"/><!-- slide 5 -->
+                        <input class="carousel__activator" type="radio" name="carousel" id="6"/><!-- slide 6 -->
+
+                        <div class="carousel__controls"><!-- slide 1 -->
+                        <label class="carousel__control carousel__control--backward" for="6"></label>
+                        <label class="carousel__control carousel__control--forward" for="2"></label>
+                        </div>
+                        <div class="carousel__controls"><!-- slide 2 -->
+                        <label class="carousel__control carousel__control--backward" for="1"></label>
+                        <label class="carousel__control carousel__control--forward" for="3"></label>
+                        </div>
+                        <div class="carousel__controls"><!-- slide 3 -->
+                        <label class="carousel__control carousel__control--backward" for="2"></label>
+                        <label class="carousel__control carousel__control--forward" for="4"></label>
+                        </div>
+                        <div class="carousel__controls"><!-- slide 4 -->
+                        <label class="carousel__control carousel__control--backward" for="3"></label>
+                        <label class="carousel__control carousel__control--forward" for="5"></label>
+                        </div>
+                        <div class="carousel__controls"><!-- slide 5 -->
+                        <label class="carousel__control carousel__control--backward" for="4"></label>
+                        <label class="carousel__control carousel__control--forward" for="6"></label>
+                        </div>
+                        <div class="carousel__controls"><!-- slide 6 -->
+                        <label class="carousel__control carousel__control--backward" for="5"></label>
+                        <label class="carousel__control carousel__control--forward" for="1"></label>
+                        </div>
+                        <div class="carousel__track">
+
+                        <li class="carousel__slide"><!-- slide 1 -->
+                        <div class="image_carrousel">
+
+                            <img src="../../../public/img/maison.png" alt="image maison">
+                         </div>
+                        </li>
+
+
+
+                        <li class="carousel__slide"> <!-- slide 2 -->
+                            <div class="image_carrousel">
+                            <img src="../../../public/img/logements/1/1.png" alt="image maison"> 
+
+                        
+                        
+                        
+                        </div>              
+                        </li>
+                        <li class="carousel__slide"> <!-- slide 3 -->
+                            <div class="image_carrousel">
+                            <img src="../../../public/img/logements/2/1.png" alt="image maison"> 
+
+                        
+                        
+                        
+                        </div>              
+                        </li>
+                        <li class="carousel__slide"> <!-- slide 4 -->
+                            <div class="image_carrousel">
+                            <img src="../../../public/img/logements/1/1.png" alt="image maison"> 
+
+                        
+                        
+                        
+                        </div>              
+                        </li>
+                        <li class="carousel__slide"> <!-- slide 5 -->
+                            <div class="image_carrousel">
+                            <img src="../../../public/img/logements/2/1.png" alt="image maison"> 
+
+                        
+                        
+                        
+                        </div>              
+                        </li>
+                        <li class="carousel__slide"> <!-- slide 6 -->
+                            <div class="image_carrousel">
+                            <img src="../../..//public/img/photos_profil/1.png" alt="image maison"> 
+
+                        </div>              
+                        </li>
+                        
+                        </div>
+                        <div class="carousel__indicators">
+                        <label class="carousel__indicator" for="1"></label>
+                        <label class="carousel__indicator" for="2"></label>
+                        <label class="carousel__indicator" for="3"></label>
+                        <label class="carousel__indicator" for="4"></label>
+                        <label class="carousel__indicator" for="5"></label>
+                        <label class="carousel__indicator" for="6"></label>
+
+                        </div>
+                    </div>
+                    </div>
+                    
+                    <?php
+                } else {//caroussel gestion
+                    if ($nombre_fichiers===0) {?>
+                        <p>Aucune photo n'a été trouvé pour ce logement<p><?php
+                    }
+                    if ($nombre_fichiers===1) {?>
+                        <div class="carousel my-carousel carousel--translate">
+                            <div class="caroussel_track">
+                                <div class="caroussel_slide">
+                                    <div class="image_carrousel">
+                                        <img src="<?php echo $img ?>" alt="image maison">
+                                    </div>
+                                </div>
+                            </div>
+                        </div><?php
+                    }
+                    if ($nombre_fichiers>1) {?>
+                        <div class="carousel my-carousel carousel--translate">
+                            <input class="carousel__activator" type="radio" name="carousel" id="1" checked="checked"/><?php
+                        for ($i=2; $i <= $nombre_fichiers; $i++) { 
+                            ?><input class="carousel__activator" type="radio" name="carousel" id="<?php echo $i ?>"/><?php
+                        }
+
+                        for ($i=1; $i <= $nombre_fichiers; $i++) { 
+                            $slide_avant=$i-1;
+                            $slide_apres=$i+1;
+                            if ($slide_avant<=0) {
+                                $slide_avant=$nombre_fichiers;
+                            }
+                            if ($slide_apres>$nombre_fichiers) {
+                                $slide_apres=1;
+                            }?>    
+                            <div class="carousel__controls"><!-- slide <?php echo $i ?> -->
+                                <label class="carousel__control carousel__control--backward" for="<?php echo $slide_avant ?>"></label>
+                                <label class="carousel__control carousel__control--forward" for="<?php echo $slide_apres ?>"></label>
+                            </div><?php
+                        }
+                        ?><div class="carousel__track"><?php
+                        for ($i=1; $i <= $nombre_fichiers; $i++) { ?>
+                            <li class="carousel__slide"><!-- slide <?php echo $i ?> -->
+                                <div class="image_carrousel">
+                                <img src="<?php echo ${"img".$i} ?>" alt="image maison">
+                                </div>
+                            </li><?php
+                        }
+                            ?></div><div class="carousel__indicators"><?php
+
+                            for ($i=1; $i <= $nombre_fichiers; $i++) { ?>
+                                <label class="carousel__indicator" for="<?php echo $i ?>"></label><?php 
+                            }
+                        }
+                        ?></div></div><?php
+                    } ?>
                 <div>
                     <ul class="infos_loge">
                         <li><h2 id="localisation_haut_page">
