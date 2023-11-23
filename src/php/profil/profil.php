@@ -1,6 +1,7 @@
 <?php
     session_start();
-
+/*****************************************************************************/
+/*****************************************************************************/
     //Vérifier si l'utilisateur est donné
     $user_set = true;
     if (!isset($_GET['user'])){
@@ -34,7 +35,8 @@
         } catch (\Throwable $th) {
             //Erreur
         }
-
+/*****************************************************************************/
+/*****************************************************************************/
         //Récupère les informations de l'utilisateur
         $infos = array();
         $keys = array('Prénom','Nom','Pseudo','Date de Naissance','Adresse Mail','Téléphone','Adresse Postale','Mot de Passe','Notation Moyenne');
@@ -135,8 +137,35 @@
             } catch (\Throwable $th) {
                 //throw $th;
             } */
-            
-            $pdo = null; 
+
+/*****************************************************************************/
+/*****************************************************************************/
+            //Récupère les logements de l'utilisateur
+            try {
+                $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
+                $stmt = $pdo->prepare("SELECT numLogement,libelle,nbPersMax,tarifNuitees,LogementEnLigne FROM ldc.Logement WHERE proprio = :user");
+                $stmt->bindParam(':user', $user, PDO::PARAM_STR);
+        
+                //Recherche des logements dans la base de données
+                $stmt->execute();
+                $logements = array();
+                while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+                    $logements[] = $row;
+                }
+        
+                //Obtenir la localisation de chaque logement
+                if (count($logements) !== 0) {
+                    $stmt = $pdo->prepare("SELECT numLogement,ville FROM ldc.Localisation WHERE numLogement = ?");
+                    foreach ($logements as $logement) {
+                        $stmt->execute([$logement[0]]);
+                        $ville = $stmt->fetch(PDO::FETCH_NUM)[1];
+                        $logements[($logement[0] - 1)][] = $ville;
+                    }
+                }
+                $pdo = null;
+            } catch (PDOException $e) {
+                $logements = array();
+            }
 
             //Adapter les informations
             $infos['Date de Naissance'] = date('d/m/Y', strtotime($infos['Date de Naissance']));
@@ -265,6 +294,52 @@
                 <?php } ?>
             </div>
         </div>
+
+        <!-- Cas profil propriétaire -->
+        <?php if ($page_proprio){ ?>
+            <div id="logements">
+                <h2>Logements de <?php echo $infos['Pseudo']; ?></h2>
+                <div id="logement-container">
+                <?php
+                    /*Créations de carte pour chaque logements*/
+
+                    $nb_logements_inactifs = 0;
+                    $logements = array_reverse($logements);
+                    foreach ($logements as $logement) {
+                        $actif = $logement[4];
+                        if ($actif) {
+                            $lien = '/src/php/logement/PageDetailLogement.php?numLogement=' . $logement[0];
+                            $img = '/public/img/logements/' . $logement[0] . '/1.png';
+
+                            $titre = $logement[1];
+                            $nombre_personnes = $logement[2];
+                            $localisation = $logement[5];
+                            $prix = $logement[3] ?>
+        
+                            <div class="logement">
+                                <a href="<?php echo $lien ?>"><img src="<?php echo $img ?>"></a> <!-- Image du logement -->
+                                <div>
+                                    <div id="rating"><img src="/public/icons/star_fill.svg">4.9</div> <!-- Notation -->
+                                    <button type="button"><img src="/public/icons/heart_white.svg"></button> <!-- Coeur pour liker -->
+                                </div>   
+                                <a id="description" href="<?php echo $lien ?>"><div> 
+                                    <h3><?php echo $titre ?></h3> <!-- Titre du logement -->
+                                    <div><img src="/public/icons/nb_personnes.svg"><?php echo $nombre_personnes ?> personnes</div> <!-- Nombre de personnes -->
+                                    <div><img src="/public/icons/map.svg"><?php echo $localisation ?></div> <!-- Localisation -->
+                                    <div><strong><?php echo $prix ?>€</strong> / nuit</div> <!-- Prix du logement -->
+                                </div></a>
+                            </div> 
+                        <?php
+                    } else{
+                        $nb_logements_inactifs++;
+                    }
+                } 
+                if ($nb_logements_inactifs == count($logements)){ ?>
+                    <h3>Aucun logement pour le moment</h3><?php
+                } ?>
+                </div>             
+            </div>
+        <?php } ?>
 
     <?php }} ?>
     </div>
