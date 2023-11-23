@@ -249,6 +249,12 @@
                     <h2><?php echo $infos['Notation Moyenne']; ?></h2>
                 </div>
                 <h3><?php echo $nbCommentairesEnvoyes ?> commentaire<?php if ($nbCommentairesEnvoyes > 1) { echo 's envoyés'; } else { echo ' envoyé'; } ?></h3>
+                <div class="nav">
+                    <a href="#commentaires" class="boutton">Commentaires</a>
+                    <?php if ($page_proprio){ ?>
+                        <a href="#logements" class="boutton">Logements</a>
+                    <?php } ?>
+                </div>
             </div>
         </div>
 
@@ -300,6 +306,7 @@
             <div id="logements">
                 <h2>Logements de <?php echo $infos['Pseudo']; ?></h2>
                 <div id="logement-container">
+                <div id="logement-ligne">
                 <?php
                     /*Créations de carte pour chaque logements*/
 
@@ -334,6 +341,7 @@
                         $nb_logements_inactifs++;
                     }
                 } 
+                ?></div> <?php
                 if ($nb_logements_inactifs == count($logements)){ ?>
                     <h3>Aucun logement pour le moment</h3><?php
                 } ?>
