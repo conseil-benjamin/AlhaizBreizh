@@ -21,7 +21,7 @@ $nomProprio = 'Beber';
 <body>
 <div style="height: 75px"></div>
 <div>
-    <h1> <?= $titreLogement ?></h1>
+    <h1 id="titreLogement"> <?= $titreLogement ?></h1>
     <div id="infosContainer">
         <div id="photoEtContact">
             <figure>
@@ -34,16 +34,16 @@ $nomProprio = 'Beber';
             </div>
         </div>
         <div id="autreInfo">
-            <div class="container">
+            <div class="container" id="localisationEtat">
                 <div id="localisation">
-                    <img src="" alt="logo"/>
-                    <p>Location localisation détaillé</p>
+                    <img src="../../../public/icons/markerMap.svg" alt="logo"/>
+                    <h2>Location <br/> localisation détaillé</h2>
                 </div>
                 <div id="etatResa" class="center"><h2> En attente du devis</h2></div>
             </div>
             <div id="dateDiv">
                 <h2 id="date"><span id="dateArr"><?= $dateArr ?></span> - <span id="dateDep"><?= $dateDep ?></span></h2>
-                <div id="nbPersonne" class="center"><h1>7</h1></div>
+                <div id="nbPersonne" class="center"> <img src="../../../public/icons/nb_personnes.svg" alt="nbPersonne" /> <h1>7</h1></div>
             </div>
             <div id="devisRecu">
                 <a href='' download='devis.pdf'><img src="" alt="icon devis"/></a> <h2>

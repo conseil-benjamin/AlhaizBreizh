@@ -2,6 +2,12 @@ body {
     background-color: white;
 }
 
+#titreLogement {
+    margin-top: 10vh;
+    margin-bottom: 4vh;
+    padding-left: 3vw;
+}
+
 #infosContainer {
     display: flex;
 }
@@ -10,6 +16,10 @@ body {
     display: flex;
     flex-direction: column;
     margin: 20px;
+}
+
+figure {
+    width: max-content;
 }
 
 figure > img {
@@ -113,11 +123,15 @@ body {
 }
 
 #nbPersonne {
-    height: 10vh;
-    width: 4vw;
-
+    height: 9vh;
+    width: 6vw;
     background: #16A1EF;
-    border-radius: 60px;
+    justify-content: space-around !important;
+    border-radius: 10px;
+}
+
+#nbPersonne > img {
+    height: 80%;
 }
 
 .center {
@@ -128,15 +142,37 @@ body {
 
 #devisRecu {
     width: 30vw;
-    height: 15vh;
+    height: 11vh;
     display: flex;
     justify-content: space-around;
     align-items: center;
     background: var(--col2);
     border-radius: 10px;
+
 }
 
 #devisRecu h2 {
     font-weight: normal;
+    font-size: 1.6em;
 }
 
+#autreInfo > * {
+    margin-top: 4vh;
+}
+
+#localisationEtat {
+    justify-content: space-between;
+}
+
+#localisation {
+    background-color: #16A1EF;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 18vw;
+}
+
+#localisation > h2 {
+    font-weight: lighter;
+}
