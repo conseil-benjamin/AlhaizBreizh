@@ -1,4 +1,5 @@
 <?php
+global $photo_profil_proprio;
 $id = 1;
 $titreLogement = "Superbe maison au bord de la plage";
 $cheminPhoto = "../../../public/img/logements/$id/$id.png";
@@ -13,7 +14,7 @@ $etatResa = 'En attente';
 $prenom_proprio = "Albert";
 $nom_proprio = "Einstaint";
 include("getDBResa.php");
-$nomProprio = "$prenom_proprio"."$nom_proprio";
+$nomProprio = "$prenom_proprio"." "."$nom_proprio";
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -35,7 +36,7 @@ $nomProprio = "$prenom_proprio"."$nom_proprio";
                 <fieldset><a>En savoir plus</a></fieldset>
             </figure>
             <div id="contactPropio">
-                <div id="carteProprio"><img src="" alt="Photo de profil"/> <?= $nomProprio ?></div>
+                <div id="carteProprio"><img src="<?= $photo_profil_proprio ?>" alt="Photo de profil"/> <?= $nomProprio ?></div>
                 <button class="boutton gris" disabled>Contacter</button>
             </div>
         </div>

@@ -15,11 +15,10 @@ try {
     $stmt = $pdo->prepare($sqlLogement);
     $stmt->execute();
     $resultLogement = $stmt->fetchAll();
-    print_r($resultLogement);
-    //$titreLogement = $resultLogement[0]["libelle"];
-    //$numLogement = $resultLogement[0]["devis.numLogement"];
-    //$proprio = $resultLogement[0]["l.proprio"];
-    /*
+    $titreLogement = $resultLogement[0]["libelle"];
+    $numLogement = $resultLogement[0]["numlogement"];
+    $proprio = $resultLogement[1]["proprio"];
+
     $stmt = $pdo->prepare("SELECT firstName,lastName,languesParlees
                                     FROM ldc.Proprietaire P
                                     NATURAL JOIN ldc.Client C
@@ -30,7 +29,6 @@ try {
         $nom_proprio = $row[1] ?? null;
     }
     $photo_profil_proprio = '/public/img/photos_profil/'.$proprio.'.png';
-    */
     $pdo = null;
 } catch (PDOException $e) {
     // En cas d'erreur, affichez un message d'erreur
