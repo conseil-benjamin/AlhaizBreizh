@@ -1,3 +1,6 @@
+/**
+ * Fonction pour annuler la réservation
+ */
 function annulerResa() {
         let numReservation = 1;
         fetch("../php/reservation/supprimerResaDB.php", {
@@ -20,6 +23,9 @@ function annulerResa() {
             });
 }
 
+/**
+ * Fonction pour simuler la confirmation de la réservation
+ */
 function confirmerResa() {
     if(Math.random() > 0.5 ) {
         confirmerSuccesPopUp()
@@ -27,6 +33,9 @@ function confirmerResa() {
         confirmerErreurPopUp()
 }
 
+/**
+ * Affiche le Pop-up pour confirmer de l'annulation de la réservation
+ */
 function confirmationAnnulerPopUp() {
     swal({
         title: "Êtes-vous sur de vouloir annuler cette réservation",
@@ -42,6 +51,9 @@ function confirmationAnnulerPopUp() {
         })
 }
 
+/**
+ * Affiche le Pop-up pour confirmer la validation de la réservation
+ */
 function confirmationValiderPopUp() {
     swal({
         title: "Êtes-vous sur de vouloir confirmer cette réservation",
@@ -57,6 +69,9 @@ function confirmationValiderPopUp() {
         })
 }
 
+/**
+ * Pop-up du succès de l'annulation
+ */
 function annulerSuccesPopUp() {
     swal({
         title: "La réservation à bien été supprimée",
@@ -68,6 +83,10 @@ function annulerSuccesPopUp() {
     )
 }
 
+
+/**
+ * Pop-up erreur de l'annulation
+ */
 function annulerErreurPopUp() {
     swal({
         title: "Erreur",
@@ -77,6 +96,9 @@ function annulerErreurPopUp() {
     })
 }
 
+/**
+ * Pop-up du succès de la confirmation
+ */
 function confirmerSuccesPopUp() {
     swal({
         title: "La réservation à bien été confirmer",
@@ -89,6 +111,9 @@ function confirmerSuccesPopUp() {
     )
 }
 
+/**
+ * Pop-up erreur de la confirmation
+ */
 function confirmerErreurPopUp() {
     swal({
         title: "Erreur",
