@@ -7,10 +7,13 @@ $dateDep = '25/10/2004';
 $dateDevis = '25/22/2004';
 $prixTotal = '200';
 $dateResa = '25/22/2004';
-$nomProprio = 'Beber';
 $devisRecu = false;
 $conlue = false;
 $etatResa = 'En attente';
+$prenom_proprio = "Albert";
+$nom_proprio = "Einstaint";
+include("getDBResa.php");
+$nomProprio = "$prenom_proprio"."$nom_proprio";
 ?>
 <!DOCTYPE html>
 <html lang="fr">

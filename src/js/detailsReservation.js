@@ -52,7 +52,7 @@ function confirmationValiderPopUp() {
     })
         .then((value) => {
             if (value) {
-                alert("coucou")
+                confirmerResa()
             }
         })
 }
