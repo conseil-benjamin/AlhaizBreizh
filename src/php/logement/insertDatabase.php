@@ -7,7 +7,7 @@
     }
 
      if (isset($_SESSION['nbInstallations'])) {
-        $nbInstallations = 'nbInstallations';
+        $nbInstallations = $_SESSION['nbInstallations'];
         echo $nbInstallations;
     } else{
         echo "pas d'installations trouvé";
@@ -60,13 +60,6 @@
             $stmt->execute();
 
             //Ajouter les services
-            // for
-
-
-
-} catch (PDOException $e) {
-    echo "Erreur : " . $e->getMessage();
-}
 
     $last_inserted_id = $pdo->lastInsertId();
 
@@ -77,42 +70,41 @@
     else {
         echo "rien";
     }
+    $nom_dossier = $_SERVER['DOCUMENT_ROOT'] . "/public/img/logements/" . $last_inserted_id;
 
-                $nom_dossier = $_SERVER['DOCUMENT_ROOT'] . "/public/img/logements/" . $last_inserted_id;
-
-                if (!is_dir($nom_dossier)) { // Vérifie si le dossier n'existe pas déjà
-                    if (mkdir($nom_dossier)) { // Crée le dossier
-                        foreach ($_FILES["photos"]["error"] as $key => $error) {
-                            if ($error == UPLOAD_ERR_OK) {
-                                $tmp_name = $_FILES["photos"]["tmp_name"][$key];
-
-                                    $fichiers = scandir($$nom_dossier);
-                                    
-                                    foreach ($fichiers as $fichier) {
-                                        if (!is_dir($nom_dossier . "/" . $fichier)) {
-                                            // Le fichier est un fichier, pas un dossier
-                                            if (file_exists($filename)) {
-                                                echo "Le fichier $filename existe.";
-                                            } else {
-                                                echo "Le fichier $filename n'existe pas.";
-                                            }
-                                                if (condition) {
-                                                    move_uploaded_file($tmp_name, "$nom_dossier/$name");
-                                                }
-                                            }
-                                            echo $fichier . "<br>";
-                                        }
-                                    }
-                                    
-                                    closedir($handle);
+    if (!is_dir($nom_dossier)) { // Vérifie si le dossier n'existe pas déjà
+        if (mkdir($nom_dossier)) { // Crée le dossier
+            foreach ($_FILES["photos"]["error"] as $key => $error) {
+                $i = 1;
+                if ($error == UPLOAD_ERR_OK) {
+                    $tmp_name = $_FILES["photos"]["tmp_name"][$key];
+                        $fichiers = scandir($$nom_dossier);
+                        foreach ($fichiers as $fichier) {
+                            if (!is_dir($nom_dossier . "/" . $fichier)) {
+                                // Le fichier est un fichier, pas un dossier
+                                if (file_exists($i)) {
+                                    echo "Le fichier $fichier existe.";
+                                } else {
+                                    echo "Le fichier $fichier n'existe pas.";
+                                    move_uploaded_file($tmp_name, "$nom_dossier/$i");
                                 }
+                                }
+                                echo $fichier . "<br>";
+                            }
                         }
-                    } else {
-                        
+                        closedir($handle);
                     }
-                } else {
-                }
+            }
+        } else {
+            echo "erreur";
+        }
 
+
+} catch (PDOException $e) {
+    echo "Erreur : " . $e->getMessage();
+}
+
+    
 // créé un Dossier au nom du dernier logement créé
 // ajouter les images dans ce dossier ci
 // pareil pour service et tout le reste

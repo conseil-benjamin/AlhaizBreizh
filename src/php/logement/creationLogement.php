@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="../../styles/styles.css">
     <link rel="stylesheet" type="text/css" href="../../styles/styleCreationLogement.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="../../js/addInputElement.js"></script>
+    <script src="/src/js/addInputElement.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>Creation Logement</title>
 </head>
@@ -22,7 +22,7 @@
     ?>
     <h1>Création d’un nouveau logement</h1>
     <hr>
-<form method="post" action="insertDatabase.php">
+    <form id="myForm" method="post" action="javascript:void(0);" onsubmit="submitForm(event)">
     <div class="container-main">
         <div class="container-left">
             <label for="title">Titre de l'annonce (*)</label>
