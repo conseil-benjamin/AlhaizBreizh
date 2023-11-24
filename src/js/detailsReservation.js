@@ -1,7 +1,8 @@
 function annulerResa() {
-        fetch("../php/suppResaDB.php", {
+        let numReservation = 1;
+        fetch("../php/reservation/supprimerResaDB.php", {
             method: "POST",
-            body: new URLSearchParams({numReservation: numReservation}),
+            body: numReservation.toString(),
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
             },
@@ -20,7 +21,10 @@ function annulerResa() {
 }
 
 function confirmerResa() {
-
+    if(Math.random() > 0.5 ) {
+        confirmerSuccesPopUp()
+    }
+        confirmerErreurPopUp()
 }
 
 function confirmationAnnulerPopUp() {
@@ -28,7 +32,7 @@ function confirmationAnnulerPopUp() {
         title: "Êtes-vous sur de vouloir annuler cette réservation",
         text: "Cette action est définitive",
         icon: "warning",
-        buttons: true,
+        buttons: ['annuler',true],
         dangerMode: true,
     })
         .then((value) => {
@@ -43,12 +47,12 @@ function confirmationValiderPopUp() {
         title: "Êtes-vous sur de vouloir confirmer cette réservation",
         text: "Vous allez être redirigé vers la page de paiment",
         icon: "warning",
-        buttons: true,
+        buttons: ['annuler',true],
         dangerMode: true,
     })
         .then((value) => {
             if (value) {
-
+                alert("coucou")
             }
         })
 }

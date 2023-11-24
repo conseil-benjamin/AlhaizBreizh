@@ -107,13 +107,9 @@ body {
     background: var(--col4);
     border-radius: 10px;
     padding: 20px 10px;
-}
-
-#etatResa * {
-    font-family: 'Noir Pro';
-    text-align: center;
     color: #FFFFFF;
 }
+
 
 #dateDiv {
     display: flex;
@@ -139,18 +135,26 @@ body {
     align-items: center;
 }
 
-#devisRecu {
+#etatDevis {
     width: 30vw;
     height: 11vh;
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background: var(--col2);
-    border-radius: 10px;
 
+    border-radius: 10px;
 }
 
-#devisRecu h2 {
+.recu {
+    background: var(--col2);
+}
+
+.enattente {
+    background-color: var(--col4);
+    color: white;
+}
+
+#etatDevis h2 {
     font-weight: normal;
     font-size: 1.6em;
 }

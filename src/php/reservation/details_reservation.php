@@ -8,6 +8,9 @@ $dateDevis = '25/22/2004';
 $prixTotal = '200';
 $dateResa = '25/22/2004';
 $nomProprio = 'Beber';
+$devisRecu = false;
+$conlue = false;
+$etatResa = 'En attente';
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -30,7 +33,7 @@ $nomProprio = 'Beber';
             </figure>
             <div id="contactPropio">
                 <div id="carteProprio"><img src="" alt="Photo de profil"/> <?= $nomProprio ?></div>
-                <button class="boutton">Contacter</button>
+                <button class="boutton gris" disabled>Contacter</button>
             </div>
         </div>
         <div id="autreInfo">
@@ -39,13 +42,13 @@ $nomProprio = 'Beber';
                     <img src="../../../public/icons/markerMap.svg" alt="logo"/>
                     <h2>Location <br/> localisation détaillé</h2>
                 </div>
-                <div id="etatResa" class="center"><h2> En attente du devis</h2></div>
+                <div id="etatResa" class="center"><h2> <?= $etatResa ?> </h2></div>
             </div>
             <div id="dateDiv">
                 <h2 id="date"><span id="dateArr"><?= $dateArr ?></span> - <span id="dateDep"><?= $dateDep ?></span></h2>
                 <div id="nbPersonne" class="center"> <img src="../../../public/icons/nb_personnes.svg" alt="nbPersonne" /> <h1>7</h1></div>
             </div>
-            <div id="devisRecu">
+            <div id="etatDevis" class="<?php if ($devisRecu) { echo 'recu';} else { echo 'enattente';} ?>">
                 <a href='' download='devis.pdf'><img src="" alt="icon devis"/></a> <h2>
                 Devis reçu le <span id="dateDevis"> <?= $dateDevis ?></span></h2></div>
 
@@ -55,13 +58,20 @@ $nomProprio = 'Beber';
             </div>
             <div class="container" style="flex-direction: column;
     align-items: end;">
-                <!--<div id="annulerAccepter">
-                    <button class="boutton" onclick="">Accepter le devis et payer</button>
-                    <button class="boutton" onclick="confirmationAnnulerPopUp()">Annuler ma réservation</button>
-                </div> -->
                 <div id="annulerAccepter">
-                    <button class="boutton gris" onclick="" disabled>Laisser un avis sur le logement</button>
-                    <button class="boutton gris" onclick="confirmationAnnulerPopUp()" disabled>Laisser un avis sur l'hôte</button>
+                <?php
+                if(!$conlue) {
+                    echo '
+                    <button class="boutton" onclick="confirmationValiderPopUp()">Accepter le devis et payer</button>
+                    <button class="boutton" onclick="confirmationAnnulerPopUp()">Annuler ma réservation</button>
+                ';
+                }
+                else {
+                    echo '
+                    <button class="boutton gris" disabled>Laisser un avis sur le logement</button>
+                    <button class="boutton gris" disabled>Laisser un avis sur l\'hôte</button>';
+                }
+                ?>
                 </div>
                 <p>Logement reservé le <span id="dateResa"><?= $dateResa ?></span></p>
             </div>
