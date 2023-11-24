@@ -22,7 +22,7 @@
     ?>
     <h1>Création d’un nouveau logement</h1>
     <hr>
-<form method="post" action="javascript:void(0);" onsubmit="submitForm()">
+<form method="post" action="insertDatabase.php">
     <div class="container-main">
         <div class="container-left">
             <label for="title">Titre de l'annonce (*)</label>

@@ -8,9 +8,11 @@
 
      if (isset($_SESSION['nbInstallations'])) {
         $nbInstallations = 'nbInstallations';
+        echo $nbInstallations;
     } else{
         echo "pas d'installations trouvé";
     }
+
 
     $title = $_GET['title'];
     $description = $_GET['description'];
@@ -31,10 +33,9 @@
     $installationsDispo = $_GET['installDispo'];
     $equipementsDispo = $_GET['equipementDispo'];
     $nbPersMax = $_GET['nbMaxPers'];
-    $detailsLitsDispos = $_GET[''];
     $proprio = 1;
     $logementEnLigne = 1;
-    
+
     try {
         $pdo = require($_SERVER['DOCUMENT_ROOT'].'/src/php/connect.php');
 
@@ -59,26 +60,58 @@
             $stmt->execute();
 
             //Ajouter les services
+            // for
+
+
+
 } catch (PDOException $e) {
     echo "Erreur : " . $e->getMessage();
 }
 
-$last_inserted_id = $pdo->lastInsertId();
-echo $last_inserted_id;
-/*
+    $last_inserted_id = $pdo->lastInsertId();
 
-                $nom_dossier = $_SERVER['DOCUMENT_ROOT'] . "/public/img/logements/" . 5;
+    if ($last_inserted_id) {
+        echo "<br>";
+        echo $last_inserted_id;
+    }
+    else {
+        echo "rien";
+    }
+
+                $nom_dossier = $_SERVER['DOCUMENT_ROOT'] . "/public/img/logements/" . $last_inserted_id;
 
                 if (!is_dir($nom_dossier)) { // Vérifie si le dossier n'existe pas déjà
                     if (mkdir($nom_dossier)) { // Crée le dossier
-                        echo "Le dossier $nom_dossier a été créé avec succès.";
+                        foreach ($_FILES["photos"]["error"] as $key => $error) {
+                            if ($error == UPLOAD_ERR_OK) {
+                                $tmp_name = $_FILES["photos"]["tmp_name"][$key];
+
+                                    $fichiers = scandir($$nom_dossier);
+                                    
+                                    foreach ($fichiers as $fichier) {
+                                        if (!is_dir($nom_dossier . "/" . $fichier)) {
+                                            // Le fichier est un fichier, pas un dossier
+                                            if (file_exists($filename)) {
+                                                echo "Le fichier $filename existe.";
+                                            } else {
+                                                echo "Le fichier $filename n'existe pas.";
+                                            }
+                                                if (condition) {
+                                                    move_uploaded_file($tmp_name, "$nom_dossier/$name");
+                                                }
+                                            }
+                                            echo $fichier . "<br>";
+                                        }
+                                    }
+                                    
+                                    closedir($handle);
+                                }
+                        }
                     } else {
-                        echo "Erreur : Impossible de créer le dossier $nom_dossier.";
+                        
                     }
                 } else {
-                    echo "Le dossier $nom_dossier existe déjà.";
                 }
-*/
 
 // créé un Dossier au nom du dernier logement créé
 // ajouter les images dans ce dossier ci
@@ -86,5 +119,5 @@ echo $last_inserted_id;
 
 
 $pdo = null;
-header('Location: /src/php/logement/mesLogements.php');
+//header('Location: /src/php/logement/mesLogements.php');
 ?>

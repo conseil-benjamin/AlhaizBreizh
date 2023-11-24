@@ -115,6 +115,7 @@ document.addEventListener("DOMContentLoaded", function () {
    * * Listener sur le bouton creerAnnonce qui
    * * vérifie si tous les champs ont correctement été remplis
    */
+/*
 
   form.addEventListener("submit", function (event) {
     event.preventDefault();
@@ -142,6 +143,10 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
   });
+
+  */
+
+
   /**
    * * Permet au clic du bouton Ajouter installation,
    * * d'ajouter un nouvel input pour renseigner une nouvelle installation
@@ -150,9 +155,10 @@ document.addEventListener("DOMContentLoaded", function () {
   addInstallation.addEventListener("click", () => {
     nbInstallations++;
     let nameInput = "InstallDispo" + nbInstallations;
+    let id = "installNumero" + nbInstallations;
     const inputPlusIconeSupprimer = createInputWithIconSupprimer(
       "Installation disponible",
-      nameInput
+      nameInput, id
     );
     installationsElement.appendChild(inputPlusIconeSupprimer);
     $.ajax({
@@ -288,13 +294,14 @@ document.addEventListener("DOMContentLoaded", function () {
    * * Fonction qui crée un input ainsi qu'une image,
    * * les assemble dans une div, et return la div
    */
-  function createInputWithIconSupprimer(placeholder, name) {
+  function createInputWithIconSupprimer(placeholder, name, id) {
     let newElement = document.createElement("input");
     newElement.setAttribute("type", "text");
     newElement.setAttribute("size", "60");
     newElement.setAttribute("placeholder", placeholder);
     newElement.setAttribute("name", name);
-
+    newElement.setAttribute("id", id);
+    console.log(id);
     console.log(name);
 
     const iconSupprimer = document.createElement("img");
