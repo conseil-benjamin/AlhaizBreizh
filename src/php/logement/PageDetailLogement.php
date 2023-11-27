@@ -98,6 +98,8 @@ if (isset($_GET['numLogement'])) {
         } else {
             $error_message = "Le numéro de logement spécifié n'existe pas.";
         }
+    } else {
+        $numLogementExists = false;
     }
 } else {
     $error_message = "Aucun numéro de logement spécifié.";
@@ -525,46 +527,35 @@ if (!isset($liste_langue_parle)) {
                         <br>
                     </section>
                     <section class="reserve_contact">
-                        <div class="resa_colle">
-                            <article class="reserve">
+                        <article class="reserve">
+                            <div>
+                                <p><strong><?php echo $prix; ?>€</strong> / nuit</p>
+                            </div>
+                            <form class="date_resa" id="date_arri" action="/src/php/devis/demande_devis.php" method="post">
                                 <div>
-                                    <p><strong><?php echo $prix; ?>€</strong> / nuit</p>
-                                </div>
-                                <form class="date_resa" id="date_arri" action="/src/php/devis/demande_devis.php" method="post">
                                     <div>
-                                        <div>
-                                            <input class="textfield" min="0" max="999" type="number" id="date_arrivee" name="date_arrivee" content required>
-                                            <label for="date_arrivee">/ nuit(s)</label>
-                                        </div>
-                                        <div>
-                                            <input class="boutton" type="submit"></input>
-                                        </div>
+                                        <input class="textfield" min="0" max="999" type="number" id="date_arrivee" name="date_arrivee" content required>
+                                        <label for="date_arrivee">/ nuit(s)</label>
                                     </div>
-                                </form>
-                            </article>
-
-                            <article class="contact">
-                                <div class="photo_profil_contact">
-                                    <?php
-                                        if (file_exists($_SERVER['DOCUMENT_ROOT'] . $photo_profil_proprio)==false) { ?>
-                                            <img src="/public/icons/user.svg" id="photo_profil" alt="photo de profil du propriétaire"> <?php          
-                                        } else { ?>
-                                            <img src="<?php echo $photo_profil_proprio ?>" id="photo_profil" alt="photo de profil du propriétaire"> <?php
-                                        } ?>                                        
-                                        <div class="contact_nom_bouton">
-                                        <p><?php echo $prenom_proprio .' '. $nom_proprio; ?></p>
-                                        <p><img src="/public/icons/star_fill.svg" id="icone" alt="icone etoile"> Note</p>
-                                        <div class="bouton_contact"><a href="#">Contacter</a></div>
+                                    <div>
+                                        <input class="boutton" type="submit"></input>
                                     </div>
                                 </div>
-                                <br>
-                                <p>
-                                    Langues parlées :
-                                    <?php //$liste_langue_parle = array("Français", "Anglais", "Espagnol"); 
-                                    echo $liste_langue_parle; ?>
-                                </p>
-                            </article>
-                        </div>
+                            </form>
+                        </article>
+                        <article class="contact">                                 
+                            <div>
+                                <?php if (file_exists($_SERVER['DOCUMENT_ROOT'] . $photo_profil_proprio)==false) { ?>
+                                    <img src="/public/icons/user.svg" id="photo_profil" alt="photo de profil du propriétaire"> <?php          
+                                } else { ?>
+                                    <img src="<?php echo $photo_profil_proprio ?>" id="photo_profil" alt="photo de profil du propriétaire"> <?php
+                                } ?>  
+                                <p><?php echo $prenom_proprio .' '. $nom_proprio; ?></p>
+                            </div>
+                            <p><?php echo $liste_langue_parle; ?></p>
+                            <p><img src="/public/icons/star_fill.svg" id="icone" alt="icone etoile"> Note</p>
+                            <a class="boutton" href="#">Contacter</a>
+                        </article>
                     </section>
                 </div>
             </div>

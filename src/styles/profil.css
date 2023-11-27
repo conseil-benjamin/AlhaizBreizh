@@ -1,0 +1,474 @@
+/*****************************************************/
+/*Content*/
+
+.monprofil{
+    margin: calc(75px + 1em) auto 1em auto;
+    width: 80%;
+    background-color: #fff;
+}
+
+div.notation{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: .5em;
+    line-height: 2em;
+    height: 2em;
+    margin-top: 1em;
+}
+
+div.notation img{
+    height: 100%;
+}
+
+/*****************************************************/
+/*Image + message bienvenue*/
+
+#titre{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 2em;
+    margin: auto;
+    padding: 1em;
+    width: fit-content;
+    height: 100px;
+}
+
+#titre img{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 5px solid var(--col6);
+}
+
+/*****************************************************/
+/*Informations*/
+
+.monprofil #info{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-color: var(--col4);
+    color: #fff;
+}
+
+.monprofil #info > div{
+    font-size: 1.2em;
+    gap: .25em;
+    margin: auto;
+    padding: 1em;
+    width: 50%;
+}
+
+.monprofil #info ul{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
+
+.monprofil #info li{
+    margin-top: .5em;
+    margin-bottom: .5em;
+}
+
+.monprofil #info a.boutton{
+    display: block;
+    position: absolute;
+    background-color: var(--col6);
+    width: 50px;
+    height: 50px;
+    padding: 1em;
+    border-radius: 0;
+    border-top-left-radius: 50px;
+    bottom: 0;
+    right: 0;
+}
+
+.monprofil #info a.boutton:hover{
+    scale: 1.1;
+}
+
+.monprofil #info a.boutton img{
+    width: 50px;
+    height: 50px;
+}
+
+/*****************************************************/
+/*Options*/
+
+.monprofil #options{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 1em;
+    background-color: var(--col2);
+    padding-top: 1em;
+}
+
+.monprofil #options a.boutton{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: .5em;
+    background-color: var(--col6);
+}
+
+.monprofil #options a.boutton img{
+    width: 30px;
+    height: 30px;
+}
+
+.monprofil #options img#img-disconnect{
+    rotate: 90deg;
+}
+
+/*****************************************************/
+/*Editer son profil*/
+
+.monprofil form#form{
+    position: relative;
+}
+
+.monprofil form#form img{
+    position: relative;
+    cursor: pointer;
+    transition: all 0.5s ease;  
+}
+
+.monprofil form#form img:hover{
+    filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.75))
+            brightness(70%);
+}
+
+.monprofil form#form input{
+    min-width: max-content;
+    padding: 0 1em;
+    height: fit-content;
+}
+
+.monprofil form#form .bouttons{
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: max-content;
+    flex-direction: row;
+    align-items: end;
+    justify-content: center;
+    padding: 0;
+    gap: 0;
+    width: fit-content;
+}
+
+.monprofil form#form button.boutton, .monprofil form#form a.boutton{
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0;
+    height: 50px;
+    width: 50px;
+    padding: 1em;
+    margin: 0;
+    background-color: var(--col6);
+}
+
+.monprofil form#form button.boutton{
+    border-top-left-radius: 50px;
+    padding: 2.25em;
+}
+
+.monprofil form#form button.boutton:hover{
+    scale: 1.1;
+}
+
+.monprofil form#form button.boutton img, .monprofil form#form a.boutton img{
+    width: 50px;
+    height: 50px;
+}
+
+/*****************************************************/
+/*Consulter un autre compte*/
+
+.profil {
+    margin-top: 75px;
+    width: 100%;
+}
+
+.profil .infos-profil{
+    display: flex;
+    flex-direction: row;
+    height: 300px;
+    background-color: #fff;
+    filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.25));
+}
+
+.profil .infos-profil div.image{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+    width: 20%;
+    min-width: max-content;
+    padding: 1em;
+    background-color: var(--col1);
+}
+
+.profil .infos-profil div.image img{
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border: 2px solid var(--col6);
+}
+
+.profil .infos-profil > div.image a.boutton{
+    background-color: var(--col4);
+    color: #fff;
+}
+
+.profil .infos-profil > div.image a.boutton:last-child{
+    background-color: red;
+}
+
+.profil .infos-profil div.infos{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    padding: 3em;
+}
+
+.profil .infos-profil div.infos .nav{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 1em;
+}
+
+.profil .infos-profil div.infos .nav a.boutton{
+    background-color: var(--col6);
+}
+
+/*****************************************************/
+/*Commentaires*/
+
+.profil #commentaires{
+    margin: 1em;
+}
+
+.profil #commentaires #commentaire-container{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1em;
+    margin: 1em;
+}
+
+.profil #commentaires .infos{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profil #commentaires .infos a.boutton{
+    background-color: var(--col6);
+}
+
+.profil div.commentaire{
+    position: relative;
+    background-color: var(--col4);
+    color: #fff;
+    padding: 1em;
+    border-radius: 25px;
+    transition: all 0.5s ease;
+}
+
+.profil div.commentaire:hover{
+    filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.75));
+}
+
+.profil div.commentaire .user{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1em;
+}
+
+.profil div.commentaire .user img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid var(--col6);
+}
+
+.profil div.commentaire .notation{
+    position: absolute;
+    top: 0;
+    right: 1em;
+}
+
+.profil div.commentaire > p{
+    float: left;
+    width: 82%;
+}
+
+.profil div.commentaire > a{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: red;
+    color: #fff;
+    height: fit-content;
+    border-radius: 0;
+    border-top-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+
+/*****************************************************/
+/*Logements*/
+
+.profil #logements{
+    margin: 1em;
+}
+
+.profil #logements #logement-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profil #logements #logement-container #logement-ligne{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 1em;
+    width: min-content;
+}
+
+/*Une carte logement*/
+.profil .logement{
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: start;
+    position: relative;
+    width: 230px;
+    height: 300px;
+    background-color: #fff;
+    overflow: hidden;
+    border: 1px solid #000;
+    border-radius: 15px;
+    margin: auto;
+    transition: all 0.5s ease;
+}
+
+.profil .logement > a{
+    display: block;
+    height: 50%;
+}
+
+.profil .logement a:hover{
+    filter: none;
+    border: none;
+}
+
+.profil .logement img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+/*Div contenant notation + like*/
+.profil .logement > div{
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #00000050;
+    backdrop-filter: blur(1px);
+}
+
+.profil .logement > div > div{
+    margin-left: 5px;
+}
+
+.profil .logement > div img{
+    width: 25px;
+    height: 25px;
+}
+
+.profil .logement #rating{
+    display: flex;
+    align-items: center;
+    color: #fff;
+}
+
+.profil .logement button{
+    background: none;
+    cursor: pointer;
+    border: none;
+    margin-top: 5px;
+    margin-right: 5px;
+}
+
+/*Informations d'un logement*/
+
+.profil .logement #description{
+    display: block;
+    height: 50%;
+    width: 100%;
+}
+
+.profil .logement #description > div{
+    display: block;
+    margin: 1em 1em 0em 1em;
+    height: calc(100% - 2em);
+    width: calc(100% - 2em);
+    word-wrap: break-word;
+    word-break:keep-all;
+}
+
+.profil .logement a > div img{
+    height: 25px;
+    width: 25px;
+}
+
+.profil .logement a > div > div{
+    display: flex;
+    gap: 5px;
+    align-items: baseline;
+}
+/*Prix*/
+.profil .logement a > div > div+div{
+    padding-bottom: 3em;
+}
+.profil .logement a > div > div+div+div{
+    position: absolute;
+    bottom: 0;
+    line-height: normal;
+    padding-bottom: 1em;
+}
+
+.profil .logement strong{
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--col5);
+}
+
+.profil .logement:hover{
+    filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.75));
+    transform: translateY(-5px);
+}
+
+/*****************************************************/
+/*Formulaire invalide*/
+
+.invalid{
+    filter: drop-shadow(0px 0px 5px rgba(255, 0, 0, 0.75));
+}

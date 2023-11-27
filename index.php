@@ -72,9 +72,9 @@
                             </div>   
                             <a id="description" href="<?php echo $lien ?>"><div> 
                                 <h3><?php echo $titre ?></h3> <!-- Titre du logement -->
-                                <div><img src="/public/icons/nb_personnes.svg"><?php echo $nombre_personnes ?> personnes</div> <!-- Nombre de personnes -->
-                                <div><img src="/public/icons/map.svg"><?php echo $localisation ?></div> <!-- Localisation -->
-                                <div><strong><?php echo $prix ?>€</strong> / nuit</div> <!-- Prix du logement -->
+                                <div><img src="/public/icons/nb_personnes.svg"><p><?php echo $nombre_personnes ?> personnes</p></div> <!-- Nombre de personnes -->
+                                <div><img src="/public/icons/map.svg"><p><?php echo $localisation ?></p></div> <!-- Localisation -->
+                                <div><p><strong><?php echo $prix ?>€</strong> / nuit</p></div> <!-- Prix du logement -->
                             </div></a>
                         </div> <?php
                     } else{

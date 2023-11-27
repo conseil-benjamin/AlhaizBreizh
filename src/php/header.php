@@ -22,7 +22,7 @@
             </div>
             <div class="compte-options">
                 <ul>
-                    <!--<a href=""><li>Mon Profil</li></a>-->
+                    <a href="/src/php/profil/profil.php?user=<?php echo $_SESSION['id'] ?>"><li>Mon Profil</li></a>
                     <!--<a href=""><li>Ma Messagerie</li></a>-->
                     <!--<a href=""><li>Mes Réservations</li></a>-->
                     <?php

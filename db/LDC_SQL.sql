@@ -200,6 +200,7 @@ CREATE TABLE FavorisClient (
 CREATE TABLE AvisClient (
     idAvisClient SERIAL PRIMARY KEY, 
     idCompte INTEGER, 
+    idDestinataire INTEGER,
     idAvis INTEGER
 );
 
@@ -217,7 +218,7 @@ ALTER TABLE MessageConversation ADD CONSTRAINT messageconversation_conversation_
 ALTER TABLE Messagerie ADD CONSTRAINT messagerie_client_fk FOREIGN KEY (idCompte) REFERENCES Client (idCompte);
 ALTER TABLE ConversationMessagerie ADD CONSTRAINT conversationmessagerie_conversation_fk1 FOREIGN KEY (numConversation) REFERENCES Conversation (numConversation);
 ALTER TABLE ConversationMessagerie ADD CONSTRAINT conversationmessagerie_messagerie_fk2 FOREIGN KEY (numMessagerie) REFERENCES Messagerie (numMessagerie);
-ALTER TABLE Logement ADD CONSTRAINT logement_avis_fk FOREIGN KEY (numLogement) REFERENCES Avis (numAvis);
+--ALTER TABLE Logement ADD CONSTRAINT logement_avis_fk FOREIGN KEY (numLogement) REFERENCES Avis (numAvis);
 ALTER TABLE Logement ADD CONSTRAINT logement_localisation_fk FOREIGN KEY (numLogement) REFERENCES Localisation (numLogement);
 ALTER TABLE Logement ADD CONSTRAINT logement_proprio_fk FOREIGN KEY (proprio) REFERENCES Proprietaire (idCompte);
 ALTER TABLE PhotosComplementairesLogement ADD CONSTRAINT phtoscomplementaireslogement_logement_fk FOREIGN KEY (numLogement) REFERENCES Logement (numLogement);
@@ -244,7 +245,11 @@ ALTER TABLE LogementProprio ADD CONSTRAINT logementproprio_proprietaire_fk FOREI
 INSERT INTO Avis (contenuAvis, nbEtoiles)
 VALUES
     ('Très bel endroit', 4.5),
-    ('Excellent séjour', 4.8);
+    ('Excellent séjour', 4.8),
+    ('Personne très accueillante', 4.0),
+    ('A laissé en bon état ma maison !', 5.0),
+    ('Elle a offert à ma propre personne un très bon jus de pomme et je suis tellement ému par rapport à ça !', 4.5),
+    ('Personne très mal élévée', 1.0);
 
 -- Insertion de données dans la table Client
 INSERT INTO Client (firstName, lastName, mail, numeroTel, photoProfil, civilite, adressePostale, pseudoCompte, motDePasse, dateNaissance, notationMoyenne)
@@ -349,11 +354,13 @@ VALUES
     (1,'toilettes' ,'wifi, TV', 'Petit-déjeuner inclus', 'Piscine, Salle de sport', 'Ménage 50€'),
     (2, 'salle de bains','wifi, parking', 'Service de chambre', 'Jardin', 'Supplément animal de compagnie 25€');
 
--- Insertion de données dans la table AvisClient
-INSERT INTO AvisClient (idCompte, idAvis) 
-VALUES 
-    ('1', '1'),
-    ('1', '2');
+-- Insertion de données dans la table AviClient
+INSERT INTO AvisClient (idCompte, idDestinataire, idAvis)
+VALUES
+    (1, 2, 3),
+    (2, 1, 4),
+    (3, 2, 5),
+    (1, 2, 6);
 
 -- Insertion de données dans la table LogementProprio
 INSERT INTO LogementProprio (numLogement, idCompte) 

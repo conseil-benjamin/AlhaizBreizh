@@ -130,6 +130,20 @@ main p{
 }
 
 /*****************************************************/
+/*Réservation + Contact*/
+
+.reserve_contact{
+    display: flex;
+    flex-direction: column;
+    width: 26%;
+}
+
+.reserve_contact > div {
+    position: sticky;
+    top: 75px;
+}
+
+/**************/
 /*Reservation*/
 .reserve p{
     margin: 0;
@@ -176,43 +190,31 @@ main p{
     background-color: var(--col6);
 }
 
-.resa_colle{
-    position: sticky;
-    top: 75px;
-}
-
-.reserve_contact{
+/**********/
+/*Contact*/
+.contact{
     display: flex;
     flex-direction: column;
-    width:30%;
-    min-width: fit-content;
-    margin-left: 20px;
-}
-
-.contact{
     background-color: var(--col3);
-    padding: 5px;
     border-radius: 15px;
-   margin: 5px;
+    padding: 1em;
+    overflow: hidden;
+    width: 100%;
 }
 
-.bouton_contact{
-    background-color: var(--col5);
-    color: white;
-    text-align: center;
-    border-radius: 20px;
-    padding: 5px;
-    margin-top: 10px;
-}
-
-.photo_profil_contact{
+.contact > div{
     display: flex;
+    flex-direction: row;
     align-items: center;
-    margin-left: 15%;
+    width: 100%;
+    background-color: aqua;
 }
 
-footer{
-    background-color: var(--col2);
+.contact > div img{
+    object-fit: cover;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
 }
 
 #comment{
