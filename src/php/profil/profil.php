@@ -250,11 +250,13 @@
                     $infos = array_slice($infos, 0, (sizeof($infos)-1), true); //Enlève la notation moyenne
                     foreach ($infos as $key => $value) {
                         $disabled = '';
+                        $id = '';
                         $placeholder = $value;
                         echo '<ul><li>'.$key.'</li>';
                         if ($key == 'Mot de Passe'){
                             $type = 'password';
                             $placeholder = '********';
+                            $id = 'password';
                         } else if ($key == 'Date de Naissance'){
                             $value = date('Y-m-d', mktime(0, 0, 0, substr($value, 3, 2), substr($value, 0, 2), substr($value, 6, 4)));
                             $type = 'date';
@@ -266,7 +268,7 @@
                         } else{
                             $type = 'text';
                         }
-                        echo '<li><input '.$disabled.' required class="textfield" type="'.$type.'" placeholder="'.$placeholder.'" name="'.$key.'" value="'.$value.'"></li></ul>';
+                        echo '<li><input id="'.$id.'" '.$disabled.' required class="textfield" type="'.$type.'" placeholder="'.$placeholder.'" name="'.$key.'" value="'.$value.'"></li></ul>';
                         if ($key != 'Mot de Passe'){ ?>
                             <hr> <?php
                         }
@@ -402,5 +404,6 @@
     <script src="/src/js/profil/editImage.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/src/js/profil/popus.js"></script>
+    <script src="/src/js/profil/submitButton.js"></script>
 </body>
 </html>
