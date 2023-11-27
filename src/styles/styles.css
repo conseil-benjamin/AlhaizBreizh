@@ -371,4 +371,13 @@ h1, h2, h3{
     #header nav{
         margin-left: 1em !important;
     }
+
+    #footer > div > div {
+        flex-direction: column;
+        padding-left: 1em;
+    }
+
+    #footer > div > div > div {
+        padding-top: 1em;
+    }
 }
