@@ -1,17 +1,18 @@
 /*****************************************************/
 /*Définitions principales*/
-*{
-    margin: 0;
-    padding: 0;
-    scroll-padding-top: 75px;
-
-    /*Couleurs*/
+:root{
     --col1 : #515D5E;
     --col2 : #D7F0FF;
     --col3 : #7EBCF2;
     --col4 : #627099;
     --col5 : #16A1EF;
     --col6 : #65E3FF;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    scroll-padding-top: 75px;
 }
 
 body{
