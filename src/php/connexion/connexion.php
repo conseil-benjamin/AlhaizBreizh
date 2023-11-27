@@ -1,4 +1,10 @@
-<?php session_start(); ?>
+<?php 
+    session_start(); 
+
+    if (isset($_SESSION['id'])) {
+        header("Location: /index.php");
+    }
+?>
 <!DOCTYPE html>
 <html lang="fr-fr">
     <head>
@@ -16,9 +22,6 @@
                 <h1>Connexion</h1>
                 <form id="connexion-form" action="login.php" method="post">
                     <div class="form">
-                        <?php if (isset($_GET['error'])) { ?>
-                            <p class="error">Identifiant ou mot de passe incorrect</p>
-                        <?php } ?>
                         <div>
                             <label for="identifiant">Identifiant</label>
                             <input type="text" name="identifiant" id="identifiant" placeholder="Entrez votre identifiant"  required>
@@ -28,7 +31,7 @@
                             <input type="password" name="mdp" id="mdp" placeholder="Entrez votre mot de passe" required>
                             <a href="">Mot de passe oublié ?</a>
                         </div>
-                        <input id="submit" class="boutton" type="submit" value="Se connecter">
+                        <input id="submitBtn" class="boutton" type="submit" value="Se connecter">
                     </div>
                 </form>
             </div>
@@ -38,5 +41,7 @@
             </div>
         </div>
         <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'); ?>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="/src/js/connexion/popup.js"></script>
     </body>
 </html>
