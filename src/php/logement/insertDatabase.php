@@ -1,7 +1,8 @@
-<?php session_start(); 
+<?php 
+    session_start(); 
 
-    if (isset($_SESSION['nbInstallations'])) {
-        $id = 'id';
+    if (isset($_SESSION['id'])) {
+        $id = $_SESSION['id'];
     } else{
         echo "pas d'id trouvé";
     }

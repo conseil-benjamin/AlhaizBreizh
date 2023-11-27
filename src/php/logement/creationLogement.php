@@ -12,17 +12,26 @@
 </head>
 <body>
     <?php
+        session_start();
         include '../header.php';
-
+/*
         if (isset($_SESSION['nbInstallations'])) {
-        $id = 'nbInstallations';
+        $id = $_SESSION['nbInstallations'];
         } else{
         echo "pas d'id trouvé";
+        }
+        */
+
+        if (isset($_SESSION['id'])) {
+            $id = $_SESSION['id'];
+            echo $id;
+        } else{
+            echo "pas d'id trouvé";
         }
     ?>
     <h1>Création d’un nouveau logement</h1>
     <hr>
-    <form id="myForm" method="post" action="javascript:void(0);" onsubmit="submitForm(event)">
+    <form id="myForm" method="post">
     <div class="container-main">
         <div class="container-left">
             <label for="title">Titre de l'annonce (*)</label>
@@ -49,7 +58,7 @@
                 </div>
             </div>
             <label for="natureLogement">Nature du logement (*)</label>
-            <input type="text" id="natureLogementInput" name="natureLogement" size="60" placeholder="Nature du logement" maxlength="50">
+            <input type="text" id="natureLogement" name="natureLogement" size="60" placeholder="Nature du logement" maxlength="50">
             <div class="servicesElement">
                 <label for="services">Services disponibles</label>
                 <input type="text" id="services" name="services" placeholder="Service disponible" size="60" maxlength="100">
@@ -84,10 +93,6 @@
             <textarea name="accroche" id="accroche" cols="45" rows="10" placeholder="Laisser une petite accroche"></textarea>
             <div class="nbChambreEtBainsDiv">
                 <div>
-                    <label for="nbChambres">Nombres de chambres (*)</label> 
-                    <input type="number" id="nbChambres" name="nbChambres" placeholder="Nb Chambres" min="1">
-                </div>
-                <div>
                     <label for="nbSalleBain">Nombres de salles de bain (*)</label>
                     <input type="number" id="nbSallesBain" name="nbSallesBain" min="1" placeholder="Nb Salles de Bain">
                 </div>
@@ -106,12 +111,12 @@
 
             <div class="installationsElement">
                 <label for="installDispo">Installations disponibles</label>
-                <input type="text" id="installDispo" name="installDispo" placeholder="Installation disponible" size="55">
+                <input type="text" id="installDispo" name="installDispo" placeholder="Installation disponible" size="60">
             </div>
             <button class="addButton" id="btnInstallations" type="button">Ajouter installations disponibles</button>
             <div class="equipementsElement">
                 <label for="equipementDispo">Equipements disponibles</label>
-                <input type="text" id="equipementDispo" name="equipementDispo" placeholder="Equipement disponible" size="55">
+                <input type="text" id="equipementDispo" name="equipementDispo" placeholder="Equipement disponible" size="60">
             </div>
             <button class="addButton" id="btnAddEquipements" type="button">Ajouter Equipements disponibles</button>
             <button class="addChambre" id="btnAddChambre" type="button">Ajouter une chambre</button>

@@ -210,7 +210,7 @@ hr {
 
 
 
-@media (max-width: 1250px) {
+@media (max-width: 1299px) {
   .container-main {
     flex-direction: column;
     align-items: center;
@@ -223,6 +223,25 @@ hr {
     margin: 1em 5em 1em 0em;
   }
 }
+
+@media (min-width: 1300px) and (max-width: 1500px) {
+  .container-left {
+    margin: 1em 0 0 20em;
+  }
+  .container-right {
+    margin: 1em 0 0 20em;
+  }
+}
+
+@media (min-width: 1600px){
+  .container-left {
+    margin: 1em 5em 0 5em;
+  }
+  .container-right {
+    margin: 1em 0 0 5em;
+  }
+}
+
 
 @media (max-width: 830px) {
   h1 {
