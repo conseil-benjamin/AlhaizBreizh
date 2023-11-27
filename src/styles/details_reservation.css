@@ -16,6 +16,7 @@ body {
     display: flex;
     flex-direction: column;
     margin: 20px;
+    margin-left: 3vw;
 }
 
 figure {
@@ -32,8 +33,6 @@ figure > img {
 .container {
     display: flex;
 }
-
-
 
 fieldset {
     display: flex;
@@ -94,7 +93,7 @@ body {
 }
 
 #annulerAccepter > button {
-    width: 15vw;
+    width: 14vw;
     height: 82px;
     background: var(--col3);
     border-radius: 10px;
