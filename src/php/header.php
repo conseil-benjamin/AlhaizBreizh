@@ -8,9 +8,19 @@
     <a href="/index.php" class="logo"><img src="/public/logos/logo-grey.svg"></a>
     <nav>
         <ul>
-            <li><a href="/index.php#logements">Logements</a></li>
-            <li><a href="">Réservations</a></li>
-            <li><a href="">À propos</a></li>
+            <li class="navOrdi"><a href="/index.php#logements">Logements</a></li>
+            <li class="navOrdi"><a href="">Réservations</a></li>
+            <li class="navOrdi"><a href="">À propos</a></li>
+            <li>
+                <a href="#" id="dropdownButton">Menu</a>
+                <div class="dropdown-tel">
+                    <ul>
+                        <li><a href="/index.php#logements">Logements</a></li>
+                        <li><a href="">Réservations</a></li>
+                        <li><a href="">À propos</a></li>
+                    </ul>
+                </div>
+            </li>
         </ul>
     </nav>
     <?php
