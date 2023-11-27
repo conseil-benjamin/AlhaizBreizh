@@ -247,10 +247,17 @@ if (!isset($liste_langue_parle)) {
                 }
 
             if (($numLogementExists && $etat_logement !=[]) || ($numLogementExists && $_SESSION['id'] == $proprio && !$etat_logement) || ($etat_logement!=[] && $_SESSION['id'] != $proprio)) {#gestion_exisence70
-    
-                ?>
-                <section class="tete_offre">
+
+                if (isset($_SESSION['id']) && $numLogementExists) {
+                    if ($_SESSION['id'] == $proprio) {?>
+                        <section class="tete_offre_proprio">
+
                     <?php
+                    }
+                }else { ?>
+                <section class="tete_offre">
+                <?php }
+
                     if (!isset($photo_logement)) { ?>
                         
                         <div class="carousel my-carousel carousel--translate">
@@ -606,11 +613,16 @@ if (!isset($liste_langue_parle)) {
                         <p>Il n'y a pas encore d'avis pour cette annonce.</p>
                     </div>
                 </section>
+                <?php }else {?>
+
+        <div class="page_inexistante">
+            <p>Oups, la page est inexistante</p>
+            <a href="/index.php" class="retour_lobby">Retour vers l'acceuil</a>
+        </div>
+        <?php
+        }; ?>  
         </main>
-        <?php }else {?>
-            <p class="page_inexistante">Page inexistante </p>
-            <?php
-            };    
+        <?php
          include($_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'); ?>
     </body>
 </html>
