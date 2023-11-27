@@ -19,13 +19,14 @@ body {
 }
 
 figure {
-    width: auto;
     width: max-content;
+    max-width: 50vw;
 }
 
 figure > img {
     display: block;
-    height: 480px;
+    width: 100%;
+    height: auto;
 }
 
 .container {
@@ -54,7 +55,7 @@ body {
 }
 
 
-#contactPropio > button {
+#contactPropio  button {
     background: var(--col5);
     border-radius: 30px;
     font-style: normal;
@@ -72,24 +73,28 @@ body {
     margin-top: 5vh;
 }
 
+#carteProprio > div {
+    border: 2px solid #333;
+    display: inline-block;
+    margin-right: 20px;
+}
+
 #carteProprio {
     display: flex;
     align-items: center;
     width: 45vw;
     margin-bottom: 2vh;
+
 }
 
-#carteProprio > img {
+#carteProprio  img {
     width: 65px;
     height: 65px;
     background: #D9D9D9;
-    border-radius: 50px;
-    margin-right: 20px;
 }
 
-
 #annulerAccepter > button {
-    width: 378px;
+    width: 15vw;
     height: 82px;
     background: var(--col3);
     border-radius: 10px;
@@ -99,17 +104,15 @@ body {
     line-height: 24px;
     text-align: center;
     color: black;
-
 }
 
 #etatResa {
-    width: 15vw;
+    width: 10vw;
     background: var(--col4);
     border-radius: 10px;
     padding: 20px 10px;
     color: #FFFFFF;
 }
-
 
 #dateDiv {
     display: flex;
@@ -160,7 +163,7 @@ body {
 }
 
 #autreInfo > * {
-    margin-top: 4vh;
+    margin-top: 6vh;
 }
 
 #localisationEtat {
@@ -182,4 +185,54 @@ body {
 
 .gris {
     opacity: 0.5;
+}
+
+#annulerAccepter {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-around;
+}
+
+/********/
+/* Media Queries */
+/********/
+
+@media screen and (max-width: 926px) {
+    #infosContainer {
+        flex-direction: column;
+    }
+
+    #annulerAccepter > button {
+        width: 35vw;
+    }
+    #prixDiv  {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    #etatDevis {
+        width: 90vw;
+    }
+
+    #localisation {
+        width: 60vw;
+    }
+
+    #etatResa {
+        width: 20vw;
+    }
+
+    #nbPersonne {
+        width: 25vw;
+    }
+
+    #contactPropio {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    figure {
+        max-width: 100%;
+    }
 }

@@ -36,7 +36,11 @@ $nomProprio = "$prenom_proprio"." "."$nom_proprio";
                 <fieldset><a>En savoir plus</a></fieldset>
             </figure>
             <div id="contactPropio">
-                <div id="carteProprio"><img src="<?= $photo_profil_proprio ?>" alt="Photo de profil"/> <?= $nomProprio ?></div>
+                <div id="carteProprio">
+                    <div>
+                        <img src="<?= $photo_profil_proprio ?>" alt="Photo de profil"/>
+                    </div>
+                    <?= $nomProprio ?></div>
                 <button class="boutton gris" disabled>Contacter</button>
             </div>
         </div>
@@ -57,7 +61,7 @@ $nomProprio = "$prenom_proprio"." "."$nom_proprio";
                 Devis reçu le <span id="dateDevis"> <?= $dateDevis ?></span></h2></div>
 
             <div id="prixDiv">
-                <p>Total :</p>
+                <h2>Total :</h2>
                 <h2><span id="prixSpan"><?= $prixTotal ?></span>€</h2>
             </div>
             <div class="container" style="flex-direction: column;
