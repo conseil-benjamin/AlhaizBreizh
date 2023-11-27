@@ -23,7 +23,10 @@ if ((isset($_GET['user'])) && ($_GET['user'] == $_SESSION['id'])) {
 
         $keys = ['prenom', 'nom', 'pseudo', 'email', 'tel', 'adresse', 'password'];
         $i = 0;
-        foreach ($_POST as $value) {
+        foreach ($_POST as $key => $value) {
+            if ($key == 'Téléphone'){
+                $value = str_replace(' ', '', $value);
+            }
             $stmt->bindValue(':'.$keys[$i], $value, PDO::PARAM_STR);
             $i++;
         }

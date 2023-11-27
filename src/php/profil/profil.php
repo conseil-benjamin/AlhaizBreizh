@@ -208,6 +208,8 @@
             <?php 
                 $infos = array_slice($infos, 0, (sizeof($infos)-1), true); //Enlève la notation moyenne
                 $infos['Mot de Passe'] = preg_replace('/./u', '*', $infos['Mot de Passe']);
+                $infos['Téléphone'] = str_split($infos['Téléphone'], 2);
+                $infos['Téléphone'] = implode(' ', $infos['Téléphone']);
                 
                 foreach ($infos as $key => $value) {
                     echo '<ul><li>'.$key.'</li>';
