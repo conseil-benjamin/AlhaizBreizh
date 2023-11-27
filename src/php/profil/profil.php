@@ -169,7 +169,6 @@
 
             //Adapter les informations
             $infos['Date de Naissance'] = date('d/m/Y', strtotime($infos['Date de Naissance']));
-            $infos['Mot de Passe'] = preg_replace('/./u', '*', $infos['Mot de Passe']);
             $infos['Notation Moyenne'] = number_format($infos['Notation Moyenne'], 1);
         }
     }  
@@ -208,6 +207,8 @@
             <div>
             <?php 
                 $infos = array_slice($infos, 0, (sizeof($infos)-1), true); //Enlève la notation moyenne
+                $infos['Mot de Passe'] = preg_replace('/./u', '*', $infos['Mot de Passe']);
+                
                 foreach ($infos as $key => $value) {
                     echo '<ul><li>'.$key.'</li>';
                     echo '<li>'.$value.'</li></ul>';
@@ -236,10 +237,10 @@
     <!--Cas profil personnel en édition -->
     <?php } else if (($page_personnelle) && (isset($_GET['edit']))){ ?>
         
-        <form id="form" action="profil.php?user=<?php echo $user ?>" method="post">
+        <form id="form" action="saveModif.php?user=<?php echo $user ?>" method="post" enctype="multipart/form-data">
             <div id="titre">
-                <input type="file" id="fileUpload" style="display: none;">
-                <label for="fileUpload" class="customFileUpload"><img id="photo" src="<?php echo $image_user; ?>"></label>
+                <input type="file" name="file" id="file" style="display: none;" accept=".png, .jpg, .jpeg" maxlength="10">
+                <label for="file" class="customFileUpload"><img class="<?php if (isset($_GET['invalidFile'])) echo 'invalid'; ?>" id="photo" src="<?php echo $image_user; ?>"></label>
                 <h2>Editer mon profil</h2>
             </div>
             
@@ -249,9 +250,11 @@
                     $infos = array_slice($infos, 0, (sizeof($infos)-1), true); //Enlève la notation moyenne
                     foreach ($infos as $key => $value) {
                         $disabled = '';
+                        $placeholder = $value;
                         echo '<ul><li>'.$key.'</li>';
                         if ($key == 'Mot de Passe'){
                             $type = 'password';
+                            $placeholder = '********';
                         } else if ($key == 'Date de Naissance'){
                             $value = date('Y-m-d', mktime(0, 0, 0, substr($value, 3, 2), substr($value, 0, 2), substr($value, 6, 4)));
                             $type = 'date';
@@ -263,7 +266,7 @@
                         } else{
                             $type = 'text';
                         }
-                        echo '<li><input '.$disabled.' required class="textfield" type="'.$type.'" name="'.$key.'" value="'.$value.'"></li></ul>';
+                        echo '<li><input '.$disabled.' required class="textfield" type="'.$type.'" placeholder="'.$placeholder.'" name="'.$key.'" value="'.$value.'"></li></ul>';
                         if ($key != 'Mot de Passe'){ ?>
                             <hr> <?php
                         }
@@ -271,7 +274,7 @@
                 ?>
                 </div>
                 <div class="bouttons">
-                    <button class="boutton" type="submit"><img style="filter: none;" src="/public/icons/check.svg" alt="Valider"></button>
+                    <button id="submitButton" class="boutton" type="submit"><img style="filter: none;" src="/public/icons/check.svg" alt="Valider"></button>
                     <a class="boutton" href="profil.php?user=<?php echo $user ?>"><img style="filter: none;" src="/public/icons/supprimer64.svg" alt="Annuler"></a>
                 </div>
             </div>  
@@ -397,5 +400,7 @@
     </div>
     <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'); ?>
     <script src="/src/js/profil/editImage.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/src/js/profil/popus.js"></script>
 </body>
 </html>

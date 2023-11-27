@@ -465,3 +465,10 @@ div.notation img{
     filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.75));
     transform: translateY(-5px);
 }
+
+/*****************************************************/
+/*Formulaire invalide*/
+
+.invalid{
+    filter: drop-shadow(0px 0px 5px rgba(255, 0, 0, 0.75));
+}
