@@ -3,7 +3,7 @@ body {
   --main-bg-color: var(--col1);
   --color-btn-submit: var(--col3);
   --main-font-color: #ffffff;
-  --secondary-font-color : #000000;
+  --secondary-font-color: #000000;
   --h1-font-color: var(--col5);
 }
 
@@ -28,7 +28,7 @@ body {
 }
 
 input,
-select{
+select {
   margin: 1em;
   border-radius: 5px;
   padding: 0.8em;
@@ -60,11 +60,11 @@ select{
   cursor: pointer;
 }
 
-#photosName{
+#photosName {
   margin: 0 0 0 1em;
 }
 
-button{
+button {
   margin: 1em;
   border-radius: 45px;
   padding: 0.8em;
@@ -72,7 +72,7 @@ button{
   cursor: pointer;
 }
 
-button:hover{
+button:hover {
   background-color: var(--col3);
   transition: 0.7s;
 }
@@ -108,7 +108,7 @@ h1 {
   display: flex;
   flex-direction: row;
 }
-  
+
 .nbChambreEtBainsDiv,
 .nbPrixEtPersonnesDiv,
 .typeLogementDiv {
@@ -121,11 +121,11 @@ h1 {
   height: 4em;
 }
 
-.nbPrixEtPersonnesDiv{
-  margin: 5em 0 0 0;
+.nbPrixEtPersonnesDiv {
+  margin: 0em 0 0 0;
 }
 
-#typeLogement{
+#typeLogement {
   width: 220px;
 }
 
@@ -149,6 +149,10 @@ hr {
   max-width: 25rem;
 }
 
+.inputPlusIconeSupprimer > label {
+  margin: 0 1em 0 1em;
+}
+
 .bottom {
   display: flex;
   flex-direction: column;
@@ -168,7 +172,7 @@ hr {
   width: 30px;
   cursor: pointer;
 }
-.bottom > span{
+.bottom > span {
   margin: 0 1em 0 1em;
 }
 
@@ -176,39 +180,40 @@ hr {
   cursor: pointer;
 }
 
-#lits{
+#lits {
   width: 20rem;
 }
 
-.testValeurInputAnnonce{
+.testValeurInputAnnonce {
   color: red;
 }
 
-.divPrixParNuit{
+.divPrixParNuit {
   margin: 2em 0 0 0;
 }
 
-.addButton, .addChambre, .btnAddLits{
+.addButton,
+.addChambre,
+.btnAddLits {
   background-color: var(--col5);
   border-radius: 10px;
 }
 
-.addButton:hover, .addChambre:hover{
+.addButton:hover,
+.addChambre:hover {
   background-color: var(--main-font-color);
   color: black;
 }
 
-.conditionsGenerale{
-  margin: auto;  
+.conditionsGenerale {
+  margin: auto;
   width: 60%;
 }
 
-.creerAnnonce{
+.creerAnnonce {
   margin: auto;
   margin-bottom: 2em;
 }
-
-
 
 @media (max-width: 1299px) {
   .container-main {
@@ -233,7 +238,7 @@ hr {
   }
 }
 
-@media (min-width: 1600px){
+@media (min-width: 1600px) {
   .container-left {
     margin: 1em 5em 0 5em;
   }
@@ -241,7 +246,6 @@ hr {
     margin: 1em 0 0 5em;
   }
 }
-
 
 @media (max-width: 830px) {
   h1 {

@@ -31,7 +31,7 @@
     ?>
     <h1>Création d’un nouveau logement</h1>
     <hr>
-    <form id="myForm" method="post">
+    <form id="myForm" method="post" enctype="multipart/form-data">
     <div class="container-main">
         <div class="container-left">
             <label for="title">Titre de l'annonce (*)</label>
@@ -42,7 +42,7 @@
                 Ajouter photos
                 <input type="file" id="photos" name="photos" accept=".jpg, .jpeg, .png" onchange="afficherNomsPhotos()" multiple>
             </div>
-            <div id="photosName">Noms Photos :</div>
+            <div id="photosName"></div>
             <div class="typeLogementDiv">
                 <div>
                     <label for="typeLogement">Type de logement (*)</label>
@@ -81,7 +81,7 @@
             <div class="villeDiv">
                 <div>
                     <label for="cdPostal">Code Postal (*)</label>
-                    <input type="text" id="cdPostal" name="cdPostal" placeholder="Code Postal" maxlength="5">
+                    <input type="number" id="cdPostal" name="cdPostal" placeholder="Code Postal" max="99999">
                     <span id="testValeurInputCdPostal"></span>
                 </div>
                 <div>
@@ -91,12 +91,6 @@
             </div>
             <label for="accroche">Phrase d'accroche</label>
             <textarea name="accroche" id="accroche" cols="45" rows="10" placeholder="Laisser une petite accroche"></textarea>
-            <div class="nbChambreEtBainsDiv">
-                <div>
-                    <label for="nbSalleBain">Nombres de salles de bain (*)</label>
-                    <input type="number" id="nbSallesBain" name="nbSallesBain" min="1" placeholder="Nb Salles de Bain">
-                </div>
-            </div>
             <div class="nbPrixEtPersonnesDiv">
                 <div>
                     <label for="nbMaxPers">Nombre de personnes max (*)</label>
@@ -107,7 +101,12 @@
                     <br>
                     <input type="number" id="prixParNuit" name="prixParNuit" placeholder="Prix/Nuit" min="1">
                 </div>
-            </div>
+            </div>   
+            <div>
+                    <label for="nbSalleBain">Nombres de salles de bain (*)</label>
+                    <input type="number" id="nbSallesBain" name="nbSallesBain" min="1" placeholder="Nb Salles de Bain">
+                </div>
+            
 
             <div class="installationsElement">
                 <label for="installDispo">Installations disponibles</label>

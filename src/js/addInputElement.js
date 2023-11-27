@@ -34,23 +34,23 @@ document.addEventListener("DOMContentLoaded", function () {
   iconSupprimer.alt = "Icone supprimer";
 
   let divNomsPhotos = document.getElementById("photosName");
+  const input = document.getElementById("photos");
 
   /**
    * * Fonction permettant d'afficher le nom de tous les fichiers sélectioner par le propriétaire.
    */
   function afficherNomsPhotos() {
-    const input = document.getElementById("photos");
     const photos = input.files;
 
     for (let i = 0; i < photos.length; i++) {
       const nomPhoto = photos[i].name;
-      console.log("Nom de la photo " + (i + 1) + ": " + nomPhoto);
       let photo = document.createElement("p");
-      photo.textContent = "Photo n°" + (i + 1) + ":" + nomPhoto;
+      photo.textContent = nomPhoto;
       divNomsPhotos.appendChild(photo);
     }
-    input.addEventListener("change", afficherNomsPhotos);
   }
+
+  input.addEventListener("change", afficherNomsPhotos);
 
   /**
    * * Si réglement pas accepté, bouton creerAnnonce désactivé
@@ -67,7 +67,16 @@ document.addEventListener("DOMContentLoaded", function () {
    * * Déclaration de tous les inputs ayant un *
    */
   let cdPostalInput = document.querySelector("#cdPostal");
-  //let photosInput = document.querySelector("#photos");
+
+  /**
+   * * Permet de limiter le nombre de chiffre à 5 pour le code postal
+   */
+  cdPostalInput.addEventListener("input", function () {
+    let postalCode = this.value;
+    if (postalCode.length > 5) {
+      this.value = postalCode.slice(0, 5);
+    }
+  });
 
   let cdPostalValue = cdPostalInput.value;
   //let photosValues = photosInput.value;
@@ -77,6 +86,7 @@ document.addEventListener("DOMContentLoaded", function () {
    */
 
   function checkFormValidity() {
+    // Récupère le formulaire HTML et ses balises
     const formData = new FormData(document.getElementById("myForm"));
     let errors = [];
 
@@ -85,6 +95,7 @@ document.addEventListener("DOMContentLoaded", function () {
       title: "Titre d'annonce non renseigné",
       description: "Description du logement non renseignée",
       surface: "Surface du logement non renseigné",
+      photos: "Aucune photo télécharger",
       natureLogement: "Nature du logement non renseigné",
       adresse: "Adresse du logement non renseigné",
       cdPostal: "Code postal non renseigné",
@@ -94,6 +105,9 @@ document.addEventListener("DOMContentLoaded", function () {
       prixParNuit: "Prix par nuit non renseigné",
     };
 
+    /**
+     * * Vérifie si le champ sélectionner à une valeur, si non, on retourne l'erreur associé à ce champ
+     */
     for (const [fieldName, errorMessage] of Object.entries(requiredFields)) {
       if (!formData.get(fieldName)) {
         errors.push(errorMessage);
@@ -108,23 +122,28 @@ document.addEventListener("DOMContentLoaded", function () {
         icon: "warning",
       });
       return false; // Le formulaire n'est pas valide
-    } else if (cdPostalValue.length < 5) {
+    } else {
+      /*
+    else if (cdPostalValue.length < 5) {
       console.log(cdPostalValue);
       Swal.fire({
         title: "Code postal doit être composer de 5 chiffres",
         icon: "warning",
       });
       return false;
-    } else {
+
+    } 
+        */
       return true; // Le formulaire est valide
     }
   }
 
   /**
-   * * Listener sur le bouton creerAnnonce qui vérifie si tous les champs ont correctement été remplis
+   * * Vérifie si le formulaire est bien valide, si oui on affiche un message de succès
+   * * Après avoir fermer l'alert de succès on renvoie vers une page qui s'occupe d'insérer les éléments du client dans la bdd
+   * * On récupère les informations de la création de logement via la méthode : formData.entries() et on les ajoute à l'url de destination
+   * @param {*} event
    */
-
-  // Fonction appelée lors de la soumission du formulaire
   function submitForm(event) {
     event.preventDefault();
     if (checkFormValidity()) {
@@ -163,14 +182,6 @@ document.addEventListener("DOMContentLoaded", function () {
       id
     );
     installationsElement.appendChild(inputPlusIconeSupprimer);
-    $.ajax({
-      type: "POST", // Méthode HTTP
-      url: "receptionDonnes.php", // URL du script PHP
-      data: { nbInstallations: nbInstallations }, // Les données à envoyer
-      success: function (response) {
-        console.log("Réponse du serveur : " + response);
-      },
-    });
   });
 
   addService.addEventListener("click", () => {
@@ -220,20 +231,17 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  if (nbChambres >= 20) {
-    addChambre.disabled = true;
-  } else {
-    null;
-  }
-
+  /**
+   * * Permet d'ajouter une chambre au clic sur le bouton "Ajouter une chambre"
+   */
   addChambre.addEventListener("click", () => {
+    let nbLitsChambreNumero;
     nbChambres++;
     nbLits++;
     let numeroChambre = "Chambre" + nbChambres;
 
     console.log(nbChambres);
     let titre = document.createElement("label");
-    let divBtnAddLits = document.createElement("div");
     let btnAddLits = document.createElement("button");
 
     btnAddLits.textContent = "Ajouter lit";
@@ -275,6 +283,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     chambresElement.appendChild(divChambre);
 
+    /**
+     * Permet de supprimer une chambre ainsi que ses lits associés
+     */
     iconSupprimer.addEventListener("click", function () {
       const parentDiv = this.parentElement;
       const parentDivUp = parentDiv.parentElement;
@@ -285,7 +296,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     btnAddLits.addEventListener("click", () => {
       const addLits = addLitsFunction();
-      // Insérer le lit avant le bouton "Ajouter lit"
+      // Fais en sorte que le bouton "ajouter lit" soit toujours le dernier élément de la chambre
       divChambre.insertBefore(addLits, btnAddLits);
     });
   });
@@ -293,6 +304,9 @@ document.addEventListener("DOMContentLoaded", function () {
   /**
    * * Fonction qui crée un input ainsi qu'une image,
    * * les assemble dans une div, et return la div
+   * @param {*} placeholder
+   * @param {*} name
+   * @param {*} id
    */
   function createInputWithIconSupprimer(placeholder, name, id) {
     let newElement = document.createElement("input");
