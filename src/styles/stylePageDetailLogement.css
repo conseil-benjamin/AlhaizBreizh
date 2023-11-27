@@ -41,11 +41,26 @@ footer{
     transition: all 0.5s ease;
 }
 
-.tete_offre:hover{
+
+.tete_offre_proprio{
+  display: flex;
+  flex-direction: row;
+  background-color: var(--col2);
+  width: calc(100% - 10%);
+  margin: auto;
+  margin-top: 20px;
+  height: 500px;
+  border-radius: 0 20px 20px 0;
+  
+  overflow: hidden;
+  transition: all 0.5s ease;
+}
+
+.tete_offre:hover , .tete_offre_proprio:hover{
     filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.5));
 }
 
-.tete_offre > .carousel{
+.tete_offre > .carousel, .tete_offre_proprio > .carousel{
     display: block;
     width: 80%;
     height: calc(100% + 5px);
@@ -55,13 +70,13 @@ footer{
     z-index: 10;
 }
 
-.tete_offre > img:hover{
+.tete_offre > img:hover, .tete_offre_proprio > img:hover{
     filter: drop-shadow(5px 0px 5px rgba(0, 0, 0, 0.75));
     transform: translateY(0px);
 }
 
 /*Div contenant les infos à droite des images*/
-.tete_offre > div{
+.tete_offre > div, .tete_offre_proprio > div{
     display: flex;
     flex-direction: column;
     width: 20%;
@@ -69,12 +84,12 @@ footer{
     transition: all 0.5s ease;
 }
 
-.tete_offre > div:hover{
+.tete_offre > div:hover, .tete_offre_proprio > div:hover{
     filter: drop-shadow(-5px 0px 5px rgba(0, 0, 0, 0.75));
     z-index: 11;
 }
 
-.tete_offre > div .infos_loge{
+.tete_offre > div .infos_loge, .tete_offre_proprio > div .infos_loge{
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -84,17 +99,17 @@ footer{
     margin-right: 2em;
 }
 
-.tete_offre > div .infos_loge li{
+.tete_offre > div .infos_loge li, .tete_offre_proprio > div .infos_loge li{
     list-style: none;
     font-size: 1.2em;
 }
 
-.tete_offre > div .infos_loge li:first-child{
+.tete_offre > div .infos_loge li:first-child, .tete_offre_proprio > div .infos_loge li:first-child{
     font-size: 1.5em;
     font-weight: bold;
 }
 
-.tete_offre > div .infos_loge li div, .tete_offre > div .infos_loge li div a{
+.tete_offre > div .infos_loge li div, .tete_offre > div .infos_loge li div a, .tete_offre_proprio > div .infos_loge li div, .tete_offre_proprio > div .infos_loge li div a{
     display: flex;
     flex-direction: row;
     align-items: end;
@@ -119,6 +134,7 @@ footer{
 .liste_corps{
     list-style: disc;
     margin: 50px;
+    margin-bottom: 25px;
     margin-top: 15px;
 }
 
@@ -146,7 +162,6 @@ footer{
     background-color: var(--col2);
     border-radius: 20px;
     background-color: #fff;
-    width: max-content;
     background-color: var(--col4);
     color: #fff;
 }
@@ -156,12 +171,13 @@ footer{
     flex-direction: column;
     height: fit-content;
     margin: 5px;
+    text-align: center;
 }
 
 .reserve > form > div div{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 }
 
@@ -174,9 +190,9 @@ footer{
 .reserve > form input:last-child{
     height: fit-content;
     line-height: normal;
-    margin-top: 10px;
+    margin-top: 20px;
     padding: 0em;
-    width: 100%;
+    width: 80%;
     background-color: var(--col6);
 }
 
@@ -263,6 +279,34 @@ hs{
     margin-right: 10px;
 }
 
+.page_inexistante{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  color: var(--col5);
+}
+
+.page_inexistante>p{
+  font-size: 5em;
+
+}
+
+.retour_lobby{
+  color: var(--col6);
+  background-color:var(--col1) ;
+  padding: 2%;
+  margin: 2%;
+  border-radius: 20px 0 20px 0;
+  font-size: 3em;
+}
+
+
+.retour_lobby:hover{
+  text-decoration: underline;
+
+}
 
 
 /*****************************************************/
