@@ -27,7 +27,7 @@
         <div id="fond">
             <section id="entete">
                 <h1>
-                    Réservation de "<?php echo $nomBien ?>"
+                    <?= $nomBien ?>
                 </h1>
             </section>
             <section id="corpsTexte">
