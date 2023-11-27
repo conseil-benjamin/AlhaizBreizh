@@ -18,7 +18,7 @@
 
         //Vérifier si la page est la page personnelle de l'utilisateur
         $page_personnelle = false;
-        if ((isset($_SESSION['id'])) && ($user == $_SESSION['id'])){
+        if ((isset($_SESSION['id'])) && ($user == $_SESSION['id']) && (!isset($_GET['public']))){
             $page_personnelle = true;
         } 
 
@@ -196,7 +196,7 @@
     <?php } else{ ?>
 
     <!--Cas profil personnel -->
-    <?php if (($page_personnelle) && (!isset($_GET['edit']))){ ?>  
+    <?php if (($page_personnelle) && (!isset($_GET['edit'])) && (!isset($_GET['public']))){ ?>  
 
         <div id="titre">
             <img src="<?php echo $image_user ?>">
@@ -224,7 +224,8 @@
         </div>
 
         <div id="options">
-            <a class="boutton" href=""><img src="/public/icons/comment.svg" alt="">Ma messagerie</a>
+            <a class="boutton" href="profil.php?user=<?php echo $user ?>&public"><img src="/public/icons/user.svg" alt="">Profil public</a>
+            <!--<a class="boutton" href=""><img src="/public/icons/comment.svg" alt="">Ma messagerie</a>
             <a class="boutton" href=""><img src="/public/icons/type_logement.svg" alt="">
             <?php 
                 if ($page_personnelle && $page_proprio){ ?>
@@ -232,12 +233,12 @@
                 } else{ ?>
                     Devenir Propriétaire</a> <?php
                 }
-            ?>
+            ?>-->
             <a class="boutton" href="/src/php/connexion/login.php?deconnexion"><img id="img-disconnect" src="/public/icons/forward.svg" alt="">Déconnexion</a>
         </div>
 
     <!--Cas profil personnel en édition -->
-    <?php } else if (($page_personnelle) && (isset($_GET['edit']))){ ?>
+    <?php } else if (($page_personnelle) && (isset($_GET['edit'])) && (!isset($_GET['public']))){ ?>
         
         <form id="form" action="saveModif.php?user=<?php echo $user ?>" method="post" enctype="multipart/form-data">
             <div id="titre">
@@ -290,8 +291,12 @@
         <div class="infos-profil">
             <div class="image">
                 <img src="<?php echo $image_user ?>" alt="Image de l'utilisateur">
-                <a class="boutton" href="">Contacter</a>
-                <a class="boutton" href="">Signaler</a>
+                <?php if ($user != $_SESSION['id']){ ?>
+                    <a class="boutton" href="">Contacter</a>
+                    <a class="boutton" href="">Signaler</a> <?php
+                } else{?>
+                    <a class="boutton" style="background-color: var(--col6); color: #000;" href="profil.php">Voir profil privé</a> <?php
+                } ?>
             </div>
             <div class="infos">
                 <h1><?php echo $infos['Pseudo'] ?></h1>
@@ -324,7 +329,7 @@
                                         $image_avis = '/public/img/icons/user.svg';
                                     }
                                 ?>
-                                <a href="/src/php/profil/profil.php?user=<?php echo $commentaire['id'] ?>"><img src="<?php echo $image_avis ?>" alt="Image de l'utilisateur"></a>
+                                <a href="/src/php/profil/profil.php?user=<?php echo $commentaire['id'] ?>&public"><img src="<?php echo $image_avis ?>" alt="Image de l'utilisateur"></a>
                                 <h1><?php echo $commentaire['pseudo']; ?></h1>
                             </div>
 
