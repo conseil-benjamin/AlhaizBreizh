@@ -23,11 +23,16 @@ const form = document.getElementById('form');
 /*****************************************************************/
 //Listeners
 
-//Enlèvement de la classe invalid lorsqu'on clique sur un champ
-form.addEventListener('click', function (e) {
-    if (e.target.classList.contains('invalid')) {
+// Gestion des champs vides
+form.addEventListener('input', function (e) {
+    e.target.classList.add('invalid');
+    if (e.target.value == "") {
+        e.target.setCustomValidity('Ce champ ne peut pas être vide');
+    } else {
+        e.target.setCustomValidity('');
         e.target.classList.remove('invalid');
     }
+    e.target.reportValidity();
 });
 
 //Envoi du formulaire
@@ -43,7 +48,8 @@ submitButton.addEventListener('click', function (e) {
 
         // Gestion des champs vides
         if ((input.value == "") && (input.type != "file")) {
-            input.classList.add('invalid');
+            input.setCustomValidity('Ce champ ne peut pas être vide');
+            input.reportValidity();
             champsVides = true;
 
         // Gestion du champ file (photo)
@@ -66,7 +72,8 @@ submitButton.addEventListener('click', function (e) {
             if ((charMaj.test(input.value) == false) || (charSpe.test(input.value) == false) || (charNum.test(input.value) == false) || (input.value.length < 8)){
                 input.classList.add('invalid');
                 invalid = true;
-                promise = promise.then(() => popupInvalid("Le mot de passe actuel est incorrect !", "Veuillez réessayer en s'assurant que le mot de passe contient au moins 8 caractères, une majuscule, un chiffre et un caractère spécial."));
+                input.setCustomValidity("Veuillez utiliser au moins 8 caractères, une majuscule, un chiffre et un caractère spécial.");
+                input.reportValidity();
             } 
         }
 
@@ -77,7 +84,8 @@ submitButton.addEventListener('click', function (e) {
             if (regex.test(input.value) == false){
                 input.classList.add('invalid');
                 invalid = true;
-                promise = promise.then(() => popupInvalid("Le numéro de téléphone est incorrect !", "Veuillez réessayer en s'assurant que le numéro de téléphone est au format français."));
+                input.setCustomValidity("Veuillez réessayer en s'assurant que le numéro de téléphone est au format français.");
+                input.reportValidity();
             } 
         }
 
@@ -90,11 +98,10 @@ submitButton.addEventListener('click', function (e) {
                 invalid = true;
                 promise = promise.then(() => popupInvalid("L'adresse email est incorrecte !", "Veuillez réessayer en s'assurant que l'adresse email est sous ce format: xxx@xxx.xxx"));
             } 
+        } else {
+            input.setCustomValidity('');
         }
     });
-    if (champsVides) {
-        promise = promise.then(() => popupInvalid("Certains champs sont vides !"));
-    }
     
     if ((invalid == false) && (champsVides == false)){
         //Récupérer le mot de passe actuel
