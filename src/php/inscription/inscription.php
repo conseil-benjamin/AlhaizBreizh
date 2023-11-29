@@ -12,7 +12,7 @@
 <div id="contenu">
     <?php include($_SERVER['DOCUMENT_ROOT'] . '/src/php/header.php'); ?>
     <h1> Inscription </h1>
-    <form enctype="multipart/form-data" method="POST" id="formulaire">
+    <form action="inscriptionValidation.php" enctype="multipart/form-data" method="POST" id="formulaire">
         <div>
             <div id="infosPerso">
                 <!-- Nom -->
@@ -47,7 +47,7 @@
                     <div class="labelGrp">
                         <!-- Date de naissance -->
                         <label for="date_naissance">Date de naissance :</label>
-                        <input id="date_naissance" name="date_naissance" required type="date">
+                        <input id="date_naissance" name="date_naissance" required type="date" min="01-01-1901">
                     </div>
                 </div>
                 <div class="labelGrp">
@@ -108,7 +108,7 @@
         </div>
         <div id="validation">
             <!-- Bouton de soumission -->
-            <button class="boutton" type="submit" onclick="test()">Créer son compte</button>
+            <button class="boutton" type="submit" id="valider">Créer son compte</button>
             <div>
                 <label for="accept_conditions">J'ai lu et j'accepte les Conditions Générales d'Utilisation, la Politique
                     des données personnelles et les Conditions Générales de Ventes d’Alhaiz Breih</label>

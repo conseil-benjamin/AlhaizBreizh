@@ -1,5 +1,5 @@
 const formHTMLelement = document.getElementById("formulaire")
-
+const btnValiderHTMLelement = document.getElementById("valider")
 
 function validerForm() {
     const nom = document.forms["formulaire"]["nom"].value;
@@ -59,7 +59,7 @@ function validerForm() {
     if (!acceptConditions) {
         msgErreur += "Vous devez accepter les conditions générales d'utilisation.\n"
     }
-    if (verifierMDP(mdp, confirmerMdp)) {
+    if (!verifierMDP(mdp, confirmerMdp)) {
         msgErreur += "Le champ 'Mot de passe' et 'Confirmer le mot de passe' ne sont pas identique.\n";
     }
 
@@ -67,12 +67,13 @@ function validerForm() {
 }
 
 function verifierMDP(mdp, confirmation) {
+    console.log(mdp === confirmation)
     return mdp === confirmation;
 }
 
 function verifierImg(file) {
     if (file === undefined) {
-        return false
+        return true
     } else {
         if (!file.type.match(/^image\/(jpeg|jpg|png)$/i)) {
             return false;
@@ -83,19 +84,11 @@ function verifierImg(file) {
 }
 
 
-formHTMLelement.addEventListener("submit", () => {
-    const err = validerForm()
-    if (err !== "") {
-        // TODO valider la creation
-    } else {
-        console.log(err)
-    }
-})
-
-function test() {
+function handleClickBtnValider(e) {
+    e.preventDefault()
     const err = validerForm()
     if (err === "") {
-        // TODO valider la creation
+        formHTMLelement.submit();
     } else {
         notifFormInvalide(err)
     }
@@ -108,3 +101,5 @@ function notifFormInvalide(err) {
         icon: "warning",
     })
 }
+
+btnValiderHTMLelement.addEventListener("click", (e) => handleClickBtnValider(e))

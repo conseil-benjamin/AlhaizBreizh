@@ -124,6 +124,24 @@ input[type='checkbox'] {
     margin-right: 2vw;
 }
 
+/** Validation */
+
+#contenu > h1 {
+    margin-top: 3vh;
+}
+
+
+#contenu > h2 {
+    margin-left: 2vw;
+    color: white;
+}
+
+#contenu > ul {
+    margin-left: 4vw;
+    color: white;
+    margin-bottom: 4vh;
+}
+
 @media screen and (max-width: 760px) {
     form > div {
         flex-direction: column;
@@ -164,4 +182,6 @@ input[type='checkbox'] {
     #contenu {
         width: 85vw;
     }
+
+
 }
