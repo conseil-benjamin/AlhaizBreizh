@@ -6,24 +6,15 @@ $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
 
 if (isset($_GET['numLogement'])) {
     $numLogement = $_GET['numLogement'];
-
-
-
-
-
-
+ 
     if (isset($pdo)&&!empty($numLogement)) {
         // Vérifier si numLogement existe dans la base de données
         $stmt = $pdo->query("SELECT COUNT(*) FROM ldc.Logement WHERE numLogement = $numLogement");
         $numLogementExists = $stmt ? $stmt->fetchColumn() : null;
 
         if ($numLogementExists) {
-
-
             $etat_logement = "SELECT LogementEnLigne FROM ldc.Logement WHERE numLogement = $numLogement";
             $etat_logement = $pdo->query($etat_logement)->fetchColumn();
-
-                
 
                 // Récupération des informations du logement
                 $stmt = $pdo->prepare("SELECT * FROM ldc.Logement WHERE numLogement = $numLogement");
@@ -47,9 +38,7 @@ if (isset($_GET['numLogement'])) {
                     $prix = isset($row[15]) ? $row[15] : null;
                 }
 
-
                 if ($etat_logement || $_SESSION['id'] == $proprio){
-
                     // Récupération des listes: installations, équipements, services
                     $stmt = $pdo->prepare("SELECT installationsOffertes, equipementsProposes, servicesComplementaires FROM ldc.Services WHERE numLogement = $numLogement");
                     $stmt->execute();
@@ -58,7 +47,6 @@ if (isset($_GET['numLogement'])) {
                         $liste_equipements = isset($row[1]) ? $row[1] : null;
                         $liste_services = isset($row[2]) ? $row[2] : null;
                     }
-
                     // Récupérations des informations concernant le propriétaire
                     $stmt = $pdo->prepare("SELECT firstName,lastName,languesParlees
                                             FROM ldc.Proprietaire P
@@ -80,16 +68,10 @@ if (isset($_GET['numLogement'])) {
                         $localisation_speci = isset($row[1]) ? $row[1] : null;
                     }
 
-
-
                     $img = '/public/img/logements/'.$numLogement.'/1.png';
-
                         //Récupérer les images logement
                         $chemin_photos = $_SERVER['DOCUMENT_ROOT'] . '/public/img/logements/' . $numLogement;
-                        
-
                         $liste_photos = scandir($chemin_photos);
-
                         $nombre_fichiers = 0;
                         foreach ($liste_photos as $fichier) {
                             $chemin_fichier = $chemin_photos .'/'. $fichier;
@@ -206,11 +188,7 @@ if (!isset($liste_langue_parle)) {
     $liste_langue_parle = 'Non renseigné';
 }
 
-
-
-
 ?>
-
 <!DOCTYPE html>
 <html lang="fr-fr">
     <head>
@@ -245,7 +223,6 @@ if (!isset($liste_langue_parle)) {
                         </p><?php 
                     }
                 }
-
             if (($numLogementExists && $etat_logement !=[]) || ($numLogementExists && $_SESSION['id'] == $proprio && !$etat_logement) || ($etat_logement!=[] && $_SESSION['id'] != $proprio)) {#gestion_exisence70
 
                 if (isset($_SESSION['id']) && $numLogementExists) {
@@ -420,7 +397,6 @@ if (!isset($liste_langue_parle)) {
                                 } else {
                                     echo "$localisation <br>";
                                 }
-
                                 # gestion localisation specifique
                                 if (!isset($localisation_speci)) {
                                     echo "Localisation specifique";          
