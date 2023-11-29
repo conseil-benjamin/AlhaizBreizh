@@ -349,10 +349,6 @@ Media queries
         transform: none;
     }
 
-    a {
-        color: white;
-    }
-
     #header nav ul {
         gap: 1em;
     }
