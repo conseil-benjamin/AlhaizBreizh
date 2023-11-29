@@ -3,7 +3,7 @@
     //connexion à la base de donnée
     try {
         $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
-        $stmt = $pdo->prepare("SELECT numLogement,libelle,nbPersMax,tarifNuitees,LogementEnLigne FROM ldc.Logement");
+        $stmt = $pdo->prepare("SELECT numLogement,libelle,nbPersMax,tarifNuitees,LogementEnLigne,ville FROM ldc.Logement");
 
         //Recherche des logements dans la base de données
         $stmt->execute();
@@ -12,15 +12,6 @@
             $logements[] = $row;
         }
 
-        //Obtenir la localisation de chaque logement
-        if (count($logements) !== 0) {
-            $stmt = $pdo->prepare("SELECT numLogement,ville FROM ldc.Localisation WHERE numLogement = ?");
-            foreach ($logements as $logement) {
-                $stmt->execute([$logement[0]]);
-                $ville = $stmt->fetch(PDO::FETCH_NUM)[1];
-                $logements[($logement[0] - 1)][] = $ville;
-            }
-        }
         $pdo = null;
     } catch (PDOException $e) {
         $logements = array();

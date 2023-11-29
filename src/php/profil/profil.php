@@ -143,7 +143,7 @@
             //Récupère les logements de l'utilisateur
             try {
                 $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
-                $stmt = $pdo->prepare("SELECT numLogement,libelle,nbPersMax,tarifNuitees,LogementEnLigne FROM ldc.Logement WHERE proprio = :user");
+                $stmt = $pdo->prepare("SELECT numLogement,libelle,nbPersMax,tarifNuitees,LogementEnLigne,ville FROM ldc.Logement WHERE proprio = :user");
                 $stmt->bindParam(':user', $user, PDO::PARAM_STR);
         
                 //Recherche des logements dans la base de données
@@ -153,15 +153,6 @@
                     $logements[] = $row;
                 }
         
-                //Obtenir la localisation de chaque logement
-                if (count($logements) !== 0) {
-                    $stmt = $pdo->prepare("SELECT numLogement,ville FROM ldc.Localisation WHERE numLogement = ?");
-                    foreach ($logements as $logement) {
-                        $stmt->execute([$logement[0]]);
-                        $ville = $stmt->fetch(PDO::FETCH_NUM)[1];
-                        $logements[($logement[0] - 1)][] = $ville;
-                    }
-                }
                 $pdo = null;
             } catch (PDOException $e) {
                 $logements = array();
@@ -280,7 +271,7 @@
                 </div>
                 <div class="bouttons">
                     <button id="submitButton" class="boutton" type="submit"><img style="filter: none;" src="/public/icons/check.svg" alt="Valider"></button>
-                    <a class="boutton" href="profil.php?user=<?php echo $user ?>"><img style="filter: none;" src="/public/icons/supprimer64.svg" alt="Annuler"></a>
+                    <a class="boutton" href="profil.php?user=<?php echo $user ?>"><img style="filter: none;" src="/public/icons/supprimer.svg" alt="Annuler"></a>
                 </div>
             </div>  
         </form>   
