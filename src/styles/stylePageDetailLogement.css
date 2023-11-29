@@ -2,7 +2,6 @@
 /*Définitions principales*/
 main{
     margin-top: 75px;
-    width: 95%;
     margin-left: auto;
     margin-right: auto;
 }
@@ -16,10 +15,16 @@ main{
 main p{
     margin-top: 10px;
     margin-left: 15px;
+    display: flex;
+    align-items: center;
 }
 
 #icone{
-    width: 30px;
+    width: 40px;
+}
+
+footer{
+  width: 100%;
 }
 
 /*****************************************************/
@@ -38,11 +43,26 @@ main p{
     transition: all 0.5s ease;
 }
 
-.tete_offre:hover{
+
+.tete_offre_proprio{
+  display: flex;
+  flex-direction: row;
+  background-color: var(--col2);
+  width: calc(100% - 10%);
+  margin: auto;
+  margin-top: 20px;
+  height: 500px;
+  border-radius: 0 20px 20px 0;
+  
+  overflow: hidden;
+  transition: all 0.5s ease;
+}
+
+.tete_offre:hover , .tete_offre_proprio:hover, .reserve:hover, .contact:hover{
     filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.5));
 }
 
-.tete_offre > .carousel{
+.tete_offre > .carousel, .tete_offre_proprio > .carousel{
     display: block;
     width: 80%;
     height: calc(100% + 5px);
@@ -52,13 +72,13 @@ main p{
     z-index: 10;
 }
 
-.tete_offre > img:hover{
+.tete_offre > img:hover, .tete_offre_proprio > img:hover{
     filter: drop-shadow(5px 0px 5px rgba(0, 0, 0, 0.75));
     transform: translateY(0px);
 }
 
 /*Div contenant les infos à droite des images*/
-.tete_offre > div{
+.tete_offre > div, .tete_offre_proprio > div{
     display: flex;
     flex-direction: column;
     width: 20%;
@@ -66,12 +86,12 @@ main p{
     transition: all 0.5s ease;
 }
 
-.tete_offre > div:hover{
+.tete_offre > div:hover, .tete_offre_proprio > div:hover{
     filter: drop-shadow(-5px 0px 5px rgba(0, 0, 0, 0.75));
     z-index: 11;
 }
 
-.tete_offre > div .infos_loge{
+.tete_offre > div .infos_loge, .tete_offre_proprio > div .infos_loge{
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -81,20 +101,23 @@ main p{
     margin-right: 2em;
 }
 
-.tete_offre > div .infos_loge li{
+.tete_offre > div .infos_loge li, .tete_offre_proprio > div .infos_loge li{
+    display: flex;
     list-style: none;
     font-size: 1.2em;
+    align-items: center;
 }
 
-.tete_offre > div .infos_loge li:first-child{
+.tete_offre > div .infos_loge li:first-child, .tete_offre_proprio > div .infos_loge li:first-child{
     font-size: 1.5em;
     font-weight: bold;
+
 }
 
-.tete_offre > div .infos_loge li div, .tete_offre > div .infos_loge li div a{
+.tete_offre > div .infos_loge li div, .tete_offre > div .infos_loge li div a, .tete_offre_proprio > div .infos_loge li div, .tete_offre_proprio > div .infos_loge li div a{
     display: flex;
     flex-direction: row;
-    align-items: end;
+    align-items: center;
     gap: 5px;
 }
 
@@ -116,6 +139,7 @@ main p{
 .liste_corps{
     list-style: disc;
     margin: 50px;
+    margin-bottom: 25px;
     margin-top: 15px;
 }
 
@@ -130,20 +154,6 @@ main p{
 }
 
 /*****************************************************/
-/*Réservation + Contact*/
-
-.reserve_contact{
-    display: flex;
-    flex-direction: column;
-    width: 26%;
-}
-
-.reserve_contact > div {
-    position: sticky;
-    top: 75px;
-}
-
-/**************/
 /*Reservation*/
 .reserve p{
     margin: 0;
@@ -153,11 +163,10 @@ main p{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 1em;
+    padding: 2em;
     background-color: var(--col2);
     border-radius: 20px;
     background-color: #fff;
-    width: max-content;
     background-color: var(--col4);
     color: #fff;
 }
@@ -166,12 +175,14 @@ main p{
     display: flex;
     flex-direction: column;
     height: fit-content;
+    margin: 5px;
+    text-align: center;
 }
 
 .reserve > form > div div{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 }
 
@@ -184,37 +195,49 @@ main p{
 .reserve > form input:last-child{
     height: fit-content;
     line-height: normal;
-    margin-top: 5px;
+    margin-top: 20px;
     padding: 0em;
-    width: 100%;
+    width: 80%;
     background-color: var(--col6);
 }
 
-/**********/
-/*Contact*/
-.contact{
+.resa_colle{
+    position: sticky;
+    top: 75px;
+}
+
+.reserve_contact{
     display: flex;
     flex-direction: column;
+    width:30%;
+    min-width: fit-content;
+    margin-left: 20px;
+}
+
+.contact{
     background-color: var(--col3);
+    padding: 5px;
     border-radius: 15px;
-    padding: 1em;
-    overflow: hidden;
-    width: 100%;
+   margin: 5px;
 }
 
-.contact > div{
+.bouton_contact{
+    background-color: var(--col5);
+    color: white;
+    text-align: center;
+    border-radius: 20px;
+    padding: 5px;
+    margin-top: 10px;
+}
+
+.photo_profil_contact{
     display: flex;
-    flex-direction: row;
     align-items: center;
-    width: 100%;
-    background-color: aqua;
+    margin-left: 15%;
 }
 
-.contact > div img{
-    object-fit: cover;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
+footer{
+    background-color: var(--col2);
 }
 
 #comment{
@@ -261,6 +284,35 @@ hs{
     margin-right: 10px;
 }
 
+.page_inexistante{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  color: var(--col5);
+}
+
+.page_inexistante>p{
+  font-size: 5em;
+  text-align: center;
+
+}
+
+.retour_lobby{
+  color: var(--col6);
+  background-color:var(--col1) ;
+  padding: 2%;
+  margin: 2%;
+  border-radius: 20px 0 20px 0;
+  font-size: 3em;
+}
+
+
+.retour_lobby:hover{
+  text-decoration: underline;
+
+}
 
 
 /*****************************************************/
@@ -509,3 +561,77 @@ hs{
 
   }
   
+
+/*****************************************************/
+/*Responsives*/
+
+
+
+  @media screen and (max-width: 1025px) {
+
+      .tete_offre, .tete_offre_proprio{
+        width: calc(100%-50%);
+      }
+
+ 
+
+      .tete_offre > div .infos_loge li:first-child, .tete_offre_proprio > div .infos_loge li:first-child{
+        margin-bottom: 8px;
+        font-size: 1.2em;
+        flex-wrap: nowrap;
+      }
+
+
+
+      .tete_offre > div .infos_loge, .tete_offre_proprio > div .infos_loge{
+        margin-left: 1em;
+        margin-top: 1em;
+      }
+
+  }
+
+
+
+  @media screen and (max-width: 725px) {
+
+
+    .tete_offre, .tete_offre_proprio{
+        flex-direction: column;
+        transition: none;
+        border-radius: 0 0 20px 20px;
+
+    }
+
+    .tete_offre > div .infos_loge, .tete_offre_proprio > div .infos_loge{
+          flex-direction: row;
+          flex-wrap: wrap;
+          padding-bottom: 5px;
+    }
+
+ 
+
+    .tete_offre > div, .tete_offre_proprio > div{
+      width: 100%;
+      transition: none;
+    }
+
+   
+
+    .tete_offre > .carousel, .tete_offre_proprio > .carousel{
+      width: 100%;
+      transition: none;
+      transform: none;
+     }
+
+   
+
+}
+@media screen and (max-width: 500px) {
+  .proprio{
+    flex-wrap: wrap;
+  }
+
+  .bouton_modification{
+    margin-top: 8px;
+  }
+}
