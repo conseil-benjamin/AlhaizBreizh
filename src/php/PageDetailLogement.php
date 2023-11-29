@@ -257,7 +257,6 @@ if (!isset($liste_langue_parle)) {
                 }else { ?>
                 <section class="tete_offre">
                 <?php }
-
                     if (!isset($photo_logement)) { ?>
                         
                         <div class="carousel my-carousel carousel--translate">
@@ -442,9 +441,9 @@ if (!isset($liste_langue_parle)) {
                                     <?php echo $type_logement; ?>
                                 </div>
                             </li>
-                            <li><div><img src="/public/icons/nb_personnes.svg" id="icone" alt="icone personnes"><?php echo $nb_personnes?> Personne(s)</div></li>                
-                            <li><div><a href="#infos_chambres"><img src="/public/icons/double-bed.svg" id="icone" alt="icone lit"><?php echo $nb_chambres?> Chambre(s)</a></div></li>
-                            <li><div><img src="/public/icons/salle_de_bains.svg" id="icone" alt="icone salle de bain"><?php echo $nb_sdb?> Salle(s) de bains</div></li>
+                            <li><div><img src="/public/icons/nb_personnes.svg" id="icone" alt="icone personnes"><?php echo $nb_personnes ?> Personne<?php echo ($nb_personnes > 1) ? 's' : '' ?></div></li>
+                            <li><div><a href="#infos_chambres"><img src="/public/icons/double-bed.svg" id="icone" alt="icone lit"><?php echo $nb_chambres?> Chambre<?php echo ($nb_chambres > 1) ? 's' : '' ?></a></div></li>
+                            <li><div><img src="/public/icons/salle_de_bains.svg" id="icone" alt="icone salle de bain"><?php echo $nb_sdb?> Salle<?php echo ($nb_sdb > 1) ? 's' : '' ?> de bains</div></li>
                         </ul>
                     </div>
                 </section>
@@ -460,7 +459,7 @@ if (!isset($liste_langue_parle)) {
                             </p>
                             <ul class="infos_chambres"></ul>
                             <h2 id="infos_chambres">
-                            Chambres :
+                            Chambre<?php echo ($nb_chambres > 1) ? 's' : '' ?> :
                             </h2>
                             <?php
                                 /*
