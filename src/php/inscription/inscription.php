@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <link href="/src/styles/insription.css" rel="stylesheet" type="text/css">
+    <link href="/src/styles/inscription.css" rel="stylesheet" type="text/css">
     <link href="/src/styles/styles.css" rel="stylesheet" type="text/css">
     <title>S'inscrire</title>
 </head>
 <body>
 <div id="contenu">
+    <?php include($_SERVER['DOCUMENT_ROOT'] . '/src/php/header.php'); ?>
     <h1> Inscription </h1>
-    <form action="" enctype="multipart/form-data" method="POST">
+    <form enctype="multipart/form-data" method="POST" id="formulaire">
         <div>
             <div id="infosPerso">
                 <!-- Nom -->
@@ -98,7 +99,7 @@
                     <input id="confirmer_mdp" name="confirmer_mdp" required type="password">
                 </div>
 
-                <h2> Tout les champs sont obligatoires</h2>
+                <h2> Tous les champs sont obligatoires</h2>
                 <div class="labelGrp">
                     <label for="photo_profil">Choisir une photo de profil :</label>
                     <input accept="image/*" id="photo_profil" name="photo_profil" type="file">
@@ -107,7 +108,7 @@
         </div>
         <div id="validation">
             <!-- Bouton de soumission -->
-            <button class="boutton" type="submit">Créer son compte</button>
+            <button class="boutton" type="submit" onclick="test()">Créer son compte</button>
             <div>
                 <label for="accept_conditions">J'ai lu et j'accepte les Conditions Générales d'Utilisation, la Politique
                     des données personnelles et les Conditions Générales de Ventes d’Alhaiz Breih</label>
@@ -117,5 +118,8 @@
         </div>
     </form>
 </div>
+<?php include($_SERVER['DOCUMENT_ROOT'] . '/src/php/footer.php'); ?>
 </body>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="../../js/inscription.js"></script>
 </html>
