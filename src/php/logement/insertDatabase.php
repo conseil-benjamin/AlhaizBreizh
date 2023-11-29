@@ -1,54 +1,100 @@
 <?php 
-    session_start(); 
+session_start();
+if (isset($_SESSION['id'])) {
+    $id = $_SESSION['id'];
+    echo $id;
+} else{
+    echo "pas d'id trouvé";
+}
 
-    if (isset($_SESSION['id'])) {
-        $id = $_SESSION['id'];
-        echo "Id : " . $id . "<br>";
-    } else{
-        echo "pas d'id trouvé";
-    }
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    if(isset($_POST['nbChambres'])) {
-        $nbChambres = $_POST['nbChambres'];
-        echo $nbChambres;
-    } else {
-        echo "pas de nombre de chambres";
-    }
-
-    /* 
-     if (isset($_SESSION['nbInstallations'])) {
-        $nbInstallations = $_SESSION['nbInstallations'];
-        echo $nbInstallations;
-    } else{
-        echo "pas d'installations trouvé";
-    }
-    */
-
-
-    $title = $_GET['title'];
-    $description = $_GET['description'];
+    $title = $_POST['title'];
+    $description = $_POST['description'];
     $photoCouverture = $_FILES['photos']['name'];
-    $typeLogement = $_GET['typeLogement'];
-    $surface = $_GET['surface'];
-    $natureLogement = $_GET['natureLogement'];
-    $services = $_GET['services'];
-    $lits = $_GET['lits'];
-    $adresse = $_GET['adresse'];
-    $cp = $_GET['cdPostal'];
-    $ville = $_GET['ville'];
-    $accroche = $_GET['accroche'];
-    $nbSalleDeBain = $_GET['nbSallesBain'];
-    $nbMaxPers = $_GET['nbMaxPers'];
-    $prixParNuit = $_GET['prixParNuit'];
-    $installationsDispo = $_GET['installDispo'];
-    $equipementsDispo = $_GET['equipementDispo'];
-    $nbPersMax = $_GET['nbMaxPers'];
+    $typeLogement = $_POST['typeLogement'];
+    $surface = $_POST['surface'];
+    $natureLogement = $_POST['natureLogement'];
+    $photos = $_POST['photos'];
+    $lits = $_POST['lits'];
+    $adresse = $_POST['adresse'];
+    $cp = $_POST['cdPostal'];
+    $ville = $_POST['ville'];
+    $accroche = $_POST['accroche'];
+    $nbSalleDeBain = $_POST['nbSallesBain'];
+    $nbMaxPers = $_POST['nbMaxPers'];
+    $prixParNuit = $_POST['prixParNuit'];
+    $nbPersMax = $_POST['nbMaxPers'];
     $proprio = $id;
     $logementEnLigne = 1;
 
+
+
+    $installations=[];
+    $installElement=$_POST['installDispo'];
+    $i=0;
+    while (isset($installElement)){
+        $installations[$i]=$installElement;
+        $i=$i+1;
+        $installElement=$_POST['InstallDispo'.$i+1];
+    }
+
+    //EQUIPEMENT
+
+    $equipements=[];
+    $equipementElement=$_POST['equipement'];
+    $x=0;
+    while (isset($equipementElement)){
+        $equipements[$i]=$equipementElement;
+        $x=$x+1;
+        $equipementElement=$_POST['equipement'.$x+1];
+    }
+
+    //SERVICE
+
+    $services=[];
+    $serviceElement=$_POST['service'];
+    $j=0;
+    while (isset($serviceElement)){
+        $services[$i]=$serviceElement;
+        $j=$j+1;
+        $serviceElement=$_POST['service'.$j+1];
+    }
+
+    //CHAMBRES
+
+    $chambres=[];
+    $vessel=$_POST['1lits0'];
+    $i=1;
+    while (isset($vessel)){
+        if ($vessel=='Lit simple (90 * 190)'){
+            $chambres[$i][0]=$chambres[$i][0]+1;
+            $chambres[$i][1]=0;
+        }
+        else{
+            $chambres[$i][1]=$chambres[$i][1]+1;
+            $chambres[$i][0]=0;
+        }
+        $j=1;
+        $vessel=$_POST[$i."lits".$j];
+        while (isset($vessel)){
+            if ($vessel=='Lit simple (90 * 190)'){
+                $chambres[$i][0]=$chambres[$i][0]+1;
+            }
+            else{
+                $chambres[$i][1]=$chambres[$i][1]+1;
+            }
+            $j=$j+1;
+            $vessel=$_POST[$i.'lits'.$j];
+        }
+        $i=$i+1;
+        $j=0;
+        $vessel=$_POST[$i.'lits'.$j];
+    }
+    $nbChambres=count($chambres);
+
     try {
         $pdo = require($_SERVER['DOCUMENT_ROOT'].'/src/php/connect.php');
-
         $stmt = $pdo->prepare("INSERT INTO ldc.Logement (surfaceHabitable, libelle, accroche, descriptionLogement, natureLogement, adresse, cp, ville ,proprio, photoCouverture, LogementEnLigne, nbPersMax, nbChambres, nbSalleDeBain, tarifNuitees) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
             $stmt->bindParam(1, $surface);
@@ -69,34 +115,45 @@
             
             $stmt->execute();
 
-            //Ajouter les services
+            $id_logem = $pdo->lastInsertId();
 
-    $idLogement = $pdo->lastInsertId();
+            foreach ($chambres as $key => $value){
+                $stmt = $pdo->prepare(
+                    "INSERT INTO ldc.chambre VALUES ($key, $value[0], $value[1], $id_logem)"
+                );
+                $stmt->execute();
+            }
+            
+            foreach($installations as $key => $value){
+                $stmt = $pdo->prepare(
+                    "INSERT INTO ldc.installation VALUES ($id_logem, $key, '$value')"
+                );
+                $stmt->execute();
+            }
+    
+            foreach($equipements as $key => $value){
+                $stmt = $pdo->prepare(
+                    "INSERT INTO ldc.equipement VALUES ($id_logem, $key, '$value')"
+                );
+                $stmt->execute();
+            }
+    
+            foreach($services as $key => $value){
+                $stmt = $pdo->prepare(
+                    "INSERT INTO ldc.service VALUES ($id_logem, $key, '$value')"
+                );
+                $stmt->execute();
+            }
 
-    if ($idLogement) {
-        echo "<br>";
-        echo $idLogement;
-    }
-    else {
-        echo "rien";
-    }
-    $nom_dossier = $_SERVER['DOCUMENT_ROOT'] . "/public/img/logements/" . $idLogement;
+    $nom_dossier = $_SERVER['DOCUMENT_ROOT'] . "/public/img/logements/" . $id_logem;
 
-
-    // marche pas 
-    $photos = $_FILES['photos'];
-
-    // Parcourir chaque fichier
-    foreach ($photos['tmp_name'] as $key => $tmp_name) {
-        $file_name = $photos['name'][$key];
-        $file_tmp = $photos['tmp_name'][$key];
-        // Traitement des fichiers ou enregistrement dans un dossier
-    }
 
 if (!is_dir($nom_dossier)) {
     if (mkdir($nom_dossier)) {
+        echo "crée dossier";
         // Vérifie si des fichiers ont été envoyés
         if (!empty($_FILES['photos']['name'][0])) {
+            echo "fichier présent";
             // Boucle pour traiter chaque fichier envoyé
             foreach ($_FILES['photos']['name'] as $key => $name) {
                 echo "dada";
@@ -124,14 +181,11 @@ if (!is_dir($nom_dossier)) {
     echo "Le dossier existe déjà.";
 }
 
-    
-    
-
-
 } catch (PDOException $e) {
     echo "Erreur : " . $e->getMessage();
 }
 
 $pdo = null;
+    }
 //header('Location: /src/php/logement/mesLogements.php');
 ?>

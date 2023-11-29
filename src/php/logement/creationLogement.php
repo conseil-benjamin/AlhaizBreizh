@@ -12,26 +12,11 @@
 </head>
 <body>
     <?php
-        session_start();
         include '../header.php';
-/*
-        if (isset($_SESSION['nbInstallations'])) {
-        $id = $_SESSION['nbInstallations'];
-        } else{
-        echo "pas d'id trouvé";
-        }
-        */
-
-        if (isset($_SESSION['id'])) {
-            $id = $_SESSION['id'];
-            echo $id;
-        } else{
-            echo "pas d'id trouvé";
-        }
     ?>
     <h1>Création d’un nouveau logement</h1>
     <hr>
-    <form id="myForm" method="post" enctype="multipart/form-data">
+    <form id="myForm" method="post" action="insertDatabase.php" enctype="multipart/form-data">
     <div class="container-main">
         <div class="container-left">
             <label for="title">Titre de l'annonce (*)</label>
@@ -61,15 +46,15 @@
             <input type="text" id="natureLogement" name="natureLogement" size="60" placeholder="Nature du logement" maxlength="50">
             <div class="servicesElement">
                 <label for="services">Services disponibles</label>
-                <input type="text" id="services" name="services" placeholder="Service disponible" size="60" maxlength="100">
+                <input type="text" id="service" name="service" placeholder="Service disponible" size="60" maxlength="100">
             </div>
             <button class="addButton" id="btnServices" type="button">Ajouter services disponibles</button>
             <div class="chambresElement">
             <div class="litsElement">
                 <label for="lits">Chambre 1</label>
-                <select id="lits" name="lits">
-                <option selected="selected" >Lit double (140 * 190)</option>
+                <select id="lits" name="1lits0">
                 <option>Lit simple (90 * 190)</option>
+                <option selected="selected" >Lit double (140 * 190)</option>
                 </select>
             </div>
             <button class="addButton" id="btnAddLits" type="button">Ajouter un lit</button>
@@ -106,8 +91,6 @@
                     <label for="nbSalleBain">Nombres de salles de bain (*)</label>
                     <input type="number" id="nbSallesBain" name="nbSallesBain" min="1" placeholder="Nb Salles de Bain">
                 </div>
-            
-
             <div class="installationsElement">
                 <label for="installDispo">Installations disponibles</label>
                 <input type="text" id="installDispo" name="installDispo" placeholder="Installation disponible" size="60">
@@ -115,7 +98,7 @@
             <button class="addButton" id="btnInstallations" type="button">Ajouter installations disponibles</button>
             <div class="equipementsElement">
                 <label for="equipementDispo">Equipements disponibles</label>
-                <input type="text" id="equipementDispo" name="equipementDispo" placeholder="Equipement disponible" size="60">
+                <input type="text" id="equipement" name="equipement" placeholder="Equipement disponible" size="60">
             </div>
             <button class="addButton" id="btnAddEquipements" type="button">Ajouter Equipements disponibles</button>
             <button class="addChambre" id="btnAddChambre" type="button">Ajouter une chambre</button>
