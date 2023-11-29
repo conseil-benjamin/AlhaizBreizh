@@ -15,10 +15,12 @@ main{
 main p{
     margin-top: 10px;
     margin-left: 15px;
+    display: flex;
+    align-items: center;
 }
 
 #icone{
-    width: 30px;
+    width: 40px;
 }
 
 footer{
@@ -293,6 +295,7 @@ hs{
 
 .page_inexistante>p{
   font-size: 5em;
+  text-align: center;
 
 }
 
@@ -575,6 +578,7 @@ hs{
       .tete_offre > div .infos_loge li:first-child, .tete_offre_proprio > div .infos_loge li:first-child{
         margin-bottom: 8px;
         font-size: 1.2em;
+        flex-wrap: nowrap;
       }
 
 
@@ -604,6 +608,8 @@ hs{
           padding-bottom: 5px;
     }
 
+ 
+
     .tete_offre > div, .tete_offre_proprio > div{
       width: 100%;
       transition: none;
@@ -619,4 +625,13 @@ hs{
 
    
 
+}
+@media screen and (max-width: 500px) {
+  .proprio{
+    flex-wrap: wrap;
+  }
+
+  .bouton_modification{
+    margin-top: 8px;
+  }
 }
