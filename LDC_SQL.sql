@@ -61,7 +61,6 @@ CREATE TABLE ConversationMessagerie (
 -- Table Avis
 CREATE TABLE Avis (
     numAvis SERIAL NOT NULL PRIMARY KEY,
-    numLogement INTEGER,
     contenuAvis VARCHAR(255),
     nbEtoiles DOUBLE PRECISION
 );
@@ -87,10 +86,11 @@ CREATE TABLE Logement (
 );
 
 CREATE TABLE Chambre (
-    numChambre SERIAL PRIMARY KEY,
+    numChambre INTEGER,
     nbLitsSimples INTEGER,
     nbLitsDoubles INTEGER,
     numLogement INTEGER,
+    PRIMARY KEY (numChambre,numLogement),
     CONSTRAINT fk_numLogement
         FOREIGN KEY (numLogement)
         REFERENCES Logement (numLogement)
@@ -228,7 +228,6 @@ CREATE TABLE LogementProprio (
 );
 
 -- Contraintes de clés étrangères
-
 ALTER TABLE MessageConversation ADD CONSTRAINT messageconversation_conversation_fk1 FOREIGN KEY (numMessage) REFERENCES Message (numMessage);
 ALTER TABLE MessageConversation ADD CONSTRAINT messageconversation_conversation_fk2 FOREIGN KEY (numConversation) REFERENCES Conversation (numConversation);
 ALTER TABLE Messagerie ADD CONSTRAINT messagerie_client_fk FOREIGN KEY (idCompte) REFERENCES Client (idCompte);
@@ -314,8 +313,8 @@ VALUES
     (80, 'Appartement cozy', 'Un adorable appartement dans les bois', 'Cet appartement est parfait pour un weekend en amoureux.', 'appartement','9 rue des serpentins','22500','Lannion', 1, 'appartement.jpg', TRUE, 4, 2, 1, 150.0),
     (100.2, 'Cave spacieuse', 'Au coeur de la ville', 'Profitez de la vie urbaine grâce à cette magnifique cave.', 'cave','2 rue des tulipes','63000','Strasbourg', 2, 'cave.jpg', TRUE, 3, 1, 2, 120.0);
 
-INSERT INTO Chambre (numLogement, nbLitsSimples, nbLitsDoubles) VALUES (1, 2, 3);
-INSERT INTO Chambre (numLogement, nbLitsSimples, nbLitsDoubles) VALUES (1, 2, 3);
+INSERT INTO Chambre (numChambre,numLogement, nbLitsSimples, nbLitsDoubles) VALUES (1,1, 2, 3);
+INSERT INTO Chambre (numChambre,numLogement, nbLitsSimples, nbLitsDoubles) VALUES (2,1, 2, 3);
 
 -- Insertion de données dans la table Reservation
 INSERT INTO Reservation (numClient, numLogement, dateReservation, nbPersonnes, dateDebut, dateFin, dateDevis, nbJours, optionAnnulation)
@@ -374,5 +373,3 @@ VALUES
 
 
 INSERT INTO Admin (pseudo_admin, mdp_admin) VALUES ('admin', 'admin');
-
-
