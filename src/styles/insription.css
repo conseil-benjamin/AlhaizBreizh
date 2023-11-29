@@ -15,7 +15,7 @@ form {
     margin: 20px;
 }
 
-form > div  {
+form > div {
     display: flex;
     justify-content: center;
 }
@@ -34,7 +34,7 @@ form > div > div {
     width: 80%;
 }
 
-input:not([type="file"]),select {
+input:not([type="file"]):not([type="checkbox"]), select {
     width: 30vw;
     height: 5vh;
 
@@ -70,32 +70,97 @@ label {
     width: 80%;
 }
 
-#civiliteDateNaissance > .labelGrp,#codePostalVille .labelGrp  {
+#civiliteDateNaissance > .labelGrp, #codePostalVille .labelGrp {
     width: 40%;
 }
-#civiliteDateNaissance input, #civiliteDateNaissance select
- {
+
+#civiliteDateNaissance input, #civiliteDateNaissance select {
     width: 100%;
 }
 
-#codePostalVille input{
+#codePostalVille input {
     width: 100%;
 }
 
 
- #civiliteDateNaissance .labelGrp + .labelGrp, #codePostalVille .labelGrp+.labelGrp {
+#civiliteDateNaissance .labelGrp + .labelGrp, #codePostalVille .labelGrp + .labelGrp {
     margin-left: 5vw;
 }
 
- #civilite {
-     padding-left: 5px;
- }
+#civilite {
+    padding-left: 5px;
+}
 
- #infosCompte h2{
-     margin-top: 3vh;
-     color: white;
- }
+#infosCompte h2 {
+    margin-top: 3vh;
+    color: white;
+}
 
 #validation {
     margin-top: 5vh;
+    display: flex;
+    justify-content: space-around;
+    padding: 0 20px;
+}
+
+#validation div {
+    flex-direction: row-reverse;
+}
+
+#validation button {
+    background-color: var(--col5);
+    color: black;
+    width: 20vw;
+}
+
+#validation label {
+    margin: 0;
+}
+
+input[type='checkbox'] {
+    height: 3vh;
+    width: 3vw;
+    margin-right: 2vw;
+}
+
+@media screen and (max-width: 760px) {
+    form > div {
+        flex-direction: column;
+    }
+
+    form > div > div {
+        width: 100%;
+    }
+
+    input:not([type="file"]):not([type="checkbox"]), select {
+        width: 100%;
+    }
+
+    #civiliteDateNaissance, #codePostalVille {
+        flex-direction: column;
+    }
+
+    #civiliteDateNaissance > .labelGrp, #codePostalVille .labelGrp {
+        width: auto;
+    }
+
+    #civiliteDateNaissance .labelGrp + .labelGrp, #codePostalVille .labelGrp + .labelGrp {
+        margin-left: 0;
+    }
+
+    #infosCompte h2 {
+        scale: 0.8;
+    }
+
+    #validation button {
+        width: 68vw;
+    }
+
+    #validation div {
+        margin-top: 2vh;
+    }
+
+    #contenu {
+        width: 85vw;
+    }
 }
