@@ -4,13 +4,17 @@
         $image = '/public/img/photos_profil/'.$_SESSION['id'].'.png';
     }
 ?>
+<input type="checkbox" id="toggleBurger">
 <header id="header">
-    <a href="/index.php" class="logo"><img src="/public/logos/logo-grey.svg"></a>
+    
+    <label for="toggleBurger" class="burger logo">
+        <img src="/public/logos/logo-grey.svg">
+    </label>
     <nav>
         <ul>
-            <li><a href="/index.php#logements">Logements</a></li>
-            <li><a href="">Réservations</a></li>
-            <li><a href="">À propos</a></li>
+            <a href="/index.php#logements"><li>Logements</li></a>
+            <a href=""><li>Réservations</li></a>
+            <a href=""><li>À propos</li></a>
         </ul>
     </nav>
     <?php
@@ -45,3 +49,5 @@
     ?>
 </header>
 <script src="/src/js/compte-click.js"></script>
+<script src="/src/js/header/menu-burger.js"></script>
+<script src="/src/js/header/menu-compte.js"></script>

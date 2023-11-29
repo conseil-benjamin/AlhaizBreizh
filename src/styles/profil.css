@@ -5,6 +5,14 @@
     margin: calc(75px + 1em) auto 1em auto;
     width: 80%;
     background-color: #fff;
+    transition: all .5s ease;
+}
+
+@media screen and (max-width: 1300px) {
+    
+    .monprofil {
+        width: 100%;
+    }
 }
 
 div.notation{
@@ -47,11 +55,13 @@ div.notation img{
 
 .monprofil #info{
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: end;
     justify-content: center;
     position: relative;
     background-color: var(--col4);
     color: #fff;
+    transition: all .5s ease;
 }
 
 .monprofil #info > div{
@@ -59,7 +69,9 @@ div.notation img{
     gap: .25em;
     margin: auto;
     padding: 1em;
-    width: 50%;
+    min-width: 50%;
+    width: max-content;
+    transition: all .5s ease;
 }
 
 .monprofil #info ul{
@@ -94,6 +106,18 @@ div.notation img{
 .monprofil #info a.boutton img{
     width: 50px;
     height: 50px;
+}
+
+@media screen and (max-width: 1000px) {
+    
+    .monprofil #info > div{
+        width: 90%;
+        align-self: center;
+    }
+
+    .monprofil #info a.boutton{
+        position: relative;
+    }
 }
 
 /*****************************************************/
@@ -155,13 +179,12 @@ div.notation img{
     position: absolute;
     bottom: 0;
     right: 0;
-    width: max-content;
+    width: 100%;
     flex-direction: row;
     align-items: end;
-    justify-content: center;
+    justify-content: end;
     padding: 0;
     gap: 0;
-    width: fit-content;
 }
 
 .monprofil form#form button.boutton, .monprofil form#form a.boutton{
@@ -189,6 +212,13 @@ div.notation img{
 .monprofil form#form button.boutton img, .monprofil form#form a.boutton img{
     width: 50px;
     height: 50px;
+}
+
+@media screen and (max-width: 1000px) {
+
+    .monprofil form#form .bouttons{
+        position: relative;
+    }
 }
 
 /*****************************************************/
@@ -280,6 +310,9 @@ div.notation img{
 
 .profil div.commentaire{
     position: relative;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
     background-color: var(--col4);
     color: #fff;
     padding: 1em;
@@ -471,4 +504,8 @@ div.notation img{
 
 .invalid{
     filter: drop-shadow(0px 0px 5px rgba(255, 0, 0, 0.75));
+}
+
+.invalid:focus{
+    filter: drop-shadow(0px 0px 5px rgba(255, 0, 0, 1));
 }

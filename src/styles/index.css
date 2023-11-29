@@ -66,6 +66,29 @@
     background-color: #394142;
 }
 
+@media screen and (max-width: 900px){
+
+    #toggleBurger:checked ~ #header > nav > ul{
+        filter: drop-shadow(1px 0px 5px rgba(0, 0, 0, 0.55));
+        background-color: #00000050;
+    }
+
+    #toggleBurger:checked ~ #header.scrolled > nav > ul {
+        background-color: var(--col3);
+        filter: none;
+    }
+
+    #toggleBurger:checked ~ #header > nav > ul li:hover{
+        background-color: #00000050;
+        filter: none;
+    }
+
+    #toggleBurger:checked ~ #header.scrolled > nav > ul li:hover{
+        background-color: var(--col3);
+        filter: brightness(0.9);
+    }
+}
+
 /********************************************/
 /*Titre*/
 
