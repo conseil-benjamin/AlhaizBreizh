@@ -22,6 +22,9 @@
                 <h1>Connexion</h1>
                 <form id="connexion-form" action="login.php" method="post">
                     <div class="form">
+                        <?php if (isset($_GET['error'])) { ?>
+                            <p class="error">Identifiant ou mot de passe incorrect</p>
+                        <?php } ?>
                         <div>
                             <label for="identifiant">Identifiant</label>
                             <input type="text" name="identifiant" id="identifiant" placeholder="Entrez votre identifiant"  required>
