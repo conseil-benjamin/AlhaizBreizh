@@ -51,6 +51,13 @@ submitButton.addEventListener('click', function (e) {
             input.setCustomValidity('Ce champ ne peut pas être vide');
             input.reportValidity();
             champsVides = true;
+        
+        // Gestion des champs trop longs
+        } else if ((input.value.length > 50) && (["tel", "email"].includes(input.type) == false)) {
+            input.classList.add('invalid');
+            input.setCustomValidity('Ce champ ne peut pas contenir plus de 50 caractères');
+            input.reportValidity();
+            invalid = true;
 
         // Gestion du champ file (photo)
         } else if ((input.type == "file") && (input.value != "")) {
@@ -92,8 +99,13 @@ submitButton.addEventListener('click', function (e) {
         // Gestion du champ email
         else if ((input.type == "email") && (input.value != "")) {
             const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-
-            if (regex.test(input.value) == false){
+            if (input.value.length > 100) {
+                input.classList.add('invalid');
+                invalid = true;
+                input.setCustomValidity("Ce champ ne peut pas contenir plus de 100 caractères");
+                input.reportValidity();
+                
+            } else if (regex.test(input.value) == false){
                 input.classList.add('invalid');
                 invalid = true;
                 promise = promise.then(() => popupInvalid("L'adresse email est incorrecte !", "Veuillez réessayer en s'assurant que l'adresse email est sous ce format: xxx@xxx.xxx"));
