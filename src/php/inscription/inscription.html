@@ -98,14 +98,19 @@
                     <input id="confirmer_mdp" name="confirmer_mdp" required type="password">
                 </div>
 
+                <h2> Tout les champs sont obligatoires</h2>
                 <div class="labelGrp">
                     <label for="photo_profil">Choisir une photo de profil :</label>
                     <input accept="image/*" id="photo_profil" name="photo_profil" type="file">
                 </div>
-                <p> Tout les champs sont obligatoires</p>
             </div>
         </div>
         <div id="validation">
+            <label>
+                <input type="checkbox" name="accept_conditions" required>
+                J'accepte les conditions d'utilisation
+            </label>
+
             <!-- Bouton de soumission -->
             <button class="boutton" type="submit">S'inscrire</button>
         </div>

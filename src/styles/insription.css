@@ -78,10 +78,24 @@ label {
     width: 100%;
 }
 
- #civiliteDateNaissance .labelGrp + .labelGrp{
+#codePostalVille input{
+    width: 100%;
+}
+
+
+ #civiliteDateNaissance .labelGrp + .labelGrp, #codePostalVille .labelGrp+.labelGrp {
     margin-left: 5vw;
 }
 
  #civilite {
      padding-left: 5px;
  }
+
+ #infosCompte h2{
+     margin-top: 3vh;
+     color: white;
+ }
+
+#validation {
+    margin-top: 5vh;
+}
