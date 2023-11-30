@@ -22,16 +22,16 @@
   margin-left: 50px;
 }
 
-h2 {
+main h2 {
   margin-top: 100px;
   margin-left: 50px;
 }
 
-h3 {
+main h3 {
   margin-bottom: 5px;
 }
 
-p {
+main p {
   margin: 10px;
   margin-left: 50px;
 }
@@ -44,6 +44,6 @@ input {
   padding: 0.7em;
 }
 
-label {
+main label {
   margin-left: 10px;
 }
