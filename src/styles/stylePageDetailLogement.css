@@ -287,6 +287,18 @@ footer{
     line-height: 100%;
 }
 
+.bouton_disponible{
+  display: flex;
+  background-color: var(--col1);
+  color: white;
+  padding: 1em;
+  border-radius: 20px;
+  margin-right: 20px;
+  min-width:30px;
+  justify-content: center;
+  line-height: 100%;
+}
+
 hs{
   font-size: large;
   margin-right: 10px;
