@@ -111,9 +111,9 @@
     z-index: 2;
 }
 
-#content .logement > img{
+#content .logement a > img{
     height: 100%;
-    width: 30%;
+    width: 300px;
     object-fit: cover;
     image-rendering: optimizeQuality;
 }
@@ -126,4 +126,15 @@
 #content .logement > div img{
     width: 25px;
     height: 25px;
+}
+
+#content .logement > div .boutton{
+    background-color: var(--col6);
+    height: fit-content;
+    padding: .5em;
+}
+
+#content .logement > div .boutton img{
+    width: 20px;
+    height: 20px;
 }
