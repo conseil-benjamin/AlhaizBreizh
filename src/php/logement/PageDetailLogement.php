@@ -52,6 +52,8 @@ if (isset($_GET['numLogement'])) {
                     $liste_services = '';
                     while ($row = $stmt->fetch(PDO::FETCH_NUM)){
                         $liste_services .= isset($row[0]) ? $row[0] : '';
+                        $liste_services .= ", ";
+
                     }
 
                     // Récupération des equipements
@@ -60,6 +62,8 @@ if (isset($_GET['numLogement'])) {
                     $liste_equipements = '';
                     while ($row = $stmt->fetch(PDO::FETCH_NUM)){
                         $liste_equipements .= isset($row[0]) ? $row[0] : '';
+                        $liste_equipements .= ", ";
+
                     }
 
                     // Récupération des installations
@@ -68,7 +72,10 @@ if (isset($_GET['numLogement'])) {
                     $liste_installation = '';
                     while ($row = $stmt->fetch(PDO::FETCH_NUM)){
                         $liste_installation .= isset($row[0]) ? $row[0] : '';
+                        $liste_installation .= ", ";
+
                     }
+
                     // Récupérations des informations concernant le propriétaire
                     $stmt = $pdo->prepare("SELECT firstName,lastName,languesParlees
                                             FROM ldc.Proprietaire P
@@ -500,6 +507,7 @@ if (!isset($liste_langue_parle)) {
                                 } else {
                                     // Divise la chaîne en un tableau en utilisant la virgule comme séparateur
                                     $installation_array = explode(', ', $liste_installation);
+                                    array_pop($installation_array);
                                 
                                     echo "<ul class='liste_corps'>";
                                     foreach ($installation_array as $installation) {
@@ -517,6 +525,8 @@ if (!isset($liste_langue_parle)) {
                                     echo "<p class='section_vide'>Cette section est vide.</p>";
                                 } else {
                                     $equipements_array = explode(', ', $liste_equipements);
+                                    array_pop($equipements_array);
+
                                 
                                     echo "<ul class='liste_corps'>";
                                     foreach ($equipements_array as $equipement) {
@@ -532,6 +542,8 @@ if (!isset($liste_langue_parle)) {
                                     echo "<p class='section_vide'>Cette section est vide.</p>";
                                 } else {
                                     $services_array = explode(', ', $liste_services);
+                                    array_pop($services_array);
+
                                 
                                     echo "<ul class='liste_corps'>";
                                     foreach ($services_array as $service) {
