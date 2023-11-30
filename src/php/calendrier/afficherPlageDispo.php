@@ -59,7 +59,7 @@
                     // Vérifie si les dates sont valides et le tarif est numérique
                     if (strtotime($datedebutplage) && strtotime($datefinplage) && is_numeric($tarifjournalier)) {
                         $stmt = $pdo->prepare("INSERT INTO ldc.PlageDeDisponibilite (numCal, datedebutplage, datefinplage, tarifjournalier) 
-                            VALUES (?, ?, ?, ?) WHERE numLogement = $numLogement AND proprio = $proprio");
+                            VALUES (?, ?, ?, ?) WHERE numLogement = $numLogement");
                         $stmt->execute([$numCal, $datedebutplage, $datefinplage, $tarifjournalier]);
                 
                         // Rafraîchit les plages de disponibilité

@@ -1,36 +1,40 @@
-*{
-   margin : 0;
-   padding : 0; 
+* {
+  margin: 0;
+  padding: 0;
 }
 
-#calendar{
-   margin-top: 50px;
-   margin-left: 50px;
-   margin-right: 50px;
-   max-width :1500px;
-   display: flex;
-   position : center;
+#calendar {
+  margin-top: 50px;
+  margin-left: 50px;
+  margin-right: 50px;
+  max-width: 1500px;
+  display: flex;
+  position: center;
 }
 
-#plage-form{
-   margin-top: 100px;
-   margin-left:50px;
+#plage-form {
+  margin-top: 100px;
+  margin-left: 50px;
 }
 
-h2{
-   margin-top:100px;
-   margin-left:50px;
+h2 {
+  margin-top: 100px;
+  margin-left: 50px;
 }
 
-h3{
-   margin-bottom: 5px;
+h3 {
+  margin-bottom: 5px;
 }
 
-p{
-   margin : 10px;
-   margin-left: 50px;;
+p {
+  margin: 10px;
+  margin-left: 50px;
 }
 
-input{
-   padding: 0.7em;
+#logement-name > p {
+  margin-top: 80px;
+}
+
+input {
+  padding: 0.7em;
 }
