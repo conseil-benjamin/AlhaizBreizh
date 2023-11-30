@@ -9,18 +9,25 @@ body {
 
 .container-main {
   display: flex;
+  flex-direction: row;
+  justify-content: space-around;
   background-color: var(--main-bg-color);
   border-radius: 25px;
-  margin: 10em;
+  margin: 5em;
+  margin-left: auto;
+  margin-right: auto;
   color: var(--main-font-color);
   flex-wrap: wrap;
+  width: 90%;
 }
 
 .container-left {
-  flex-direction: column;
-  margin: 1em 15em 1em 15em;
+  width: fit-content;
 }
 
+.container-right {
+  width: fit-content;
+}
 
 input,
 select {
@@ -28,7 +35,6 @@ select {
   border-radius: 5px;
   padding: 0.8em;
   display: block;
-  width: 300px; 
 }
 
 .custom-file-input {
@@ -77,7 +83,7 @@ button:hover {
   height: 1.3em;
 }
 
-label {
+.container-main label {
   margin: 2em 0 0 1em;
   display: block;
 }
@@ -90,7 +96,7 @@ textarea {
 
 h1 {
   text-align: center;
-  font-size: clamp(1rem, 2.5vw, 2rem);
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
   color: var(--col5);
 }
 
@@ -215,32 +221,9 @@ hr {
   margin-bottom: 2em;
 }
 
-@media (max-width: 1299px) {
-  .container-main {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  .container-left {
-    margin: 1em 5em 1em 5em;
-  }
-  .container-right {
-    margin: 1em 0 1em 5em;
-  }
-}
-
-@media (min-width: 1300px) and (max-width: 1500px) {
-  .container-left {
-    margin: 1em 0 0 20em;
-  }
-  .container-right {
-    margin: 1em 0 0 20em;
-  }
-}
-
 @media (max-width: 830px) {
   h1 {
-    margin: 10em 0 0 0;
+    margin-top: calc(75px + 1em);
   }
   textarea{
     width: 80%;
@@ -252,7 +235,8 @@ hr {
     width: 80%;
   }
   .container-main {
-    margin: 2em 1em 0 1em;
+    margin: auto;
+    margin-top: 2em;
     min-width: 20rem;
   }
   .container-left {
