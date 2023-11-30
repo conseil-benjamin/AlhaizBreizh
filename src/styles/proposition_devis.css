@@ -1,0 +1,59 @@
+input[type='file'] {
+    display: none;
+}
+
+
+#devisLabel {
+    display: block;
+    margin: 12px !important;
+    color: black !important;
+    font-weight: normal !important;
+}
+
+#upload:hover, #devisLabel:hover {
+    cursor: pointer;
+}
+
+#upload {
+    height: 8vh;
+    background: var(--col3);
+    border-radius: 10px;
+    width: max-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#ficUpload {
+    display: none;
+}
+
+#annulerFicUpload {
+    background: transparent;
+    width: auto;
+    height: auto;
+    margin-left: 10px;
+    border-style: solid;
+    padding: 10px;
+    cursor: pointer;
+}
+
+
+/**
+
+Media Queries
+
+ */
+
+@media screen and (max-width: 760px) {
+
+    #prixDIv > div > label{
+        text-align: center;
+    }
+
+    textarea {
+        width: 100%;
+    }
+
+
+}

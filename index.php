@@ -1,4 +1,22 @@
-<?php session_start(); ?>
+<?php 
+    session_start(); 
+    //connexion à la base de donnée
+    try {
+        $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
+        $stmt = $pdo->prepare("SELECT numLogement,libelle,nbPersMax,tarifNuitees,LogementEnLigne,ville FROM ldc.Logement");
+
+        //Recherche des logements dans la base de données
+        $stmt->execute();
+        $logements = array();
+        while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+            $logements[] = $row;
+        }
+
+        $pdo = null;
+    } catch (PDOException $e) {
+        $logements = array();
+    }
+?>
 <!DOCTYPE html>
 <html lang="fr-fr">
     <head>
@@ -10,7 +28,7 @@
         <title>ALHaiz Breizh</title>
     </head>
     <body>
-        <?php include './src/php/header.php'; ?>
+        <?php include $_SERVER['DOCUMENT_ROOT'] .'/src/php/header.php'; ?>
         <video id="background" autoplay loop muted>
             <source src="/public/videos/video-bretagne.mp4" type="video/mp4">
         </video>
@@ -23,33 +41,43 @@
             <div>
                 <?php
                 /*Créations de carte pour chaque logements*/
-                $dir = './public/img/logements';
-                $folders = array_diff(scandir($dir), array('..', '.'));
 
-                if ($folders == null) { ?>
-                    <h2>Aucun logement n'est disponible pour le moment :/</h2> <?php
-                }
+                $nb_logements_inactifs = 0;
+                $logements = array_reverse($logements);
+                foreach ($logements as $logement) {
+                    $actif = $logement[4];
+                    if ($actif) {
+                        $lien = '/src/php/logement/PageDetailLogement.php?numLogement=' . $logement[0];
+                        $img = '/public/img/logements/' . $logement[0] . '/1.png';
 
-                foreach ($folders as $folder) {
-                    $img = $dir . '/' . $folder . '/1.png'; ?>
-
-                    <div class="logement">
-                        <a href=""><img src="<?php echo $img ?>"></a>
-                        <button type="button"><img src="/public/icons/heart.svg"></button>
-                        <a href=""><div>
-                            <h3>Maison à Plestin les grèves</h3>
-                            <div id="rating">4.9<img src="/public/icons/star_fill.svg"></div>
-                            <div><img src="/public/icons/nb_personnes.svg">6 personnes</div>
-                            <div><strong>999€</strong> / nuit</div>
-                        </div></a>
-                    </div> <?php
-                }
-
-                ?>
+                        $titre = $logement[1];
+                        $nombre_personnes = $logement[2];
+                        $localisation = $logement[5];
+                        $prix = $logement[3] ?>
+    
+                        <div class="logement">
+                            <a href="<?php echo $lien ?>"><img src="<?php echo $img ?>"></a> <!-- Image du logement -->
+                            <div>
+                                <div id="rating"><img src="/public/icons/star_fill.svg">4.9</div> <!-- Notation -->
+                                <button type="button"><img src="/public/icons/heart_white.svg"></button> <!-- Coeur pour liker -->
+                            </div>   
+                            <a id="description" href="<?php echo $lien ?>"><div> 
+                                <h3><?php echo $titre ?></h3> <!-- Titre du logement -->
+                                <div><img src="/public/icons/nb_personnes.svg"><p><?php echo $nombre_personnes ?> personnes</p></div> <!-- Nombre de personnes -->
+                                <div><img src="/public/icons/map.svg"><p><?php echo $localisation ?></p></div> <!-- Localisation -->
+                                <div><p><strong><?php echo $prix ?>€</strong> / nuit</p></div> <!-- Prix du logement -->
+                            </div></a>
+                        </div> <?php
+                    } else{
+                        $nb_logements_inactifs++;
+                    }
+                } 
+                if ($nb_logements_inactifs == count($logements)){ ?>
+                    <h2>Aucun logement n'est disponible pour le moment :/</h2><?php
+                } ?>
             </div> 
         </div>   
-        <?php include './src/php/footer.php'; ?>
-        <script src="/src/js/compte-click.js"></script>
+        <?php include $_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'; ?>
         <script>
             window.addEventListener("scroll", () => {
                 var header = document.querySelector("header");
