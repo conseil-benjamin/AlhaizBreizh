@@ -3,6 +3,11 @@ const btnValiderHTMLelement = document.getElementById("valider")
 const numTelInputHTMLelement = document.getElementById("num_tel")
 const codePostalHTMLelement = document.getElementById("code_postal")
 const villeHTMLelement = document.getElementById("ville")
+const dateNaissanceInputHTMLelement = document.getElementById("date_naissance")
+
+function setMaxDateNaissanceAuj() {
+    dateNaissanceInputHTMLelement.max = new Date().toISOString().split('T')[0];
+}
 
 function validerForm() {
     const nom = document.forms["formulaire"]["nom"].value;
@@ -168,3 +173,4 @@ numTelInputHTMLelement.addEventListener("input", function () {formatTelephone(th
 
 codePostalHTMLelement.addEventListener("input", function () {formatCodePostal(this)})
 villeHTMLelement.addEventListener("input", function () {formatVille(this)})
+setMaxDateNaissanceAuj()

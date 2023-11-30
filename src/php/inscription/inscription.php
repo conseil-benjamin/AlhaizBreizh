@@ -101,7 +101,7 @@
 
                 <h2>Les champs marqués de (?) sont optionnels, les autres sont obligatoires</h2>
                 <div class="labelGrp">
-                    <label for="photo_profil" id="photoProfil"> <img src="/public/icons/user.svg" alt="Illustration photo de profile"/> Choisir une photo de profil : (?)</label>
+                    <label for="photo_profil" id="photoProfil"> <img src="/public/icons/user.svg" alt="Illustration photo de profile"/> Choisir une photo de profil (?): </label>
                     <input accept="image/*" id="photo_profil" name="photo_profil" type="file">
                 </div>
             </div>

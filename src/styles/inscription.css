@@ -39,6 +39,8 @@ input:not([type="file"]):not([type="checkbox"]), select {
     width: 30vw;
     height: 5vh;
 
+    padding-left: 10px;
+
     background: white;
     border-radius: 10px;
 
