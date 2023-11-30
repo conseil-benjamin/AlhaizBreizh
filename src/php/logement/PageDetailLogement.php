@@ -238,8 +238,9 @@ if (!isset($liste_langue_parle)) {
                                 <a href="?action=activer&numLogement=<?php echo $numLogement ?>" class="bouton_modification">Mettre l'annonce en ligne</a>
                             <?php } else { ?>
                                 <a href="?action=desactiver&numLogement=<?php echo $numLogement ?>" class="bouton_modification">Mettre l'annonce hors ligne</a>
-                            <?php } ?>
-                            <a href="#" class="bouton_modification">Modifier l'annonce</a>
+                            <?php } 
+                            $_SESSION['numLogement']=$numLogement?>
+                            <a href="/src/php/logement/modif.php" class="bouton_modification">Modifier l'annonce</a>
                             <a href="#" class="bouton_modification">Supprimer l'annonce</a>
                         </p><?php 
                     }
