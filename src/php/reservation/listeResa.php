@@ -11,8 +11,9 @@ try {
 // Assurez-vous que la session 'id' est définie pour éviter des erreurs
 if (isset($_SESSION['id'])) {
     // Utilisez des requêtes préparées pour éviter les injections SQL
-    $stmt = $pdo->prepare("SELECT * FROM ldc.Reservation WHERE id = :id");
+    $stmt = $pdo->prepare("SELECT DISTINCT numLogement,libelle,dateDebut,dateFin,pseudoCompte,proprio FROM ldc.Reservation NATURAL JOIN ldc.Logement NATURAL JOIN ldc.Client WHERE proprio = :id AND pseudoCompte = :pseudo");
     $stmt->bindParam(':id', $_SESSION['id'], PDO::PARAM_INT);
+    $stmt->bindParam(':pseudo', $_SESSION['pseudo'], PDO::PARAM_STR);
     $stmt->execute();
     
     // Vérifiez si l'utilisateur a des réservations
@@ -20,18 +21,22 @@ if (isset($_SESSION['id'])) {
         // Récupérez les réservations
         $reservations = $stmt->fetchAll(PDO::FETCH_ASSOC);
     } else {
-        // Ajustez en conséquence si l'utilisateur n'a pas de réservations
         $reservations = array();
     }
+    // Si l'utilisateur n'est pas le propriétaire, obtenir ses reservations
+    $stmt = $pdo->prepare("SELECT DISTINCT numLogement,libelle,dateDebut,dateFin,pseudoCompte,proprio FROM ldc.Reservation NATURAL JOIN ldc.Logement NATURAL JOIN ldc.Client WHERE numClient = :id AND proprio != :id");
+    $stmt->bindParam(':id', $_SESSION['id'], PDO::PARAM_INT);
+    $stmt->execute();
+    $reservations = $reservations + $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     // Utilisez une boucle foreach pour afficher les réservations
-    foreach ($reservations as $reservation) {
+    /*foreach ($reservations as $reservation) {
         // Affichez les détails de la réservation
         echo "Numéro de logement: " . $reservation['numLogement'] . "<br>";
         echo "Date de début: " . $reservation['dateDebut'] . "<br>";
         echo "Date de fin: " . $reservation['dateFin'] . "<br>";
         // Ajoutez d'autres détails selon votre structure de base de données
-    }
+    }*/
 } else {
     // Ajustez en conséquence si l'utilisateur n'est pas connecté
     echo "Utilisateur non connecté";
@@ -59,25 +64,7 @@ if (isset($_SESSION['id'])) {
     <!-- Code PHP pour vérifier la session utilisateur et définir l'image de profil -->
     <?php
 // Supposons que vous ayez déjà une variable $reservations récupérée de la base de données
-$reservations = [
-    [
-        'numReservation' => 1,
-        'numLogement' => 1,
-        'libelle' => 'Appartement Cozy',
-        'dateDebut' => '2023-11-01',
-        'dateFin' => '2023-11-07',
-        'pseudoCompte' => 'Gege',
-    ],
-    [
-        'numReservation' => 2,
-        'numLogement' => 2,
-        'libelle' => 'Cave Spacieuse',
-        'dateDebut' => '2023-11-10',
-        'dateFin' => '2023-11-15',
-        'pseudoCompte' => 'Gege',
-    ],
-    // ... Ajoutez d'autres réservations ici
-];
+
 ?>
 
 
@@ -90,7 +77,6 @@ $reservations = [
 <body>
     <?php 
     // Code PHP pour gérer la soumission du formulaire
-    session_start(); 
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
@@ -143,17 +129,17 @@ $reservations = [
             <div class="card-container">    
                 <div class="reservation-card">
                     <div class="logement">
-                        <img src="/public/img/logements/<?php echo $reservation['numLogement']; ?>/1.png" alt="Photo du logement">
+                        <img src="/public/img/logements/<?php echo $reservation['numlogement']; ?>/1.png" alt="Photo du logement">
                     </div>
                     <div class="infos">
                         <h2><?php echo $reservation['libelle']; ?></h2>
                         <div class="details">
-                            <p>Date d'arrivée : <?php echo $reservation['dateDebut']; ?></p>
-                            <p>Date de départ : <?php echo $reservation['dateFin']; ?></p>
+                            <p>Date d'arrivée : <?php echo $reservation['datedebut']; ?></p>
+                            <p>Date de départ : <?php echo $reservation['datefin']; ?></p>
                         </div>
                         <div class="profile">
-                            <img src="/public/img/gege.png" alt="Photo de profil">
-                            <p><?php echo $reservation['pseudoCompte']; ?></p>
+                            <img src="/public/img/photos_profil/<?php echo $reservation['proprio']; ?>.png" alt="Photo de profil">
+                            <p><?php echo $reservation['pseudocompte']; ?></p>
                         </div>
                     </div>
                     <label class="button-etat" for="status">État Réservation</label>
