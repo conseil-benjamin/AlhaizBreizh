@@ -6,13 +6,15 @@
 
     // Connexion à la base de données
     $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
-
+    $isProprio = $_SESSION['proprio'];
+    $isProprioEncode = json_encode($isProprio);
 
     if (isset($_GET['numLogement'])) {
         $numLogement = $_GET['numLogement'];
         $proprio = $_SESSION['id'];
 
         if (isset($pdo)&&!empty($numLogement)) {
+            
             // Vérifier si numLogement existe dans la base de données
             $stmt = $pdo->query("SELECT COUNT(*) FROM ldc.Logement WHERE numLogement = $numLogement");
             $numLogementExists = $stmt ? $stmt->fetchColumn() : null;
@@ -107,6 +109,7 @@
                 <script> 
                     //script de création du calendrier
                     var evenements = <?php echo $evenementsJSON; ?>;
+                    var isProprio = <?php echo $isProprioEncode;?>
                     document.addEventListener('DOMContentLoaded', function() {
                         var calendarEl = document.getElementById('calendar');
                         var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -122,38 +125,41 @@
                             unselectAuto: true,
                             events: evenements,
                             eventClick: function(info) {
-                                Swal.fire({
-                                    title: "Voulez-vous supprimer la plage de disponibilité ?",
-                                    showCancelButton: true,
-                                    confirmButtonText: "Confirmer",
-                                    cancelButtonText: "Annuler"
-                                }).then((result) => {
-                                    if (result.isConfirmed) {
-                                        Swal.fire({
-                                            icon: "success",
-                                            title: "La plage de disponibilité a bien été supprimée",
-                                            showConfirmButton: false,
-                                            timer: 2000
-                                        });
-                                        $.ajax({
-                                            url: 'supprimerPlage.php', 
-                                            type: 'POST',
-                                            data: {
-                                                numPlage: info.event.id
-                                            },
-                                            success: function(response) {
-                                                console.log(response);
-                                                calendar.refetchEvents();
-                                                setTimeout(()=> {
-                                                    location.reload(); // Rafraîchit la page après la suppression
-                                                }, 2000);
-                                            },
-                                            error: function(xhr, status, error) {
-                                                console.error('Erreur lors de la suppression :', error);
-                                            }
-                                        });                                        
-                                    }
-                                });                                
+                                if (isProprio){
+
+                                    Swal.fire({
+                                        title: "Voulez-vous supprimer la plage de disponibilité ?",
+                                        showCancelButton: true,
+                                        confirmButtonText: "Confirmer",
+                                        cancelButtonText: "Annuler"
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            Swal.fire({
+                                                icon: "success",
+                                                title: "La plage de disponibilité a bien été supprimée",
+                                                showConfirmButton: false,
+                                                timer: 2000
+                                            });
+                                            $.ajax({
+                                                url: 'supprimerPlage.php', 
+                                                type: 'POST',
+                                                data: {
+                                                    numPlage: info.event.id
+                                                },
+                                                success: function(response) {
+                                                    console.log(response);
+                                                    calendar.refetchEvents();
+                                                    setTimeout(()=> {
+                                                        location.reload(); // Rafraîchit la page après la suppression
+                                                    }, 2000);
+                                                },
+                                                error: function(xhr, status, error) {
+                                                    console.error('Erreur lors de la suppression :', error);
+                                                }
+                                            });                                        
+                                        }
+                                    }); 
+                                }                               
                             }
                         });
                         calendar.render();  
@@ -177,7 +183,7 @@
             <?php
                 //Formulaire permettant l'ajout d'une plage de disponibilité
                 if (isset($_SESSION['id']) && $numLogementExists) {
-                    if ($_SESSION['proprio'] == true) { 
+                    if ($isProprio == true) { 
             ?>
                         <div id="plage-form">
                             <h3>Ajouter une plage de disponibilité :</h3>
