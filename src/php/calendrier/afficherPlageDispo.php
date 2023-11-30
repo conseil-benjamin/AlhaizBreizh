@@ -10,7 +10,7 @@
     $isProprioJSON = json_encode($isProprio);
 
     if (isset($_GET['numLogement'])) {
-        $numLogement = $_GET['numLogement'];
+        $numLogement = $_SESSION['numLogement'];
 
         if (isset($pdo)&&!empty($numLogement)) {
             // Vérifier si numLogement existe dans la base de données
@@ -50,6 +50,25 @@
                 }
                 $evenementsJSON = json_encode($evenements);
 
+                //Récupérer les données des plages de disponibilité du calendrier
+                $stmtPlagesIndispo = $pdo->prepare("SELECT * FROM ldc.PlageIndisponibilite WHERE numCal = $numCal");
+                $stmtPlagesIndispo->execute(); 
+                $plagesIndisponibilite = $stmtPlagesIndispo->fetchAll(PDO::FETCH_ASSOC);
+                $evenementsI = [];
+
+                foreach ($plagesIndisponibilite as $plage) {
+                    if (isset($plage['datedebutplagei'], $plage['datefinplagei'])) {
+                        $evenementI = [
+                            'id' => $plage['numplagei'],
+                            'title' => 'Indisponible',
+                            'start' => $plage['datedebutplagei'],
+                            'end' => $plage['datefinplagei'],
+                        ];
+                        $evenementsI[] = $evenementI;
+                    }
+                }
+                $evenementsIJSON = json_encode($evenementsI);
+
                 //Insérer une plage de disponibilité
                 if (isset($_POST['submitPlageDispo'])) {
                     $datedebutplage = $_POST['datedebutplage'];
@@ -66,6 +85,23 @@
                         header("Refresh:0");
                     }
                 }
+
+                //Insérer une plage d'indisponabilité
+                if (isset($_POST['submitPlageIndispo'])) {
+                    $datedebutplagei = $_POST['datedebutplagei'];
+                    $datefinplagei = $_POST['datefinplagei'];
+                
+                    // Vérifie si les dates sont valides et le tarif est numérique
+                    if (strtotime($datedebutplagei) && strtotime($datefinplagei)) {
+                        $stmt = $pdo->prepare("INSERT INTO ldc.PlageIndisponibilite (numCal, datedebutplagei, datefinplagei) 
+                            VALUES (?, ?, ?) ");
+                        $stmt->execute([$numCal, $datedebutplagei, $datefinplagei]);
+                
+                        // Rafraîchit les plages de disponibilité
+                        header("Refresh:0");
+                    }
+                }
+
             }else{
                 echo "Le numéro de logement spécifié n'existe pas.";
             }
@@ -107,6 +143,7 @@
                 <script> 
                     //script de création du calendrier
                     let evenements = <?php echo $evenementsJSON; ?>;
+                    let evenementsI = <?php echo $evenementsIJSON; ?>;
                     let isProprio = <?php echo $isProprioJSON;?>;
                     document.addEventListener('DOMContentLoaded', function() {
                         var calendarEl = document.getElementById('calendar');
@@ -121,11 +158,21 @@
                             height: 600,
                             selectable: true,
                             unselectAuto: true,
-                            events: evenements,
+                            events: evenements.concat(evenementsI),
+                            eventColor: function(event) {
+                                console.log('Event:', event);
+                                if (event.title === 'Indisponible') {
+                                    console.log('Setting color to red');
+                                    return 'red';
+                                } else {
+                                    console.log('Setting color to green');
+                                    return 'blue';
+                                }
+                            },
                             eventClick: function(info) {
                                 if(isProprio){
                                     Swal.fire({
-                                        title: "Voulez-vous supprimer la plage de disponibilité ?",
+                                        title: "Voulez-vous supprimer la plage ?",
                                         showCancelButton: true,
                                         confirmButtonText: "Confirmer",
                                         cancelButtonText: "Annuler"
@@ -133,31 +180,51 @@
                                         if (result.isConfirmed) {
                                             Swal.fire({
                                                 icon: "success",
-                                                title: "La plage de disponibilité a bien été supprimée",
+                                                title: "La plage a bien été supprimée",
                                                 showConfirmButton: false,
                                                 timer: 2000
                                             });
-                                            $.ajax({
-                                                url: 'supprimerPlage.php', 
-                                                type: 'POST',
-                                                data: {
-                                                    numPlage: info.event.id
-                                                },
-                                                success: function(response) {
-                                                    console.log(response);
-                                                    calendar.refetchEvents();
-                                                    setTimeout(()=> {
-                                                        location.reload(); // Rafraîchit la page après la suppression
-                                                    }, 2000);
-                                                },
-                                                error: function(xhr, status, error) {
-                                                    console.error('Erreur lors de la suppression :', error);
-                                                }
-                                            });                                        
+                                            if (info.event.title.startsWith("Tarif journalier :")) {
+                                                $.ajax({
+                                                    url: 'supprimerPlage.php', 
+                                                    type: 'POST',
+                                                    data: {
+                                                        numPlage: info.event.id
+                                                    },
+                                                    success: function(response) {
+                                                        console.log(response);
+                                                        calendar.refetchEvents();
+                                                        setTimeout(()=> {
+                                                            location.reload(); // Rafraîchit la page après la suppression
+                                                        }, 2000);
+                                                    },
+                                                    error: function(xhr, status, error) {
+                                                        console.error('Erreur lors de la suppression :', error);
+                                                    }
+                                                });
+                                            }else{
+                                                $.ajax({
+                                                    url: 'supprimerPlageIndispo.php',
+                                                    type: 'POST',
+                                                    data: {
+                                                        numPlageI: info.event.id
+                                                    },
+                                                    success: function(response) {
+                                                        console.log(response);
+                                                        calendar.refetchEvents();
+                                                        setTimeout(() => {
+                                                            location.reload(); // Refresh the page after deletion
+                                                        }, 2000);
+                                                    },
+                                                    error: function(xhr, status, error) {
+                                                        console.error('Erreur lors de la suppression :', error);
+                                                    }
+                                                });
+                                            }                                       
                                         }
                                     });
                                 }                                
-                            }
+                            }                   
                         });
                         calendar.render();  
                     });
@@ -182,7 +249,7 @@
                 if (isset($_SESSION['id']) && $numLogementExists) {
                     if ($_SESSION['proprio'] == true) { 
             ?>
-                        <div id="plage-form">
+                        <div id="plage-disp-form">
                             <h3>Ajouter une plage de disponibilité :</h3>
                             <form method="POST">
                                 <label for="datedebutplage">Date de début :</label>
@@ -195,6 +262,27 @@
                                 <input type="number" name="tarifjournalier" step="0.01" required>
 
                                 <input type="submit" name="submitPlageDispo" value="Ajouter">
+                            </form>
+                        </div>
+            <?php   }
+                }
+             ?>
+            
+            <?php
+                //Formulaire permettant l'ajout d'une plage d'indisponabilité'
+                if (isset($_SESSION['id']) && $numLogementExists) {
+                    if ($_SESSION['proprio'] == true) { 
+            ?>
+                        <div id="plage-indisp-form">
+                            <h3>Ajouter une plage d'indisponibilité :</h3>
+                            <form method="POST">
+                                <label for="datedebutplagei">Date de début :</label>
+                                <input type="date" name="datedebutplagei" required>
+
+                                <label for="datefinplagei">Date de fin :</label>
+                                <input type="date" name="datefinplagei" required>
+
+                                <input type="submit" name="submitPlageIndispo" value="Ajouter">
                             </form>
                         </div>
             <?php   }

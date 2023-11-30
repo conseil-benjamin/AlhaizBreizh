@@ -12,7 +12,12 @@
   position: center;
 }
 
-#plage-form {
+#plage-disp-form {
+  margin-top: 100px;
+  margin-left: 50px;
+}
+
+#plage-indisp-form {
   margin-top: 100px;
   margin-left: 50px;
 }
@@ -37,4 +42,8 @@ p {
 
 input {
   padding: 0.7em;
+}
+
+label {
+  margin-left: 10px;
 }

@@ -83,8 +83,7 @@ CREATE TABLE Logement (
     nbLitsSimples INTEGER,
     nbLitsDoubles INTEGER,
     detailsLitsDispos VARCHAR(100),
-    nbSalleDeBain INTEGER,
-    tarifNuitees DOUBLE PRECISION
+    nbSalleDeBain INTEGER
 );
 
 -- Table PhotosComplementairesLogement
@@ -134,10 +133,18 @@ CREATE TABLE Calendrier (
 
 -- Table PlageDeDisponibilite 
 CREATE TABLE PlageDeDisponibilite (
-    numCal SERIAL NOT NULL PRIMARY KEY,    
+    numPlage SERIAL PRIMARY KEY,
+    numCal INTEGER NOT NULL,    
     dateDebutPlage DATE,
     dateFinPlage DATE,
     tarifJournalier INTEGER
+);
+
+CREATE TABLE PlageIndisponibilite(
+    numPlageI SERIAL PRIMARY KEY,
+    numCal INTEGER NOT NULL,
+    dateDebutPlageI DATE,
+    dateFinPlageI DATE
 );
 
 -- Table Proprietaire
@@ -225,6 +232,7 @@ ALTER TABLE Reservation ADD CONSTRAINT reservation_client_fk FOREIGN KEY (numCli
 ALTER TABLE Reservation ADD CONSTRAINT reservation_logement_fk FOREIGN KEY (numLogement) REFERENCES Logement (numLogement);
 ALTER TABLE Calendrier ADD CONSTRAINT calendrier_logement_fk FOREIGN KEY (numLogement) REFERENCES Logement (numLogement);
 ALTER TABLE PlageDeDisponibilite ADD CONSTRAINT plagededisponibilite_calendrier_fk FOREIGN KEY (numCal) REFERENCES Calendrier (numCal);
+ALTER TABLE PlageIndisponibilite ADD CONSTRAINT plageindisponibilite_calendrier_fk FOREIGN KEY (numCal) REFERENCES Calendrier (numCal);
 ALTER TABLE Proprietaire ADD CONSTRAINT proprietaire_client_fk FOREIGN KEY (idCompte) REFERENCES Client (idCompte);
 ALTER TABLE Tarification ADD CONSTRAINT tarification_devis_fk FOREIGN KEY (numDevis) REFERENCES Devis (numDevis);
 ALTER TABLE Services ADD CONSTRAINT services_logement_fk FOREIGN KEY (numLogement) REFERENCES Logement (numLogement);
@@ -249,17 +257,16 @@ VALUES
 -- Insertion de données dans la table Client
 INSERT INTO Client (firstName, lastName, mail, numeroTel, photoProfil, civilite, adressePostale, pseudoCompte, motDePasse, dateNaissance, notationMoyenne)
 VALUES
-    ('Gérard', 'LeG', 'gerard.leg@email.com', '123456789', 'photo1.jpg', 'Monsieur', '123 Rue des lilas', 'gege', '1234', '2000-01-15', 4.5),
-    ('Jeanne', 'Robert', 'jeanne.robert@email.com', '987654321', 'photo2.jpg', 'Madame', '456 Avenue Charles de Gaule', 'propro', '1234', '1998-07-25', 4.0),
-    ('Julien', 'LeBras', 'julien.lebras@email.com', '895432156', 'photo2.jpg', 'Monsieur', '2 Rue du moine', 'JuJu', '1234', '1999-07-25', 4.0);
+    ('Thierry', 'Richard', 'thierry.richard@email.com', '123456789', 'photo1.jpg', 'Monsieur', '123 Rue des lilas', 'trich', 'mdp123', '15-01-2000', 4.5),
+    ('Jeanne', 'Robert', 'jeanne.robert@email.com', '987654321', 'photo2.jpg', 'Madame', '456 Avenue Charles de Gaule', 'jrob', 'psw123', '25-07-1998', 4.0);
 
 
 -- Insertion de données dans la table Message
 INSERT INTO Message (destinataire, expediteur, dateExpedition, contenu)
 VALUES
-    (1, 2, '2023-10-15', 'Bonjour, je viens pour une réservation...'),
-    (2, 1, '2023-10-16', 'Bonsoir, j''adore votre cave'),
-    (1, 2, '2023-10-16', 'Merci !...');
+    (1, 2, '15-10-2023', 'Bonjour, je viens pour une réservation...'),
+    (2, 1, '16-10-2023', 'Bonsoir, j''adore votre cave'),
+    (1, 2, '16-10-2023', 'Merci !...');
 
 -- Insertion de données dans la table Conversation
 INSERT INTO Conversation (titreConversation)
@@ -291,20 +298,20 @@ VALUES
 -- Insertion de données dans la table Proprietaire
 INSERT INTO Proprietaire (idCompte, pieceIdentite, RIB, languesParlees, messageType)
 VALUES
-    (2, TRUE, '987654321', 'Espagnol, Français, Anglais', 'Message B'),
-    (3, TRUE, '789456123', 'Espagnol, Français, Anglais', 'Message C');
+    (1, TRUE, '123456789', 'Français, Anglais', 'Message A'),
+    (2, TRUE, '987654321', 'Espagnol, Français, Anglais', 'Message B');
 
 -- Insertion de données dans la table Localisation
 INSERT INTO Localisation (numLogement, gps, rue, cp, ville)
 VALUES
-    (1, '546498', '123 Rue des Roses', '22310', 'Plestin-les-Grèves'),
-    (2, '489445', '456 Avenue des Soldats', '29000', 'Quimper');
+    (1, '546498', '123 Rue des Roses', '12345', 'Ville A'),
+    (2, '489445', '456 Avenue des Soldats', '67890', 'Ville B');
     
 -- Insertion de données dans la table Logement
-INSERT INTO Logement (surfaceHabitable, libelle, accroche, description, natureLogement, proprio, photoCouverture, LogementEnLigne, nbPersMax, nbChambres, nbLitsSimples, nbLitsDoubles, detailsLitsDispos, nbSalleDeBain, tarifNuitees)
+INSERT INTO Logement (surfaceHabitable, libelle, accroche, description, natureLogement, proprio, photoCouverture, LogementEnLigne, nbPersMax, nbChambres, nbLitsSimples, nbLitsDoubles, detailsLitsDispos, nbSalleDeBain)
 VALUES
-    (80.5, 'Maison cozy', 'Une adorable maison dans la campagne', 'Cette maison est parfaite pour un weekend en amoureux.', 'maison', 2, 'maison.jpg', TRUE, 4, 2, 2, 1, '1 lit double, 2 lits simples', 1, 150.0),
-    (100.2, 'Cave spacieuse', 'Au cœur de la ville', 'Profitez de la vie urbaine grâce à cette magnifique cave.', 'cave', 2, 'cave.jpg', TRUE, 3, 1, 2, 1, '2 lits simples', 2, 120.0);
+    (80.5, 'Appartement cozy', 'Un adorable appartement dans les bois', 'Cet appartement est parfait pour un weekend en amoureux.', 'appartement', 1, 'appartement.jpg', TRUE, 4, 2, 2, 1, '1 lit double, 2 lits simples', '1'),
+    (100.2, 'Cave spacieuse', 'Au coeur de la ville', 'Profitez de la vie urbaine grâce à cette magnifique cave.', 'cave', 2, 'cave.jpg', TRUE, 3, 1, 2, 1, '2 lits simples', '2');
 
 -- Insertion de données dans la table Reservation
 INSERT INTO Reservation (numClient, numLogement, dateReservation, nbPersonnes, dateDebut, dateFin, dateDevis, nbJours, optionAnnulation)
@@ -315,8 +322,8 @@ VALUES
 -- Insertion de données dans la table Devis
 INSERT INTO Devis (nbPersonnes, numReservation, numLogement, dateDebut, dateFin, dateDevis, dateValid, optionAnnulation, dureeDelaisAcceptation)
 VALUES
-    (2, 1, 1, '2023-11-01', '2023-11-07', '2023-10-15', '2023-10-20', 'Stricte', 48),
-    (3, 2, 2, '2023-11-05', '2023-11-10', '2023-10-16', '2023-10-22', 'Flexible', 72);
+    (2, 1, 1, '2023-11-01', '07-11-2023', '15-10-2023', '20-10-2023', 'Stricte', 48),
+    (3, 2, 2, '2023-11-05', '10-11-2023', '16-10-2023', '22-10-2023', 'Flexible', 72);
     
 -- Insertion de données dans la table Calendrier
 INSERT INTO Calendrier (statutDispo, dureeMinLoc, delaisEntreResArrivee, contrainteArriveeDepart, numLogement)
@@ -327,8 +334,15 @@ VALUES
 -- Insertion de données dans la table PlageDeDisponibilite
 INSERT INTO PlageDeDisponibilite (numCal, dateDebutPlage, dateFinPlage, tarifJournalier)
 VALUES
-    (1, '2023-11-01', '2023-11-07', 100),
-    (2, '2023-11-05', '2023-11-10', 120);
+    (2, '2023-11-20', '2023-11-27', 100),
+    (1, '2023-11-10', '2023-11-12', 120);
+    
+-- Insertion de données dans la table PlageDeDisponibilite
+INSERT INTO PlageIndisponibilite (numCal, dateDebutPlageI, dateFinPlageI)
+VALUES
+    (2, '2023-11-10', '2023-11-20'),
+    (1, '2023-11-20', '2023-11-23');
+
 
 -- Insertion de données dans la table Favoris
 INSERT INTO FavorisClient (idCompte, numLogement)

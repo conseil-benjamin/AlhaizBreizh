@@ -4,13 +4,13 @@
     $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
 
     if (isset($_SESSION['id']) && $_SESSION['proprio'] == true) {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['numPlage'])) {
-            $numPlage = $_POST['numPlage'];
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['numPlageI'])) {
+            $numPlageI = $_POST['numPlageI'];
             
-            $stmt = $pdo->prepare("DELETE FROM ldc.PlageDeDisponibilite WHERE numPlage = $numPlage");
+            $stmt = $pdo->prepare("DELETE FROM ldc.PlageIndisponibilite WHERE numPlageI = $numPlageI");
             if ($stmt->execute()) {
                 http_response_code(200);
-                echo "Plage de disponibilité supprimée avec succès";
+                echo "Plage d'indisponibilité supprimée avec succès";
                 
             } else {
                 http_response_code(500);
