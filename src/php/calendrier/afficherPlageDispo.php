@@ -170,13 +170,8 @@
                             unselectAuto: true,
                             events: evenements.concat(evenementsI),
                             eventColor: function(event) {
-                                console.log('Event:', event);
                                 if (event.title === 'Indisponible') {
-                                    console.log('Setting color to red');
                                     return 'red';
-                                } else {
-                                    console.log('Setting color to green');
-                                    return 'blue';
                                 }
                             },
                             eventClick: function(info) {
