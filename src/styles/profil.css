@@ -378,6 +378,7 @@ div.notation img{
 }
 
 .profil #logements #logement-container{
+    margin-top: 1em;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -488,13 +489,13 @@ div.notation img{
 }
 /*Prix*/
 .profil .logement a > div > div+div{
-    padding-bottom: 3em;
+    padding-bottom: 0;
 }
 .profil .logement a > div > div+div+div{
     position: absolute;
     bottom: 0;
     line-height: normal;
-    padding-bottom: 1em;
+    margin-bottom: 0;
 }
 
 .profil .logement strong{

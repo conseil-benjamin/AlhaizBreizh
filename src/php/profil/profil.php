@@ -282,7 +282,7 @@
         <div class="infos-profil">
             <div class="image">
                 <img src="<?php echo $image_user ?>" alt="Image de l'utilisateur">
-                <?php if ($user != $_SESSION['id']){ ?>
+                <?php if ($page_personnelle == false){ ?>
                     <a class="boutton" href="">Contacter</a>
                     <a class="boutton" href="">Signaler</a> <?php
                 } else{?>
