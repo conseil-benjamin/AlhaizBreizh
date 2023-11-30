@@ -610,6 +610,10 @@ if (!isset($liste_langue_parle)) {
                         <p>Il n'y a pas encore d'avis pour cette annonce.</p>
                     </div>
                 </section>
+                </main>
+                <?php
+                include($_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'); ?>
+
                 <?php }else {?>
                     <div class="wrapper">
                         <video autoplay playsinline muted loop preload poster="http://i.imgur.com/xHO6DbC.png">
@@ -637,11 +641,10 @@ if (!isset($liste_langue_parle)) {
                             </a>
                         </div>
                     </div>
+                </main>
 
         <?php
         }; ?>  
-        </main>
-        <?php
-         include($_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'); ?>
+
     </body>
 </html>
