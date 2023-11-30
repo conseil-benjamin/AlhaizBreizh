@@ -8,12 +8,36 @@ try {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
 }
 
-if ((isset($_SESSION['id'])) && (file_exists($_SERVER['DOCUMENT_ROOT'] . '/public/img/' . $_SESSION['id'] . '.png'))) {
-    $image = '/public/img/' . $_SESSION['id'] . '.png';
+// Assurez-vous que la session 'id' est définie pour éviter des erreurs
+if (isset($_SESSION['id'])) {
+    // Utilisez des requêtes préparées pour éviter les injections SQL
+    $stmt = $pdo->prepare("SELECT * FROM ldc.Reservation WHERE id = :id");
+    $stmt->bindParam(':id', $_SESSION['id'], PDO::PARAM_INT);
+    $stmt->execute();
+    
+    // Vérifiez si l'utilisateur a des réservations
+    if ($stmt->rowCount() > 0) {
+        // Récupérez les réservations
+        $reservations = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } else {
+        // Ajustez en conséquence si l'utilisateur n'a pas de réservations
+        $reservations = array();
+    }
+
+    // Utilisez une boucle foreach pour afficher les réservations
+    foreach ($reservations as $reservation) {
+        // Affichez les détails de la réservation
+        echo "Numéro de logement: " . $reservation['numLogement'] . "<br>";
+        echo "Date de début: " . $reservation['dateDebut'] . "<br>";
+        echo "Date de fin: " . $reservation['dateFin'] . "<br>";
+        // Ajoutez d'autres détails selon votre structure de base de données
+    }
 } else {
-    $image = '/public/icons/user-blue.svg';
+    // Ajustez en conséquence si l'utilisateur n'est pas connecté
+    echo "Utilisateur non connecté";
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="fr-fr">
@@ -31,6 +55,32 @@ if ((isset($_SESSION['id'])) && (file_exists($_SERVER['DOCUMENT_ROOT'] . '/publi
 
     <!-- Titre de la page -->
     <title>ALHaiz Breizh</title>
+
+    <!-- Code PHP pour vérifier la session utilisateur et définir l'image de profil -->
+    <?php
+// Supposons que vous ayez déjà une variable $reservations récupérée de la base de données
+$reservations = [
+    [
+        'numReservation' => 1,
+        'numLogement' => 1,
+        'libelle' => 'Appartement Cozy',
+        'dateDebut' => '2023-11-01',
+        'dateFin' => '2023-11-07',
+        'pseudoCompte' => 'Gege',
+    ],
+    [
+        'numReservation' => 2,
+        'numLogement' => 2,
+        'libelle' => 'Cave Spacieuse',
+        'dateDebut' => '2023-11-10',
+        'dateFin' => '2023-11-15',
+        'pseudoCompte' => 'Gege',
+    ],
+    // ... Ajoutez d'autres réservations ici
+];
+?>
+
+
 </head>
 
 <!-- Section En-tête -->
@@ -38,13 +88,14 @@ if ((isset($_SESSION['id'])) && (file_exists($_SERVER['DOCUMENT_ROOT'] . '/publi
 
 <!-- Section Corps -->
 <body>
-
     <?php 
     // Code PHP pour gérer la soumission du formulaire
+    session_start(); 
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
             // Connexion à la base de données et préparation de la requête
-            $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
+            $pdo = new PDO("pgsql:host=localhost;port=5432;dbname=postgres;user=postgres;password=root");
             $stmt = $pdo->prepare("INSERT INTO ldc.Reservation (numLogement, dateDebut, dateFin) VALUES (:numLogement, :dateDebut, :dateFin)");
 
             // Récupération des données du formulaire
@@ -58,6 +109,8 @@ if ((isset($_SESSION['id'])) && (file_exists($_SERVER['DOCUMENT_ROOT'] . '/publi
             $stmt->bindParam(':dateFin', $dateFin, PDO::PARAM_STR);
             $stmt->execute();
 
+            $pdo = null;
+
             // Redirection vers la page de confirmation
             header('Location: confirmation.php');
             exit();
@@ -67,6 +120,8 @@ if ((isset($_SESSION['id'])) && (file_exists($_SERVER['DOCUMENT_ROOT'] . '/publi
         }
     }
     ?>
+
+
 
     <!-- Section Contenu -->
     <div class="content">
@@ -82,17 +137,7 @@ if ((isset($_SESSION['id'])) && (file_exists($_SERVER['DOCUMENT_ROOT'] . '/publi
             </div>
         </div>
 
-        <!-- Formulaire de réservation -->
-<!--         <form method="post" action="">
-
-
-            <label for="dateDebut">Date d'arrivée :</label>
-            <input type="date" id="dateDebut" name="dateDebut" required>
-
-            <label for="dateFin">Date de départ :</label>
-            <input type="date" id="dateFin" name="dateFin" required>
-        </form> -->
-
+      
         <!-- Affiche les cartes de réservation -->
         <?php foreach ($reservations as $reservation): ?>
             <div class="card-container">    
