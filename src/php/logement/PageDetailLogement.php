@@ -556,7 +556,10 @@ if (!isset($liste_langue_parle)) {
                                 ?>
                             </ul>
                             <br>
+                            <?php $_SESSION['numLogement']=$numLogement; ?>
+                            <a href="/src/php/calendrier/afficherPlageDispo.php" class="bouton_disponible">Voir les disponibilitées du logement</a>
                         </section>
+
                         <section class="reserve_contact">
                             <div class="resa_colle">
                                 <article class="reserve">
