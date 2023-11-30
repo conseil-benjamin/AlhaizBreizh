@@ -34,50 +34,7 @@ if ((isset($_SESSION['id'])) && (file_exists($_SERVER['DOCUMENT_ROOT'] . '/publi
 </head>
 
 <!-- Section En-tête -->
-<header id="header">
-    <a href="/index.php" class="logo"><img src="/public/logos/logo-grey.svg"></a>
-    <nav>
-        <ul>
-            <li><a href="/index.php#logements">Logements</a></li>
-            <li><a href="">Réservations</a></li>
-            <li><a href="">À propos</a></li>
-        </ul>
-    </nav>
-
-    <!-- Code PHP pour gérer la session utilisateur -->
-    <?php
-    if ($_SESSION['id']==1) { ?>
-        <!-- Affiche les informations utilisateur si connecté -->
-        <div class="compte">
-            <img src="/public/icons/arrow-blue.svg">
-            <p><?php echo $_SESSION['id'] ?></p>
-            <img src="<?php echo $image ?>">
-        </div>
-        <!-- Menu d'options utilisateur -->
-        <div class="compte-options">
-            <ul>
-                <a href=""><li>Mon Profil</li></a>
-                <a href=""><li>Ma Messagerie</li></a>
-                <a href=""><li>Mes Réservations</li></a>
-                <?php
-                if ($_SESSION['proprio']) { ?>
-                    <a href=""><li>Mes Logements</li></a> <?php
-                } else { ?>
-                    <a href=""><li>Devenir propriétaire</li></a> <?php
-                } ?>
-                <a href=""><li>Mes Favoris</li></a>
-                <a href=""><li>Besoin d'Aide</li></a>
-                <a href="/src/php/login.php?deconnexion" id="deconnexion"><li>Déconnexion</li></a>
-            </ul>
-        </div>
-    <?php } else { ?>
-        <!-- Affiche le lien de connexion si non connecté -->
-        <a href="/src/php/connection.php" class="compte">
-            <p>Se connecter</p>
-            <img src="/public/icons/user-blue.svg">
-        </a>
-    <?php } ?>
-</header>
+<?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/header.php'); ?>
 
 <!-- Section Corps -->
 <body>
@@ -171,37 +128,7 @@ if ((isset($_SESSION['id'])) && (file_exists($_SERVER['DOCUMENT_ROOT'] . '/publi
     </div>
 
     <!-- Section Pied de page -->
-    <footer id="footer">
-        <img src="/public/icons/wave.svg">
-        <div>
-            <div>
-                <div>
-                    <h2>Assistance</h2>
-                    <ul>
-                        <li><a href="">Centre d'aide</a></li>
-                        <li><a href="">Options d'annulation</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h2>Accueil des voyageurs</h2>
-                    <ul>
-                        <li><a href="">Nous rejoindre</a></li>
-                        <li><a href="">Mettez votre logement sur ALHaIZ Breizh</a></li>
-                        <li><a href="">Confiance et sécurité</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h2>ALHaIZ Breizh</h2>
-                    <ul>
-                        <li><a href="">Qui sommes-nous</a></li>
-                        <li><a href="">Conditions générales d'utilisation</a></li>
-                        <li><a href="">Mentions légales</a></li>
-                    </ul>
-                </div>
-            </div>
-            <p>© 2023 ALHaIZ Breizh - Tous droits réservés</p>
-        </div>
-    </footer>
+    <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'); ?>
 </body>
 
 </html>

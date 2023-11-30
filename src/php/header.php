@@ -4,23 +4,17 @@
         $image = '/public/img/photos_profil/'.$_SESSION['id'].'.png';
     }
 ?>
+<input type="checkbox" id="toggleBurger">
 <header id="header">
-    <a href="/index.php" class="logo"><img src="/public/logos/logo-grey.svg"></a>
+    
+    <label for="toggleBurger" class="burger logo">
+        <img src="/public/logos/logo-grey.svg">
+    </label>
     <nav>
         <ul>
-            <li class="navOrdi"><a href="/index.php#logements">Logements</a></li>
-            <li class="navOrdi"><a href="">Réservations</a></li>
-            <li class="navOrdi"><a href="">À propos</a></li>
-            <li>
-                <a href="#" id="dropdownButton">Menu</a>
-                <div class="dropdown-tel">
-                    <ul>
-                        <li><a href="/index.php#logements">Logements</a></li>
-                        <li><a href="">Réservations</a></li>
-                        <li><a href="">À propos</a></li>
-                    </ul>
-                </div>
-            </li>
+            <a href="/index.php#logements"><li>Logements</li></a>
+            <a href=""><li>Réservations</li></a>
+            <a href=""><li>À propos</li></a>
         </ul>
     </nav>
     <?php
@@ -32,7 +26,7 @@
             </div>
             <div class="compte-options">
                 <ul>
-                    <!--<a href=""><li>Mon Profil</li></a>-->
+                    <a href="/src/php/profil/profil.php?user=<?php echo $_SESSION['id'] ?>"><li>Mon Profil</li></a>
                     <!--<a href=""><li>Ma Messagerie</li></a>-->
                     <!--<a href=""><li>Mes Réservations</li></a>-->
                     <?php
@@ -55,3 +49,5 @@
     ?>
 </header>
 <script src="/src/js/compte-click.js"></script>
+<script src="/src/js/header/menu-burger.js"></script>
+<script src="/src/js/header/menu-compte.js"></script>
