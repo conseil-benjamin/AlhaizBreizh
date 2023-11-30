@@ -25,28 +25,57 @@ if (isset($_GET['numLogement'])) {
                     $phrase_accroche = isset($row[3]) ? $row[3] : null;
                     $detail_description = isset($row[4]) ? $row[4] : null;
                     $type_logement = ucfirst($row[5]);
-                    $proprio = isset($row[6]) ? $row[6] : null;
-                    $photo_logement = isset($row[7]) ? $row[7] : null;
-                    $photoCouverture = isset($row[7]) ? $row[7] : null;
-                    $LogementEnLigne = isset($row[8]) ? $row[8] : null;
-                    $nb_personnes = isset($row[9]) ? $row[9] : null;
-                    $nb_chambres = isset($row[10]) ? $row[10] : null;
-                    $nbLitsSimples = isset($row[11]) ? $row[11] : null;
-                    $nbLitsDoubles = isset($row[12]) ? $row[12] : null;
-                    $detailsLitsDispos = isset($row[13]) ? $row[13] : null;
+                    $localisation = isset($row[8]) ? $row[8] : null;
+                    $localisation_speci = isset($row[6]) ? $row[6] : null;
+                    $proprio = isset($row[9]) ? $row[9] : null;
+                    $photo_logement = isset($row[10]) ? $row[10] : null;
+                    $photoCouverture = isset($row[10]) ? $row[10] : null;
+                    $LogementEnLigne = isset($row[11]) ? $row[11] : null;
+                    $nb_personnes = isset($row[12]) ? $row[12] : null;
+                    $nb_chambres = isset($row[13]) ? $row[13] : null;
                     $nb_sdb = isset($row[14]) ? $row[14] : null;
                     $prix = isset($row[15]) ? $row[15] : null;
                 }
 
-                if ($etat_logement || $_SESSION['id'] == $proprio){
-                    // Récupération des listes: installations, équipements, services
-                    $stmt = $pdo->prepare("SELECT installationsOffertes, equipementsProposes, servicesComplementaires FROM ldc.Services WHERE numLogement = $numLogement");
+                // Récupération des chambres
+                $stmt = $pdo->prepare("SELECT nbLitsSimples, nbLitsDoubles FROM ldc.Chambre WHERE numLogement = $numLogement");
+                $stmt->execute();
+                while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+                    $nbLitsSimples = isset($row[0]) ? $row[0] : null;
+                    $nbLitsDoubles = isset($row[1]) ? $row[1] : null;
+                }
+
+                if ($etat_logement || (isset($_SESSION['id']) && $_SESSION['id'] == $proprio)){
+                    // Récupération des services
+                    $stmt = $pdo->prepare("SELECT nom FROM ldc.Service WHERE numLogement = $numLogement");
                     $stmt->execute();
+                    $liste_services = '';
                     while ($row = $stmt->fetch(PDO::FETCH_NUM)){
-                        $liste_installation = isset($row[0]) ? $row[0] : null;
-                        $liste_equipements = isset($row[1]) ? $row[1] : null;
-                        $liste_services = isset($row[2]) ? $row[2] : null;
+                        $liste_services .= isset($row[0]) ? $row[0] : '';
+                        $liste_services .= ", ";
+
                     }
+
+                    // Récupération des equipements
+                    $stmt = $pdo->prepare("SELECT nom FROM ldc.Equipement WHERE numLogement = $numLogement");
+                    $stmt->execute();
+                    $liste_equipements = '';
+                    while ($row = $stmt->fetch(PDO::FETCH_NUM)){
+                        $liste_equipements .= isset($row[0]) ? $row[0] : '';
+                        $liste_equipements .= ", ";
+
+                    }
+
+                    // Récupération des installations
+                    $stmt = $pdo->prepare("SELECT nom FROM ldc.Installation WHERE numLogement = $numLogement");
+                    $stmt->execute();
+                    $liste_installation = '';
+                    while ($row = $stmt->fetch(PDO::FETCH_NUM)){
+                        $liste_installation .= isset($row[0]) ? $row[0] : '';
+                        $liste_installation .= ", ";
+
+                    }
+
                     // Récupérations des informations concernant le propriétaire
                     $stmt = $pdo->prepare("SELECT firstName,lastName,languesParlees
                                             FROM ldc.Proprietaire P
@@ -59,14 +88,6 @@ if (isset($_GET['numLogement'])) {
                         $liste_langue_parle = isset($row[2]) ? $row[2] : null;
                     }
                     $photo_profil_proprio = '/public/img/photos_profil/'.$proprio.'.png'; 
-                    
-                    // Récupération de la localisation
-                    $stmt = $pdo->prepare("SELECT ville,rue FROM ldc.localisation WHERE numLogement = $numLogement");
-                    $stmt->execute();
-                    while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-                        $localisation = isset($row[0]) ? $row[0] : null;
-                        $localisation_speci = isset($row[1]) ? $row[1] : null;
-                    }
 
                     $img = '/public/img/logements/'.$numLogement.'/1.png';
                         //Récupérer les images logement
@@ -82,10 +103,10 @@ if (isset($_GET['numLogement'])) {
 
                         for ($i = 1; $i <= $nombre_fichiers; $i++) {
                             ${"img".$i}='/public/img/logements/'.$numLogement.'/'.$i.'.png';
-                            }
+                        }
                     
 
-                }elseif (!$etat_logement && $_SESSION['id'] != $proprio) {
+                }elseif (!$etat_logement && isset($_SESSION['id']) && $_SESSION['id'] != $proprio) {
                     $surfaceHabitable = null;
                     $titre_offre = null;
                     $phrase_accroche = null;
@@ -217,22 +238,19 @@ if (!isset($liste_langue_parle)) {
                                 <a href="?action=activer&numLogement=<?php echo $numLogement ?>" class="bouton_modification">Mettre l'annonce en ligne</a>
                             <?php } else { ?>
                                 <a href="?action=desactiver&numLogement=<?php echo $numLogement ?>" class="bouton_modification">Mettre l'annonce hors ligne</a>
-                            <?php } ?>
-                            <a href="#" class="bouton_modification">Modifier l'annonce</a>
+                            <?php } 
+                            $_SESSION['numLogement']=$numLogement?>
+                            <a href="/src/php/logement/modif.php" class="bouton_modification">Modifier l'annonce</a>
                             <a href="#" class="bouton_modification">Supprimer l'annonce</a>
                         </p><?php 
                     }
                 }
-            if (($numLogementExists && $etat_logement !=[]) || ($numLogementExists && $_SESSION['id'] == $proprio && !$etat_logement) || ($etat_logement!=[] && $_SESSION['id'] != $proprio)) {#gestion_exisence70
+            if (($numLogementExists && $etat_logement) || ($numLogementExists && isset($_SESSION['id']) && $_SESSION['id'] == $proprio && !$etat_logement) || ($etat_logement && isset($_SESSION['id']) && $_SESSION['id'] != $proprio)) {#gestion_exisence70
 
-                if (isset($_SESSION['id']) && $numLogementExists) {
-                    if ($_SESSION['id'] == $proprio) {?>
-                        <section class="tete_offre_proprio">
-
-                    <?php
-                    }
+                if (isset($_SESSION['id']) && $numLogementExists && $_SESSION['id'] == $proprio) { ?>
+                        <section class="tete_offre_proprio"> <?php
                 }else { ?>
-                <section class="tete_offre">
+                    <section class="tete_offre">
                 <?php }
                     if (!isset($photo_logement)) { ?>
                         
@@ -490,6 +508,7 @@ if (!isset($liste_langue_parle)) {
                                 } else {
                                     // Divise la chaîne en un tableau en utilisant la virgule comme séparateur
                                     $installation_array = explode(', ', $liste_installation);
+                                    array_pop($installation_array);
                                 
                                     echo "<ul class='liste_corps'>";
                                     foreach ($installation_array as $installation) {
@@ -507,6 +526,8 @@ if (!isset($liste_langue_parle)) {
                                     echo "<p class='section_vide'>Cette section est vide.</p>";
                                 } else {
                                     $equipements_array = explode(', ', $liste_equipements);
+                                    array_pop($equipements_array);
+
                                 
                                     echo "<ul class='liste_corps'>";
                                     foreach ($equipements_array as $equipement) {
@@ -522,6 +543,8 @@ if (!isset($liste_langue_parle)) {
                                     echo "<p class='section_vide'>Cette section est vide.</p>";
                                 } else {
                                     $services_array = explode(', ', $liste_services);
+                                    array_pop($services_array);
+
                                 
                                     echo "<ul class='liste_corps'>";
                                     foreach ($services_array as $service) {
@@ -588,16 +611,41 @@ if (!isset($liste_langue_parle)) {
                         <p>Il n'y a pas encore d'avis pour cette annonce.</p>
                     </div>
                 </section>
-                <?php }else {?>
+                </main>
+                <?php
+                include($_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'); ?>
 
-        <div class="page_inexistante">
-            <p>Oups, la page est inexistante</p>
-            <a href="/index.php" class="retour_lobby">Retour vers l'acceuil</a>
-        </div>
+                <?php }else {?>
+                    <div class="wrapper">
+                        <video autoplay playsinline muted loop preload poster="http://i.imgur.com/xHO6DbC.png">
+                            <source src="/public/videos/video-bretagne.mp4" />
+                        </video>
+                        <div class="container">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 285 80" preserveAspectRatio="xMidYMid slice">
+                                <defs>
+                                    <mask id="mask" x="0" y="0" width="100%" height="100%">
+                                        <rect x="0" y="0" width="100%" height="100%" />
+                                        <!-- Texte principal -->
+                                        <text x="50%" y="50%" text-anchor="middle" alignment-baseline="middle" font-family="NoirPro" font-weight="200" text-transform="uppercase" font-size="20">
+                                            ALHaIZ Breizh
+                                        </text>
+                                    </mask>
+                                </defs>
+                                <!-- Rectangle pour masquer le texte principal -->
+                                <rect x="0" y="0" width="100%" height="100%" mask="url(#mask)" />
+                            </svg>
+                            <!-- Lien vers la page d'accueil avec un message d'erreur -->
+                            <a class="lien" href="/accueil" target="_blank">
+                                <div>
+                                    Cette page est inexistante. Cliquez ici pour retourner à l'accueil.
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </main>
+
         <?php
         }; ?>  
-        </main>
-        <?php
-         include($_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'); ?>
+
     </body>
 </html>
