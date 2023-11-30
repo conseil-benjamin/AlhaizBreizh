@@ -22,7 +22,6 @@ if (isset($_GET['numLogement'])) {
                 while ($row = $stmt->fetch(PDO::FETCH_NUM)) {  
                     $surfaceHabitable = isset($row[1]) ? $row[1] : null;
                     $titre_offre = isset($row[2]) ? $row[2] : null;
-                    $_SESSION["nom_bien"] = $titre_offre;
                     $phrase_accroche = isset($row[3]) ? $row[3] : null;
                     $detail_description = isset($row[4]) ? $row[4] : null;
                     $type_logement = ucfirst($row[5]);
@@ -36,12 +35,11 @@ if (isset($_GET['numLogement'])) {
                     $nb_chambres = isset($row[13]) ? $row[13] : null;
                     $nb_sdb = isset($row[14]) ? $row[14] : null;
                     $prix = isset($row[15]) ? $row[15] : null;
-                    $_SESSION['prixNuit'] = $prix;
                 }
 
                 // le nom pour la demande de devis
 
-
+                $_SESSION["nom_bien"] = $titre_offre;
 
                 // Récupération des chambres
                 $stmt = $pdo->prepare("SELECT nbLitsSimples, nbLitsDoubles FROM ldc.Chambre WHERE numLogement = $numLogement");
@@ -84,7 +82,7 @@ if (isset($_GET['numLogement'])) {
 
                     // Récupérations des informations concernant le propriétaire
                     $stmt = $pdo->prepare("SELECT firstName,lastName,languesParlees
-                                            FROM ldc2.Proprietaire P
+                                            FROM ldc.Proprietaire P
                                             NATURAL JOIN ldc.Client C
                                             WHERE idCompte = $proprio");
                     $stmt->execute();
