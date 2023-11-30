@@ -1,5 +1,6 @@
 <?php
     if (isset($_SESSION)) {
+        print_r($_SESSION);
         $nom = $_SESSION["nom_bien"];
         $nbNuit = $_POST["date_arrivee"];
         $prixNuit = $_SESSION["prixNuit"];
