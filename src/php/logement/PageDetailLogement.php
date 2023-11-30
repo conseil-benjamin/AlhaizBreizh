@@ -611,11 +611,33 @@ if (!isset($liste_langue_parle)) {
                     </div>
                 </section>
                 <?php }else {?>
+                    <div class="wrapper">
+                        <video autoplay playsinline muted loop preload poster="http://i.imgur.com/xHO6DbC.png">
+                            <source src="/public/videos/video-bretagne.mp4" />
+                        </video>
+                        <div class="container">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 285 80" preserveAspectRatio="xMidYMid slice">
+                                <defs>
+                                    <mask id="mask" x="0" y="0" width="100%" height="100%">
+                                        <rect x="0" y="0" width="100%" height="100%" />
+                                        <!-- Texte principal -->
+                                        <text x="50%" y="50%" text-anchor="middle" alignment-baseline="middle" font-family="NoirPro" font-weight="200" text-transform="uppercase" font-size="20">
+                                            ALHaIZ Breizh
+                                        </text>
+                                    </mask>
+                                </defs>
+                                <!-- Rectangle pour masquer le texte principal -->
+                                <rect x="0" y="0" width="100%" height="100%" mask="url(#mask)" />
+                            </svg>
+                            <!-- Lien vers la page d'accueil avec un message d'erreur -->
+                            <a class="lien" href="/accueil" target="_blank">
+                                <div>
+                                    Cette page est inexistante. Cliquez ici pour retourner à l'accueil.
+                                </div>
+                            </a>
+                        </div>
+                    </div>
 
-        <div class="page_inexistante">
-            <p>Oups, la page est inexistante</p>
-            <a href="/index.php" class="retour_lobby">Retour vers l'acceuil</a>
-        </div>
         <?php
         }; ?>  
         </main>
