@@ -214,7 +214,7 @@
         </div>
         </div>
         </form>
-        <?php include './footer.php';
+        <?php include $_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php';
         } else{
             echo "pas d'id trouvé";
         }
