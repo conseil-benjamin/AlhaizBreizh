@@ -1,11 +1,5 @@
 /*****************************************************/
 /*Définitions principales*/
-*{
-    margin: 0;
-    padding: 0;
-    scroll-behavior: smooth;
-    scroll-padding-top: 75px;
-
     /*Couleurs*/
 :root{
     --col1 : #515D5E;
@@ -352,6 +346,15 @@ h1, h2, h3{
     #toggleBurger:checked ~ #header{
         transition: height 500ms ease-in;
     }
+
+    #footer > div > div {
+        flex-direction: column;
+        padding-left: 1em;
+    }
+
+    #footer > div > div > div {
+        padding-top: 1em;
+    }
 }
 
 /********************************************/
@@ -405,51 +408,3 @@ h1, h2, h3{
 Media queries
 
 */
-
-@media screen and (max-width: 760px) {
-
-    .navOrdi {
-        display: none;
-    }
-
-
-    .dropdown-tel {
-        display: none;
-    }
-    #header nav ul {
-        flex-direction: column;
-    }
-
-    #header nav ul li:hover {
-        transform: none;
-    }
-
-    #header nav ul {
-        gap: 1em;
-    }
-
-    #header .dropdown-tel {
-        left: 0;
-    }
-
-    #header > .logo {
-        display: none !important;
-    }
-
-    #dropdownButton {
-        color: var(--col4);
-    }
-
-    #header nav{
-        margin-left: 1em !important;
-    }
-
-    #footer > div > div {
-        flex-direction: column;
-        padding-left: 1em;
-    }
-
-    #footer > div > div > div {
-        padding-top: 1em;
-    }
-}
