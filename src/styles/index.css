@@ -118,6 +118,7 @@
     min-height: 100vh;
     margin-bottom: calc(100vh - 200px);
     background-color: #fff;
+    padding: 2em;
 }
 
 #logements h2{
@@ -139,7 +140,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 2em;
+    gap: 4em;
     padding: 2em;
 }
 
@@ -161,7 +162,7 @@
     border-radius: 15px;
     transition: all 0.5s ease;
     scale: 1.2;
-    margin-left: 2vw;
+    margin-bottom: 2em;
 }
 
 .logement > a{
@@ -250,7 +251,7 @@
 }
 /*Prix*/
 .logement a > div > div+div{
-    padding-bottom: 3em;
+    padding-bottom: 5em;
 }
 .logement a > div > div+div+div{
     position: absolute;

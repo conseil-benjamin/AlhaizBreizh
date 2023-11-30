@@ -59,6 +59,7 @@
                                 <h3><?php echo $logement[2] ?></h3>
                                 <p><?php echo $logement[3] ?></p>
                                 <div><img src="/public/icons/map.svg" alt="Map"><?php echo $logement[4] ?></div>
+                                <a class="boutton" href="/src/php/logement/modificationLogement.php?numLogement=<?php echo $logement[0]; ?>"><img src="/public/icons/edit.svg" alt="Editer">Editer</a>
                             </div>   
                         </div></a> <?php
                     }

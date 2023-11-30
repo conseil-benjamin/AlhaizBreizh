@@ -585,12 +585,14 @@ if (!isset($liste_langue_parle)) {
 
                                 <article class="contact">
                                     <div class="photo_profil_contact">
-                                        <?php
+                                            <a href="/src/php/profil/profil.php?user=<?php echo $proprio ?>">
+                                            <?php
                                             if (file_exists($_SERVER['DOCUMENT_ROOT'] . $photo_profil_proprio)==false) { ?>
                                                 <img src="/public/icons/user.svg" id="photo_profil" alt="photo de profil du propriétaire"> <?php          
                                             } else { ?>
                                                 <img src="<?php echo $photo_profil_proprio ?>" id="photo_profil" alt="photo de profil du propriétaire"> <?php
-                                            } ?>                                        
+                                            } ?>    
+                                            </a>                                    
                                             <div class="contact_nom_bouton">
                                             <p><?php echo $prenom_proprio .' '. $nom_proprio; ?></p>
                                             <p><img src="/public/icons/star_fill.svg" id="icone" alt="icone etoile"> Note</p>
