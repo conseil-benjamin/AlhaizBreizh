@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
     for (let i = 0; i < photos.length; i++) {
       const nomPhoto = photos[i].name;
       let photo = document.createElement("p");
-      photo.textContent = "Photo n°" + (i + 1) + ":" + nomPhoto;
+      photo.textContent =  nomPhoto;
       divNomsPhotos.appendChild(photo);
     }
   }
@@ -68,12 +68,19 @@ document.addEventListener("DOMContentLoaded", function () {
    * * DÃ©claration de tous les inputs ayant un *
    */
   let cdPostalInput = document.querySelector("#cdPostal");
+  let surfaceInput = document.querySelector("#surface");
   //let photosInput = document.querySelector("#photos");
   //let photosValues = photosInput.value;
 
   /**
    * * Permet de limiter le nombre de chiffre à 5 pour le code postal
    */
+  surfaceInput.addEventListener("input", function () {
+    let surface = this.value;
+    if (surface.length > 4) {
+      this.value = surface.slice(0, 4);
+    }
+  });
   cdPostalInput.addEventListener("input", function () {
     let postalCode = this.value;
     if (postalCode.length > 5) {
@@ -93,16 +100,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // VÃ©rification des champs requis et stockage des messages d'erreur
     const requiredFields = {
-      title: "Titre d'annonce non renseignÃ©",
-      description: "Description du logement non renseignÃ©e",
-      surface: "Surface du logement non renseignÃ©",
-      natureLogement: "Nature du logement non renseignÃ©",
-      adresse: "Adresse du logement non renseignÃ©",
-      cdPostal: "Code postal non renseignÃ©",
-      ville: "Ville non renseignÃ©",
-      nbSallesBain: "Nombres de salles de bain non renseignÃ©",
-      nbMaxPers: "Nombre max. pers non renseignÃ©",
-      prixParNuit: "Prix par nuit non renseignÃ©",
+      title: "Titre d'annonce non renseigné",
+      description: "Description du logement non renseigné",
+      surface: "Surface du logement non renseigné",
+      natureLogement: "Nature du logement non renseigné",
+      photos: "0 photos ou plus de 6 photos ajouté",
+      adresse: "Adresse du logement non renseigné",
+      cdPostal: "Code postal non renseigné",
+      ville: "Ville non renseignée",
+      nbSallesBain: "Nombres de salles de bain non renseigné",
+      nbMaxPers: "Nombre maximum personne non renseigné",
+      prixParNuit: "Prix par nuit non renseigné",
     };
 
     for (const [fieldName, errorMessage] of Object.entries(requiredFields)) {
@@ -122,7 +130,7 @@ document.addEventListener("DOMContentLoaded", function () {
     } else if (cdPostalInput.value.length < 5) {
       console.log(cdPostalValue);
       Swal.fire({
-        title: "Code postal doit Ãªtre composer de 5 chiffres",
+        title: "Code postal doit être composer de 5 chiffres",
         icon: "warning",
       });
       return false;
@@ -130,6 +138,15 @@ document.addEventListener("DOMContentLoaded", function () {
       return true; // Le formulaire est valide
     }
   }
+
+  function submitForm(event) {
+    event.preventDefault();
+    if (checkFormValidity()) {
+      form.submit();
+    }
+  }
+  
+  myForm.addEventListener("submit", submitForm);
 
   /**
    * * Permet au clic du bouton Ajouter
@@ -147,7 +164,7 @@ document.addEventListener("DOMContentLoaded", function () {
     newElement.setAttribute("id", name);
 
     const iconSupprimer = document.createElement("img");
-    iconSupprimer.src = "../../public/icons/supprimer34.svg";
+    iconSupprimer.src = "/public/icons/supprimer.svg";
     iconSupprimer.alt = "Icone supprimer";
     iconSupprimer.id = "iconSupprimer";
 
@@ -223,12 +240,12 @@ La fonction
 
     newElement.className = "litsElement";
 
-    var option1 = document.createElement("option");
+    let option1 = document.createElement("option");
     option1.value = "Lit double (140 * 190)";
     option1.text = "Lit double (140 * 190)";
     newElement.appendChild(option1);
 
-    var option2 = document.createElement("option");
+    let option2 = document.createElement("option");
     option2.value = "Lit simple (90 * 190)";
     option2.text = "Lit simple (90 * 190)";
     newElement.appendChild(option2);
@@ -269,12 +286,12 @@ La fonction
     let newElement = document.createElement("select");
     newElement.name = nbChambres + "lits" + 0;
 
-    var option1 = document.createElement("option");
+    let option1 = document.createElement("option");
     option1.value = "Lit double (140 * 190)";
     option1.text = "Lit double (140 * 190)";
     newElement.appendChild(option1);
 
-    var option2 = document.createElement("option");
+    let option2 = document.createElement("option");
     option2.value = "Lit simple (90 * 190)";
     option2.text = "Lit simple (90 * 190)";
     newElement.appendChild(option2);
@@ -335,15 +352,14 @@ La fonction
     ella[nChambre]++;
 
     let newElement = document.createElement("select");
-    newElement.setAttribute("type", "text");
     newElement.name = nChambre + "lits" + ella[nChambre];
 
-    var option1 = document.createElement("option");
+    let option1 = document.createElement("option");
     option1.value = "Lit double (140 * 190)";
     option1.text = "Lit double (140 * 190)";
     newElement.appendChild(option1);
 
-    var option2 = document.createElement("option");
+    let option2 = document.createElement("option");
     option2.value = "Lit simple (90 * 190)";
     option2.text = "Lit simple (90 * 190)";
     newElement.appendChild(option2);
