@@ -1,3 +1,7 @@
+<?php 
+    session_start(); 
+    error_reporting(E_ALL & ~E_WARNING);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,14 +12,13 @@
 </head>
 <body>
 <?php  
-session_start();
+
 if (isset($_SESSION['id'])) {
     $id = $_SESSION['id'];
 } else{
 }
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
     $title = $_POST['title'];
     $description = $_POST['description'];
     $photoCouverture = $_FILES['photos']['name'];
