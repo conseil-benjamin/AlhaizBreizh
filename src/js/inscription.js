@@ -1,5 +1,8 @@
 const formHTMLelement = document.getElementById("formulaire")
 const btnValiderHTMLelement = document.getElementById("valider")
+const numTelInputHTMLelement = document.getElementById("num_tel")
+const codePostalHTMLelement = document.getElementById("code_postal")
+const villeHTMLelement = document.getElementById("ville")
 
 function validerForm() {
     const nom = document.forms["formulaire"]["nom"].value;
@@ -21,10 +24,13 @@ function validerForm() {
         msgErreur += "Le champ 'Nom' est vide.\n"
     }
     if (prenom === "") {
-        msgErreur += "Le champ 'Prenom' est vide.\n"
+        msgErreur += "Le champ 'Prènom' est vide.\n"
     }
     if (numTel === "") {
         msgErreur += "Le champ 'Numéro de téléphone' est vide.\n"
+    }
+    else if (!estValideNumTel(numTel)) {
+        msgErreur += "Le numéro de Téléphone n'est pas valide.\n"
     }
     if (civilite === "") {
         msgErreur += "Le champ 'Civilité' est vide.\n"
@@ -34,6 +40,9 @@ function validerForm() {
     }
     if (adresse === "") {
         msgErreur += "Le champ 'Adresse' est vide.\n"
+    }
+    else if (!estValideAdr(adresse)) {
+        msgErreur += "L'adresse spécifié est invalide.\n"
     }
     if (codePostal === "") {
         msgErreur += "Le champ 'Code postal' est vide.\n"
@@ -46,6 +55,9 @@ function validerForm() {
     }
     if (email === "") {
         msgErreur += "Le champ 'Email' est vide.\n"
+    }
+    else if (!estValideMail(email)) {
+        msgErreur += "Votre Email est invalide. (ex : admin@example.com)\n"
     }
     if (mdp === "") {
         msgErreur += "Le champ 'Mot de passe' est vide.\n"
@@ -94,6 +106,56 @@ function handleClickBtnValider(e) {
     }
 }
 
+function formatTelephone(input) {
+    const valPropre = input.value.replace(/\D/g, '');
+
+    if (valPropre.length > 2) {
+        // Ajouter des espaces entre chaque paire de chiffres
+        const formatter = valPropre.replace(/(\d{2})(?=\d)/g, '$1 ');
+        input.value = formatter;
+    } else {
+        input.value = valPropre;
+    }
+}
+
+function formatCodePostal(input) {
+    input.value = input.value.replace(/\D/g, '')
+}
+
+function formatVille(input) {
+    input.value = input.value.replace(/\d/g,'')
+}
+
+function estValideNumTel(numTel) {
+    const regexTelephone = /^(0)[\s.-]*([1-9](?:[\s.-]*\d{2}){4})$/
+    return regexTelephone.test(numTel)
+}
+
+function estValideMail(mail) {
+    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regexEmail.test(mail)
+}
+
+/**
+ * Permet de valide le code postal (a voir si on en a vraiment besoins)
+ * @param codePostal
+ * @returns {boolean}
+ */
+function estValideCodePostal(codePostal) {
+    const regexCodePostal = /^\d{5}$/
+    return regexCodePostal.test(codePostal)
+}
+
+/**
+ * Permet de valider l'adresse (le num et le nom de rue, pas l'adresse complete)
+ * @param adr l'adresse à valider
+ * @returns {boolean}
+ */
+function estValideAdr(adr) {
+    const regexAdr = /^[0-9]+\s[A-Za-z\s]+/
+    return regexAdr.test(adr)
+}
+
 function notifFormInvalide(err) {
     swal({
         title: "Attention formulaire invalide",
@@ -103,3 +165,7 @@ function notifFormInvalide(err) {
 }
 
 btnValiderHTMLelement.addEventListener("click", (e) => handleClickBtnValider(e))
+numTelInputHTMLelement.addEventListener("input", function () {formatTelephone(this)})
+
+codePostalHTMLelement.addEventListener("input", function () {formatCodePostal(this)})
+villeHTMLelement.addEventListener("input", function () {formatVille(this)})

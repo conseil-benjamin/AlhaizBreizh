@@ -2,7 +2,6 @@
 if (!isset($_POST)) {
     die();
 }
-session_start();
 global $pdo;
 require("../connect.php");
 $stmt = $pdo->prepare("INSERT INTO ldc.Client (firstName, lastName, mail, numeroTel, photoProfil, civilite, adressePostale, pseudoCompte, motDePasse, dateNaissance, notationMoyenne)
@@ -11,7 +10,7 @@ try {
     $stmt->execute([
         ':firstName' => $_POST["prenom"],
         ':lastName' => $_POST["nom"],
-        ':mail' => $_POST["mail"],
+        ':mail' => $_POST["email"],
         ':numeroTel' => $_POST["num_tel"],
         ':photoProfil' => 'photo2.jpg',
         ':civilite' => $_POST["civilite"],
@@ -25,8 +24,9 @@ try {
     print_r($err);
     die();
 }
-include("../connexion/login.php")
 ?>
+
+
 <html lang="fr">
 <head>
     <meta charset="UTF-8">

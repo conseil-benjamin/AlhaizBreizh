@@ -30,7 +30,7 @@
                 <div class="labelGrp">
                     <!-- Numéro de téléphone -->
                     <label for="num_tel">Numéro de téléphone :</label>
-                    <input id="num_tel" name="num_tel" required type="tel">
+                    <input id="num_tel" name="num_tel" required type="tel" maxlength="14" placeholder="ex : 01 23 45 67 89">
                 </div>
 
                 <div id="civiliteDateNaissance">
@@ -53,14 +53,14 @@
                 <div class="labelGrp">
                     <!-- Adresse -->
                     <label for="adresse">Adresse :</label>
-                    <input id="adresse" name="adresse" required type="text">
+                    <input id="adresse" name="adresse" required type="text" placeholder="ex : 27 avenue des Champs">
                 </div>
 
                 <div id="codePostalVille">
                     <div class="labelGrp">
                         <!-- Code postal -->
                         <label for="code_postal">Code postal :</label>
-                        <input id="code_postal" name="code_postal" required type="text">
+                        <input id="code_postal" name="code_postal" required type="text" maxlength="5">
                     </div>
 
                     <div class="labelGrp">
