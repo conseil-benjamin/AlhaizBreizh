@@ -23,7 +23,11 @@ function alertOverlay(elem, text){
     message.style.top = elem.offsetTop + elem.offsetHeight + "px";
     message.style.left = elem.offsetLeft + "px";
     message.style.width = "calc("+elem.offsetWidth + "px - 2em"+")";
+    message.style.zIndex = "100";
     elem.parentNode.appendChild(message);
+    setTimeout(function() {
+        elem.parentNode.removeChild(elem.parentNode.querySelector('.alert'));
+    }, 3000);
 }
 
 function removeAlert(elem){
@@ -51,9 +55,16 @@ window.addEventListener('resize', function () {
 
 // Gestion des champs vides
 form.addEventListener('input', function (e) {
-    if (e.target.value == "") {
+    if ((e.target.value == "") && (e.target.type != "file")) {
         alertOverlay(e.target, "Ce champ ne peut pas être vide");
     } else {
+        removeAlert(e.target);
+    }
+});
+
+// Retirer les messages d'erreur quand on clique sur le champ
+form.addEventListener('focusin', function (e) {
+    if (e.target.classList.contains('invalid')) {
         removeAlert(e.target);
     }
 });
@@ -71,8 +82,6 @@ submitButton.addEventListener('click', function (e) {
 
         // Gestion des champs vides
         if ((input.value == "") && (input.type != "file")) {
-            input.setCustomValidity('Ce champ ne peut pas être vide');
-            input.reportValidity();
             champsVides = true;
         
         // Gestion des champs trop longs
@@ -101,8 +110,7 @@ submitButton.addEventListener('click', function (e) {
             if ((charMaj.test(input.value) == false) || (charSpe.test(input.value) == false) || (charNum.test(input.value) == false) || (input.value.length < 8)){
                 input.classList.add('invalid');
                 invalid = true;
-                input.setCustomValidity("Veuillez utiliser au moins 8 caractères, une majuscule, un chiffre et un caractère spécial.");
-                input.reportValidity();
+                alertOverlay(input, "Veuillez utiliser au moins 8 caractères, une majuscule, un chiffre et un caractère spécial.");
             } 
         }
 
@@ -113,8 +121,7 @@ submitButton.addEventListener('click', function (e) {
             if (regex.test(input.value) == false){
                 input.classList.add('invalid');
                 invalid = true;
-                input.setCustomValidity("Veuillez réessayer en s'assurant que le numéro de téléphone est au format français.");
-                input.reportValidity();
+                alertOverlay(input, "Veuillez réessayer en s'assurant que le numéro de téléphone est au format français.");
             } 
         }
 
@@ -124,13 +131,12 @@ submitButton.addEventListener('click', function (e) {
             if (input.value.length > 100) {
                 input.classList.add('invalid');
                 invalid = true;
-                input.setCustomValidity("Ce champ ne peut pas contenir plus de 100 caractères");
-                input.reportValidity();
+                alertOverlay(input, "Ce champ ne peut pas contenir plus de 100 caractères");
                 
             } else if (regex.test(input.value) == false){
                 input.classList.add('invalid');
                 invalid = true;
-                promise = promise.then(() => popupInvalid("L'adresse email est incorrecte !", "Veuillez réessayer en s'assurant que l'adresse email est sous ce format: xxx@xxx.xxx"));
+                alertOverlay(input, "Veuillez utiliser ce format: xxx@xxx.xxx");
             } 
         } else {
             input.setCustomValidity('');
