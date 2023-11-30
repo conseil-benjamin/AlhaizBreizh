@@ -192,6 +192,10 @@ textarea:invalid {
 }
 
 @media screen and (max-width: 760px) {
+    section#entete h1 {
+        margin-left: 10px;
+    }
+
     #formulaire {
         flex-direction: column;
     }
