@@ -1,9 +1,6 @@
 <?php
     session_start();
 
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
-
     // Connexion à la base de données
     $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
     $isProprio = $_SESSION['proprio'];
