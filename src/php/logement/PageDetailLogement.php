@@ -52,6 +52,8 @@ if (isset($_GET['numLogement'])) {
                     $liste_services = '';
                     while ($row = $stmt->fetch(PDO::FETCH_NUM)){
                         $liste_services .= isset($row[0]) ? $row[0] : '';
+                        $liste_services .= ", ";
+
                     }
 
                     // Récupération des equipements
@@ -60,6 +62,8 @@ if (isset($_GET['numLogement'])) {
                     $liste_equipements = '';
                     while ($row = $stmt->fetch(PDO::FETCH_NUM)){
                         $liste_equipements .= isset($row[0]) ? $row[0] : '';
+                        $liste_equipements .= ", ";
+
                     }
 
                     // Récupération des installations
@@ -68,7 +72,10 @@ if (isset($_GET['numLogement'])) {
                     $liste_installation = '';
                     while ($row = $stmt->fetch(PDO::FETCH_NUM)){
                         $liste_installation .= isset($row[0]) ? $row[0] : '';
+                        $liste_installation .= ", ";
+
                     }
+
                     // Récupérations des informations concernant le propriétaire
                     $stmt = $pdo->prepare("SELECT firstName,lastName,languesParlees
                                             FROM ldc.Proprietaire P
@@ -500,6 +507,7 @@ if (!isset($liste_langue_parle)) {
                                 } else {
                                     // Divise la chaîne en un tableau en utilisant la virgule comme séparateur
                                     $installation_array = explode(', ', $liste_installation);
+                                    array_pop($installation_array);
                                 
                                     echo "<ul class='liste_corps'>";
                                     foreach ($installation_array as $installation) {
@@ -517,6 +525,8 @@ if (!isset($liste_langue_parle)) {
                                     echo "<p class='section_vide'>Cette section est vide.</p>";
                                 } else {
                                     $equipements_array = explode(', ', $liste_equipements);
+                                    array_pop($equipements_array);
+
                                 
                                     echo "<ul class='liste_corps'>";
                                     foreach ($equipements_array as $equipement) {
@@ -532,6 +542,8 @@ if (!isset($liste_langue_parle)) {
                                     echo "<p class='section_vide'>Cette section est vide.</p>";
                                 } else {
                                     $services_array = explode(', ', $liste_services);
+                                    array_pop($services_array);
+
                                 
                                     echo "<ul class='liste_corps'>";
                                     foreach ($services_array as $service) {
@@ -599,11 +611,33 @@ if (!isset($liste_langue_parle)) {
                     </div>
                 </section>
                 <?php }else {?>
+                    <div class="wrapper">
+                        <video autoplay playsinline muted loop preload poster="http://i.imgur.com/xHO6DbC.png">
+                            <source src="/public/videos/video-bretagne.mp4" />
+                        </video>
+                        <div class="container">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 285 80" preserveAspectRatio="xMidYMid slice">
+                                <defs>
+                                    <mask id="mask" x="0" y="0" width="100%" height="100%">
+                                        <rect x="0" y="0" width="100%" height="100%" />
+                                        <!-- Texte principal -->
+                                        <text x="50%" y="50%" text-anchor="middle" alignment-baseline="middle" font-family="NoirPro" font-weight="200" text-transform="uppercase" font-size="20">
+                                            ALHaIZ Breizh
+                                        </text>
+                                    </mask>
+                                </defs>
+                                <!-- Rectangle pour masquer le texte principal -->
+                                <rect x="0" y="0" width="100%" height="100%" mask="url(#mask)" />
+                            </svg>
+                            <!-- Lien vers la page d'accueil avec un message d'erreur -->
+                            <a class="lien" href="/accueil" target="_blank">
+                                <div>
+                                    Cette page est inexistante. Cliquez ici pour retourner à l'accueil.
+                                </div>
+                            </a>
+                        </div>
+                    </div>
 
-        <div class="page_inexistante">
-            <p>Oups, la page est inexistante</p>
-            <a href="/index.php" class="retour_lobby">Retour vers l'acceuil</a>
-        </div>
         <?php
         }; ?>  
         </main>
