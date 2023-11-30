@@ -348,7 +348,7 @@ h1, h2, h3{
     }
 
     #footer > div > div {
-        flex-direction: column;
+        flex-direction: column !important;
         padding-left: 1em;
     }
 
