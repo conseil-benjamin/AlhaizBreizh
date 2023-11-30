@@ -66,6 +66,29 @@
     background-color: #394142;
 }
 
+@media screen and (max-width: 900px){
+
+    #toggleBurger:checked ~ #header > nav > ul{
+        filter: drop-shadow(1px 0px 5px rgba(0, 0, 0, 0.55));
+        background-color: #00000050;
+    }
+
+    #toggleBurger:checked ~ #header.scrolled > nav > ul {
+        background-color: var(--col3);
+        filter: none;
+    }
+
+    #toggleBurger:checked ~ #header > nav > ul li:hover{
+        background-color: #00000050;
+        filter: none;
+    }
+
+    #toggleBurger:checked ~ #header.scrolled > nav > ul li:hover{
+        background-color: var(--col3);
+        filter: brightness(0.9);
+    }
+}
+
 /********************************************/
 /*Titre*/
 
@@ -137,6 +160,8 @@
     border: 1px solid #000;
     border-radius: 15px;
     transition: all 0.5s ease;
+    scale: 1.2;
+    margin-left: 2vw;
 }
 
 .logement > a{
@@ -169,12 +194,17 @@
 .logement > div img{
     width: 25px;
     height: 25px;
+    margin-right: 5px;
 }
 
 .logement #rating{
     display: flex;
     align-items: center;
     color: #fff;
+}
+
+.logement #rating img {
+    margin-right: 8px;
 }
 
 .logement button{
@@ -192,6 +222,12 @@
     height: 50%;
     width: 100%;
 }
+
+.logement #description div > * {
+    margin: 3px;
+}
+
+
 
 .logement #description > div{
     display: block;
@@ -232,4 +268,10 @@
 .logement:hover{
     filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.75));
     transform: translateY(-5px);
+}
+
+@media screen and (max-width: 760px) {
+    .logement{
+        scale: 1;
+    }
 }

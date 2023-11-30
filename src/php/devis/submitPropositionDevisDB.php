@@ -1,8 +1,13 @@
 <?php
-$numlogement = $_SESSION["numLogement"];
+if(isset($_SESSION)) {
+    $numLogement = $_SESSION["numLogement"];
+}
+else {
+    $numLogement = 1;
+}
 $dateDevis = new DateTime();
 $dateDevis = $dateDevis->format("Y-m-d");
-$durreeAcceptation = 300;
+$dureeAcceptation = 300;
 
 global $pdo;
 try {
@@ -10,11 +15,23 @@ try {
     $stmt = $pdo->prepare(
         "UPDATE ldc.devis
         SET dateDevis = '$dateDevis'
-        WHERE numlogement = $numlogement;"
+        WHERE numlogement = $numLogement;"
     );
     $stmt->execute();
     $pdo = null;
+    echo '<script>
+        notifSuccess()
+    </script>';
 } catch (PDOException $e) {
-    print "Erreur !: " . $e->getMessage() . "";
+    print "Erreur submitDB !: " . $e->getMessage();
+    echo '<script>
+       notifErr()
+    </script>';
+    die();
+}
+catch (Error $e) {
+    echo '<script>
+        notifErr()
+    </script>';
     die();
 }
