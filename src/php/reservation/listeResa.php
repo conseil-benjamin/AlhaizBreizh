@@ -1,4 +1,5 @@
 <?php
+global $numLogement;
 session_start();
 
 // Connexion à la base de données
@@ -151,7 +152,7 @@ if (isset($_SESSION['id'])) {
                         </button>
                     </div>
                     <div>
-                        <a href="#" class="button-resa">Voir Réservation</a>
+                        <a href="details_reservation.php?numLogement=<?=$numLogement?>?" class="button-resa">Voir Réservation</a>
                     </div>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 <?php
-$numReservation = $_GET['$numReservation'] ?? 1;
+$numReservation = $_GET["numLogement"] ?? 1;
 global $pdo;
 include("../connect.php");
 try {
