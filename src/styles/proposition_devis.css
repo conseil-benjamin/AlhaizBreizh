@@ -37,3 +37,23 @@ input[type='file'] {
     padding: 10px;
     cursor: pointer;
 }
+
+
+/**
+
+Media Queries
+
+ */
+
+@media screen and (max-width: 760px) {
+
+    #prixDIv > div > label{
+        text-align: center;
+    }
+
+    textarea {
+        width: 100%;
+    }
+
+
+}

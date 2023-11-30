@@ -1,6 +1,12 @@
 const compteDiv = document.querySelector('.compte');
 const compteOptionsDiv = document.querySelector('.compte-options');
+
+const dropDownTelDiv = document.querySelector('.dropdown-tel')
+const dropdownButton = document.getElementById('dropdownButton')
+
+
 let isCompteOptionsVisible = false;
+let isdropDownTelDivVisible = false
 
 compteDiv.addEventListener('click', () => {
     if (!isCompteOptionsVisible) {
@@ -13,3 +19,13 @@ compteDiv.addEventListener('click', () => {
         isCompteOptionsVisible = false;
     }
 });
+
+dropdownButton.addEventListener('click', ()=> {
+    if (!isdropDownTelDivVisible) {
+        dropDownTelDiv.style.display = 'block';
+        isdropDownTelDivVisible = !isdropDownTelDivVisible
+    } else {
+        dropDownTelDiv.style.display = 'none';
+        isdropDownTelDivVisible = !isdropDownTelDivVisible
+    }
+})

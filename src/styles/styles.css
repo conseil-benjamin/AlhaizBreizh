@@ -1,5 +1,12 @@
 /*****************************************************/
 /*Définitions principales*/
+*{
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+    scroll-padding-top: 75px;
+
+    /*Couleurs*/
 :root{
     --col1 : #515D5E;
     --col2 : #D7F0FF;
@@ -19,7 +26,6 @@ body{
     background-color: var(--col2);
     min-height: calc(100vh + 20em);
     font-family: "Montserrat", Arial, sans-serif;
-    overflow-x: hidden;
     overflow-x: hidden;
 }
 
@@ -161,7 +167,6 @@ h1, h2, h3{
 #header {
     display: flex;
     flex-direction: row;
-    align-items: center;
     align-items: center;
     justify-content: stretch;
     background-color: var(--col3);
@@ -313,7 +318,7 @@ h1, h2, h3{
     }
 
     #header .compte-options{
-        
+
     }
 
     #header > nav{
@@ -336,7 +341,7 @@ h1, h2, h3{
         display: flex;
         flex-direction: column;
         background-color: var(--col3);
-        gap: 0;    
+        gap: 0;
     }
 
     #toggleBurger:checked ~ #header > nav > ul li:hover{
@@ -393,4 +398,58 @@ h1, h2, h3{
     align-items: center;
     justify-content: center;
     font-size: 16px;
+}
+
+/**
+
+Media queries
+
+*/
+
+@media screen and (max-width: 760px) {
+
+    .navOrdi {
+        display: none;
+    }
+
+
+    .dropdown-tel {
+        display: none;
+    }
+    #header nav ul {
+        flex-direction: column;
+    }
+
+    #header nav ul li:hover {
+        transform: none;
+    }
+
+    #header nav ul {
+        gap: 1em;
+    }
+
+    #header .dropdown-tel {
+        left: 0;
+    }
+
+    #header > .logo {
+        display: none !important;
+    }
+
+    #dropdownButton {
+        color: var(--col4);
+    }
+
+    #header nav{
+        margin-left: 1em !important;
+    }
+
+    #footer > div > div {
+        flex-direction: column;
+        padding-left: 1em;
+    }
+
+    #footer > div > div > div {
+        padding-top: 1em;
+    }
 }
