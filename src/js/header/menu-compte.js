@@ -4,9 +4,12 @@
 let compte = document.querySelector('#header .compte');
 let options = document.querySelector('#header .compte-options');
 
-options.style.width = compte.offsetWidth + 'px';
+if(options !== undefined) {
+    options.style.width = compte.offsetWidth + 'px';
+}
+
 
 window.addEventListener('resize', function(){
-    options.style.width = compte.offsetWidth + 'px';
-    console.log('resize');
+    if(options !== undefined) {
+    options.style.width = compte.offsetWidth + 'px'; }
 });
