@@ -7,14 +7,12 @@
     // Connexion à la base de données
     $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
     $isProprio = $_SESSION['proprio'];
-    $isProprioEncode = json_encode($isProprio);
+    $isProprioJSON = json_encode($isProprio);
 
     if (isset($_GET['numLogement'])) {
         $numLogement = $_GET['numLogement'];
-        $proprio = $_SESSION['id'];
 
         if (isset($pdo)&&!empty($numLogement)) {
-            
             // Vérifier si numLogement existe dans la base de données
             $stmt = $pdo->query("SELECT COUNT(*) FROM ldc.Logement WHERE numLogement = $numLogement");
             $numLogementExists = $stmt ? $stmt->fetchColumn() : null;
@@ -108,8 +106,8 @@
             <div id='calendar'>
                 <script> 
                     //script de création du calendrier
-                    var evenements = <?php echo $evenementsJSON; ?>;
-                    var isProprio = <?php echo $isProprioEncode;?>
+                    let evenements = <?php echo $evenementsJSON; ?>;
+                    let isProprio = <?php echo $isProprioJSON;?>;
                     document.addEventListener('DOMContentLoaded', function() {
                         var calendarEl = document.getElementById('calendar');
                         var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -125,8 +123,7 @@
                             unselectAuto: true,
                             events: evenements,
                             eventClick: function(info) {
-                                if (isProprio){
-
+                                if(isProprio){
                                     Swal.fire({
                                         title: "Voulez-vous supprimer la plage de disponibilité ?",
                                         showCancelButton: true,
@@ -158,8 +155,8 @@
                                                 }
                                             });                                        
                                         }
-                                    }); 
-                                }                               
+                                    });
+                                }                                
                             }
                         });
                         calendar.render();  
@@ -183,7 +180,7 @@
             <?php
                 //Formulaire permettant l'ajout d'une plage de disponibilité
                 if (isset($_SESSION['id']) && $numLogementExists) {
-                    if ($isProprio == true) { 
+                    if ($_SESSION['proprio'] == true) { 
             ?>
                         <div id="plage-form">
                             <h3>Ajouter une plage de disponibilité :</h3>
