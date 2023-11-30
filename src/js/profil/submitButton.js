@@ -57,6 +57,16 @@ submitButton.addEventListener('click', function (e) {
             input.classList.add('invalid');
             input.setCustomValidity('Ce champ ne peut pas contenir plus de 50 caractères');
             input.reportValidity();
+            let message = document.createElement('p')
+            message.innerHTML = "Ce champ ne peut pas contenir plus de 50 caractères";
+            message.style.position = "absolute";
+            message.style.color = "red";
+            message.style.backgroundColor = "white";
+            message.style.border = "1px solid red";
+            message.style.fontSize = "12px";
+            message.style.top = input.offsetTop + input.offsetHeight + "px";
+            message.style.left = input.offsetLeft + "px";
+            input.parentNode.appendChild(message);
             invalid = true;
 
         // Gestion du champ file (photo)
