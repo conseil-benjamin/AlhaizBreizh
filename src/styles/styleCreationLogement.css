@@ -3,6 +3,7 @@ body {
   --main-bg-color: var(--col1);
   --color-btn-submit: var(--col3);
   --main-font-color: #ffffff;
+  --secondary-font-color: #000000;
   --h1-font-color: var(--col5);
 }
 
@@ -17,24 +18,53 @@ body {
 
 .container-left {
   flex-direction: column;
-  margin: 1em 5em 1em 8em;
+  margin: 1em 5em 1em 10em;
   width: 35%;
 }
 
 .container-right {
-  margin: 1em 0 0 0;
+  margin: 1em 5em 0 0;
   width: 35%;
 }
 
 input,
-select{
+select {
   margin: 1em;
   border-radius: 5px;
   padding: 0.8em;
   display: block;
 }
 
-button{
+.custom-file-input {
+  background-color: var(--col5);
+  margin: 1em 0 1em 1em;
+  color: var(--secondary-font-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  background-color: #ffffff;
+  border-radius: 10px;
+  width: 10rem;
+  height: 2em;
+  cursor: pointer;
+}
+
+/* Styles pour le bouton de type file */
+#photos {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+#photosName {
+  margin: 0 0 0 1em;
+}
+
+button {
   margin: 1em;
   border-radius: 45px;
   padding: 0.8em;
@@ -42,7 +72,7 @@ button{
   cursor: pointer;
 }
 
-button:hover{
+button:hover {
   background-color: var(--col3);
   transition: 0.7s;
 }
@@ -78,7 +108,7 @@ h1 {
   display: flex;
   flex-direction: row;
 }
-  
+
 .nbChambreEtBainsDiv,
 .nbPrixEtPersonnesDiv,
 .typeLogementDiv {
@@ -91,11 +121,11 @@ h1 {
   height: 4em;
 }
 
-.nbPrixEtPersonnesDiv{
-  margin: 5em 0 0 0;
+.nbPrixEtPersonnesDiv {
+  margin: 0em 0 0 0;
 }
 
-#typeLogement{
+#typeLogement {
   width: 220px;
 }
 
@@ -119,6 +149,10 @@ hr {
   max-width: 25rem;
 }
 
+.inputPlusIconeSupprimer > label {
+  margin: 0 1em 0 1em;
+}
+
 .bottom {
   display: flex;
   flex-direction: column;
@@ -138,7 +172,7 @@ hr {
   width: 30px;
   cursor: pointer;
 }
-.bottom > span{
+.bottom > span {
   margin: 0 1em 0 1em;
 }
 
@@ -146,20 +180,42 @@ hr {
   cursor: pointer;
 }
 
-#lits{
+#lits {
   width: 20rem;
 }
 
-.testValeurInputAnnonce{
+.testValeurInputAnnonce {
   color: red;
 }
 
-.divPrixParNuit{
+.divPrixParNuit {
   margin: 2em 0 0 0;
 }
 
+.addButton,
+.addChambre,
+.btnAddLits {
+  background-color: var(--col5);
+  border-radius: 10px;
+}
 
-@media (max-width: 1250px) {
+.addButton:hover,
+.addChambre:hover {
+  background-color: var(--main-font-color);
+  color: black;
+}
+
+.conditionsGenerale {
+  margin: auto;
+  width: 60%;
+}
+
+.creerAnnonce {
+  margin: auto;
+  margin-bottom: 2em;
+}
+
+@media (max-width: 1299px) {
   .container-main {
     flex-direction: column;
     align-items: center;
@@ -170,6 +226,24 @@ hr {
   }
   .container-right {
     margin: 1em 5em 1em 0em;
+  }
+}
+
+@media (min-width: 1300px) and (max-width: 1500px) {
+  .container-left {
+    margin: 1em 0 0 20em;
+  }
+  .container-right {
+    margin: 1em 0 0 20em;
+  }
+}
+
+@media (min-width: 1600px) {
+  .container-left {
+    margin: 1em 5em 0 5em;
+  }
+  .container-right {
+    margin: 1em 0 0 5em;
   }
 }
 

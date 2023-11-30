@@ -3,7 +3,7 @@
     //connexion à la base de donnée
     try {
         $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
-        $stmt = $pdo->prepare("SELECT numLogement,libelle,nbPersMax,tarifNuitees,LogementEnLigne FROM ldc.Logement");
+        $stmt = $pdo->prepare("SELECT numLogement,libelle,nbPersMax,tarifNuitees,LogementEnLigne,ville FROM ldc.Logement");
 
         //Recherche des logements dans la base de données
         $stmt->execute();
@@ -12,15 +12,6 @@
             $logements[] = $row;
         }
 
-        //Obtenir la localisation de chaque logement
-        if (count($logements) !== 0) {
-            $stmt = $pdo->prepare("SELECT numLogement,ville FROM ldc.Localisation WHERE numLogement = ?");
-            foreach ($logements as $logement) {
-                $stmt->execute([$logement[0]]);
-                $ville = $stmt->fetch(PDO::FETCH_NUM)[1];
-                $logements[($logement[0] - 1)][] = $ville;
-            }
-        }
         $pdo = null;
     } catch (PDOException $e) {
         $logements = array();
@@ -72,9 +63,9 @@
                             </div>   
                             <a id="description" href="<?php echo $lien ?>"><div> 
                                 <h3><?php echo $titre ?></h3> <!-- Titre du logement -->
-                                <div><img src="/public/icons/nb_personnes.svg"><?php echo $nombre_personnes ?> personnes</div> <!-- Nombre de personnes -->
-                                <div><img src="/public/icons/map.svg"><?php echo $localisation ?></div> <!-- Localisation -->
-                                <div><strong><?php echo $prix ?>€</strong> / nuit</div> <!-- Prix du logement -->
+                                <div><img src="/public/icons/nb_personnes.svg"><p><?php echo $nombre_personnes ?> personnes</p></div> <!-- Nombre de personnes -->
+                                <div><img src="/public/icons/map.svg"><p><?php echo $localisation ?></p></div> <!-- Localisation -->
+                                <div><p><strong><?php echo $prix ?>€</strong> / nuit</p></div> <!-- Prix du logement -->
                             </div></a>
                         </div> <?php
                     } else{

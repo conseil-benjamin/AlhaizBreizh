@@ -6,8 +6,9 @@
         $dateArrivee = "2023-10-19";
         $dateDepart = "2023-10-19";
         $nbPersonne = 10;
-        $demande = "Petit dejeuner au lit";
+        $demande = "Petit déjeuner au lit";
     }
+    require "propositionGetDb.php";
 ?>
 <!DOCTYPE html>
     <html lang="fr">
@@ -18,7 +19,7 @@
         <link href="/src/styles/proposition_devis.css" rel="stylesheet" type="text/css">
         <link href="/src/styles/demande_devis.css" rel="stylesheet" type="text/css">
         <link href="/src/styles/styles.css" rel="stylesheet" type="text/css">
-        <title>Demande de devis</title>
+        <title>Proposition de devis</title>
     </head>
     <body>
         <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/header.php'); ?>
@@ -26,11 +27,11 @@
         <div id="fond">
             <section id="entete">
                 <h1>
-                    Réservation de "<?php echo $nomBien ?>"
+                    <?= $nomBien ?>
                 </h1>
             </section>
             <section id="corpsTexte">
-                <form method="post" action="submitPropositionDevis.php">
+                <form method="post" enctype="application/x-www-form-urlencoded">
                     <div id="formulaire">
                         <div id="prixDiv">
                             <ul>
@@ -70,14 +71,14 @@
                                 </li>
                             </ul>
                             <div>
-                                <label for="demande">Autre demande (1000 caractères maximum)</label>
+                                <label for="demande">Autre demande</label>
                                 <textarea id="demande" maxlength="1000" content="<?php echo $demande ?>"
                                         spellcheck="true" name="demande" readonly></textarea>
                             </div>
                             <div id="upload">
                                 <div id="uploadInput">
                                     <label for="devis" id="devisLabel">Upload votre devis</label>
-                                    <input type="file" accept="application/pdf" name="devis" id="devis">
+                                    <input type="file" accept=".pdf" name="devis" id="devis">
                                 </div>
                                 <div id="ficUpload">
                                     <button id="annulerFicUpload" type="button">Annuler</button>
@@ -101,7 +102,6 @@
                                     $name = 'service' . $i;
                                     echo "<li>
                                     <div class='$classe'>
-                                        <input id='$id' type='checkbox' name='$name'>
                                         <label for='$id'>Service 01</label>
                                         <p class='prix''><span>66,6</span>€</p>
                                     </div>
@@ -113,12 +113,18 @@
                         </div>
                     </div>
                     <div id="total">
-                        <button class="boutton" type="submit">Envoyer le devis</button>
+                        <button class="boutton" type="submit" id="envoyer">Envoyer le devis</button>
                     </div>
                 </form>
             </section>
         </div>
         <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'); ?>
     </body>
-    <script src="js/proposition_devis.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> <!-- Librairie pour les alertes -->
+    <script src="../../js/proposition_devis.js"></script>
+    <?php
+    if(isset($_POST['devis'])) {
+        require("submitPropositionDevisDB.php");
+    }
+    ?>
 </html>
