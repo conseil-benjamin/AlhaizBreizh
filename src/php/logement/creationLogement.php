@@ -25,7 +25,7 @@
             <textarea name="description" id="description" cols="46" rows="20" placeholder="Description" maxlength="500"></textarea>
             <div class="custom-file-input">
                 Ajouter photos
-                <input type="file" id="photos" name="photos" accept=".jpg, .jpeg, .png" onchange="afficherNomsPhotos()" multiple>
+                <input type="file" id="photos" name="photos" accept=".jpg, .jpeg, .png" multiple onchange="afficherNomsPhotos()">
             </div>
             <div id="photosName"></div>
             <div class="typeLogementDiv">
@@ -59,6 +59,7 @@
             </div>
             <button class="addButton" id="btnAddLits" type="button">Ajouter un lit</button>
             </div>
+            <button class="addChambre" id="btnAddChambre" type="button">Ajouter une chambre</button>    
         </div>
         <div class="container-right">
             <label for="adresse">Adresse (*)</label>
@@ -77,20 +78,20 @@
             <label for="accroche">Phrase d'accroche</label>
             <textarea name="accroche" id="accroche" cols="45" rows="10" placeholder="Laisser une petite accroche"></textarea>
             <div class="nbPrixEtPersonnesDiv">
-                <div>
+                <div class="div-label-nbPers">
                     <label for="nbMaxPers">Nombre de personnes max (*)</label>
                     <input type="number" id="nbMaxPers" name="nbMaxPers" placeholder="Nb pers max" min="1">
                 </div>
-                <div> 
+                <div class="div-prix-nuit"> 
                     <label for="prixParNuit">Prix de base par nuit (*)</label>
                     <br>
                     <input type="number" id="prixParNuit" name="prixParNuit" placeholder="Prix/Nuit" min="1">
                 </div>
             </div>   
-            <div>
+            <div class="div-nbSalleBain">
                     <label for="nbSalleBain">Nombres de salles de bain (*)</label>
                     <input type="number" id="nbSallesBain" name="nbSallesBain" min="1" placeholder="Nb Salles de Bain">
-                </div>
+            </div>
             <div class="installationsElement">
                 <label for="installDispo">Installations disponibles</label>
                 <input type="text" id="installDispo" name="installDispo" placeholder="Installation disponible" size="60">
@@ -101,7 +102,6 @@
                 <input type="text" id="equipement" name="equipement" placeholder="Equipement disponible" size="60">
             </div>
             <button class="addButton" id="btnAddEquipements" type="button">Ajouter Equipements disponibles</button>
-            <button class="addChambre" id="btnAddChambre" type="button">Ajouter une chambre</button>
     </div>
     <div class="bottom">
     <p>Les champs marqués par (*) sont obligatoire</p>

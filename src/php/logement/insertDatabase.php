@@ -1,10 +1,17 @@
-<?php 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+<?php  
 session_start();
 if (isset($_SESSION['id'])) {
     $id = $_SESSION['id'];
-    echo $id;
 } else{
-    echo "pas d'id trouvé";
 }
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -27,8 +34,6 @@ if (isset($_SESSION['id'])) {
     $nbPersMax = $_POST['nbMaxPers'];
     $proprio = $id;
     $logementEnLigne = 1;
-
-
 
     $installations=[];
     $installElement=$_POST['installDispo'];
@@ -118,74 +123,95 @@ if (isset($_SESSION['id'])) {
             $id_logem = $pdo->lastInsertId();
 
             foreach ($chambres as $key => $value){
-                $stmt = $pdo->prepare(
-                    "INSERT INTO ldc.chambre VALUES ($key, $value[0], $value[1], $id_logem)"
+                $stmtChambre = $pdo->prepare(
+                    "INSERT INTO ldc.chambre (numChambre, nblitssimples, nblitsdoubles, numlogement) VALUES (?, ?, ?, ?)"
                 );
-                $stmt->execute();
+                $stmtChambre->bindParam(1, $key);
+                $stmtChambre->bindParam(2, $value[0]);
+                $stmtChambre->bindParam(3, $value[1]);
+                $stmtChambre->bindParam(4, $id_logem);
+                $stmtChambre->execute();
             }
             
             foreach($installations as $key => $value){
-                $stmt = $pdo->prepare(
-                    "INSERT INTO ldc.installation VALUES ($id_logem, $key, '$value')"
+                $stmtInstallation = $pdo->prepare(
+                    "INSERT INTO ldc.installation (numlogement, numinstall, nom) VALUES (?, ?, ?)"
                 );
-                $stmt->execute();
+                $stmtInstallation->bindParam(1, $id_logem);
+                $stmtInstallation->bindParam(2, $key);
+                $stmtInstallation->bindParam(3, $value);
+                $stmtInstallation->execute();
             }
     
             foreach($equipements as $key => $value){
-                $stmt = $pdo->prepare(
-                    "INSERT INTO ldc.equipement VALUES ($id_logem, $key, '$value')"
+                $stmtEquipement = $pdo->prepare(
+                    "INSERT INTO ldc.equipement (numlogement, numeequip, nom) VALUES (?, ?, ?)"
                 );
-                $stmt->execute();
+                $stmtEquipement->bindParam(1, $id_logem);
+                $stmtEquipement->bindParam(2, $key);
+                $stmtEquipement->bindParam(3, $value);
+                $stmtEquipement->execute();
             }
     
             foreach($services as $key => $value){
-                $stmt = $pdo->prepare(
-                    "INSERT INTO ldc.service VALUES ($id_logem, $key, '$value')"
+                $stmtServcie = $pdo->prepare(
+                    "INSERT INTO ldc.service (numlogement, numserv, nom) VALUES (?, ?, ?)"
                 );
-                $stmt->execute();
+                $stmtServcie->bindParam(1, $id_logem);
+                $stmtServcie->bindParam(2, $key);
+                $stmtServcie->bindParam(3, $value);
+                $stmtServcie->execute();
             }
 
-    $nom_dossier = $_SERVER['DOCUMENT_ROOT'] . "/public/img/logements/" . $id_logem;
 
 
-if (!is_dir($nom_dossier)) {
-    if (mkdir($nom_dossier)) {
-        echo "crée dossier";
-        // Vérifie si des fichiers ont été envoyés
-        if (!empty($_FILES['photos']['name'][0])) {
-            echo "fichier présent";
-            // Boucle pour traiter chaque fichier envoyé
-            foreach ($_FILES['photos']['name'] as $key => $name) {
-                echo "dada";
-                $tmp_name = $_FILES['photos']['tmp_name'][$key];    
-                $fichierURL = $nom_dossier . "/" . $name;
-                // Vérifier si le fichier existe déjà dans le dossier
-                if (file_exists($fichierURL)) {
-                    echo "Le fichier existe déjà : " . $name . "<br>";
-                } else {
-                    // Déplacer le fichier téléchargé dans le dossier
-                    if (move_uploaded_file($tmp_name, $fichierURL)) {
-                        echo "Fichier téléchargé avec succès : " . $name . "<br>";
-                    } else {
-                        echo "Erreur lors du téléchargement du fichier : " . $name . "<br>";
-                    }
+            $nom_dossier = $_SERVER['DOCUMENT_ROOT'] . "/public/img/logements/" . $id_logem;
+            $nbPhotos = count(glob($nom_dossier . "/*.png"));
+
+            if (!is_dir($nom_dossier)){
+                if (mkdir($nom_dossier)) {
+                    $url = $nom_dossier . "/" . ($nbPhotos + 1) . ".png";
+                    move_uploaded_file($_FILES['photos']['tmp_name'], $url);
                 }
             }
-        } else {
-            echo "Aucun fichier envoyé.";
-        }
-    } else {
-        echo "Erreur lors de la création du dossier.";
-    }
-} else {
-    echo "Le dossier existe déjà.";
-}
+
+            if ($stmtChambre->affected_rows < 1) {
+                ?>
+                <script>
+               Swal.fire({
+                icon: "success",
+                title: "Logement bien créé",
+                showConfirmButton: false,
+                timer: 2000
+            });
+               </script>
+            <?php   
+            } else {
+                ?>
+                <script>
+                Swal.fire({
+                title: "Erreur : logement non créé",
+                icon: "error",
+                });
+               </script>
+                <?php
+            }
 
 } catch (PDOException $e) {
-    echo "Erreur : " . $e->getMessage();
+    //echo "Erreur : " . $e->getMessage();
 }
 
 $pdo = null;
-    }
-//header('Location: /src/php/logement/mesLogements.php');
 ?>
+<script>
+    setTimeout(() => {
+         window.location.href = '/src/php/logement/mesLogements.php';
+}, 2000);
+</script>
+<?php
+exit;
+}
+?>
+</body>
+</html>
+
