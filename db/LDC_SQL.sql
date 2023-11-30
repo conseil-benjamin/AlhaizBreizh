@@ -259,7 +259,11 @@ ALTER TABLE LogementProprio ADD CONSTRAINT logementproprio_proprietaire_fk FOREI
 INSERT INTO Avis (contenuAvis, nbEtoiles)
 VALUES
     ('Très bel endroit', 4.5),
-    ('Excellent séjour', 4.8);
+    ('Excellent séjour', 4.8),
+    ('Personne très accueillante', 4.0),
+    ('A laissé en bon état ma maison !', 5.0),
+    ('Elle a offert à ma propre personne un très bon jus de pomme et je suis tellement ému par rapport à ça !', 4.5),
+    ('Personne très mal élévée', 1.0);
 
 -- Insertion de données dans la table Client
 INSERT INTO Client (firstName, lastName, mail, numeroTel, photoProfil, civilite, adressePostale, pseudoCompte, motDePasse, dateNaissance, notationMoyenne)
@@ -358,10 +362,12 @@ VALUES
     (2, 90, 100, 600, 660, 60, 72, 18, 720);
 
 -- Insertion de données dans la table Avis_Client
-INSERT INTO AvisClient (idCompte, idAvis) 
-VALUES 
-    ('1', '1'),
-    ('1', '2');
+INSERT INTO AvisClient (idCompte, idDestinataire, idAvis)
+VALUES
+    (1, 2, 3),
+    (2, 1, 4),
+    (3, 2, 5),
+    (1, 2, 6);
 
 -- Insertion de données dans la table LogementProprio
 INSERT INTO LogementProprio (numLogement,idCompte) 
