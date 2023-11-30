@@ -79,7 +79,6 @@ function validerForm() {
 }
 
 function verifierMDP(mdp, confirmation) {
-    console.log(mdp === confirmation)
     return mdp === confirmation;
 }
 
