@@ -32,10 +32,9 @@ try {
     die();
 }
 
-$dest = "/public/img/photos_profil/";
+$dest = $_SERVER['DOCUMENT_ROOT']."/public/img/photos_profil/";
 if (isset($_FILES['photo_profil']) && $_FILES['photo_profil']['error'] === UPLOAD_ERR_OK) {
     $src = $_FILES['photo_profil']['tmp_name'];
-    echo $src;
     $destinationChemin = $dest . $nomRnd.".png";
     move_uploaded_file($src, $destinationChemin);
 }
