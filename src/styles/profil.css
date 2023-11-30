@@ -518,3 +518,16 @@ div.notation img{
 .invalid:focus{
     filter: drop-shadow(0px 0px 5px rgba(255, 0, 0, 1));
 }
+
+.alert{
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: red;
+    background-color: #fff;
+    border: 1px solid red;
+    border-radius: 50px;
+    font-size: 12px;
+    padding-left: 1em;
+    padding-right: 1em;
+}

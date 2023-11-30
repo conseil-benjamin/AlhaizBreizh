@@ -4,7 +4,7 @@
 //Fonctions
 
 function popupInvalid(titre, message='') {
-    //Fonction qui affiche un message d'erreur si le champ est invalide
+    //Fonction qui affiche un popup d'erreur si le champ est invalide
     let popup = Swal.fire({
         icon: 'info',
         title: titre,
@@ -12,6 +12,24 @@ function popupInvalid(titre, message='') {
         showConfirmButton: true
     });
     return popup;
+}
+
+function alertOverlay(elem, text){
+    //Fonction qui affiche un message d'erreur si le champ est invalide
+    elem.classList.add('invalid');
+    let message = document.createElement('p')
+    message.innerHTML = text;
+    message.classList.add('alert');
+    message.style.top = elem.offsetTop + elem.offsetHeight + "px";
+    message.style.left = elem.offsetLeft + "px";
+    message.style.width = "calc("+elem.offsetWidth + "px - 2em"+")";
+    elem.parentNode.appendChild(message);
+}
+
+function removeAlert(elem){
+    //Fonction qui supprime le message d'erreur
+    elem.parentNode.querySelector('.invalid').classList.remove('invalid');
+    elem.parentNode.removeChild(elem.parentNode.querySelector('.alert'));
 }
 
 /*****************************************************************/
@@ -23,16 +41,21 @@ const form = document.getElementById('form');
 /*****************************************************************/
 //Listeners
 
+// Retirer les messages d'erreur quand on resize la fenêtre
+window.addEventListener('resize', function () {
+    const alerts = document.querySelectorAll('.alert');
+    alerts.forEach(alert => {
+        alert.parentNode.removeChild(alert);
+    });
+});
+
 // Gestion des champs vides
 form.addEventListener('input', function (e) {
-    e.target.classList.add('invalid');
     if (e.target.value == "") {
-        e.target.setCustomValidity('Ce champ ne peut pas être vide');
+        alertOverlay(e.target, "Ce champ ne peut pas être vide");
     } else {
-        e.target.setCustomValidity('');
-        e.target.classList.remove('invalid');
+        removeAlert(e.target);
     }
-    e.target.reportValidity();
 });
 
 //Envoi du formulaire
@@ -55,18 +78,7 @@ submitButton.addEventListener('click', function (e) {
         // Gestion des champs trop longs
         } else if ((input.value.length > 50) && (["tel", "email"].includes(input.type) == false)) {
             input.classList.add('invalid');
-            input.setCustomValidity('Ce champ ne peut pas contenir plus de 50 caractères');
-            input.reportValidity();
-            let message = document.createElement('p')
-            message.innerHTML = "Ce champ ne peut pas contenir plus de 50 caractères";
-            message.style.position = "absolute";
-            message.style.color = "red";
-            message.style.backgroundColor = "white";
-            message.style.border = "1px solid red";
-            message.style.fontSize = "12px";
-            message.style.top = input.offsetTop + input.offsetHeight + "px";
-            message.style.left = input.offsetLeft + "px";
-            input.parentNode.appendChild(message);
+            alertOverlay(input, "Ce champ ne peut pas contenir plus de 50 caractères");
             invalid = true;
 
         // Gestion du champ file (photo)
