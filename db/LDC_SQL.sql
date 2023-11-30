@@ -61,7 +61,6 @@ CREATE TABLE ConversationMessagerie (
 -- Table Avis
 CREATE TABLE Avis (
     numAvis SERIAL NOT NULL PRIMARY KEY,
-    numLogement INTEGER,
     contenuAvis VARCHAR(255),
     nbEtoiles DOUBLE PRECISION
 );
@@ -87,10 +86,11 @@ CREATE TABLE Logement (
 );
 
 CREATE TABLE Chambre (
-    numChambre SERIAL PRIMARY KEY,
+    numChambre INTEGER,
     nbLitsSimples INTEGER,
     nbLitsDoubles INTEGER,
     numLogement INTEGER,
+    PRIMARY KEY (numChambre,numLogement),
     CONSTRAINT fk_numLogement
         FOREIGN KEY (numLogement)
         REFERENCES Logement (numLogement)
@@ -152,6 +152,7 @@ CREATE TABLE PlageDeDisponibilite (
 CREATE TABLE Proprietaire (
     idCompte SERIAL NOT NULL PRIMARY KEY,
     pieceIdentite BOOLEAN,
+    RIB VARCHAR(30),
     languesParlees VARCHAR(100),
     messageType VARCHAR(300)
 );
@@ -169,14 +170,34 @@ CREATE TABLE Tarification (
     total DOUBLE PRECISION 
 );
 
--- Table Services
-CREATE TABLE Services (
-    numLogement SERIAL NOT NULL PRIMARY KEY,
-    installationsOffertes VARCHAR(255),
-    equipementsProposes VARCHAR(255),
-    servicesComplementaires VARCHAR(255),
-    amenagementsProposes VARCHAR(255),
-    chargesAdditionnelles VARCHAR(255)
+CREATE TABLE Service(
+  numLogement INTEGER NOT NULL,
+  numServ INTEGER NOT NULL,
+  nom VARCHAR(255),
+  PRIMARY KEY (numLogement,numServ),
+  CONSTRAINT fk_numService
+        FOREIGN KEY (numLogement)
+        REFERENCES Logement (numLogement)
+);
+
+CREATE TABLE Equipement(
+  numLogement INTEGER NOT NULL,
+  numeEquip INTEGER NOT NULL,
+  nom VARCHAR(255),
+  PRIMARY KEY (numLogement,numeEquip),
+    CONSTRAINT fk_numEquipement
+        FOREIGN KEY (numLogement)
+        REFERENCES Logement (numLogement)
+);
+
+CREATE TABLE Installation(
+  numLogement INTEGER NOT NULL,
+  numInstall INTEGER NOT NULL,
+  nom VARCHAR(255),
+  PRIMARY KEY (numLogement,numInstall),
+    CONSTRAINT fk_numInstallation
+        FOREIGN KEY (numLogement)
+        REFERENCES Logement (numLogement)
 );
 
 -- Table Devis_Client_Reservation
@@ -208,7 +229,6 @@ CREATE TABLE LogementProprio (
 );
 
 -- Contraintes de clés étrangères
-
 ALTER TABLE MessageConversation ADD CONSTRAINT messageconversation_conversation_fk1 FOREIGN KEY (numMessage) REFERENCES Message (numMessage);
 ALTER TABLE MessageConversation ADD CONSTRAINT messageconversation_conversation_fk2 FOREIGN KEY (numConversation) REFERENCES Conversation (numConversation);
 ALTER TABLE Messagerie ADD CONSTRAINT messagerie_client_fk FOREIGN KEY (idCompte) REFERENCES Client (idCompte);
@@ -223,7 +243,6 @@ ALTER TABLE Calendrier ADD CONSTRAINT calendrier_logement_fk FOREIGN KEY (numLog
 ALTER TABLE PlageDeDisponibilite ADD CONSTRAINT plagededisponibilite_calendrier_fk FOREIGN KEY (numCal) REFERENCES Calendrier (numCal);
 ALTER TABLE Proprietaire ADD CONSTRAINT proprietaire_client_fk FOREIGN KEY (idCompte) REFERENCES Client (idCompte);
 ALTER TABLE Tarification ADD CONSTRAINT tarification_devis_fk FOREIGN KEY (numDevis) REFERENCES Devis (numDevis);
-ALTER TABLE Services ADD CONSTRAINT services_logement_fk FOREIGN KEY (numLogement) REFERENCES Logement (numLogement);
 ALTER TABLE Devis_Client_Reservation ADD CONSTRAINT devis_client_reservation_fk1 FOREIGN KEY (numDevis) REFERENCES Devis (numDevis);
 ALTER TABLE Devis_Client_Reservation ADD CONSTRAINT devis_client_reservation_fk2 FOREIGN KEY (idCompte) REFERENCES Client (idCompte);
 ALTER TABLE Devis_Client_Reservation ADD CONSTRAINT devis_client_reservation_fk3 FOREIGN KEY (numReservation) REFERENCES Reservation (numReservation);
@@ -240,11 +259,7 @@ ALTER TABLE LogementProprio ADD CONSTRAINT logementproprio_proprietaire_fk FOREI
 INSERT INTO Avis (contenuAvis, nbEtoiles)
 VALUES
     ('Très bel endroit', 4.5),
-    ('Excellent séjour', 4.8),
-    ('Personne très accueillante', 4.0),
-    ('A laissé en bon état ma maison !', 5.0),
-    ('Elle a offert à ma propre personne un très bon jus de pomme et je suis tellement ému par rapport à ça !', 4.5),
-    ('Personne très mal élévée', 1.0);
+    ('Excellent séjour', 4.8);
 
 -- Insertion de données dans la table Client
 INSERT INTO Client (firstName, lastName, mail, numeroTel, photoProfil, civilite, adressePostale, pseudoCompte, motDePasse, dateNaissance, notationMoyenne)
@@ -289,10 +304,10 @@ VALUES
     (2, 2);
     
 -- Insertion de données dans la table Proprietaire
-INSERT INTO Proprietaire (idCompte, pieceIdentite, languesParlees, messageType)
+INSERT INTO Proprietaire (idCompte, RIB, pieceIdentite, languesParlees, messageType)
 VALUES
-    (1, TRUE,  'Français, Anglais', 'Message A'),
-    (2, TRUE, 'Espagnol, Français, Anglais', 'Message B');
+    (1, 'FR7630001007941234567890185', TRUE,  'Français, Anglais', 'Message A'),
+    (2, 'FR7630004000031234567890143', TRUE, 'Espagnol, Français, Anglais', 'Message B');
 
 
     
@@ -302,8 +317,8 @@ VALUES
     (80, 'Appartement cozy', 'Un adorable appartement dans les bois', 'Cet appartement est parfait pour un weekend en amoureux.', 'appartement','9 rue des serpentins','22500','Lannion', 1, 'appartement.jpg', TRUE, 4, 2, 1, 150.0),
     (100.2, 'Cave spacieuse', 'Au coeur de la ville', 'Profitez de la vie urbaine grâce à cette magnifique cave.', 'cave','2 rue des tulipes','63000','Strasbourg', 2, 'cave.jpg', TRUE, 3, 1, 2, 120.0);
 
-INSERT INTO Chambre (numLogement, nbLitsSimples, nbLitsDoubles) VALUES (1, 2, 3);
-INSERT INTO Chambre (numLogement, nbLitsSimples, nbLitsDoubles) VALUES (1, 2, 3);
+INSERT INTO Chambre (numChambre,numLogement, nbLitsSimples, nbLitsDoubles) VALUES (1,1, 2, 3);
+INSERT INTO Chambre (numChambre,numLogement, nbLitsSimples, nbLitsDoubles) VALUES (2,1, 2, 3);
 
 -- Insertion de données dans la table Reservation
 INSERT INTO Reservation (numClient, numLogement, dateReservation, nbPersonnes, dateDebut, dateFin, dateDevis, nbJours, optionAnnulation)
@@ -342,19 +357,11 @@ VALUES
     (1, 10, 80, 560, 600, 40, 48, 12, 660),
     (2, 90, 100, 600, 660, 60, 72, 18, 720);
 
--- Insertion de données dans la table Services
-INSERT INTO Services (numLogement, installationsOffertes, equipementsProposes, servicesComplementaires, amenagementsProposes, chargesAdditionnelles)
-VALUES
-    (1,'toilettes' ,'wifi, TV', 'Petit-déjeuner inclus', 'Piscine, Salle de sport', 'Ménage 50€'),
-    (2, 'salle de bains','wifi, parking', 'Service de chambre', 'Jardin', 'Supplément animal de compagnie 25€');
-
--- Insertion de données dans la table AviClient
-INSERT INTO AvisClient (idCompte, idDestinataire, idAvis)
-VALUES
-    (1, 2, 3),
-    (2, 1, 4),
-    (3, 2, 5),
-    (1, 2, 6);
+-- Insertion de données dans la table Avis_Client
+INSERT INTO AvisClient (idCompte, idAvis) 
+VALUES 
+    ('1', '1'),
+    ('1', '2');
 
 -- Insertion de données dans la table LogementProprio
 INSERT INTO LogementProprio (numLogement,idCompte) 
@@ -368,7 +375,4 @@ VALUES
     (1, 'photo.png'),
     (2, 'photo.jgp');
 
-
 INSERT INTO Admin (pseudo_admin, mdp_admin) VALUES ('admin', 'admin');
-
-

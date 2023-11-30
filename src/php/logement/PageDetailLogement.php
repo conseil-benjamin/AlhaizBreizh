@@ -25,27 +25,49 @@ if (isset($_GET['numLogement'])) {
                     $phrase_accroche = isset($row[3]) ? $row[3] : null;
                     $detail_description = isset($row[4]) ? $row[4] : null;
                     $type_logement = ucfirst($row[5]);
-                    $proprio = isset($row[6]) ? $row[6] : null;
-                    $photo_logement = isset($row[7]) ? $row[7] : null;
-                    $photoCouverture = isset($row[7]) ? $row[7] : null;
-                    $LogementEnLigne = isset($row[8]) ? $row[8] : null;
-                    $nb_personnes = isset($row[9]) ? $row[9] : null;
-                    $nb_chambres = isset($row[10]) ? $row[10] : null;
-                    $nbLitsSimples = isset($row[11]) ? $row[11] : null;
-                    $nbLitsDoubles = isset($row[12]) ? $row[12] : null;
-                    $detailsLitsDispos = isset($row[13]) ? $row[13] : null;
+                    $localisation = isset($row[8]) ? $row[8] : null;
+                    $localisation_speci = isset($row[6]) ? $row[6] : null;
+                    $proprio = isset($row[9]) ? $row[9] : null;
+                    $photo_logement = isset($row[10]) ? $row[10] : null;
+                    $photoCouverture = isset($row[10]) ? $row[10] : null;
+                    $LogementEnLigne = isset($row[11]) ? $row[11] : null;
+                    $nb_personnes = isset($row[12]) ? $row[12] : null;
+                    $nb_chambres = isset($row[13]) ? $row[13] : null;
                     $nb_sdb = isset($row[14]) ? $row[14] : null;
                     $prix = isset($row[15]) ? $row[15] : null;
                 }
 
+                // Récupération des chambres
+                $stmt = $pdo->prepare("SELECT nbLitsSimples, nbLitsDoubles FROM ldc.Chambre WHERE numLogement = $numLogement");
+                $stmt->execute();
+                while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+                    $nbLitsSimples = isset($row[0]) ? $row[0] : null;
+                    $nbLitsDoubles = isset($row[1]) ? $row[1] : null;
+                }
+
                 if ($etat_logement || $_SESSION['id'] == $proprio){
-                    // Récupération des listes: installations, équipements, services
-                    $stmt = $pdo->prepare("SELECT installationsOffertes, equipementsProposes, servicesComplementaires FROM ldc.Services WHERE numLogement = $numLogement");
+                    // Récupération des services
+                    $stmt = $pdo->prepare("SELECT nom FROM ldc.Service WHERE numLogement = $numLogement");
                     $stmt->execute();
+                    $liste_services = '';
                     while ($row = $stmt->fetch(PDO::FETCH_NUM)){
-                        $liste_installation = isset($row[0]) ? $row[0] : null;
-                        $liste_equipements = isset($row[1]) ? $row[1] : null;
-                        $liste_services = isset($row[2]) ? $row[2] : null;
+                        $liste_services .= isset($row[0]) ? $row[0] : '';
+                    }
+
+                    // Récupération des equipements
+                    $stmt = $pdo->prepare("SELECT nom FROM ldc.Equipement WHERE numLogement = $numLogement");
+                    $stmt->execute();
+                    $liste_equipements = '';
+                    while ($row = $stmt->fetch(PDO::FETCH_NUM)){
+                        $liste_equipements .= isset($row[0]) ? $row[0] : '';
+                    }
+
+                    // Récupération des installations
+                    $stmt = $pdo->prepare("SELECT nom FROM ldc.Installation WHERE numLogement = $numLogement");
+                    $stmt->execute();
+                    $liste_installation = '';
+                    while ($row = $stmt->fetch(PDO::FETCH_NUM)){
+                        $liste_installation .= isset($row[0]) ? $row[0] : '';
                     }
                     // Récupérations des informations concernant le propriétaire
                     $stmt = $pdo->prepare("SELECT firstName,lastName,languesParlees
@@ -59,14 +81,6 @@ if (isset($_GET['numLogement'])) {
                         $liste_langue_parle = isset($row[2]) ? $row[2] : null;
                     }
                     $photo_profil_proprio = '/public/img/photos_profil/'.$proprio.'.png'; 
-                    
-                    // Récupération de la localisation
-                    $stmt = $pdo->prepare("SELECT ville,rue FROM ldc.localisation WHERE numLogement = $numLogement");
-                    $stmt->execute();
-                    while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-                        $localisation = isset($row[0]) ? $row[0] : null;
-                        $localisation_speci = isset($row[1]) ? $row[1] : null;
-                    }
 
                     $img = '/public/img/logements/'.$numLogement.'/1.png';
                         //Récupérer les images logement
@@ -98,7 +112,6 @@ if (isset($_GET['numLogement'])) {
                     $nb_chambres = null;
                     $nbLitsSimples = null;
                     $nbLitsDoubles = null;
-                    $detailsLitsDispos = null;
                     $nb_sdb = null;
                     $prix =null;
                 }
