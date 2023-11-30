@@ -1,9 +1,9 @@
 <?php
-$numReservation = $_POST['$numReservation'] ?? 6;
+$numReservation = $_GET['$numReservation'] ?? 1;
 global $pdo;
 include("../connect.php");
 try {
-    $sqlResa = "SELECT * FROM ldc.reservation";
+    $sqlResa = "SELECT * FROM ldc.reservation where numreservation=$numReservation";
     $sqlLogement ="SELECT libelle,devis.numLogement,l.proprio FROM ldc.devis INNER JOIN ldc.logement l on devis.numlogement = l.numlogement";
     $stmt = $pdo->prepare($sqlResa);
     $stmt->execute();
