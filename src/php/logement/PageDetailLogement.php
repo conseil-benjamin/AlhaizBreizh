@@ -6,7 +6,7 @@ $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
 
 if (isset($_GET['numLogement'])) {
     $numLogement = $_GET['numLogement'];
- 
+    $_SESSION['num_logement'] = $numLogement;
     if (isset($pdo)&&!empty($numLogement)) {
         // Vérifier si numLogement existe dans la base de données
         $stmt = $pdo->query("SELECT COUNT(*) FROM ldc.Logement WHERE numLogement = $numLogement");
@@ -36,6 +36,10 @@ if (isset($_GET['numLogement'])) {
                     $nb_sdb = isset($row[14]) ? $row[14] : null;
                     $prix = isset($row[15]) ? $row[15] : null;
                 }
+
+                // le nom pour la demande de devis
+
+                $_SESSION["nom_bien"] = $titre_offre;
 
                 // Récupération des chambres
                 $stmt = $pdo->prepare("SELECT nbLitsSimples, nbLitsDoubles FROM ldc.Chambre WHERE numLogement = $numLogement");

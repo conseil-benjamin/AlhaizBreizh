@@ -2,7 +2,7 @@
 
 // Vérifie que la session est bien initialisée
 if(isset($_SESSION)) {
-    $id_client = $_SESSION['id_client'];
+    $id_client = $_SESSION['id'];
     $numLogement = $_SESSION['num_logement'];
 }
 else {

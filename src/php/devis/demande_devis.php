@@ -1,8 +1,8 @@
 <?php
     if (isset($_SESSION)) {
         $nom = $_SESSION["nom_bien"];
-        $nbNuit = $_SESSION["nbNuit"];
-        $prixNuit = $_SESSION["prixNuit"];
+        $nbNuit = $_POST["date_arrivee"];
+        $prixNuit = "6,8";
     } else {
         $nom = "Superbe Maison au bord de la plage";
         $nbNuit = "6";
