@@ -28,6 +28,13 @@
                     $contrainteArriveeDepart = isset($calendrierData[4]) ? $calendrierData[4] : null;
                 }
 
+                //Récupérer le tarif par nuitée par défaut
+                $stmtTarifDefaut = $pdo->prepare("SELECT * FROM ldc.Logement WHERE numLogement = $numLogement");
+                $stmtTarifDefaut->execute();
+                while($logementData = $stmtTarifDefaut->fetch(PDO::FETCH_NUM)){
+                    $tarifDefaut = isset($logementData[15]) ? $logementData[15] : null;
+                }
+    
                 //Récupérer les données des plages de disponibilité du calendrier
                 $stmtPlagesDispo = $pdo->prepare("SELECT * FROM ldc.PlageDeDisponibilite WHERE numCal = $numCal");
                 $stmtPlagesDispo->execute(); 
@@ -76,7 +83,11 @@
                     if (strtotime($datedebutplage) && strtotime($datefinplage) && is_numeric($tarifjournalier)) {
                         $stmt = $pdo->prepare("INSERT INTO ldc.PlageDeDisponibilite (numCal, datedebutplage, datefinplage, tarifjournalier) 
                             VALUES (?, ?, ?, ?) ");
-                        $stmt->execute([$numCal, $datedebutplage, $datefinplage, $tarifjournalier]);
+                        $stmt->bindParam(1, $numCal);
+                        $stmt->bindParam(2, $datedebutplage);
+                        $stmt->bindParam(3, $datefinplage);
+                        $stmt->bindParam(4, $tarifjournalier);
+                        $stmt->execute();
                 
                         // Rafraîchit les plages de disponibilité
                         header("Refresh:0");
@@ -92,13 +103,15 @@
                     if (strtotime($datedebutplagei) && strtotime($datefinplagei)) {
                         $stmt = $pdo->prepare("INSERT INTO ldc.PlageIndisponibilite (numCal, datedebutplagei, datefinplagei) 
                             VALUES (?, ?, ?) ");
-                        $stmt->execute([$numCal, $datedebutplagei, $datefinplagei]);
+                        $stmt->bindParam(1,$numCal);
+                        $stmt->bindParam(2,$datedebutplagei);
+                        $stmt->bindParam(3,$datefinplagei);
+                        $stmt->execute();
                 
                         // Rafraîchit les plages de disponibilité
                         header("Refresh:0");
                     }
                 }
-
             }else{
                 echo "Le numéro de logement spécifié n'existe pas.";
             }
@@ -256,7 +269,7 @@
                                 <input type="date" name="datefinplage" required>
 
                                 <label for="tarifjournalier">Tarif journalier :</label>
-                                <input type="number" name="tarifjournalier" step="0.01" required>
+                                <input type="number" name="tarifjournalier" placeholder="<?php echo $tarifDefaut?>" step="0.01" required>
 
                                 <input type="submit" name="submitPlageDispo" value="Ajouter">
                             </form>
