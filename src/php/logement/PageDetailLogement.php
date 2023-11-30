@@ -45,7 +45,7 @@ if (isset($_GET['numLogement'])) {
                     $nbLitsDoubles = isset($row[1]) ? $row[1] : null;
                 }
 
-                if ($etat_logement || $_SESSION['id'] == $proprio){
+                if ($etat_logement || (isset($_SESSION['id']) && $_SESSION['id'] == $proprio)){
                     // Récupération des services
                     $stmt = $pdo->prepare("SELECT nom FROM ldc.Service WHERE numLogement = $numLogement");
                     $stmt->execute();
@@ -96,10 +96,10 @@ if (isset($_GET['numLogement'])) {
 
                         for ($i = 1; $i <= $nombre_fichiers; $i++) {
                             ${"img".$i}='/public/img/logements/'.$numLogement.'/'.$i.'.png';
-                            }
+                        }
                     
 
-                }elseif (!$etat_logement && $_SESSION['id'] != $proprio) {
+                }elseif (!$etat_logement && isset($_SESSION['id']) && $_SESSION['id'] != $proprio) {
                     $surfaceHabitable = null;
                     $titre_offre = null;
                     $phrase_accroche = null;
@@ -112,6 +112,7 @@ if (isset($_GET['numLogement'])) {
                     $nb_chambres = null;
                     $nbLitsSimples = null;
                     $nbLitsDoubles = null;
+                    $detailsLitsDispos = null;
                     $nb_sdb = null;
                     $prix =null;
                 }
@@ -236,16 +237,12 @@ if (!isset($liste_langue_parle)) {
                         </p><?php 
                     }
                 }
-            if (($numLogementExists && $etat_logement !=[]) || ($numLogementExists && $_SESSION['id'] == $proprio && !$etat_logement) || ($etat_logement!=[] && $_SESSION['id'] != $proprio)) {#gestion_exisence70
+            if (($numLogementExists && $etat_logement) || ($numLogementExists && isset($_SESSION['id']) && $_SESSION['id'] == $proprio && !$etat_logement) || ($etat_logement && isset($_SESSION['id']) && $_SESSION['id'] != $proprio)) {#gestion_exisence70
 
-                if (isset($_SESSION['id']) && $numLogementExists) {
-                    if ($_SESSION['id'] == $proprio) {?>
-                        <section class="tete_offre_proprio">
-
-                    <?php
-                    }
+                if (isset($_SESSION['id']) && $numLogementExists && $_SESSION['id'] == $proprio) { ?>
+                        <section class="tete_offre_proprio"> <?php
                 }else { ?>
-                <section class="tete_offre">
+                    <section class="tete_offre">
                 <?php }
                     if (!isset($photo_logement)) { ?>
                         
