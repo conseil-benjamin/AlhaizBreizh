@@ -12,7 +12,7 @@
 <div id="contenu">
     <?php include($_SERVER['DOCUMENT_ROOT'] . '/src/php/header.php'); ?>
     <h1> Inscription </h1>
-    <form action="inscriptionValidation.php" enctype="multipart/form-data" method="POST" id="formulaire">
+    <form action="inscription.php" enctype="multipart/form-data" method="POST" id="formulaire">
         <div>
             <div id="infosPerso">
                 <!-- Nom -->
@@ -89,7 +89,7 @@
 
                 <div class="labelGrp">
                     <!-- Mot de passe -->
-                    <label for="mdp">Mot de passe :</label>
+                    <label for="mdp">Mot de passe (minimum 10 caractères, maximum 50) :</label>
                     <input id="mdp" name="mdp" required type="password">
                 </div>
 
@@ -121,4 +121,7 @@
 </body>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="../../js/inscription.js"></script>
+<?php
+    require("inscriptionValidation.php");
+?>
 </html>

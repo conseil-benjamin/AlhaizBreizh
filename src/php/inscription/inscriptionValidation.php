@@ -38,33 +38,7 @@ if (isset($_FILES['photo_profil']) && $_FILES['photo_profil']['error'] === UPLOA
     $destinationChemin = $dest . $nomRnd.".png";
     move_uploaded_file($src, $destinationChemin);
 }
+
+echo "<script> notifSucessInscription()  </script>";
 ?>
 
-
-?>
-
-
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta content="IE=edge" http-equiv="X-UA-Compatible">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <link href="/src/styles/inscription.css" rel="stylesheet" type="text/css">
-    <link href="/src/styles/styles.css" rel="stylesheet" type="text/css">
-    <title>S'inscrire</title>
-</head>
-<body>
-<?php include($_SERVER['DOCUMENT_ROOT'] . '/src/php/header.php'); ?>
-<div id="contenu">
-    <h1> Votre Inscription a bien été enregistré </h1>
-    <h2>
-        Vous pouvez maintenant :
-    </h2>
-    <ul>
-        <li><h2> - <a href="/#logement">Voir tous les logements du site</a></h2></li>
-        <li><h2> - Passer Propriétaire</li>
-    </ul>
-</div>
-<?php include($_SERVER['DOCUMENT_ROOT'] . '/src/php/footer.php'); ?>
-</body>
-</html>

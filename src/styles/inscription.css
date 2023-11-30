@@ -161,6 +161,10 @@ input[type='file'] {
 
 @media screen and (max-width: 760px) {
     form > div {
+        flex-direction: column;
+    }
+
+    #validation {
         flex-direction: column-reverse;
     }
 

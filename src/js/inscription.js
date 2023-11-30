@@ -29,7 +29,7 @@ function validerForm() {
         msgErreur += "Le champ 'Nom' est vide.\n"
     }
     if (prenom === "") {
-        msgErreur += "Le champ 'Prènom' est vide.\n"
+        msgErreur += "Le champ 'Prénom' est vide.\n"
     }
     if (numTel === "") {
         msgErreur += "Le champ 'Numéro de téléphone' est vide.\n"
@@ -66,6 +66,9 @@ function validerForm() {
     }
     if (mdp === "") {
         msgErreur += "Le champ 'Mot de passe' est vide.\n"
+    }
+    else if (mdp.size < 10) {
+        msgErreur += "Votre mot de passe est trop court.\n"
     }
     if (confirmerMdp === "") {
         msgErreur += "Le champ 'Confirmer le mot de passe' est vide.\n"
@@ -115,8 +118,7 @@ function formatTelephone(input) {
 
     if (valPropre.length > 2) {
         // Ajouter des espaces entre chaque paire de chiffres
-        const formatter = valPropre.replace(/(\d{2})(?=\d)/g, '$1 ');
-        input.value = formatter;
+        input.value = valPropre.replace(/(\d{2})(?=\d)/g, '$1 ');
     } else {
         input.value = valPropre;
     }
@@ -166,6 +168,25 @@ function notifFormInvalide(err) {
         text: err,
         icon: "warning",
     })
+}
+
+function notifErreurInscription() {
+    swal({
+        title: "Une erreur est survenu lors de l'inscription",
+        text: "Pas de panique, ce n'est pas de votre faute",
+        icon: "error",
+    })
+}
+
+function notifSucessInscription() {
+    swal({
+        title: "Vous avez bien été inscrit",
+        text: "Bienvenue sur notre Site",
+        icon: "success",
+        button : "Revenir à l\'acceuil"
+    }).then(() => {
+        window.location.href = "../connexion/connexion.php"}
+    )
 }
 
 btnValiderHTMLelement.addEventListener("click", (e) => handleClickBtnValider(e))
