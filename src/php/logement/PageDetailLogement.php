@@ -35,11 +35,12 @@ if (isset($_GET['numLogement'])) {
                     $nb_chambres = isset($row[13]) ? $row[13] : null;
                     $nb_sdb = isset($row[14]) ? $row[14] : null;
                     $prix = isset($row[15]) ? $row[15] : null;
+                    $_SESSION["nom_bien"] = $titre_offre;
+                    $_SESSION["prixNuit"] = $prix;
                 }
 
                 // le nom pour la demande de devis
 
-                $_SESSION["nom_bien"] = $titre_offre;
 
                 // Récupération des chambres
                 $stmt = $pdo->prepare("SELECT nbLitsSimples, nbLitsDoubles FROM ldc.Chambre WHERE numLogement = $numLogement");

@@ -183,7 +183,7 @@ function notifSucessInscription() {
         title: "Vous avez bien été inscrit",
         text: "Bienvenue sur notre Site",
         icon: "success",
-        button : "Revenir à l\'acceuil"
+        button : "Aller à l'écran de connexion"
     }).then(() => {
         window.location.href = "../connexion/connexion.php"}
     )
