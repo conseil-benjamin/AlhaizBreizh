@@ -12,18 +12,28 @@ try {
         ':lastName' => $_POST["nom"],
         ':mail' => $_POST["email"],
         ':numeroTel' => $_POST["num_tel"],
-        ':photoProfil' => 'photo2.jpg',
+        ':photoProfil' => $_FILES['file']['name'],
         ':civilite' => $_POST["civilite"],
         ':adressePostale' => $_POST["adresse"],
         ':pseudoCompte' => $_POST["identifiant"],
         ':motDePasse' => $_POST["mdp"],
         ':dateNaissance' => $_POST["date_naissance"],
-        ':notationMoyenne' => '0'
+        ':notationMoyenne' => 'NULL'
     ]);
 } catch (PDOException $err) {
     print_r($err);
     die();
 }
+
+$dest = "/public/img/photos_profil";
+if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
+    $src = $_FILES['file']['tmp_name'];
+    $destinationChemin = $dest . $_FILES['file']['name'];
+    move_uploaded_file($src, $destinationChemin);
+}
+?>
+
+
 ?>
 
 

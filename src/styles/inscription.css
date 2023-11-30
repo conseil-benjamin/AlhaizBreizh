@@ -142,9 +142,24 @@ input[type='checkbox'] {
     margin-bottom: 4vh;
 }
 
+input[type='file'] {
+    display: none;
+}
+
+#photoProfil > img {
+    height: 48px;
+    margin-right: 1vw;
+}
+
+
+#photoProfil {
+    display: flex;
+    align-items: center;
+}
+
 @media screen and (max-width: 760px) {
     form > div {
-        flex-direction: column;
+        flex-direction: column-reverse;
     }
 
     form > div > div {

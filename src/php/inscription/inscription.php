@@ -99,9 +99,9 @@
                     <input id="confirmer_mdp" name="confirmer_mdp" required type="password">
                 </div>
 
-                <h2> Tous les champs sont obligatoires</h2>
+                <h2>Les champs marqués de (?) sont optionnels, les autres sont obligatoires</h2>
                 <div class="labelGrp">
-                    <label for="photo_profil">Choisir une photo de profil :</label>
+                    <label for="photo_profil" id="photoProfil"> <img src="/public/icons/user.svg" alt="Illustration photo de profile"/> Choisir une photo de profil : (?)</label>
                     <input accept="image/*" id="photo_profil" name="photo_profil" type="file">
                 </div>
             </div>
@@ -111,10 +111,9 @@
             <button class="boutton" type="submit" id="valider">Créer son compte</button>
             <div>
                 <label for="accept_conditions">J'ai lu et j'accepte les Conditions Générales d'Utilisation, la Politique
-                    des données personnelles et les Conditions Générales de Ventes d’Alhaiz Breih</label>
+                    des données personnelles et les Conditions Générales de Ventes d’Alhaiz Breizh</label>
                 <input id="accept_conditions" name="accept_conditions" required type="checkbox">
             </div>
-
         </div>
     </form>
 </div>
