@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -11,9 +12,7 @@
     <title>Creation Logement</title>
 </head>
 <body>
-    <?php
-        include '../header.php';
-    ?>
+    <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/header.php'); ?>
     <h1>Création d’un nouveau logement</h1>
     <hr>
     <form id="myForm" method="post" action="insertDatabase.php" enctype="multipart/form-data">
@@ -22,7 +21,7 @@
             <label for="title">Titre de l'annonce (*)</label>
             <input type="text" id="title" name="title" size="60" placeholder="Titre" maxlength="100">
             <label for="description">Description de l'annonce (*)</label>
-            <textarea name="description" id="description" cols="46" rows="20" placeholder="Description" maxlength="500"></textarea>
+            <textarea name="description" id="description" cols="56" rows="20" placeholder="Description" maxlength="500"></textarea>
             <div class="custom-file-input">
                 Ajouter photos
                 <input type="file" id="photos" name="photos" accept=".jpg, .jpeg, .png" multiple onchange="afficherNomsPhotos()">
@@ -76,7 +75,7 @@
                 </div>
             </div>
             <label for="accroche">Phrase d'accroche</label>
-            <textarea name="accroche" id="accroche" cols="45" rows="10" placeholder="Laisser une petite accroche"></textarea>
+            <textarea name="accroche" id="accroche" cols="55" rows="10" placeholder="Laisser une petite accroche"></textarea>
             <div class="nbPrixEtPersonnesDiv">
                 <div class="div-label-nbPers">
                     <label for="nbMaxPers">Nombre de personnes max (*)</label>

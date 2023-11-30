@@ -92,6 +92,7 @@ textarea {
   margin-left: 1em;
   border-radius: 15px;
   padding: 1em;
+  width: max-content;
 }
 
 h1 {
