@@ -142,10 +142,18 @@ CREATE TABLE Calendrier (
 
 -- Table PlageDeDisponibilite
 CREATE TABLE PlageDeDisponibilite (
-    numCal SERIAL NOT NULL PRIMARY KEY,    
+    numPlage SERIAL PRIMARY KEY,
+    numCal INTEGER NOT NULL,    
     dateDebutPlage DATE,
     dateFinPlage DATE,
     tarifJournalier INTEGER
+);
+
+CREATE TABLE PlageIndisponibilite(
+    numPlageI SERIAL PRIMARY KEY,
+    numCal INTEGER NOT NULL,
+    dateDebutPlageI DATE,
+    dateFinPlageI DATE
 );
 
 -- Table Proprietaire
@@ -241,6 +249,7 @@ ALTER TABLE Reservation ADD CONSTRAINT reservation_client_fk FOREIGN KEY (numCli
 ALTER TABLE Reservation ADD CONSTRAINT reservation_logement_fk FOREIGN KEY (numLogement) REFERENCES Logement (numLogement);
 ALTER TABLE Calendrier ADD CONSTRAINT calendrier_logement_fk FOREIGN KEY (numLogement) REFERENCES Logement (numLogement);
 ALTER TABLE PlageDeDisponibilite ADD CONSTRAINT plagededisponibilite_calendrier_fk FOREIGN KEY (numCal) REFERENCES Calendrier (numCal);
+ALTER TABLE PlageIndisponibilite ADD CONSTRAINT plageindisponibilite_calendrier_fk FOREIGN KEY (numCal) REFERENCES Calendrier (numCal);
 ALTER TABLE Proprietaire ADD CONSTRAINT proprietaire_client_fk FOREIGN KEY (idCompte) REFERENCES Client (idCompte);
 ALTER TABLE Tarification ADD CONSTRAINT tarification_devis_fk FOREIGN KEY (numDevis) REFERENCES Devis (numDevis);
 ALTER TABLE Devis_Client_Reservation ADD CONSTRAINT devis_client_reservation_fk1 FOREIGN KEY (numDevis) REFERENCES Devis (numDevis);
@@ -345,8 +354,15 @@ VALUES
 -- Insertion de données dans la table PlageDeDisponibilite
 INSERT INTO PlageDeDisponibilite (numCal, dateDebutPlage, dateFinPlage, tarifJournalier)
 VALUES
-    (1, '01-11-2023', '2023-11-07', 100),
-    (2, '05-11-2023', '2023-11-10', 120);
+    (2, '2023-11-20', '2023-11-27', 100),
+    (1, '2023-11-10', '2023-11-12', 120);
+    
+-- Insertion de données dans la table PlageDeDisponibilite
+INSERT INTO PlageIndisponibilite (numCal, dateDebutPlageI, dateFinPlageI)
+VALUES
+    (2, '2023-11-10', '2023-11-20'),
+    (1, '2023-11-20', '2023-11-23');
+
 
 -- Insertion de données dans la table Favoris
 INSERT INTO FavorisClient (idCompte, numLogement)
@@ -388,7 +404,7 @@ INSERT INTO Admin (pseudo_admin, mdp_admin) VALUES ('admin', 'admin');
 INSERT INTO Logement (surfaceHabitable, libelle, accroche, descriptionLogement, natureLogement, adresse, cp, ville, proprio, photoCouverture, LogementEnLigne, nbPersMax, nbChambres, nbSalleDeBain, tarifNuitees)
 VALUES
 (50, 'Appartement de charme', 'Un appartement cosy en plein centre-ville de Rennes', 'Cet appartement est situé au cœur de Rennes, à proximité de toutes les commodités. Il est idéal pour un séjour en amoureux ou un week-end en ville.', 'appartement', '2 rue du Chapitre', 35000, 'Rennes', 2, 'appartement_rennes.jpg', TRUE, 2, 1, 1, 100.0),
-(70, 'Maison de campagne', 'Une maison de famille au bord de la mer', 'Cette maison est située à seulement quelques minutes de la plage de Saint-Malo. Elle est idéale pour des vacances en famille ou entre amis.', 'maison', '12 rue de la plage', 35400, 'Saint-Malo', 2, 'maison_saintmalo.jpg', TRUE, 6, 3, 2, 200.0),
+(70, 'Grande maison familiale', 'Une maison de famille au bord de la mer', 'Cette maison est située à seulement quelques minutes de la plage de Saint-Malo. Elle est idéale pour des vacances en famille ou entre amis.', 'maison', '12 rue de la plage', 35400, 'Saint-Malo', 2, 'maison_saintmalo.jpg', TRUE, 6, 3, 2, 200.0),
 (80, 'Gîte au bord du lac', 'Un gîte confortable en pleine nature', 'Ce gîte est situé au bord du lac de Guerlédan. Il est idéal pour des vacances en amoureux ou un week-end en randonnée.', 'gite', '10 rue du lac', 22590, 'Mûr-de-Bretagne', 2, 'gite_guerledan.jpg', TRUE, 4, 2, 1, 150.0),
 (100, 'Château de charme', 'Une expérience unique dans un château historique', 'Ce château est situé au cœur de la campagne bretonne. Il est idéal pour un séjour romantique ou un événement spécial.', 'chateau', '1 rue du château', 29500, 'Quimper', 2, 'chateau_quimper.jpg', TRUE, 10, 5, 3, 300.0);
 

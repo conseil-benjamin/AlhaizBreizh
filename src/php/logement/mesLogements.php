@@ -1,7 +1,7 @@
 <?php 
     session_start(); 
     if (!isset($_SESSION['id'])) {
-        header('Location: /src/php/connection.php');
+        header('Location: /src/php/connexion/connexion.php');
     } else if ($_SESSION['proprio'] == false) {
         header('Location: /');
     }

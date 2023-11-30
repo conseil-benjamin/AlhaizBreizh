@@ -6,7 +6,7 @@ $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
 
 if (isset($_GET['numLogement'])) {
     $numLogement = $_GET['numLogement'];
- 
+    $_SESSION['num_logement'] = $numLogement;
     if (isset($pdo)&&!empty($numLogement)) {
         // Vérifier si numLogement existe dans la base de données
         $stmt = $pdo->query("SELECT COUNT(*) FROM ldc.Logement WHERE numLogement = $numLogement");
@@ -36,6 +36,10 @@ if (isset($_GET['numLogement'])) {
                     $nb_sdb = isset($row[14]) ? $row[14] : null;
                     $prix = isset($row[15]) ? $row[15] : null;
                 }
+
+                // le nom pour la demande de devis
+
+                $_SESSION["nom_bien"] = $titre_offre;
 
                 // Récupération des chambres
                 $stmt = $pdo->prepare("SELECT nbLitsSimples, nbLitsDoubles FROM ldc.Chambre WHERE numLogement = $numLogement");
@@ -238,8 +242,9 @@ if (!isset($liste_langue_parle)) {
                                 <a href="?action=activer&numLogement=<?php echo $numLogement ?>" class="bouton_modification">Mettre l'annonce en ligne</a>
                             <?php } else { ?>
                                 <a href="?action=desactiver&numLogement=<?php echo $numLogement ?>" class="bouton_modification">Mettre l'annonce hors ligne</a>
-                            <?php } ?>
-                            <a href="#" class="bouton_modification">Modifier l'annonce</a>
+                            <?php } 
+                            $_SESSION['numLogement']=$numLogement?>
+                            <a href="/src/php/logement/modif.php" class="bouton_modification">Modifier l'annonce</a>
                             <a href="#" class="bouton_modification">Supprimer l'annonce</a>
                         </p><?php 
                     }
@@ -555,7 +560,10 @@ if (!isset($liste_langue_parle)) {
                                 ?>
                             </ul>
                             <br>
+                            <?php $_SESSION['numLogement']=$numLogement; ?>
+                            <a href="/src/php/calendrier/afficherPlageDispo.php?numLogement=<?php echo $_GET['numLogement'] ?>" class="bouton_disponible">Voir les disponibilitées du logement</a>
                         </section>
+
                         <section class="reserve_contact">
                             <div class="resa_colle">
                                 <article class="reserve">
@@ -610,6 +618,10 @@ if (!isset($liste_langue_parle)) {
                         <p>Il n'y a pas encore d'avis pour cette annonce.</p>
                     </div>
                 </section>
+                </main>
+                <?php
+                include($_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'); ?>
+
                 <?php }else {?>
                     <div class="wrapper">
                         <video autoplay playsinline muted loop preload poster="http://i.imgur.com/xHO6DbC.png">
@@ -637,11 +649,10 @@ if (!isset($liste_langue_parle)) {
                             </a>
                         </div>
                     </div>
+                </main>
 
         <?php
         }; ?>  
-        </main>
-        <?php
-         include($_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'); ?>
+
     </body>
 </html>

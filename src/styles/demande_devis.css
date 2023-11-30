@@ -189,5 +189,59 @@ textarea:invalid {
 .last {
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+}
 
+@media screen and (max-width: 760px) {
+    section#entete h1 {
+        margin-left: 10px;
+    }
+
+    #formulaire {
+        flex-direction: column;
+    }
+
+    #prixDiv {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .input1 {
+        width: 70%;
+    }
+
+    #prixDiv > ul {
+        width: 100%;
+    }
+
+    #prixDiv > div {
+        margin-top: 2vh;
+    }
+
+    #service {
+        margin-top: 8vh;
+    }
+
+    #total {
+        margin-top: 4vh;
+    }
+
+    #envoyer {
+        width: 67vw;
+    }
+
+    .supplement > input {
+        width: 5vw;
+        height: auto;
+        align-self: normal;
+    }
+
+    .supplement {
+        height: 100%;
+        align-items: center;
+    }
+
+    #service li {
+        height: 5vh;
+    }
 }
