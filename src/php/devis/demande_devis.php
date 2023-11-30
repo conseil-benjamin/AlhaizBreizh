@@ -2,7 +2,7 @@
     if (isset($_SESSION)) {
         $nom = $_SESSION["nom_bien"];
         $nbNuit = $_POST["date_arrivee"];
-        $prixNuit = "6,8";
+        $prixNuit = $_SESSION['prixNuit'];
     } else {
         $nom = "Superbe Maison au bord de la plage";
         $nbNuit = "6";
