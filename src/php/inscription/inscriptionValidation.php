@@ -1,5 +1,5 @@
 <?php
-if (!isset($_POST)) {
+if (!isset($_POST["prenom"])) {
     die();
 }
 $characters = 'abcdefghijklmnopqrstuvwxyz';
@@ -29,6 +29,9 @@ try {
     ]);
 } catch (PDOException $err) {
     print_r($err);
+    die();
+}
+catch (Error $err) {
     die();
 }
 
