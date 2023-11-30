@@ -7,7 +7,7 @@
     $isProprioJSON = json_encode($isProprio);
 
     if (isset($_GET['numLogement'])) {
-        $numLogement = $_SESSION['numLogement'];
+        $numLogement = $_GET['numLogement'];
 
         if (isset($pdo)&&!empty($numLogement)) {
             // Vérifier si numLogement existe dans la base de données

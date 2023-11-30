@@ -561,7 +561,7 @@ if (!isset($liste_langue_parle)) {
                             </ul>
                             <br>
                             <?php $_SESSION['numLogement']=$numLogement; ?>
-                            <a href="/src/php/calendrier/afficherPlageDispo.php" class="bouton_disponible">Voir les disponibilitées du logement</a>
+                            <a href="/src/php/calendrier/afficherPlageDispo.php?numLogement=<?php echo $_GET['numLogement'] ?>" class="bouton_disponible">Voir les disponibilitées du logement</a>
                         </section>
 
                         <section class="reserve_contact">
