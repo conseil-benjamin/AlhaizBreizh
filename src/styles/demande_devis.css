@@ -191,6 +191,7 @@ textarea:invalid {
     border-bottom-right-radius: 10px;
 }
 
+
 @media screen and (max-width: 760px) {
     section#entete h1 {
         margin-left: 10px;
@@ -243,5 +244,11 @@ textarea:invalid {
 
     #service li {
         height: 5vh;
+    }
+}
+
+@media screen and (max-width: 445px) {
+    #envoyer {
+        width: 75vw;
     }
 }
