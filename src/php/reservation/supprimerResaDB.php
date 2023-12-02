@@ -1,5 +1,6 @@
 <?php
-$numReservation = $_POST['numReservation'];
+print_r($_GET);
+$numReservation = $_GET['numReservation'];
 global $pdo;
 include("../connect.php");
 try {

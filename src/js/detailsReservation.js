@@ -3,9 +3,8 @@
  */
 function annulerResa() {
         let numReservation = 1;
-    fetch("/src/php/reservation/supprimerResaDB.php", {
-            method: "POST",
-            body: numReservation.toString(),
+    fetch("/src/php/reservation/supprimerResaDB.php?numReservation=" + encodeURIComponent(numReservation.toString()), {
+        method: "GET",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
             },
