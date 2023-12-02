@@ -3,7 +3,7 @@
  */
 function annulerResa() {
         let numReservation = 1;
-        fetch("../php/reservation/supprimerResaDB.php", {
+    fetch("/src/php/reservation/supprimerResaDB.php", {
             method: "POST",
             body: numReservation.toString(),
             headers: {
@@ -79,7 +79,8 @@ function annulerSuccesPopUp() {
         button : "Revenir à la liste des réservations"
     }).then(() => {
         // TODO Changer avec l'url de la liste des réservation
-        window.location.href = "../../../index.php"}
+            window.location.href = "/src/php/reservation/listeResa.php"
+        }
     )
 }
 
