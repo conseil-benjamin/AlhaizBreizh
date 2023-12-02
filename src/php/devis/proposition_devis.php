@@ -1,4 +1,5 @@
 <?php
+session_start();
     if (isset($_SESSION)) {
         $nomBien = $_SESSION["nom_bien"];
     } else {

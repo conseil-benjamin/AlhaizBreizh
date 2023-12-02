@@ -13,7 +13,9 @@
     <nav>
         <ul>
             <a href="/index.php#logements"><li>Logements</li></a>
-            <a href=""><li>Réservations</li></a>
+            <a href="/src/php/reservation/listeResa.php">
+                <li>Réservations</li>
+            </a>
             <a href=""><li>À propos</li></a>
         </ul>
     </nav>

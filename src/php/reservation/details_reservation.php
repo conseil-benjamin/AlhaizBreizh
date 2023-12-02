@@ -1,4 +1,5 @@
 <?php
+session_start();
 global $photo_profil_proprio;
 $id = 1;
 $titreLogement = "Superbe maison au bord de la plage";
@@ -57,7 +58,8 @@ $nomProprio = "$prenom_proprio"." "."$nom_proprio";
                 <div id="nbPersonne" class="center"> <img src="../../../public/icons/nb_personnes.svg" alt="nbPersonne" /> <h1>7</h1></div>
             </div>
             <div id="etatDevis" class="<?php if ($devisRecu) { echo 'recu';} else { echo 'enattente';} ?>">
-                <a href='' download='devis.pdf'><img src="" alt="icon devis"/></a> <h2>
+                <a href='' download='devis.pdf'><img src="/public/icons/contract.svg" alt="icon devis"/></a>
+                <h2>
                 Devis reçu le <span id="dateDevis"> <?= $dateDevis ?></span></h2></div>
 
             <div id="prixDiv">

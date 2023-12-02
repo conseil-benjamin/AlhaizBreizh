@@ -1,13 +1,11 @@
 <?php
-    if (isset($_SESSION)) {
-        print_r($_SESSION);
+session_start();
+if (isset($_SESSION["id"])) {
         $nom = $_SESSION["nom_bien"];
         $nbNuit = $_POST["date_arrivee"];
         $prixNuit = $_SESSION["prixNuit"];
     } else {
-        $nom = "Superbe Maison au bord de la plage";
-        $nbNuit = "6";
-        $prixNuit = "6,8";
+    header("Location: /src/php/connexion/connexion.php");
     }
     ?>
 <!DOCTYPE html>
