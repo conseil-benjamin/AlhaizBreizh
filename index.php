@@ -79,6 +79,7 @@
         <title>ALHaiz Breizh</title>
     </head>
     <body>
+        <script src="/src/js/loading.js"></script>
         <?php include $_SERVER['DOCUMENT_ROOT'] .'/src/php/header.php'; ?>
         <video id="background" autoplay loop muted>
             <source src="/public/videos/video-bretagne.mp4" type="video/mp4">
