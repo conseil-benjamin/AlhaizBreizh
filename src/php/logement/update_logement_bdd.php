@@ -133,7 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         foreach ($chambres as $key => $value){
             if ($resultC['count']>=$key){ //Si la chambre est deja presente dans la bdd on l'update
                 $stmt = $pdo->prepare(
-                    "UPDATE ldc.chambre SET nblitdbl=$value[1], nblitsmpl=$value[0] WHERE numlogement=$id_logem and numchambre=$key");
+                    "UPDATE ldc.chambre SET nbLitsDoubles=$value[1], nbLitsSimples=$value[0] WHERE numlogement=$id_logem and numchambre=$key");
                 $stmt->execute();
             }
             else{ //Si le numero de la chambre est plus eleve que le nombre de chambre de la bdd, on l'ajoute
