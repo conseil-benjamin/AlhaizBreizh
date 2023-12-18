@@ -2,14 +2,16 @@
 /*Page de connexion*/
 #content{
     display: flex;
+    align-items: center;
+    justify-content: space-evenly;
     margin: 10em auto 0 auto;
     width: 80%;
-    height: 50vh;
+    max-height: 100%;
     background-color: var(--col1);
     border-radius: 10px;
     color: #fff;
     gap: 5em;
-    padding: 2em;
+    padding: 4em 2em;
 }
 
 .invalid{
@@ -21,9 +23,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 50%;
+    text-align: center;
     gap: 1em;
 }
 
@@ -64,7 +64,7 @@
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }
 
-.form div a{
+div#connexion a{
     text-decoration: underline;
     font-size: 12px;
 }
@@ -84,22 +84,22 @@
 }
 
 /*Inscription*/
-#inscription{
+#inscription > div{
     display: flex;
+    text-align: center;
+    font-size: 20px;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100%;
-    width: 50%;
+    font-family: "Montserrat", Arial, sans-serif;
     gap: 1em;
-    text-align: center;
 }
 
-
 #inscription a{
+    display: block;
     background-color: var(--col6);
-    font-size: 20px;
-    width: 75%;
+    font-weight: bolder;
+    width: 100%;
 }
 
 @media screen and (max-width: 760px) {
