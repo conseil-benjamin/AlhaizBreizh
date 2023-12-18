@@ -5,8 +5,6 @@
 session_start(); 
 error_reporting(E_ALL & ~E_WARNING);
 
-echo "TEST";
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     /*
