@@ -53,3 +53,4 @@
 <script src="/src/js/compte-click.js"></script>
 <script src="/src/js/header/menu-burger.js"></script>
 <script src="/src/js/header/menu-compte.js"></script>
+<script src="/src/js/removeCustomScrollbar.js"></script>
