@@ -1,19 +1,70 @@
 <?php 
     session_start(); 
-    //connexion à la base de donnée
-    try {
-        $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
-        $stmt = $pdo->prepare("SELECT numLogement,libelle,nbPersMax,tarifNuitees,LogementEnLigne,ville FROM ldc.Logement");
+    /***********************************************************************/
+    /***********************************************************************/
+    //Constantes
+    $MAX_LOGEMENTS = 4;
 
-        //Recherche des logements dans la base de données
-        $stmt->execute();
-        $logements = array();
-        while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            $logements[] = $row;
+    /***********************************************************************/
+    /***********************************************************************/
+    //Définition des fonctions
+    function obtenirNombreLogements(){
+        //Permet d'obtenir le nombre de logements dans la base de données
+        try {
+            $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
+
+            $stmt = $pdo->prepare("SELECT COUNT(*) FROM ldc.Logement WHERE LogementEnLigne = true");
+            $stmt->execute();
+            $nombreLogements = $stmt->fetch(PDO::FETCH_NUM)[0];
+
+            $pdo = null;
+        } catch (PDOException $e) {
+            $nombreLogements = -1;
         }
+        return $nombreLogements;
+    }
 
-        $pdo = null;
-    } catch (PDOException $e) {
+    function obtenirLogementAPartirIndex($index) {
+        //Permet d'obtenir 8 logement à partir d'un index
+        global $MAX_LOGEMENTS;
+        try {
+            $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
+
+            //Obtenir les 8 derniers logements ajoutés dans la base de donnée où LogementEnLigne = true
+            $stmt = $pdo->prepare("SELECT numLogement,libelle,nbPersMax,tarifNuitees,LogementEnLigne,ville FROM ldc.Logement WHERE LogementEnLigne = true ORDER BY numLogement DESC LIMIT :maxlogements OFFSET :index");
+
+            //Recherche des logements dans la base de données
+            $stmt->bindParam(':maxlogements', $MAX_LOGEMENTS, PDO::PARAM_INT);
+            $stmt->bindParam(':index', $index, PDO::PARAM_INT);
+            $stmt->execute();
+            $logements = array();
+            while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+                $logements[] = $row;
+            }
+
+            $pdo = null;
+        } catch (PDOException $e) {
+            $logements = array();
+        }
+        return $logements;
+    }
+    /***********************************************************************/
+    /***********************************************************************/
+    //Définition des variables
+    if (isset($_GET['index']) && $_GET['index'] != null && $_GET['index'] != ""){
+        $index = $_GET['index'];
+    } else{
+        $index = 0;
+    }
+
+    $nombreLogements = obtenirNombreLogements();
+    if (($index > $nombreLogements) || ($index < 0)){
+        header('Location: /index.php?index=0');
+    }
+
+    if ($nombreLogements != -1) {
+        $logements = obtenirLogementAPartirIndex($index);
+    } else {
         $logements = array();
     }
 ?>
@@ -41,15 +92,16 @@
             <div>
                 <?php
                 /*Créations de carte pour chaque logements*/
-
-                $nb_logements_inactifs = 0;
-                $logements = array_reverse($logements);
-                foreach ($logements as $logement) {
-                    $actif = $logement[4];
-                    if ($actif) {
+                if ($nombreLogements == -1){ ?>
+                    <h2>Une erreur de connexion est survenue</h2> <?php
+                } else if (($logements == null) || (count($logements) == 0)){ ?>
+                    <h2>Votre recherche correspond à aucun logement :/</h2><?php
+                } else{
+                    foreach ($logements as $logement) {
+                        $actif = $logement[4];
                         $lien = '/src/php/logement/PageDetailLogement.php?numLogement=' . $logement[0];
                         $img = '/public/img/logements/' . $logement[0] . '/1.png';
-
+    
                         $titre = $logement[1];
                         $nombre_personnes = $logement[2];
                         $localisation = $logement[5];
@@ -68,17 +120,23 @@
                                 <div><p><strong><?php echo $prix ?>€</strong> / nuit</p></div> <!-- Prix du logement -->
                             </div></a>
                         </div> <?php
-                    } else{
-                        $nb_logements_inactifs++;
-                    }
-                } 
-                if ($nb_logements_inactifs == count($logements)){ ?>
-                    <h2>Aucun logement n'est disponible pour le moment :/</h2><?php
+                    } 
                 } ?>
             </div> 
+            <nav>
+                <a class="boutton" href="/index.php?index=<?php echo ($index-$MAX_LOGEMENTS) ?>">Précédent</a>
+                <a class="boutton" href="/index.php?index=<?php echo ($index+$MAX_LOGEMENTS) ?>">Suivant</a>
+            </nav>
         </div>   
         <?php include $_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'; ?>
         <script>
+            //Si on a l'attribut index dans l'url, on scroll jusqu'au logement
+            var index = <?php echo $index ?>;
+            if (index != null){
+                var logement = document.getElementById("logements");
+                logement.scrollIntoView();
+            }    
+
             window.addEventListener("scroll", () => {
                 var header = document.querySelector("header");
                 
