@@ -6,37 +6,44 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    margin: calc(1em + 75px) 1em 1em 1em;
+    margin-top: calc(1em + 75px);
 }
+
 
 /*****************************************************/
 /*Options*/
 
 #options{
+    position: relative;
     display: flex;
     flex-direction: row;
-    position: relative;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: .5em;
     width: 80%;
-    height: 50px;
+    height: fit-content;
     margin-top: 1em;
 }
 
 #options > div{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: .5em;
     height: 100%;
 }
 
-#options > div input{
-    height: 100%;
-    border-radius: 45px;
-    border: none;
-    font-family: "Montserrat", sans-serif;
-    font-size: 16px;
-    padding-left: 1em;
+#options > div > div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: .5em;
 }
 
 #options > div button{
-    background-color: #65E3FF;
+    background-color: var(--col6);
 }
 
 #options > div button:hover{
@@ -44,9 +51,21 @@
     cursor: pointer;
 }
 
-#options > a.boutton{
+#options > div+div > a.boutton{
     display: block;
-    background-color: #65E3FF;
+    background-color: var(--col6);
+}
+
+@media screen and (max-width: 950px){
+    #options{
+        justify-content: center;
+        width: 100%;
+    } 
+    
+    #options > div{
+        justify-content: center;
+        margin: 0 1em;
+    } 
 }
 
 /*****************************************************/
@@ -55,84 +74,107 @@
 #content #logements{
     width: 80%;
     margin-top: 1em;
-    border-radius: 15px;
-    overflow: hidden;
+    transition: all .5s ease-in-out;
 }
 
-#content #logements > h3{
-    text-align: center;
+#content #logements h3{
+    font-size: 1.5em;
+}
+
+#content #logements p{
+    font-size: 1em;
+}
+
+@media screen and (max-width: 1000px){
+    #content #logements{
+        width: 100%;
+        height: fit-content;
+    }  
 }
 
 /*****************************************************/
 /*Un logement*/
 
-@keyframes slideIn{
-    from{
-        height: 150px;
-    }
-    25%{
-        height: 155px
-    }
-    50%{
-        height: 160px;
-    }
-    75%{
-        height: 170px;
-    }
-    to{
-        height: 180px;
-    }
-}
-
-@keyframes slideOut{
-    from{
-        height: 180px;
-    }
-    25%{
-        height: 170px;
-    }
-    50%{
-        height: 160px;
-    }
-    75%{
-        height: 155px;
-    }
-    to{
-        height: 150px;
-    }
-}
-
 #content .logement{
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: 150px;
-    background-color: white;
-    animation: slideOut .3s ease;
+    height: 200px;
+    max-height: fit-content;
+    background-color: #fff;
     transition: all .3s ease-in;
     filter: drop-shadow(0px 0px 1px #00000033);
+    margin-bottom: 1em;
+    transition: all .5s ease-in-out;
 }
 
 #content .logement:hover{
-    height: 180px;
-    animation: slideIn .3s ease-in;
+    scale: 1.02;
     filter: drop-shadow(0px 0px 10px #00000033);
     z-index: 2;
 }
 
 #content .logement > img{
+    width: 300px;
     height: 100%;
-    width: 30%;
     object-fit: cover;
     image-rendering: optimizeQuality;
+    transition: all .5s ease-in-out;
 }
 
 /*Informations*/
 #content .logement > div{
+    position: relative;
     margin: 1em;
 }
 
 #content .logement > div img{
     width: 25px;
     height: 25px;
+}
+
+#content .logement > div .boutton{
+    background-color: var(--col6);
+    height: fit-content;
+}
+
+#content .logement > div .boutton img{
+    width: 30px;
+    height: 30px;
+    margin-right: .5em;
+}
+
+#content .logement > div > div{
+    margin-bottom: 5em;
+}
+
+#content .logement > div > nav{
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    gap: .5em;
+    width: 100%;
+    margin-top: .5em;
+    bottom: 0;
+    right: 0;
+}
+
+@media screen and (max-width: 1000px){
+    #content .logement:hover{
+        scale: 1;
+    } 
+}
+
+@media screen and (max-width: 950px){
+    #content .logement{
+        height: fit-content;
+        flex-wrap: wrap;
+    }
+
+    #content .logement > img {
+        width: 100%;
+        height: 100%;
+        max-height: 200px;
+    }
 }

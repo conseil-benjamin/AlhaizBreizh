@@ -1,10 +1,10 @@
 #fond {
-    background: #D7F0FF;
+    background: var(--col2);
 }
 
 section#entete {
     margin: 5vh 2vw;
-    background: #515D5E;
+    background: var(--col1);
     border-radius: 20px;
     width: 96vw;
     height: 15vh;
@@ -33,7 +33,7 @@ h2 {
 #corpsTexte {
     margin: 0 2vw;
     padding: 5vh 1vw;
-    background: #515D5E;
+    background: var(--col1);
     border-radius: 20px;
     display: flex;
     flex-direction: column;
@@ -42,10 +42,6 @@ h2 {
 #formulaire {
     display: flex;
     flex-direction: row;
-}
-
-#succesDevis {
-    text-align: center;
 }
 
 .input1 {
@@ -155,17 +151,16 @@ textarea:invalid {
     margin-top: 10vh;
 }
 
-button {
-    width: 685px;
+#envoyer {
+    width: 25vw;
     height: 70px;
     font-size: large;
-    background: #B6D0F2;
-    border-radius: 30px;
+    background: var(--col6);
+    border-radius: 10px;
     border-style: none;
-
 }
 
-button:hover {
+#envoyer:hover {
     cursor: pointer;
 }
 
@@ -173,7 +168,7 @@ button:hover {
 .supplement {
     display: flex;
     justify-content: space-between;
-    background-color: #7EBCF2;
+    background-color: var(--col3);
     padding: 10px;
 }
 
@@ -187,12 +182,73 @@ button:hover {
 
 
 .first {
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
 .last {
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
 
+
+@media screen and (max-width: 760px) {
+    section#entete h1 {
+        margin-left: 10px;
+    }
+
+    #formulaire {
+        flex-direction: column;
+    }
+
+    #prixDiv {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .input1 {
+        width: 70%;
+    }
+
+    #prixDiv > ul {
+        width: 100%;
+    }
+
+    #prixDiv > div {
+        margin-top: 2vh;
+    }
+
+    #service {
+        margin-top: 8vh;
+    }
+
+    #total {
+        margin-top: 4vh;
+    }
+
+    #envoyer {
+        width: 67vw;
+    }
+
+    .supplement > input {
+        width: 5vw;
+        height: auto;
+        align-self: normal;
+    }
+
+    .supplement {
+        height: 100%;
+        align-items: center;
+    }
+
+    #service li {
+        height: 5vh;
+    }
+}
+
+@media screen and (max-width: 445px) {
+    #envoyer {
+        width: 75vw;
+    }
 }

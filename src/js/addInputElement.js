@@ -1,11 +1,13 @@
-let nbChambres = 1;
-let nbLitsSimple = 0;
-let nbLitsDoubles = 0;
-const iconSupprimer = document.createElement("img");
-iconSupprimer.src = "../../public/icons/supprimer34.svg";
-iconSupprimer.alt = "Icone supprimer";
-
 document.addEventListener("DOMContentLoaded", function () {
+  let nbChambres = 1;
+  let nbLits = 1;
+  let nbInstallations = 1;
+  let nbServices = 1;
+  let nbEquipements = 1;
+  let ella = []; //Va servir de tableaux pour stoquer le nombre de lits doubles et lits simples par chambre sous forme -> ex :[[0,1],[5,6]]
+  ella[1] = 0; //declare la premiere chambre
+
+  //Recupere toutes les infos des champs texte du php
   let addInstallation = document.querySelector("#btnInstallations");
   let installationsElement = document.querySelector(".installationsElement");
 
@@ -22,11 +24,37 @@ document.addEventListener("DOMContentLoaded", function () {
   let chambresElement = document.querySelector(".chambresElement");
 
   let checkboxReglement = document.querySelector("#conditionsGenerale");
+  let myForm = document.querySelector("#myForm");
   let creerAnnonce = document.querySelector("#creerAnnonce");
   creerAnnonce.disabled = true;
 
+  const form = document.querySelector("form");
+
+  const iconSupprimer = document.createElement("img");
+  iconSupprimer.src = "/public/icons/supprimer.png";
+  iconSupprimer.alt = "Icone supprimer";
+
+  let divNomsPhotos = document.getElementById("photosName");
+  const input = document.getElementById("photos");
+
   /**
-   * * Si réglement pas accepté, bouton creerAnnonce désactivé
+   * * Fonction permettant d'afficher le nom de tous les fichiers sÃ©lectioner par le propriÃ©taire.
+   */
+  function afficherNomsPhotos() {
+    const photos = input.files;
+
+    for (let i = 0; i < photos.length; i++) {
+      const nomPhoto = photos[i].name;
+      let photo = document.createElement("p");
+      photo.textContent =  nomPhoto;
+      divNomsPhotos.appendChild(photo);
+    }
+  }
+
+  input.addEventListener("change", afficherNomsPhotos);
+
+  /**
+   * * Si rÃ©glement pas acceptÃ©, bouton creerAnnonce dÃ©sactivÃ©
    */
   checkboxReglement.addEventListener("change", function () {
     if (this.checked) {
@@ -37,146 +65,233 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   /**
-   * * Déclaration de tous les inputs ayant un *
+   * * DÃ©claration de tous les inputs ayant un *
    */
-let cdPostalInput = document.querySelector("#cdPostal");
-let villeInput = document.querySelector("#ville");
-let adresseInput = document.querySelector("#adresse");
-let titreInput = document.querySelector("#title");
-let descriptionInput = document.querySelector("#description");
-let natureLogementInput = document.querySelector("#natureLogementInput");
-let nbChambresInput = document.querySelector("#nbChambres");
-let nbSallesBainInput = document.querySelector("#nbSallesBain");
-let nbMaxPersInput = document.querySelector("#nbMaxPers");
-let prixParNuitInput = document.querySelector("#prixParNuit");
-let surfaceInput = document.querySelector("#surface");
-let photosInput = document.querySelector("#photos");
+  let cdPostalInput = document.querySelector("#cdPostal");
+  let surfaceInput = document.querySelector("#surface");
+  //let photosInput = document.querySelector("#photos");
+  //let photosValues = photosInput.value;
 
-/**
- * * Vérifie si les champs sont tous correctement remplis
- */
-
-function checkFormValidity() {
-    let cdPostalValue = cdPostalInput.value;
-    let villeValue = villeInput.value;
-    let adresseValue = adresseInput.value;
-    let titreValue = titreInput.value;
-    let descriptionValue = descriptionInput.value;
-    let natureLogementValue = natureLogementInput.value;
-    let nbChambresValue = nbChambresInput.value;
-    let nbSallesBainValue = nbSallesBainInput.value;
-    let nbMaxPersValue = nbMaxPersInput.value;
-    let prixParNuitValue = prixParNuitInput.value;
-    let surfaceValue = surfaceInput.value;
-    
-    /**
-     * * Return true uniquement si tout les tests suivants sont corrects
-     */
-    return (
-        cdPostalValue.length >= 5 &&
-        villeValue.length > 0 &&
-        adresseValue.length > 0 &&
-        titreValue.length > 0 &&
-        descriptionValue.length > 0 && 
-        natureLogementValue.length > 0 &&
-        surfaceValue.length > 0 &&
-        photosInput.files.length > 0 &&
-        (nbChambresValue.length > 0 && nbChambresValue >= 0) &&
-        (nbSallesBainValue.length > 0 && nbChambresValue >= 0) &&
-        (nbMaxPersValue.length > 0 && nbMaxPersValue >= 0) && 
-        (prixParNuitValue.length > 0 && prixParNuitValue >= 0)
-    );
-}
-
-    cdPostalInput.addEventListener("input", checkFormValidity);
-    villeInput.addEventListener("input", checkFormValidity);
-    adresseInput.addEventListener("input", checkFormValidity);
-    titreInput.addEventListener("input", checkFormValidity);
-    descriptionInput.addEventListener("input", checkFormValidity);
-
-checkFormValidity();
-
-/**
- * * Listener sur le bouton creerAnnonce qui
- * * vérifie si tous les champs ont correctement été remplis
- */
-
-creerAnnonce.addEventListener("click", () => {
-    if (checkFormValidity()) {
-        Swal.fire({
-            title: "Logement bien créé",
-            text: "Succès",
-            icon: "success"
-        });
-    } else {
-        Swal.fire({
-            title: "Veuillez remplir correctement tous les champs doté d'un *",
-            text: "Erreur",
-            icon: "error"
-        });
+  /**
+   * * Permet de limiter le nombre de chiffre à 5 pour le code postal
+   */
+  surfaceInput.addEventListener("input", function () {
+    let surface = this.value;
+    if (surface.length > 4) {
+      this.value = surface.slice(0, 4);
     }
-});
+  });
+  cdPostalInput.addEventListener("input", function () {
+    let postalCode = this.value;
+    if (postalCode.length > 5) {
+      this.value = postalCode.slice(0, 5);
+    }
+  });
 
-    /**
-     * * Permet au clic du bouton Ajouter installation,
-     * * d'ajouter un nouvel input pour renseigner une nouvelle installation
-     * * Pareil pour les services, équipements, lits et chambres
-     */
-  addInstallation.addEventListener("click", () => {
-    const inputPlusIconeSupprimer = createInputWithIconSupprimer();
+  /**
+   * * VÃ©rifie si les champs sont tous correctement remplis
+   */
+
+  function checkFormValidity() {
+    const formData = new FormData(document.getElementById("myForm"));
+    let errors = [];
+
+    let cdPostalValue = cdPostalInput.value;
+
+    // VÃ©rification des champs requis et stockage des messages d'erreur
+    const requiredFields = {
+      title: "Titre d'annonce non renseigné",
+      description: "Description du logement non renseigné",
+      surface: "Surface du logement non renseigné",
+      natureLogement: "Nature du logement non renseigné",
+      photos: "0 photos ou plus de 6 photos ajouté",
+      adresse: "Adresse du logement non renseigné",
+      cdPostal: "Code postal non renseigné",
+      ville: "Ville non renseignée",
+      nbSallesBain: "Nombres de salles de bain non renseigné",
+      nbMaxPers: "Nombre maximum personne non renseigné",
+      prixParNuit: "Prix par nuit non renseigné",
+    };
+
+    for (const [fieldName, errorMessage] of Object.entries(requiredFields)) {
+      if (!formData.get(fieldName)) {
+        errors.push(errorMessage);
+      }
+    }
+
+    // Affichage des messages d'erreur
+    if (errors.length > 0) {
+      const errorMessage = errors.join("<br>");
+      Swal.fire({
+        title: errorMessage,
+        icon: "warning",
+      });
+      return false; // Le formulaire n'est pas valide
+    } else if (cdPostalInput.value.length < 5) {
+      console.log(cdPostalValue);
+      Swal.fire({
+        title: "Code postal doit être composer de 5 chiffres",
+        icon: "warning",
+      });
+      return false;
+    } else {
+      return true; // Le formulaire est valide
+    }
+  }
+
+  function submitForm(event) {
+    event.preventDefault();
+    if (checkFormValidity()) {
+      form.submit();
+    }
+  }
+  
+  myForm.addEventListener("submit", submitForm);
+
+  /**
+   * * Permet au clic du bouton Ajouter
+   * * d'ajouter un nouvel input pour renseigner une nouvelle vignette
+   * * Marche pour les equipements, services, Ã©quipements, lits et chambres
+   */
+
+  function createLogement(placeholder, name, val) {
+    let newElement = document.createElement("input");
+    newElement.setAttribute("type", "text");
+    newElement.setAttribute("size", "60");
+    newElement.setAttribute("placeholder", placeholder);
+    newElement.setAttribute("value", val);
+    newElement.setAttribute("name", name);
+    newElement.setAttribute("id", name);
+
+    const iconSupprimer = document.createElement("img");
+    iconSupprimer.src = "/public/icons/supprimer.svg";
+    iconSupprimer.alt = "Icone supprimer";
+    iconSupprimer.id = "iconSupprimer";
+
+    const inputPlusIconeSupprimer = document.createElement("div");
+    inputPlusIconeSupprimer.classList.add("inputPlusIconeSupprimer");
+
+    inputPlusIconeSupprimer.appendChild(newElement);
+    inputPlusIconeSupprimer.appendChild(iconSupprimer);
+
+    iconSupprimer.addEventListener("click", function () {
+      const parentDiv = this.parentElement;
+      parentDiv.remove();
+      if (placeholder === "Installation disponible") {
+        nbInstallations--;
+      } else if (placeholder === "Service disponible") {
+        nbServices--;
+      } else if (placeholder === "Equipement disponible") {
+        nbEquipements--;
+      }
+    });
+    return inputPlusIconeSupprimer;
+  }
+
+  function IniInstall(valeur) {
+    nbInstallations++;
+    let nameInput = "InstallDispo" + nbInstallations;
+    const inputPlusIconeSupprimer = createLogement(
+      "Installation disponible",
+      nameInput,
+      valeur
+    );
     installationsElement.appendChild(inputPlusIconeSupprimer);
+  }
+
+  addInstallation.addEventListener("click", function () {
+    IniInstall("");
   });
 
-  addService.addEventListener("click", () => {
-    const inputPlusIconeSupprimer = createInputWithIconSupprimer();
-    servicesElement.appendChild(inputPlusIconeSupprimer);
-  });
-
-  addEquipements.addEventListener("click", () => {
-    const inputPlusIconeSupprimer = createInputWithIconSupprimer();
+  function InitiEquip(valeur) {
+    nbEquipements++;
+    let nameInput = "equipement" + nbEquipements;
+    const inputPlusIconeSupprimer = createLogement(
+      "Equipement disponible",
+      nameInput,
+      valeur
+    );
     equipementsElement.appendChild(inputPlusIconeSupprimer);
+  }
+
+  addEquipements.addEventListener("click", function () {
+    InitiEquip("");
   });
 
+  function InitiServic(valeur) {
+    nbServices++;
+    let nameInput = "service" + nbServices;
+    const inputPlusIconeSupprimer = createLogement(
+      "Service disponible",
+      nameInput,
+      valeur
+    );
+    servicesElement.appendChild(inputPlusIconeSupprimer);
+  }
+  addService.addEventListener("click", function () {
+    InitiServic("");
+  });
+
+  /* 
+La fonction 
+*/
   addLits.addEventListener("click", () => {
     let newElement = document.createElement("select");
 
     newElement.className = "litsElement";
 
-    var option1 = document.createElement("option");
+    let option1 = document.createElement("option");
     option1.value = "Lit double (140 * 190)";
     option1.text = "Lit double (140 * 190)";
     newElement.appendChild(option1);
 
-    var option2 = document.createElement("option");
+    let option2 = document.createElement("option");
     option2.value = "Lit simple (90 * 190)";
     option2.text = "Lit simple (90 * 190)";
     newElement.appendChild(option2);
 
-    const iconSupprimer = addLitsFunction();
+    const iconSupprimer = addLitsFunction(1);
 
     litsElement.appendChild(iconSupprimer);
   });
 
+  checkboxReglement.addEventListener("change", function () {
+    if (this.checked) {
+      creerAnnonce.disabled = false;
+    } else {
+      creerAnnonce.disabled = true;
+    }
+  });
+
+  // NON FONCTIONNEL POUR L INSTANT!!!
+  if (nbChambres >= 20) {
+    addChambre.disabled = true;
+  } else {
+    null;
+  }
+  // !!!
+
+  /* Ajoute une chambre lorsqu'on clique sur le bouton ajouter chambre*/
   addChambre.addEventListener("click", () => {
     nbChambres++;
     let titre = document.createElement("label");
-
     let btnAddLits = document.createElement("button");
+
+    console.log(nbChambres);
 
     btnAddLits.textContent = "Ajouter lit";
     btnAddLits.className = "btnAddLits";
 
     titre.textContent = "Chambre " + nbChambres;
     let newElement = document.createElement("select");
-    newElement.setAttribute("id", "nouvelleChambre");
-    newElement.id = "lits";
+    newElement.name = nbChambres + "lits" + 0;
 
-    var option1 = document.createElement("option");
+    let option1 = document.createElement("option");
     option1.value = "Lit double (140 * 190)";
     option1.text = "Lit double (140 * 190)";
     newElement.appendChild(option1);
 
-    var option2 = document.createElement("option");
+    let option2 = document.createElement("option");
     option2.value = "Lit simple (90 * 190)";
     option2.text = "Lit simple (90 * 190)";
     newElement.appendChild(option2);
@@ -184,14 +299,17 @@ creerAnnonce.addEventListener("click", () => {
     titre.setAttribute("for", "nouvelleChambre");
 
     const iconSupprimer = document.createElement("img");
-    iconSupprimer.src = "../../public/icons/supprimer34.svg";
+    iconSupprimer.src = "/public/icons/supprimer.svg";
     iconSupprimer.alt = "Icone supprimer";
     iconSupprimer.id = "iconSupprimer";
 
     const inputPlusIconeSupprimer = document.createElement("div");
     inputPlusIconeSupprimer.classList.add("inputPlusIconeSupprimer");
 
-    const divChambre = document.createElement("div");   
+    const divChambre = document.createElement("div");
+
+    divChambre.id = nbChambres;
+    ella[nbChambres] = 0;
 
     inputPlusIconeSupprimer.appendChild(titre);
     inputPlusIconeSupprimer.appendChild(iconSupprimer);
@@ -203,74 +321,51 @@ creerAnnonce.addEventListener("click", () => {
     chambresElement.appendChild(divChambre);
 
     /**
-     * * Même principe que pour supprimer un lit sauf qu'on vise son parent,
-     * * c'est à dire directement la chambre. 
+     * * Ajout du bouton pour supprimer la chambre
      */
     iconSupprimer.addEventListener("click", function () {
       const parentDiv = this.parentElement;
       const parentDivUp = parentDiv.parentElement;
       parentDivUp.remove();
-      nbChambres --;
+      nbChambres--;
+      console.log(nbChambres);
     });
 
+    /**
+     * * Ajout du bouton pour ajouter un lit
+     */
     btnAddLits.addEventListener("click", () => {
-      const addLits = addLitsFunction();
-      divChambre.appendChild(addLits);
+      nbRoom = divChambre.id;
+      const addLits = addLitsFunction(nbRoom);
+      divChambre.insertBefore(addLits, btnAddLits);
     });
   });
 
-  
-  /**
-   * * Fonction qui crée un input ainsi qu'une image, 
-   * * les assemble dans une div, et return la div
-   */
-  function createInputWithIconSupprimer() {
-    let newElement = document.createElement("input");
-    newElement.setAttribute("type", "text");
-    newElement.setAttribute("size", "60");
-
-    const iconSupprimer = document.createElement("img");
-    iconSupprimer.src = "../../public/icons/supprimer34.svg";
-    iconSupprimer.alt = "Icone supprimer";
-    iconSupprimer.id = "iconSupprimer";
-
-    const inputPlusIconeSupprimer = document.createElement("div");
-    inputPlusIconeSupprimer.classList.add("inputPlusIconeSupprimer");
-
-    inputPlusIconeSupprimer.appendChild(newElement);
-    inputPlusIconeSupprimer.appendChild(iconSupprimer);
-
-    iconSupprimer.addEventListener("click", function () {
-        const parentDiv = this.parentElement;
-        parentDiv.remove();
-      });
-
-    return inputPlusIconeSupprimer;
-  }
-
   /**
    * * Permet d'ajouter un select donnant le choix d'un lit,
-   * * et ensuite ajoute le select suivit de son image de supression 
-   * * dans une div, cette div est intégré dans son élément parent qui est sa chambre
-   * * 
+   * * et ensuite ajoute le select suivit de son image de supression
+   * * dans une div, cette div est intÃ©grÃ© dans son Ã©lÃ©ment parent qui est sa chambre
+   * *
    */
-  function addLitsFunction() {
-    let newElement = document.createElement("select");
-    newElement.setAttribute("type", "text");
-    newElement.id = "lits";
+  function addLitsFunction(nChambre, typ = 0) {
+    event.preventDefault();
+    ella[nChambre]++;
 
-    var option1 = document.createElement("option");
+    let newElement = document.createElement("select");
+    newElement.name = nChambre + "lits" + ella[nChambre];
+
+    let option1 = document.createElement("option");
     option1.value = "Lit double (140 * 190)";
     option1.text = "Lit double (140 * 190)";
     newElement.appendChild(option1);
 
-    var option2 = document.createElement("option");
+    let option2 = document.createElement("option");
     option2.value = "Lit simple (90 * 190)";
     option2.text = "Lit simple (90 * 190)";
     newElement.appendChild(option2);
 
     const iconSupprimer = document.createElement("img");
-    iconSupprimer.src = "../../public/icons/supprimer34.svg";
+    iconSupprimer.src = "/public/icons/supprimer.svg";
     iconSupprimer.alt = "Icone supprimer";
     iconSupprimer.id = "iconSupprimer";
 
@@ -281,12 +376,14 @@ creerAnnonce.addEventListener("click", () => {
     inputPlusIconeSupprimer.appendChild(iconSupprimer);
 
     /**
-     * * Permet au click sur l'icon supprimer, de supprimer 
+     * * Permet au click sur l'icon supprimer, de supprimer
      * * de la chambre en question le lit en question.
      */
     iconSupprimer.addEventListener("click", function () {
       const parentDiv = this.parentElement;
       parentDiv.remove();
+      nbLits--;
+      console.log(nbLits);
     });
 
     return inputPlusIconeSupprimer;

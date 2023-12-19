@@ -7,6 +7,7 @@ input[type='file'] {
     display: block;
     margin: 12px !important;
     color: black !important;
+    font-weight: normal !important;
 }
 
 #upload:hover, #devisLabel:hover {
@@ -15,8 +16,8 @@ input[type='file'] {
 
 #upload {
     height: 8vh;
-    background: #7EBCF2;
-    border-radius: 20px;
+    background: var(--col3);
+    border-radius: 10px;
     width: max-content;
     display: flex;
     align-items: center;
@@ -35,4 +36,24 @@ input[type='file'] {
     border-style: solid;
     padding: 10px;
     cursor: pointer;
+}
+
+
+/**
+
+Media Queries
+
+ */
+
+@media screen and (max-width: 760px) {
+
+    #prixDIv > div > label{
+        text-align: center;
+    }
+
+    textarea {
+        width: 100%;
+    }
+
+
 }
