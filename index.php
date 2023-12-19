@@ -132,14 +132,17 @@
         <?php include $_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'; ?>
         <script>
             //Si on a l'attribut index dans l'url, on scroll jusqu'au logement
-            var index = <?php echo $index ?>;
+            let index = <?php echo $index ?>;
             if (index != null){
-                var logement = document.getElementById("logements");
+                let logement = document.getElementById("logements");
                 logement.scrollIntoView();
-            }    
+            } else {
+                let header = document.querySelector("header");
+                header.scrollIntoView();
+            }
 
             window.addEventListener("scroll", () => {
-                var header = document.querySelector("header");
+                let header = document.querySelector("header");
                 
                 if (window.scrollY > 0) {
                     header.classList.add("scrolled");

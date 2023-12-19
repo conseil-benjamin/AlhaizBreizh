@@ -5,24 +5,26 @@
     } else if ($_SESSION['proprio'] == false) {
         header('Location: /');
     }
-    //Connection à la base de donnée
-    try{
-        $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
-        $stmt = $pdo->prepare("SELECT numLogement,proprio,libelle,accroche,ville FROM ldc.Logement");
 
-        //Recherche des logements dans la base de données
-        $stmt->execute();
+    function obtenirLogementsProprio($id) {
         $logements = array();
-        while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            if ($row[1] == $_SESSION['id']){
-                $logements[] = $row;
+        try {
+            $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
+            $stmt = $pdo->prepare("SELECT numLogement,proprio,libelle,accroche,ville FROM ldc.Logement ORDER BY numLogement DESC");
+            $stmt->execute();
+            while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+                if ($row[1] == $id){
+                    $logements[] = $row;
+                }
             }
+            $pdo = null;
+        } catch (PDOException $e) {
+            $logements = array();
         }
-
-        $pdo = null;
-    } catch (PDOException $e) {
-        $logements = array();
+        return $logements;
     }
+
+    $logements = obtenirLogementsProprio($_SESSION['id']);
 ?>
 <!DOCTYPE html>
 <html lang="fr-fr">
@@ -37,14 +39,18 @@
     <body>
         <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/header.php'); ?>
         <div id="content">
-            <h2>Mes logements</h2>
+            <h1>Mes logements</h1>
             <div id="options">
                 <div>
                     <input class="textfield" type="text" placeholder="Search..">
-                    <button class="boutton">Filtrer</button>
-                    <button class="boutton">Trier</button>
+                    <div>
+                        <button class="boutton">Filtrer</button>
+                        <button class="boutton">Trier</button>
+                    </div>
                 </div>
-                <a href="/src/php/logement/creationLogement.php" class="boutton">Ajouter un logement</a>
+                <div>
+                    <a href="/src/php/logement/creationLogement.php" class="boutton">Ajouter un logement</a>
+                </div>  
             </div>
             <div id="logements">
                 <?php
@@ -53,15 +59,18 @@
                 } else{
                     /*Créations de carte pour chaque logements*/
                     foreach ($logements as $logement) { ?>
-                        <a href="/src/php/logement/PageDetailLogement.php?numLogement=<?php echo $logement[0] ?>"><div class="logement">
+                        <div class="logement">
                             <img src="/public/img/logements/<?php echo $logement[0] ?>/1.png" alt="logement">
                             <div>
                                 <h3><?php echo $logement[2] ?></h3>
                                 <p><?php echo $logement[3] ?></p>
                                 <div><img src="/public/icons/map.svg" alt="Map"><?php echo $logement[4] ?></div>
-                                <a class="boutton" href="/src/php/logement/modificationLogement.php?numLogement=<?php echo $logement[0]; ?>"><img src="/public/icons/edit.svg" alt="Editer">Editer</a>
+                                <nav>
+                                    <a class="boutton" href="/src/php/logement/PageDetailLogement.php?numLogement=<?php echo $logement[0] ?>"><img src="/public/icons/type_logement.svg" alt="">Voir</a>
+                                    <a class="boutton" href="/src/php/logement/modificationLogement.php?numLogement=<?php echo $logement[0]; ?>"><img src="/public/icons/edit.svg" alt="Editer">Editer</a>
+                                </nav>
                             </div>   
-                        </div></a> <?php
+                        </div> <?php
                     }
                 }
                 ?>

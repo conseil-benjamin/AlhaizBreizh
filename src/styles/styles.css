@@ -77,6 +77,10 @@ h1, h2, h3{
 /*****************************************************/
 /*Bouttons*/
 .boutton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
     border-radius: 50px;
     border: #ffffff00 1px solid;
     color: var(--col1);
@@ -365,7 +369,7 @@ h1, h2, h3{
     top: 100%;
     left: 0;
     height: fit-content;
-    width: 100%;
+    width: 100vw;
     color: #fff;
 }
 
