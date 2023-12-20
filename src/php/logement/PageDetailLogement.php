@@ -39,6 +39,9 @@ if (isset($_GET['numLogement'])) {
                     $_SESSION["prixNuit"] = $prix;
                 }
 
+                // le nom pour la demande de devis
+
+
                 // Récupération des chambres
                 $stmt = $pdo->prepare("SELECT nbLitsSimples, nbLitsDoubles FROM ldc.Chambre WHERE numLogement = $numLogement");
                 $stmt->execute();
@@ -173,6 +176,38 @@ if (isset($_GET['action']) && isset($_GET['numLogement'])) {
     exit; // Assurez-vous de terminer le script après la redirection
 }
 
+// Gestion de la suppresion du logement
+$nb_resa = "select count(*) from ldc.Reservation where numLogement=$numLogement";
+$nb_resa = $pdo->query($nb_resa)->fetchColumn();
+
+$resa_en_cours = false;
+
+
+$date = new DateTime();
+$dateDuJour = $date->format('Y-m-d');
+
+
+$stmt = $pdo->prepare("select dateFin from ldc.Reservation where numLogement=$numLogement");
+$stmt->execute();
+$liste_dateFin_resa = '';
+while ($row = $stmt->fetch(PDO::FETCH_NUM)){
+    $liste_dateFin_resa .= isset($row[0]) ? $row[0] : '';
+    $liste_dateFin_resa .= ", ";
+}
+
+if ($nb_resa !== 0) {
+
+    // Divise la chaîne en un tableau en utilisant la virgule comme séparateur
+    $array_dateFin_resa = explode(', ', $liste_dateFin_resa);
+    array_pop($array_dateFin_resa);
+
+    foreach ($array_dateFin_resa as $dateFin) {
+        if ($dateFin > $dateDuJour) {
+            $resa_en_cours = true;
+        }
+    }
+}
+
 // Définir les valeurs par défaut si elles ne sont pas définies
 if (!isset($type_logement)) {
     $type_logement = 'Type de logement';
@@ -222,6 +257,8 @@ if (!isset($liste_langue_parle)) {
         <link rel="stylesheet" type="text/css" href="/src/styles/styles.css">
         <link rel="stylesheet" type="text/css" href="/src/styles/stylePageDetailLogement.css">
         <title>ALHaiz Breizh</title>
+        <link rel="icon" href="/public/logos/logo-black.svg">
+
     </head>
     <body>
         <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/header.php'); ?>
@@ -252,7 +289,7 @@ if (!isset($liste_langue_parle)) {
                             <?php } 
                             $_SESSION['numLogement']=$numLogement?>
                             <a href="/src/php/logement/modif.php" class="boutton">Modifier l'annonce</a>
-                            <a href="#" class="boutton">Supprimer l'annonce</a>
+                            <a href="#" class="boutton" onclick="supprimerAnnonce()">Supprimer l'annonce</a>
                         </div><?php 
                     }
                     if ($nombre_fichiers <= 0) {?>
@@ -519,5 +556,30 @@ if (!isset($liste_langue_parle)) {
         <?php
         }; ?>  
         <script src="/src/js/carrousel.js"></script>
+        <script>
+            function supprimerAnnonce() {
+                <?php
+                // Utilisation des valeurs PHP dans le script JavaScript
+                echo "var resaEnCours = " . json_encode($resa_en_cours) . ";\n";
+                echo "var numLogement = " . json_encode($numLogement) . ";\n";
+                ?>
+
+                if (!resaEnCours) {
+                    fetch('suppressionLogement.php?numLogement=' + numLogement, {
+                        method: 'DELETE'
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        alert(data.message);
+                    })
+                    .catch(error => {
+                        console.error('Erreur lors de la suppression du logement:', error);
+                    });
+                } else {
+                    // Affichez un message à l'utilisateur si des réservations sont en cours
+                    alert(resaEnCours);
+                }
+            }
+        </script>
     </body>
 </html>
