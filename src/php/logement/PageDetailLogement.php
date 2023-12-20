@@ -39,6 +39,9 @@ if (isset($_GET['numLogement'])) {
                     $_SESSION["prixNuit"] = $prix;
                 }
 
+                // le nom pour la demande de devis
+
+
                 // Récupération des chambres
                 $stmt = $pdo->prepare("SELECT nbLitsSimples, nbLitsDoubles FROM ldc.Chambre WHERE numLogement = $numLogement");
                 $stmt->execute();
@@ -172,6 +175,10 @@ if (isset($_GET['action']) && isset($_GET['numLogement'])) {
     exit; // Assurez-vous de terminer le script après la redirection
 }
 
+// Gestion de la suppresion du logement
+$nb_resa = "select count(*) from ldc.Reservation where numLogement=$numLogement";
+$nb_resa = $pdo->query($nb_resa)->fetchColumn();
+
 // Définir les valeurs par défaut si elles ne sont pas définies
 if (!isset($type_logement)) {
     $type_logement = 'Type de logement';
@@ -221,6 +228,8 @@ if (!isset($liste_langue_parle)) {
         <link rel="stylesheet" type="text/css" href="/src/styles/styles.css">
         <link rel="stylesheet" type="text/css" href="/src/styles/stylePageDetailLogement.css">
         <title>ALHaiz Breizh</title>
+        <link rel="icon" href="/public/logos/logo-black.svg">
+
     </head>
     <body>
         <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/header.php'); ?>
@@ -289,56 +298,35 @@ if (!isset($liste_langue_parle)) {
                             <label class="carousel__control carousel__control--forward" for="1"></label>
                             </div>
                             <div class="carousel__track">
-
                             <li class="carousel__slide"><!-- slide 1 -->
                             <div class="image_carrousel">
-
                             <img src="../../../public/img/maison.png" alt="image maison"> 
                             </div>
                             </li>
-
-
-
                             <li class="carousel__slide"> <!-- slide 2 -->
                                 <div class="image_carrousel">
                                 <img src="../../../public/img/logements/1/1.png" alt="image maison"> 
-
-                            
-                            
-                            
                             </div>              
                             </li>
                             <li class="carousel__slide"> <!-- slide 3 -->
                                 <div class="image_carrousel">
-                                <img src="../../../public/img/logements/2/1.png" alt="image maison"> 
-
-                            
-                            
-                            
+                                <img src="../../../public/img/logements/2/1.png" alt="image maison">        
                             </div>              
                             </li>
                             <li class="carousel__slide"> <!-- slide 4 -->
                                 <div class="image_carrousel">
                                 <img src="../../../public/img/logements/1/1.png" alt="image maison"> 
-
-                            
-                            
-                            
                             </div>              
                             </li>
                             <li class="carousel__slide"> <!-- slide 5 -->
                                 <div class="image_carrousel">
                                 <img src="../../../public/img/logements/2/1.png" alt="image maison"> 
 
-                            
-                            
-                            
                             </div>              
                             </li>
                             <li class="carousel__slide"> <!-- slide 6 -->
                                 <div class="image_carrousel">
                                 <img src="../../..//public/img/photos_profil/1.png" alt="image maison"> 
-
                             </div>              
                             </li>
                             
