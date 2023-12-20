@@ -83,14 +83,13 @@ h1, h2, h3{
     flex-direction: row;
     border-radius: 50px;
     border: #ffffff00 1px solid;
-    color: var(--col1);
+    color: #000;
     height: 50px;
     width: fit-content;
     font-size: 20px;
     line-height: 50px;
     text-align: center;
     font-weight: bold;
-    color: #000;
     padding: 0 1em;
     cursor: pointer;
     transition: all .3s ease-in-out;
