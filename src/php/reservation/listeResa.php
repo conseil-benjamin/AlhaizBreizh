@@ -99,7 +99,7 @@ if (isset($_SESSION['id'])) {
             $pdo = null;
 
             // Redirection vers la page de confirmation
-            header('Location: confirmation.php');
+                header('Location: confirmation.php');
             exit();
         } catch (PDOException $e) {
             // Gestion des erreurs de la base de données
@@ -123,25 +123,29 @@ if (isset($_SESSION['id'])) {
                 </div>
             </div>
         </div>
-
+  
       
         <!-- Affiche les cartes de réservation -->
         <?php foreach ($reservations as $reservation): ?>
             <div class="card-container">    
                 <div class="reservation-card">
-                    <div class="logement">
-                        <img src="/public/img/logements/<?php echo $reservation['numlogement']; ?>/1.png" alt="Photo du logement">
-                    </div>
+                    <a href="/src/php/logement/PageDetailLogement.php?numLogement=<?php echo $reservation['numlogement'] ?>">
+                        <div class="logement">
+                            <img src="/public/img/logements/<?php echo $reservation['numlogement']; ?>/1.png" alt="Photo du logement">
+                        </div>
+                    </a>
                     <div class="infos">
                         <h2><?php echo $reservation['libelle']; ?></h2>
                         <div class="details">
                             <p>Date d'arrivée : <?php echo $reservation['datedebut']; ?></p>
                             <p>Date de départ : <?php echo $reservation['datefin']; ?></p>
                         </div>
-                        <div class="profile">
-                            <img src="/public/img/photos_profil/<?php echo $reservation['proprio']; ?>.png" alt="Photo de profil">
-                            <p><?php echo $reservation['pseudocompte']; ?></p>
-                        </div>
+                        <a href="/src/php/profil/profil.php?user=<?php echo $reservation['proprio'] ?>">
+                            <div class="profile">
+                                <img src="/public/img/photos_profil/<?php echo $reservation['proprio']; ?>.png" alt="Photo de profil">
+                                <p><?php echo $reservation['pseudocompte']; ?></p>
+                            </div>
+                        </a>
                     </div>
                     <label class="button-etat" for="status">État Réservation</label>
                     <div>
