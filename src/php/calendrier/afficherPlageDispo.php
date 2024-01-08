@@ -7,7 +7,7 @@
     $isProprioJSON = json_encode($isProprio);
 
     if (isset($_GET['numLogement'])) {
-        $numLogement = $_SESSION['numLogement'];
+        $numLogement = $_GET['numLogement'];
 
         if (isset($pdo)&&!empty($numLogement)) {
             // Vérifier si numLogement existe dans la base de données
@@ -81,20 +81,38 @@
                 
                     // Vérifie si les dates sont valides et le tarif est numérique
                     if (strtotime($datedebutplage) && strtotime($datefinplage) && is_numeric($tarifjournalier)) {
-                        $stmt = $pdo->prepare("INSERT INTO ldc.PlageDeDisponibilite (numCal, datedebutplage, datefinplage, tarifjournalier) 
-                            VALUES (?, ?, ?, ?) ");
-                        $stmt->bindParam(1, $numCal);
-                        $stmt->bindParam(2, $datedebutplage);
-                        $stmt->bindParam(3, $datefinplage);
-                        $stmt->bindParam(4, $tarifjournalier);
-                        $stmt->execute();
-                
-                        // Rafraîchit les plages de disponibilité
-                        header("Refresh:0");
+                        //vérifie si la nouvelle plage de disponibilité n'intersecte pas avec une plage de disponibilité existante
+                        $intersectionQuerry = $pdo->prepare("SELECT COUNT(*) FROM ldc.PlageDeDisponibilite WHERE numCal = ? AND NOT (? >= datefinplage OR  ? <= datedebutplage)");
+                        $intersectionQuerry->execute([$numCal, $datedebutplage, $datefinplage]);
+                        $inteserctionCount = $intersectionQuerry->fetchColumn();
+
+                        if($inteserctionCount == 0){
+                            //vérifie si la nouvelle plage de disponibilité n'intersecte pas avec une plage d'indisponibilité existante
+                            $intersectionQuerryIndispo = $pdo->prepare("SELECT COUNT(*) FROM Ldc. WHERE numCal = ? AND NOT (? >= datefinplage OR ? <= datedebutplage)");
+                            $intersectionQuerryIndispo->execute([$numCal, $datedebutplage, $datefinplage]);
+                            $intersectionCountIndispo = $intersectionQuerryIndispo->fetchColumn();
+
+                            if($intersectionCountIndispo == 0){
+
+                                $stmt = $pdo->prepare("INSERT INTO ldc.PlageDeDisponibilite (numCal, datedebutplage, datefinplage, tarifjournalier) 
+                                    VALUES (?, ?, ?, ?) ");
+                                $stmt->bindParam(1, $numCal);
+                                $stmt->bindParam(2, $datedebutplage);
+                                $stmt->bindParam(3, $datefinplage);
+                                $stmt->bindParam(4, $tarifjournalier);
+                                $stmt->execute();
+                        
+                                // Rafraîchit les plages de disponibilité
+                                header("Refresh:0");
+                            }//else{
+
+                        }//else{
+
+                        //}
                     }
                 }
 
-                //Insérer une plage d'indisponabilité
+                //Insérer une plage d'indisponibilité
                 if (isset($_POST['submitPlageIndispo'])) {
                     $datedebutplagei = $_POST['datedebutplagei'];
                     $datefinplagei = $_POST['datefinplagei'];
@@ -118,14 +136,14 @@
         }
     }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="/src/styles/styles.css">
-        <link rel="stylesheet" type="text/css" href="/src/styles/styleAfficherDispo.css">   
+        <link rel="stylesheet" type="text/css" href="/src/styles/styleAfficherDispo.css">
+        <link rel="icon" href="/public/logos/logo-black.svg">   
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
@@ -149,93 +167,143 @@
                 ?>
             </div>
             
-            <div id='calendar'>
-                <script> 
-                    //script de création du calendrier
-                    let evenements = <?php echo $evenementsJSON; ?>;
-                    let evenementsI = <?php echo $evenementsIJSON; ?>;
-                    let isProprio = <?php echo $isProprioJSON;?>;
-                    document.addEventListener('DOMContentLoaded', function() {
-                        var calendarEl = document.getElementById('calendar');
-                        var calendar = new FullCalendar.Calendar(calendarEl, {
-                            locale: 'fr',
-                            initialView: 'dayGridMonth',
-                            headerToolbar: {
-                                left: 'prev,next today',
-                                center: 'title',
-                                right: 'dayGridMonth,timeGridWeek,timeGridDay'
-                            },
-                            height: 600,
-                            selectable: true,
-                            unselectAuto: true,
-                            events: evenements.concat(evenementsI),
-                            eventColor: function(event) {
-                                if (event.title === 'Indisponible') {
-                                    return 'red';
-                                }
-                            },
-                            eventClick: function(info) {
-                                if(isProprio){
-                                    Swal.fire({
-                                        title: "Voulez-vous supprimer la plage ?",
-                                        showCancelButton: true,
-                                        confirmButtonText: "Confirmer",
-                                        cancelButtonText: "Annuler"
-                                    }).then((result) => {
-                                        if (result.isConfirmed) {
-                                            Swal.fire({
-                                                icon: "success",
-                                                title: "La plage a bien été supprimée",
-                                                showConfirmButton: false,
-                                                timer: 2000
-                                            });
-                                            if (info.event.title.startsWith("Tarif journalier :")) {
-                                                $.ajax({
-                                                    url: 'supprimerPlage.php', 
-                                                    type: 'POST',
-                                                    data: {
-                                                        numPlage: info.event.id
-                                                    },
-                                                    success: function(response) {
-                                                        console.log(response);
-                                                        calendar.refetchEvents();
-                                                        setTimeout(()=> {
-                                                            location.reload(); // Rafraîchit la page après la suppression
-                                                        }, 2000);
-                                                    },
-                                                    error: function(xhr, status, error) {
-                                                        console.error('Erreur lors de la suppression :', error);
-                                                    }
+            <div id='calform'>
+                <div id='calendar'>
+                    <script> 
+                        //script de création du calendrier
+                        let evenements = <?php echo $evenementsJSON; ?>;
+                        let evenementsI = <?php echo $evenementsIJSON; ?>;
+                        let isProprio = <?php echo $isProprioJSON;?>;
+                        document.addEventListener('DOMContentLoaded', function() {
+                            var calendarEl = document.getElementById('calendar');
+                            var calendar = new FullCalendar.Calendar(calendarEl, {
+                                locale: 'fr',
+                                initialView: 'dayGridMonth',
+                                headerToolbar: {
+                                    left: 'prev,next today',
+                                    center: 'title',
+                                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                                },
+                                height: 600,
+                                selectable: true,
+                                unselectAuto: true,
+                                events: evenements.concat(evenementsI),
+                                eventColor: function(event) {
+                                    if (event.title === 'Indisponible') {
+                                        return 'red';
+                                    }
+                                },
+                                eventClick: function(info) {
+                                    if(isProprio){
+                                        Swal.fire({
+                                            title: "Voulez-vous supprimer la plage ?",
+                                            showCancelButton: true,
+                                            confirmButtonText: "Confirmer",
+                                            cancelButtonText: "Annuler"
+                                        }).then((result) => {
+                                            if (result.isConfirmed) {
+                                                Swal.fire({
+                                                    icon: "success",
+                                                    title: "La plage a bien été supprimée",
+                                                    showConfirmButton: false,
+                                                    timer: 2000
                                                 });
-                                            }else{
-                                                $.ajax({
-                                                    url: 'supprimerPlageIndispo.php',
-                                                    type: 'POST',
-                                                    data: {
-                                                        numPlageI: info.event.id
-                                                    },
-                                                    success: function(response) {
-                                                        console.log(response);
-                                                        calendar.refetchEvents();
-                                                        setTimeout(() => {
-                                                            location.reload(); // Refresh the page after deletion
-                                                        }, 2000);
-                                                    },
-                                                    error: function(xhr, status, error) {
-                                                        console.error('Erreur lors de la suppression :', error);
-                                                    }
-                                                });
-                                            }                                       
-                                        }
-                                    });
-                                }                                
-                            }                   
+                                                if (info.event.title.startsWith("Tarif journalier :")) {
+                                                    $.ajax({
+                                                        url: 'supprimerPlage.php', 
+                                                        type: 'POST',
+                                                        data: {
+                                                            numPlage: info.event.id
+                                                        },
+                                                        success: function(response) {
+                                                            console.log(response);
+                                                            calendar.refetchEvents();
+                                                            setTimeout(()=> {
+                                                                location.reload(); // Rafraîchit la page après la suppression
+                                                            }, 2000);
+                                                        },
+                                                        error: function(xhr, status, error) {
+                                                            console.error('Erreur lors de la suppression :', error);
+                                                        }
+                                                    });
+                                                }else{
+                                                    $.ajax({
+                                                        url: 'supprimerPlageIndispo.php',
+                                                        type: 'POST',
+                                                        data: {
+                                                            numPlageI: info.event.id
+                                                        },
+                                                        success: function(response) {
+                                                            console.log(response);
+                                                            calendar.refetchEvents();
+                                                            setTimeout(() => {
+                                                                location.reload(); // Rafraîchit la page après la suppression
+                                                            }, 2000);
+                                                        },
+                                                        error: function(xhr, status, error) {
+                                                            console.error('Erreur lors de la suppression :', error);
+                                                        }
+                                                    });
+                                                }                                       
+                                            }
+                                        });
+                                    }                                
+                                }                   
+                            });
+                            calendar.render();  
                         });
-                        calendar.render();  
-                    });
-                </script>
-            </div>
+                    </script>
+                </div>
 
+                <?php
+                    //Formulaire permettant l'ajout d'une plage de disponibilité
+                    if (isset($_SESSION['id']) && $numLogementExists) {
+                        if ($_SESSION['proprio'] == true) { 
+                ?>      
+                        <div id="forms">
+                            <div class="select">
+                                <select id="select-form">
+                                    <option value="plage-disp-form">Plage de disponibilité</option>
+                                    <option value="plage-indisp-form">Plage d'indisponibilité</option>
+                                    <span class="focus"></span>
+                                </select>
+                            </div>
+                            <div id="plage-disp-form">
+                                <h3>Ajouter une plage de disponibilité :</h3>
+                                <form method="POST">
+                                    <label for="datedebutplage">Date de début :</label>
+                                    <input type="date" name="datedebutplage" required>
+                                    <br>
+                                    <label for="datefinplage">Date de fin :</label>
+                                    <input type="date" name="datefinplage" required>
+                                    <br>
+                                    <label for="tarifjournalier">Tarif journalier :</label>
+                                    <input type="number" name="tarifjournalier" placeholder="<?php echo $tarifDefaut?>" step="0.01" required>
+                                    <input type="submit" name="submitPlageDispo" value="Ajouter">
+                                </form>
+                            </div>
+               
+                            <!-- Formulaire permettant l'ajout d'une plage d'indisponibilité -->
+                    
+                            <div id="plage-indisp-form">
+                                <h3>Ajouter une plage d'indisponibilité :</h3>
+                                <form method="POST">
+                                    <label for="datedebutplagei">Date de début :</label>
+                                    <input type="date" name="datedebutplagei" required>
+
+                                    <label for="datefinplagei">Date de fin :</label>
+                                    <input type="date" name="datefinplagei" required>
+
+                                    <input type="submit" name="submitPlageIndispo" value="Ajouter">
+                                </form>
+                            </div>
+
+                        </div>
+                <?php   }
+                    }
+                ?>
+                <script src="../../js/switchAddCalendrier.js"></script>
+            </div>
             <?php
                 if (isset($calendrierData)) {
                     // Utilise les données du calendrier pour afficher les informations complémentaires
@@ -248,52 +316,7 @@
                     echo '</div>';
                 }
             ?>
-
-            <?php
-                //Formulaire permettant l'ajout d'une plage de disponibilité
-                if (isset($_SESSION['id']) && $numLogementExists) {
-                    if ($_SESSION['proprio'] == true) { 
-            ?>
-                        <div id="plage-disp-form">
-                            <h3>Ajouter une plage de disponibilité :</h3>
-                            <form method="POST">
-                                <label for="datedebutplage">Date de début :</label>
-                                <input type="date" name="datedebutplage" required>
-
-                                <label for="datefinplage">Date de fin :</label>
-                                <input type="date" name="datefinplage" required>
-
-                                <label for="tarifjournalier">Tarif journalier :</label>
-                                <input type="number" name="tarifjournalier" placeholder="<?php echo $tarifDefaut?>" step="0.01" required>
-
-                                <input type="submit" name="submitPlageDispo" value="Ajouter">
-                            </form>
-                        </div>
-            <?php   }
-                }
-             ?>
-            
-            <?php
-                //Formulaire permettant l'ajout d'une plage d'indisponabilité'
-                if (isset($_SESSION['id']) && $numLogementExists) {
-                    if ($_SESSION['proprio'] == true) { 
-            ?>
-                        <div id="plage-indisp-form">
-                            <h3>Ajouter une plage d'indisponibilité :</h3>
-                            <form method="POST">
-                                <label for="datedebutplagei">Date de début :</label>
-                                <input type="date" name="datedebutplagei" required>
-
-                                <label for="datefinplagei">Date de fin :</label>
-                                <input type="date" name="datefinplagei" required>
-
-                                <input type="submit" name="submitPlageIndispo" value="Ajouter">
-                            </form>
-                        </div>
-            <?php   }
-                }
-             ?>
         </main>
     </body>
-    <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'); ?>
+    <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'); ?> 
 </html>
