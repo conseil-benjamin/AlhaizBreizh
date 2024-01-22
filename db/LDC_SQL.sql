@@ -9,6 +9,13 @@ CREATE TABLE Admin (
     mdp_admin VARCHAR(50)
 );
 
+CREATE TABLE APIkey (
+    num_api SERIAL NOT NULL PRIMARY KEY,
+    apikey VARCHAR(50) NOT NULL,
+    droit VARCHAR(4) NOT NULL,
+    id_proprio integer NOT NULL
+);
+
 -- Table Client
 CREATE TABLE Client (
     idCompte SERIAL NOT NULL PRIMARY KEY,
