@@ -15,10 +15,10 @@ uls.forEach(ul => {
             confirmButtonText: 'Copier',
             cancelButtonText: 'Annuler',
             showDenyButton: true,
-            denyButtonText: 'Supprimer'
+            denyButtonText: 'Supprimer',
         }).then((result) => {
             if (result.isConfirmed) {
-                //Copie de la clé
+                // Copie de la clé
                 navigator.clipboard.writeText(key);
                 Swal.fire({
                     icon: 'success',
@@ -26,16 +26,27 @@ uls.forEach(ul => {
                     showConfirmButton: false,
                     timer: 1500
                 });
-                
             } else if (result.isDenied) {
-                //Envoi du formulaire
-                const form = document.getElementById('removeForm');
-                const input = document.createElement('input');
-                input.setAttribute('type', 'hidden');
-                input.setAttribute('name', 'key');
-                input.setAttribute('value', key);
-                form.appendChild(input);
-                form.submit();
+                Swal.fire({
+                    icon: 'warning',
+                    title: "Êtes-vous sûr de vouloir supprimer cette clé API ?",
+                    showCancelButton: true,
+                    confirmButtonText: 'Oui',
+                    cancelButtonText: 'Non',
+                    confirmButtonColor: '#dc3741',
+                    
+                }).then((deleteResult) => {
+                    if (deleteResult.isConfirmed) {
+                        // Envoi du formulaire
+                        const form = document.getElementById('removeForm');
+                        const input = document.createElement('input');
+                        input.setAttribute('type', 'hidden');
+                        input.setAttribute('name', 'key');
+                        input.setAttribute('value', key);
+                        form.appendChild(input);
+                        form.submit();
+                    }
+                });
             }
         });
     })
