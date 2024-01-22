@@ -27,6 +27,37 @@ $stmt = $pdo->prepare("DELETE FROM ldc.logementproprio WHERE numLogement=$numLog
 $stmt->execute(); 
 $stmt = $pdo->prepare("DELETE FROM ldc.logement WHERE numLogement=$numLogement");
 $stmt->execute(); 
+$stmt = $pdo->prepare("DELETE FROM ldc.tarification WHERE numDevis IN (SELECT numDevis FROM ldc.devis WHERE numLogement=$numLogement)");
+$stmt->execute();
+$stmt = $pdo->prepare("DELETE FROM ldc.devis WHERE numLogement=$numLogement");
+$stmt->execute();
+
+
+
+$path = $_SERVER['DOCUMENT_ROOT'] . "/public/img/logements/$numLogement";
+
+// Vérifie si le dossier existe
+if (is_dir($path)) {
+
+    // Modifie les permissions du dossier
+    chmod($path, 0777);
+
+    // Itère sur les fichiers et les sous-dossiers du dossier
+    foreach (new DirectoryIterator($path) as $item) {
+
+        // Si c'est un fichier, le supprime
+        if ($item->isFile()) {
+            unlink($item->getPathname());
+        }
+
+        // Si c'est un dossier, le supprime récursivement
+        if ($item->isDir() && $item->getFilename() != "." && $item->getFilename() != "..") {
+            // On utilise `rmdir()` sans arguments pour supprimer le dossier
+            rmdir($item->getPathname());
+        }
+    }
+    rmdir($path);
+}
 
 $response = array();
 $response['message'] = 'Logement supprimé avec succès.';
