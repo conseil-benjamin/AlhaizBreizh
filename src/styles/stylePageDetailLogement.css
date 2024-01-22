@@ -411,12 +411,17 @@ footer{
   width: calc(100% - 2em);
 }
 
+.contact .profil{
+  border-bottom: #fff 2px solid;
+}
+
 .contact .profil a{
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: start;
   gap: 0em;
   width: 100%;
+  line-height: 100%;
 }
 
 /*Animation*/

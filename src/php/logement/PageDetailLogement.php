@@ -469,7 +469,7 @@ if (!isset($liste_langue_parle)) {
                         <?php $_SESSION['numLogement']=$numLogement; ?>
                         <a href="/src/php/calendrier/afficherPlageDispo.php?numLogement=<?php echo $_GET['numLogement'] ?>" class="boutton">Voir les disponibilitées du logement</a>
                     </section>
-
+                    <?php if ((isset($_SESSION['id']) == false) || ($_SESSION['id'] != $proprio)): ?>
                     <section class="reserve_contact">
                         <div class="resa_colle">
                             <article class="reserve">
@@ -513,6 +513,7 @@ if (!isset($liste_langue_parle)) {
                             </article>
                         </div>
                     </section>
+                    <?php endif; ?>
                 </div>
             </div>
 
