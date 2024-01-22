@@ -27,6 +27,12 @@ $stmt = $pdo->prepare("DELETE FROM ldc.logementproprio WHERE numLogement=$numLog
 $stmt->execute(); 
 $stmt = $pdo->prepare("DELETE FROM ldc.logement WHERE numLogement=$numLogement");
 $stmt->execute(); 
+$stmt = $pdo->prepare("DELETE FROM ldc.tarification WHERE numDevis IN (SELECT numDevis FROM ldc.devis WHERE numLogement=$numLogement)");
+$stmt->execute();
+$stmt = $pdo->prepare("DELETE FROM ldc.devis WHERE numLogement=$numLogement");
+$stmt->execute();
+
+
 
 $path = $_SERVER['DOCUMENT_ROOT'] . "/public/img/logements/$numLogement";
 
