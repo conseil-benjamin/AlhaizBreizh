@@ -559,30 +559,56 @@ if (!isset($liste_langue_parle)) {
         <?php
         }; ?>  
         <script src="/src/js/carrousel.js"></script>
-        <script>
-            function supprimerAnnonce() {
-                <?php
-                // Utilisation des valeurs PHP dans le script JavaScript
-                echo "var resaEnCours = " . json_encode($resa_en_cours) . ";\n";
-                echo "var numLogement = " . json_encode($numLogement) . ";\n";
-                ?>
+        function supprimerAnnonce() {
+    <?php
+        // Utilisation des valeurs PHP dans le script JavaScript
+        echo "var resaEnCours = " . json_encode($resa_en_cours) . ";\n";
+        echo "var numLogement = " . json_encode($numLogement) . ";\n";
+    ?>
 
-                if (!resaEnCours) {
-                    fetch('suppressionLogement.php?numLogement=' + numLogement, {
-                        method: 'DELETE'
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        alert(data.message);
-                    })
-                    .catch(error => {
-                        console.error('Erreur lors de la suppression du logement:', error);
+    if (!resaEnCours) {
+        // Affiche une boîte de dialogue d'avertissement
+        Swal.fire({
+            title: "Êtes-vous sûr de vouloir supprimer ce logement ?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Oui, je confirme",
+            cancelButtonText: "Annuler",
+        })
+        .then((result) => {
+            if (result.value) {
+                // Lance la suppression de l'annonce
+                fetch('suppressionLogement.php?numLogement=' + numLogement, {
+                    method: 'DELETE'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    Swal.fire({
+                        icon: "success",
+                        title: `${data.message}`,
+                        showConfirmButton: false,
+                        timer: 2000,
                     });
-                } else {
-                    // Affichez un message à l'utilisateur si des réservations sont en cours
-                    alert(resaEnCours);
-                }
+                    setTimeout(() => {
+                        window.location.href = "/src/php/logement/mesLogements.php";
+                    }, 2000);
+                })
+                .catch(error => {
+                    Swal.fire({
+                        title: "Erreur : Le logement n'a pas pu être supprimé",
+                        icon: "error",
+                    });
+                });
             }
-        </script>
+        });
+    } else {
+        // Affichez un message à l'utilisateur si des réservations sont en cours
+        Swal.fire({
+            title: "Vous ne pouvez pas supprimé votre logement, des réservations sont en cours",
+            icon: "error",
+        });        }
+}
+
+</script>
     </body>
 </html>
