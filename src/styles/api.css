@@ -1,0 +1,14 @@
+/*Reprend le css du profil*/
+/********************************/
+/********************************/
+/**/
+
+.monprofil #info ul{
+    transition: all 0.3s ease;
+}
+
+.monprofil #info ul:hover{
+    cursor: pointer;
+    scale: 1.1;
+    filter: drop-shadow(0px 0px 5px #000);
+}

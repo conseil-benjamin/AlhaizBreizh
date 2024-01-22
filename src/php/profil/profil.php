@@ -216,15 +216,10 @@
 
         <div id="options">
             <a class="boutton" href="profil.php?user=<?php echo $user ?>&public"><img src="/public/icons/user.svg" alt="">Profil public</a>
-            <!--<a class="boutton" href=""><img src="/public/icons/comment.svg" alt="">Ma messagerie</a>
-            <a class="boutton" href=""><img src="/public/icons/type_logement.svg" alt="">
             <?php 
                 if ($page_personnelle && $page_proprio){ ?>
-                    Mes logements</a> <?php
-                } else{ ?>
-                    Devenir Propriétaire</a> <?php
-                }
-            ?>-->
+                    <a class="boutton" href="./api"><img src="/public/icons/clef.svg" alt="">Mes clés API</a> <?php
+                } ?>
             <a class="boutton" href="/src/php/connexion/login.php?deconnexion"><img id="img-disconnect" src="/public/icons/forward.svg" alt="">Déconnexion</a>
         </div>
 
