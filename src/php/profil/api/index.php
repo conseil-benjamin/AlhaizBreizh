@@ -42,6 +42,7 @@
         <?php include $_SERVER['DOCUMENT_ROOT'] .'/src/php/header.php'; ?>
         <div class="monprofil">
             <div id="titre">
+                <img src="/public/icons/clef.svg" alt="">
                 <h2>Mes clés API</h2>
             </div>
             

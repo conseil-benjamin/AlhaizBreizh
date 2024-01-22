@@ -1,8 +1,7 @@
 /*Reprend le css du profil*/
 /********************************/
 /********************************/
-/**/
-
+/*Les UL des différentes clés*/
 .monprofil #info ul{
     transition: all 0.3s ease;
 }
@@ -11,4 +10,17 @@
     cursor: pointer;
     scale: 1.1;
     filter: drop-shadow(0px 0px 5px #000);
+}
+
+/********************************/
+/*L'image de clé*/
+.monprofil #titre{
+    justify-content: center;
+    width: 50%;
+}
+
+.monprofil #titre img{
+    object-fit: contain;
+    border: none;
+    border-radius: 0;
 }
