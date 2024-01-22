@@ -415,7 +415,6 @@ footer{
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
   gap: 0em;
   width: 100%;
 }
@@ -508,16 +507,14 @@ hs{
   }
 
   .resa_colle{
-    display: flex;
-    flex-direction: row;
-    position: relative;
-    top: 0;
+    flex-direction: column;
+    flex-wrap: wrap;
     width: 100%;
   }
 
-  .reserve_contact article{
+  .reserve_contact > .resa_colle > article{
     position: relative;
-    width: 50%;
+    width: calc(100% - 2em);
   }
 }
 
