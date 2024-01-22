@@ -14,6 +14,8 @@ CREATE TABLE APIkey (
     apikey VARCHAR(50) NOT NULL,
     droit VARCHAR(4) NOT NULL,
     id_proprio integer NOT NULL
+    ALTER TABLE APIkey ADD CONSTRAINT apikey_proprio_fk1 FOREIGN KEY (id_proprio) REFERENCES Proprietaire (idcompte),
+    ALTER TABLE APIkey ADD CONSTRAINT apikey_admin_fk1 FOREIGN KEY (id_proprio) REFERENCES Admin (idAdmin)
 );
 
 -- Table Client
@@ -373,3 +375,8 @@ INSERT INTO PhotosComplementairesLogement (numLogement, photosComplementaires)
 VALUES 
     (1, 'photo.png'),
     (2, 'photo.jgp');
+
+INSERT INTO APIkey(
+	numapi, apikey, droit, idproprio)
+	VALUES (1,"665e8884c2276465bd4c521348df62bb","RU",1),
+            (2,"73e380b09d16f3ed0bf6a0f7b8e76347", "R",1),
