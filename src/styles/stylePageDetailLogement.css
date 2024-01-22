@@ -42,7 +42,6 @@ footer{
     margin-top: calc(75px + 1em);
     height: 500px;
     border-radius: 0 20px 20px 0;
-    overflow: hidden;
     transition: all 0.5s ease;
 }
 
@@ -52,11 +51,20 @@ footer{
   flex-direction: row;
   background-color: var(--col2);
   width: calc(100% - 10%);
-  height: 500px;
+  height: calc(100vh - 150px - 2em);
   margin: auto;
   margin-top: calc(75px + 1em);
   border-radius: 0 20px 20px 0;
   transition: all 0.5s ease;
+}
+
+.tete_offre, .tete_offre_proprio{
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.tete_offre:hover, .tete_offre_proprio:hover{
+  filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.5));
 }
 
 #options-images{
@@ -67,15 +75,6 @@ footer{
   transition: all 0.5s ease;
 }
 
-.tete_offre:hover , .tete_offre_proprio:hover, .reserve:hover, .contact:hover{
-    filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.5));
-}
-
-.tete_offre > img:hover, .tete_offre_proprio > img:hover{
-    filter: drop-shadow(5px 0px 5px rgba(0, 0, 0, 0.75));
-    transform: translateY(0px);
-}
-
 /*Div contenant les infos à droite des images*/
 .tete_offre > div, .tete_offre_proprio > div+div{
     display: flex;
@@ -83,10 +82,11 @@ footer{
     flex-direction: column;
     background-color: #fff;
     transition: all 0.5s ease;
+    z-index: 0;
 }
 
-.tete_offre > div:hover, .tete_offre_proprio > div:hover{
-    filter: drop-shadow(-5px 0px 5px rgba(0, 0, 0, 0.75));
+.tete_offre > div:hover, .tete_offre_proprio > div+div:hover{
+  filter: drop-shadow(-5px 0px 5px rgba(0, 0, 0, 0.5));
 }
 
 .tete_offre > div .infos_loge, .tete_offre_proprio > div .infos_loge{
@@ -130,7 +130,15 @@ footer{
 .carousel {
     position: relative;
     width: 100%;
+    height: 100%;
     overflow: hidden;
+    transition: all 0.5s ease;
+    z-index: 0;
+}
+
+.carousel:hover{
+  filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.5));
+  z-index: 1;
 }
 
 .carousel .conteneur-images {
@@ -145,10 +153,15 @@ footer{
     transition: all 0.5s ease;
 }
 
+.carousel:hover > .conteneur-images img {
+  transform: scale(1.01);
+}
+
 .carousel button{
     background: none;
     transition: all 0.5s ease;
     opacity: 0.5;
+    z-index: 1;
 }
 
 .carousel button:hover{
@@ -160,7 +173,7 @@ footer{
     width: 100%;
     height: 100%;
     object-fit: cover;
-
+    filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.5));
 }
 
 .carousel #prevButton{
@@ -202,6 +215,7 @@ footer{
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1;
 }
 
 .carousel-dot {
@@ -211,6 +225,7 @@ footer{
   background: #ccc;
   border-radius: 50%;
   cursor: pointer;
+  filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.5));
 }
 
 .carousel-dot.active {
@@ -227,11 +242,21 @@ footer{
   flex-wrap: wrap;
   gap: .5em;
   padding: 1em;
-  max-height: 100px;
   background-color: #fff;
-  z-index: 1;
+  z-index: 0;
   transition: all 0.5s ease;
   filter: none;
+}
+
+.proprio:hover{
+  filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.5));
+  z-index: 1;
+}
+
+.proprio > div{
+  display: flex;
+  flex-direction: row;
+  gap: .5em;
 }
 
 .proprio > p{
@@ -252,9 +277,52 @@ footer{
 }
 
 /*****************************************************/
+/*Responsive de la tête de l'offre*/
+
+@media screen and (max-width: 1100px){
+
+  #options-images{
+    flex: 0 0 65%;
+  }
+
+  .tete_offre > div, .tete_offre_proprio > div+div{
+    flex: 0 0 35%;
+  }
+}
+
+@media screen and (max-width: 900px){
+
+  .tete_offre, .tete_offre_proprio{
+    flex-direction: column;
+    height: fit-content;
+    background-color: #fff;
+    border-radius: 0;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+  }
+
+  #options-images{
+    flex: 0 0 100%;
+  }
+
+  .tete_offre > div, .tete_offre_proprio > div+div{
+    flex: 0 0 100%;
+  }
+
+  .tete_offre > div > .infos_loge, .tete_offre_proprio > div+div > .infos_loge{
+    margin: 1em;
+  }
+
+  .carousel{
+    height: 300px;
+  }
+}
+
+/*****************************************************/
 /*Corps de l'offre*/
 .corps_offre{
-    padding: 25px;
+    flex: 1 1 75%;
+    padding: .5em 1em;
     border-radius: 20px;
     width: 100%;
     min-height: 500px;
@@ -278,89 +346,86 @@ footer{
 }
 
 /*****************************************************/
-/*Reservation*/
-.reserve p{
-    margin: 0;
-    display: flex;
-    justify-content: center;
-}
+/*Reservation + contact*/
 
-.reserve{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 2em;
-    background-color: var(--col2);
-    border-radius: 20px;
-    background-color: #fff;
-    background-color: var(--col4);
-    color: #fff;
-}
-
-.reserve > div, .reserve > form > div{
-    display: flex;
-    flex-direction: column;
-    height: fit-content;
-    margin: 5px;
-    text-align: center;
-}
-
-.reserve > form > div div{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
-
-.reserve > form input:first-child{
-    width: 3em;
-    height: 1em;
-    margin-right: 3px;
-}
-
-.reserve > form input:last-child{
-    height: fit-content;
-    line-height: normal;
-    margin-top: 20px;
-    padding: 0em;
-    width: 80%;
-    background-color: var(--col6);
+.reserve_contact{
+  display: flex;
+  flex: 1 1 25%;
+  flex-direction: column;
+  width:30%;
+  min-width: fit-content;
+  margin-top: .5em;
 }
 
 .resa_colle{
-    position: sticky;
-    top: 75px;
+  display: flex;
+  flex-direction: column;
+  gap: .5em;
+  position: sticky;
+  top: calc(75px + 1em);
 }
 
-.reserve_contact{
-    display: flex;
-    flex-direction: column;
-    width:30%;
-    min-width: fit-content;
-    margin-left: 20px;
+.reserve_contact > .resa_colle > article{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: .5em;
+  padding: 1em;
+  width: 300px;
+  background-color: var(--col2);
+  border-radius: 20px;
+  background-color: #fff;
+  background-color: var(--col4);
+  color: #fff;
+  transition: all 0.5s ease;
 }
 
+.reserve_contact > .resa_colle > article > div{
+  font-size: 2em;
+}
+
+.reserve_contact > .resa_colle > article form > div{
+  display: flex;
+  flex-direction: column;
+  gap: .5em;
+}
+
+.reserve_contact .boutton{
+  background-color: var(--col6);
+  width: 100%;
+}
+
+.reserve_contact input[type="text"], .reserve_contact input[type="number"]{
+  height: 30px;
+}
+
+/*Contact*/
 .contact{
-    background-color: var(--col3);
-    padding: 5px;
-    border-radius: 15px;
-   margin: 5px;
+  display: flex;
+  flex-wrap: nowrap;
+  position: relative;
 }
 
-.bouton_contact{
-    background-color: var(--col5);
-    color: white;
-    text-align: center;
-    border-radius: 20px;
-    padding: 5px;
-    margin-top: 10px;
+.contact .boutton{
+  margin-top: 1em;
+  width: calc(100% - 2em);
 }
 
-.photo_profil_contact{
-    display: flex;
-    align-items: center;
-    margin-left: 15%;
+.contact .profil a{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0em;
+  width: 100%;
 }
+
+/*Animation*/
+.reserve_contact > .resa_colle > article:hover{
+  filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.5));
+}
+
+/*****************************************************/
 
 footer{
     background-color: var(--col2);
@@ -383,16 +448,10 @@ footer{
   margin: 10px;
 }
 
-.bouton_disponible{
+.corps_offre > .boutton{ /*Boutton disponibilité*/
   display: flex;
-  background-color: var(--col1);
-  color: white;
-  padding: 1em;
-  border-radius: 20px;
-  margin-right: 20px;
-  min-width:30px;
-  justify-content: center;
-  line-height: 100%;
+  background-color: var(--col6);
+  color: #000;
 }
 
 hs{
@@ -430,52 +489,40 @@ hs{
 }
 
 /*****************************************************/
+/*Responsive Corps*/
+
+@media screen and (max-width: 900px){
+
+  .div_corps{
+    flex-direction: column;
+  }
+
+  .corps_offre{
+    order: 2;
+  }
+
+  .reserve_contact{
+    width: 100%;
+    order: 1;
+    margin: 0;
+  }
+
+  .resa_colle{
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    top: 0;
+    width: 100%;
+  }
+
+  .reserve_contact article{
+    position: relative;
+    width: 50%;
+  }
+}
+
+/*****************************************************/
 /*Responsives*/
-
-@media screen and (max-width: 1025px) {
-
-  .tete_offre, .tete_offre_proprio{
-    width: calc(100%-50%);
-  }
-
-  .tete_offre > div .infos_loge li:first-child, .tete_offre_proprio > div .infos_loge li:first-child{
-    margin-bottom: 8px;
-    font-size: 1.1em;
-    flex-wrap: nowrap;
-  }
-
-  .tete_offre > div .infos_loge, .tete_offre_proprio > div .infos_loge{
-    margin-left: 1em;
-    margin-top: 1em;
-  }
-}
-
-@media screen and (max-width: 725px) {
-
-  .tete_offre, .tete_offre_proprio{
-      flex-direction: column;
-      transition: none;
-      border-radius: 0 0 20px 20px;
-
-  }
-
-  .tete_offre > div .infos_loge, .tete_offre_proprio > div .infos_loge{
-        flex-direction: row;
-        flex-wrap: wrap;
-        padding-bottom: 5px;
-  }
-
-  .tete_offre > div, .tete_offre_proprio > div+div{
-    width: 100%;
-    transition: none;
-  }
-
-  .tete_offre > .carousel, .tete_offre_proprio > .carousel{
-    width: 100%;
-    transition: none;
-    transform: none;
-  }
-}
 
 /* CSS pour le conteneur wrapper */
 .wrapper {

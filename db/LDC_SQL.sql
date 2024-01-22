@@ -277,9 +277,11 @@ VALUES
 -- Insertion de données dans la table Client
 INSERT INTO Client (firstName, lastName, mail, numeroTel, photoProfil, civilite, adressePostale, pseudoCompte, motDePasse, dateNaissance, notationMoyenne)
 VALUES
-    ('Gérard', 'LeG', 'gerard.leg@email.com', '123456789', 'photo1.jpg', 'Monsieur', '123 Rue des lilas', 'gege', '1234', '15-01-2000', 4.5),
-    ('Jeanne', 'Robert', 'jeanne.robert@email.com', '987654321', 'photo2.jpg', 'Madame', '456 Avenue Charles de Gaule', 'propro', '1234', '25-07-1998', 4.0),
-    ('Julien', 'LeBras', 'julien.lebras@email.com', '895432156', 'photo2.jpg', 'Monsieur', '2 Rue du moine', 'JuJu', '1234', '25-07-1999', 4.0);
+    ('Gérard', 'LeG', 'gerard.leg@email.com', '123456789', 'photo1.jpg', 'Monsieur', '123 Rue des lilas', 'gege', '1234', '2000-01-15', 4.5),
+    ('Jeanne', 'Robert', 'jeanne.robert@email.com', '987654321', 'photo2.jpg', 'Madame', '456 Avenue Charles de Gaule', 'propro', '1234', '1998-07-25', 4.0),
+    ('Julien', 'LeBras', 'julien.lebras@email.com', '895432156', 'photo2.jpg', 'Monsieur', '2 Rue du moine', 'JuJu', '1234', '1999-07-25', 4.0),
+    ('Thierry', 'Richard', 'thierry.richard@email.com', '123456789', 'photo1.jpg', 'Monsieur', '123 Rue des lilas', 'trich', '1234', '15-01-2000', 4.5),
+    ('Jeanne', 'Robert', 'jeanne.robert@email.com', '987654321', 'photo2.jpg', 'Madame', '456 Avenue Charles de Gaule', 'jrob', '1234', '25-07-1998', 4.0);
 
 
 -- Insertion de données dans la table Message
@@ -375,17 +377,13 @@ VALUES
     (1, 10, 80, 560, 600, 40, 48, 12, 660),
     (2, 90, 100, 600, 660, 60, 72, 18, 720);
 
--- Insertion de données dans la table Services
-INSERT INTO Services (numLogement, installationsOffertes, equipementsProposes, servicesComplementaires, amenagementsProposes, chargesAdditionnelles)
+-- Insertion de données dans la table Avis_Client
+INSERT INTO AvisClient (idCompte, idDestinataire, idAvis)
 VALUES
-    (1,'toilettes' ,'wifi, TV', 'Petit-déjeuner inclus', 'Piscine, Salle de sport', 'Ménage 50€'),
-    (2, 'salle de bains','wifi, parking', 'Service de chambre', 'Jardin', 'Supplément animal de compagnie 25€');
-
--- Insertion de données dans la table AvisClient
-INSERT INTO AvisClient (idCompte, idAvis) 
-VALUES 
-    ('1', '1'),
-    ('1', '2');
+    (1, 2, 3),
+    (2, 1, 4),
+    (3, 2, 5),
+    (1, 2, 6);
 
 -- Insertion de données dans la table LogementProprio
 INSERT INTO LogementProprio (numLogement,idCompte) 
@@ -398,3 +396,83 @@ INSERT INTO PhotosComplementairesLogement (numLogement, photosComplementaires)
 VALUES 
     (1, 'photo.png'),
     (2, 'photo.jgp');
+
+INSERT INTO Admin (pseudo_admin, mdp_admin) VALUES ('admin', 'admin');
+
+
+
+INSERT INTO Logement (surfaceHabitable, libelle, accroche, descriptionLogement, natureLogement, adresse, cp, ville, proprio, photoCouverture, LogementEnLigne, nbPersMax, nbChambres, nbSalleDeBain, tarifNuitees)
+VALUES
+(50, 'Appartement de charme', 'Un appartement cosy en plein centre-ville de Rennes', 'Cet appartement est situé au cœur de Rennes, à proximité de toutes les commodités. Il est idéal pour un séjour en amoureux ou un week-end en ville.', 'appartement', '2 rue du Chapitre', 35000, 'Rennes', 2, 'appartement_rennes.jpg', TRUE, 2, 1, 1, 100.0),
+(70, 'Grande maison familiale', 'Une maison de famille au bord de la mer', 'Cette maison est située à seulement quelques minutes de la plage de Saint-Malo. Elle est idéale pour des vacances en famille ou entre amis.', 'maison', '12 rue de la plage', 35400, 'Saint-Malo', 2, 'maison_saintmalo.jpg', TRUE, 6, 3, 2, 200.0),
+(80, 'Gîte au bord du lac', 'Un gîte confortable en pleine nature', 'Ce gîte est situé au bord du lac de Guerlédan. Il est idéal pour des vacances en amoureux ou un week-end en randonnée.', 'gite', '10 rue du lac', 22590, 'Mûr-de-Bretagne', 2, 'gite_guerledan.jpg', TRUE, 4, 2, 1, 150.0),
+(100, 'Château de charme', 'Une expérience unique dans un château historique', 'Ce château est situé au cœur de la campagne bretonne. Il est idéal pour un séjour romantique ou un événement spécial.', 'chateau', '1 rue du château', 29500, 'Quimper', 2, 'chateau_quimper.jpg', TRUE, 10, 5, 3, 300.0);
+
+INSERT INTO LogementProprio (numLogement,idCompte) 
+VALUES 
+    ('3','2'),
+    ('4','2'),
+    ('5','2'),
+    ('6','2');
+    
+
+INSERT INTO Chambre (numChambre,numLogement, nbLitsSimples, nbLitsDoubles) VALUES (1,3, 0, 1);
+
+
+INSERT INTO Equipement (numLogement, numeEquip, nom)
+VALUES
+(1, 1, 'Climatisation'),
+(1, 2, 'TV écran plat'),
+(2, 1, 'Climatisation'),
+(2, 2, 'TV écran plat'),
+(2, 3, 'Lecteur DVD'),
+(3, 1, 'Climatisation'),
+(3, 2, 'TV écran plat'),
+(3, 3, 'Barbecue'),
+(4, 1, 'Climatisation'),
+(4, 2, 'TV écran plat'),
+(4, 3, 'Jeux de société'),
+(5, 1, 'Climatisation'),
+(5, 2, 'TV écran plat'),
+(5, 3, 'Matériel de sport'),
+(6, 1, 'Climatisation'),
+(6, 2, 'TV écran plat'),
+(6, 3, 'Livres');
+
+INSERT INTO Installation (numLogement, numInstall, nom)
+VALUES
+(1, 1, 'Alarme'),
+(1, 2, 'Caméra de surveillance'),
+(2, 1, 'Alarme'),
+(2, 2, 'Caméra de surveillance'),
+(3, 1, 'Alarme'),
+(3, 2, 'Caméra de surveillance'),
+(4, 1, 'Alarme'),
+(4, 2, 'Caméra de surveillance'),
+(5, 1, 'Alarme'),
+(5, 2, 'Caméra de surveillance'),
+(6, 1, 'Alarme'),
+(6, 2, 'Caméra de surveillance');
+
+INSERT INTO Service (numLogement, numServ, nom)
+VALUES
+(1, 1, 'Wifi'),
+(1, 2, 'Accès lave-linge'),
+(2, 1, 'Wifi'),
+(2, 2, 'Accès lave-linge'),
+(2, 3, 'Accès parking'),
+(3, 1, 'Wifi'),
+(3, 2, 'Accès lave-linge'),
+(3, 3, 'Accès piscine'),
+(4, 1, 'Wifi'),
+(4, 2, 'Accès lave-linge'),
+(4, 3, 'Accès sauna'),
+(5, 1, 'Wifi'),
+(5, 2, 'Accès lave-linge'),
+(5, 3, 'Accès jacuzzi'),
+(6, 1, 'Wifi'),
+(6, 2, 'Accès lave-linge'),
+(6, 3, 'Accès salle de sport');
+
+
+

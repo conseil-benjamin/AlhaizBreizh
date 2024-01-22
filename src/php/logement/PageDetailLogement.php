@@ -281,23 +281,27 @@ if (!isset($liste_langue_parle)) {
                                 <?php if($etat_logement){ ?>en ligne
                                 <?php } else { ?>hors ligne <?php } ?>
                             </p>
-                            <?php
-                            if (!$etat_logement){ ?>
-                                <a href="?action=activer&numLogement=<?php echo $numLogement ?>" class="boutton">Mettre l'annonce en ligne</a>
-                            <?php } else { ?>
-                                <a href="?action=desactiver&numLogement=<?php echo $numLogement ?>" class="boutton">Mettre l'annonce hors ligne</a>
-                            <?php } 
-                            $_SESSION['numLogement']=$numLogement?>
-                            <a href="/src/php/logement/modif.php" class="boutton">Modifier l'annonce</a>
-                            <a href="#" class="boutton" onclick="supprimerAnnonce()">Supprimer l'annonce</a>
+                            <div>
+                                <?php
+                                if (!$etat_logement){ ?>
+                                    <a href="?action=activer&numLogement=<?php echo $numLogement ?>" class="boutton">Mettre en ligne</a>
+                                <?php } else { ?>
+                                    <a href="?action=desactiver&numLogement=<?php echo $numLogement ?>" class="boutton">Mettre hors ligne</a>
+                                <?php } 
+                                $_SESSION['numLogement']=$numLogement?>
+                                <a href="/src/php/logement/modif.php" class="boutton">Modifier</a>
+                                <a href="#" class="boutton" onclick="supprimerAnnonce()">Supprimer</a>
+                            </div>
                         </div><?php 
                     }
                     if ($nombre_fichiers <= 0) {?>
                         <h2>Aucune photo n'a été trouvée pour ce logement<h2><?php
                     } else {?>
                         <div class="carousel">
+                            <?php if ($nombre_fichiers > 1): ?>
                             <button id="prevButton"><img src="/public/icons/arrow.svg" alt="Précédent"></button>
                             <button id="nextButton"><img src="/public/icons/arrow.svg" alt="Suivant"></button>
+                            <?php endif; ?>
                             <div class="carousel-dots">
                                 <?php for ($i = 1; $i <= $nombre_fichiers; $i++ ): ?>
                                     <span class="carousel-dot" data-index="<?php echo ($i - 1) ?>"></span>
@@ -462,7 +466,7 @@ if (!isset($liste_langue_parle)) {
                         </ul>
                         <br>
                         <?php $_SESSION['numLogement']=$numLogement; ?>
-                        <a href="/src/php/calendrier/afficherPlageDispo.php?numLogement=<?php echo $_GET['numLogement'] ?>" class="bouton_disponible">Voir les disponibilitées du logement</a>
+                        <a href="/src/php/calendrier/afficherPlageDispo.php?numLogement=<?php echo $_GET['numLogement'] ?>" class="boutton">Voir les disponibilitées du logement</a>
                     </section>
 
                     <section class="reserve_contact">
@@ -485,22 +489,21 @@ if (!isset($liste_langue_parle)) {
                             </article>
 
                             <article class="contact">
-                                <div class="photo_profil_contact">
-                                        <a href="/src/php/profil/profil.php?user=<?php echo $proprio ?>">
+                                <div class="profil">
+                                    <a href="/src/php/profil/profil.php?user=<?php echo $proprio ?>">
                                         <?php
                                         if (file_exists($_SERVER['DOCUMENT_ROOT'] . $photo_profil_proprio)==false) { ?>
                                             <img src="/public/icons/user.svg" id="photo_profil" alt="photo de profil du propriétaire"> <?php          
                                         } else { ?>
                                             <img src="<?php echo $photo_profil_proprio ?>" id="photo_profil" alt="photo de profil du propriétaire"> <?php
                                         } ?>    
-                                        </a>                                    
-                                        <div class="contact_nom_bouton">
                                         <p><?php echo $prenom_proprio .' '. $nom_proprio; ?></p>
-                                        <p><img src="/public/icons/star_fill.svg" id="icone" alt="icone etoile"> Note</p>
-                                        <div class="bouton_contact"><a href="#">Contacter</a></div>
-                                    </div>
+                                    </a>                                    
                                 </div>
-                                <br>
+                                <div class="contact_nom_bouton">
+                                    <p><img src="/public/icons/star_fill.svg" id="icone" alt="icone etoile"> Note</p>
+                                    <a class="boutton" href="#">Contacter</a>
+                                </div>
                                 <p>
                                     Langues parlées :
                                     <?php //$liste_langue_parle = array("Français", "Anglais", "Espagnol"); 
@@ -545,7 +548,7 @@ if (!isset($liste_langue_parle)) {
                             <rect x="0" y="0" width="100%" height="100%" mask="url(#mask)" />
                         </svg>
                         <!-- Lien vers la page d'accueil avec un message d'erreur -->
-                        <a class="lien" href="/accueil" target="_blank">
+                        <a class="lien" href="/accueil">
                             <div>
                                 Cette page est inexistante. Cliquez ici pour retourner à l'accueil.
                             </div>
