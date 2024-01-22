@@ -258,6 +258,7 @@ if (!isset($liste_langue_parle)) {
         <link rel="stylesheet" type="text/css" href="/src/styles/stylePageDetailLogement.css">
         <title>ALHaiz Breizh</title>
         <link rel="icon" href="/public/logos/logo-black.svg">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     </head>
     <body>
@@ -559,12 +560,13 @@ if (!isset($liste_langue_parle)) {
         <?php
         }; ?>  
         <script src="/src/js/carrousel.js"></script>
+        <script>
         function supprimerAnnonce() {
-    <?php
-        // Utilisation des valeurs PHP dans le script JavaScript
-        echo "var resaEnCours = " . json_encode($resa_en_cours) . ";\n";
-        echo "var numLogement = " . json_encode($numLogement) . ";\n";
-    ?>
+            <?php
+                // Utilisation des valeurs PHP dans le script JavaScript
+                echo "var resaEnCours = " . json_encode($resa_en_cours) . ";\n";
+                echo "var numLogement = " . json_encode($numLogement) . ";\n";
+            ?>
 
     if (!resaEnCours) {
         // Affiche une boîte de dialogue d'avertissement
