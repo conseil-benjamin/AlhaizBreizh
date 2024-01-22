@@ -15,8 +15,6 @@ CREATE TABLE APIkey (
     id_proprio integer,
     id_admin integer,
     est_admin boolean NOT NULL,
-    FOREIGN KEY (id_proprio) REFERENCES Proprietaire (idcompte),
-    FOREIGN KEY (id_admin) REFERENCES Admin (idAdmin),
     CHECK (
         (est_admin = true AND id_admin IS NOT NULL AND id_proprio IS NULL) OR
         (est_admin = false AND id_proprio IS NOT NULL AND id_admin IS NULL)
@@ -276,9 +274,8 @@ ALTER TABLE AvisClient ADD CONSTRAINT avisclient_client_fk FOREIGN KEY (idCompte
 ALTER TABLE AvisClient ADD CONSTRAINT avisclient_avis_fk FOREIGN KEY (idAvis) REFERENCES Avis(numAvis);
 ALTER TABLE LogementProprio ADD CONSTRAINT logementproprio_logement_fk FOREIGN KEY (numLogement) REFERENCES Logement(numLogement);
 ALTER TABLE LogementProprio ADD CONSTRAINT logementproprio_proprietaire_fk FOREIGN KEY (idCompte) REFERENCES Proprietaire(idCompte);
-ALTER TABLE APIkey ADD CONSTRAINT apikey_proprio_fk1 FOREIGN KEY (id_user) REFERENCES Proprietaire (idcompte);
-ALTER TABLE APIkey ADD CONSTRAINT apikey_admin_fk1 FOREIGN KEY (id_user) REFERENCES Admin (idAdmin);
-
+ALTER TABLE APIkey ADD CONSTRAINT apikey_proprio_fk1 FOREIGN KEY (id_proprio) REFERENCES Proprietaire (idcompte);
+ALTER TABLE APIkey ADD CONSTRAINT apikey_admin_fk1 FOREIGN KEY (id_admin) REFERENCES Admin (idAdmin);
 
 -- Insertion de données dans la table Avis
 INSERT INTO Avis (contenuAvis, nbEtoiles)
