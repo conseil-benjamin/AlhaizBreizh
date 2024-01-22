@@ -7,13 +7,23 @@ if ($_SESSION['proprio'] != true){
 } else{
     $id = $_SESSION['id'];
 
-    $newApiKey = bin2hex(random_bytes(25));
-    $droits = $_GET['rights'];
-    $droitsAutorises = array('R', 'RW');
-    if (!in_array($droits, $droitsAutorises)){
-        header('Location: /src/php/profil/api/index.php');
-        exit();
-    }
+    do {
+        $newApiKey = bin2hex(random_bytes(25));
+        $droits = $_GET['rights'];
+        $droitsAutorises = array('R', 'RU');
+        if (!in_array($droits, $droitsAutorises)){
+            header('Location: /src/php/profil/api/index.php');
+            exit();
+        }
+
+        //Vérifier que la clé n'existe pas déjà
+        $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
+        $stmt = $pdo->prepare("SELECT apikey FROM ldc.APIkey WHERE apikey = :cle");
+        $stmt->bindParam(':cle', $newApiKey);
+        $stmt->execute();
+        $pdo = null;
+
+    } while ($stmt->rowCount() > 0);
 
     //Ajouter la clé API à la base de données
     $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
