@@ -265,8 +265,7 @@ if (!isset($liste_langue_parle)) {
         <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/header.php'); ?>
         <main>
             <?php
-            if (($numLogementExists && $etat_logement) || ($numLogementExists && isset($_SESSION['id']) && $_SESSION['id'] == $proprio && !$etat_logement) || ($etat_logement && isset($_SESSION['id']) && $_SESSION['id'] != $proprio)) {#gestion_exisence70
-
+            if (($numLogementExists && $etat_logement) || ($numLogementExists && isset($_SESSION['id']) && $_SESSION['id'] == $proprio && !$etat_logement) || ($etat_logement && isset($_SESSION['id']) && $_SESSION['id'] != $proprio)) {
                 if (isset($_SESSION['id']) && $numLogementExists && $_SESSION['id'] == $proprio) { ?>
                     <section class="tete_offre_proprio"> <?php
                 }else { ?>
