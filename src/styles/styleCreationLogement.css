@@ -208,6 +208,17 @@ span a{
 /*TextFields*/
 .textfield{
   width: calc(100% - 4em);
+  height: 1em;
+}
+
+textarea.textfield {
+  height: 5em;
+  padding: 1.5em;
+  padding-bottom: 2em;
+}
+
+select.textfield {
+  height: auto;
 }
 
 /********************************/
