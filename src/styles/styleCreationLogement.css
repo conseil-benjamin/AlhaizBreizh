@@ -195,6 +195,11 @@ litsElement > label{
   margin-bottom: 2em;
 }
 
+.creerAnnonce:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 span a{
   text-decoration: underline;
 }
