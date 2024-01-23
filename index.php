@@ -130,6 +130,7 @@
             </nav>
         </div>   
         <?php include $_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'; ?>
+        <script src="/src/js/accueilScroll.js"></script>
         <script>
             //Si on a l'attribut index dans l'url, on scroll jusqu'au logement
             let index = <?php echo $_GET["index"] ?>;
@@ -141,16 +142,6 @@
                 let header = document.querySelector("header");
                 header.scrollIntoView();
             }
-
-            window.addEventListener("scroll", () => {
-                let header = document.querySelector("header");
-                
-                if (window.scrollY > 0) {
-                    header.classList.add("scrolled");
-                } else{
-                    header.classList.remove("scrolled");
-                }
-            });
         </script>
     </body>
 </html>
