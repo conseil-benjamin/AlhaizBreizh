@@ -9,6 +9,9 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="/src/js/modifierLogement/addInputElement.js"></script>
+    <link rel="icon" href="/public/logos/logo-black.svg">
+
+
     <title>Modification Logement</title>
 </head>
 <body>
@@ -21,8 +24,7 @@
                 }else {
                     $numLogement=$_SESSION['num_logement'];
                 }
-
-
+                
                 // Connexion à la base de données
                 $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
             
@@ -56,8 +58,8 @@
                 $result = $pdo->query($query);
     
                 while ($row = $result->fetch(PDO::FETCH_NUM)) {
-                    $numChambre[$i][0] = $row[2];
-                    $numChambre[$i][1] = $row[3];
+                    $numChambre[$i][0] = $row[2]; //Doubles
+                    $numChambre[$i][1] = $row[1]; //Simples
                     $i=$i+1;
                 }
     
@@ -106,6 +108,8 @@
         <form id="myForm" method="post" action="update_logement_bdd.php">
         <div class="container-main">
             <div class="container-left">
+                <input type="hidden" name="id_logem" value="<?php echo $numLogement ?>">
+
                 <label for="title" >Titre de l'annonce (*)</label>
                 <input type="text" id="title" name="title" size="60" placeholder="Titre" maxlength="100" value="<?php echo $title; ?>" >
                 
@@ -216,7 +220,7 @@
                 </span>
                 <input type="checkbox" name="conditionsGenerale" id="conditionsGenerale">
                 <label class="conditionsGenerale" for="conditionsGenerale">
-                <button class="creerAnnonce" type="submit" id="creerAnnonce">Créer annonce</button>
+                <button class="creerAnnonce" type="submit" id="creerAnnonce">Modifier annonce</button>
         </div>
         </div>
         </form>
