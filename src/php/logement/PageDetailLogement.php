@@ -279,8 +279,8 @@ if (!isset($liste_langue_parle)) {
                         <div class="proprio">
                             <p>
                                 Le logement est 
-                                <?php if($etat_logement){ ?>en ligne
-                                <?php } else { ?>hors ligne <?php } ?>
+                                <?php if($etat_logement){ ?>en ligne<div id="icone_en_ligne"> <img id="icone" src="/public/icons/rond_vert.svg"></div>
+                                <?php } else { ?>hors ligne <div id="icone_en_ligne"><img id="icone" src="/public/icons/rond_rouge.svg"></div> <?php } ?>
                             </p>
                             <div>
                                 <?php
@@ -290,7 +290,7 @@ if (!isset($liste_langue_parle)) {
                                     <a href="?action=desactiver&numLogement=<?php echo $numLogement ?>" class="boutton">Mettre hors ligne</a>
                                 <?php } 
                                 $_SESSION['numLogement']=$numLogement?>
-                                <a href="/src/php/logement/modificationLogement.php" class="boutton">Modifier</a>
+                                <a href="/src/php/logement/modificationLogement.php?numLogement=<?php echo $numLogement ?>" class="boutton">Modifier</a>
                                 <a href="#" class="boutton" onclick="supprimerAnnonce()">Supprimer</a>
                             </div>
                         </div><?php 
