@@ -290,7 +290,7 @@ if (!isset($liste_langue_parle)) {
                                     <a href="?action=desactiver&numLogement=<?php echo $numLogement ?>" class="boutton">Mettre hors ligne</a>
                                 <?php } 
                                 $_SESSION['numLogement']=$numLogement?>
-                                <a href="/src/php/logement/modif.php" class="boutton">Modifier</a>
+                                <a href="/src/php/logement/modificationLogement.php" class="boutton">Modifier</a>
                                 <a href="#" class="boutton" onclick="supprimerAnnonce()">Supprimer</a>
                             </div>
                         </div><?php 
