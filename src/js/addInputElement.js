@@ -162,6 +162,7 @@ document.addEventListener("DOMContentLoaded", function () {
     newElement.setAttribute("value", val);
     newElement.setAttribute("name", name);
     newElement.setAttribute("id", name);
+    newElement.classList.add("textfield");
 
     const iconSupprimer = document.createElement("img");
     iconSupprimer.src = "/public/icons/supprimer.svg";
@@ -280,10 +281,11 @@ La fonction
     console.log(nbChambres);
 
     btnAddLits.textContent = "Ajouter lit";
-    btnAddLits.className = "btnAddLits";
+    btnAddLits.className = "btnAddLits boutton";
 
     titre.textContent = "Chambre " + nbChambres;
     let newElement = document.createElement("select");
+    newElement.className = "textfield";
     newElement.name = nbChambres + "lits" + 0;
 
     let option1 = document.createElement("option");
@@ -352,6 +354,7 @@ La fonction
     ella[nChambre]++;
 
     let newElement = document.createElement("select");
+    newElement.className = "textfield";
     newElement.name = nChambre + "lits" + ella[nChambre];
 
     let option1 = document.createElement("option");
