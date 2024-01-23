@@ -14,9 +14,15 @@
 <body>
     <?php
         include($_SERVER['DOCUMENT_ROOT'].'/src/php/header.php');
-        if (isset($_SESSION['numLogement']) && !empty($_SESSION['numLogement'])) {
+        if (isset($_SESSION['num_logement']) || (isset($_GET['numLogement']) && !empty($_GET['numLogement']))) {
             try {
-                $numLogement=$_SESSION['num_logement'];
+                if (!empty($_GET['numLogement'])) {
+                    $numLogement=$_GET['numLogement'];
+                }else {
+                    $numLogement=$_SESSION['num_logement'];
+                }
+
+
                 // Connexion à la base de données
                 $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
             
