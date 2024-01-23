@@ -54,7 +54,7 @@
     if (isset($_GET['index']) && $_GET['index'] != null && $_GET['index'] != ""){
         $index = $_GET['index'];
     } else{
-        $index = 0;
+        $index = NULL;
     }
 
     $nombreLogements = obtenirNombreLogements();
@@ -132,7 +132,8 @@
         <?php include $_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'; ?>
         <script>
             //Si on a l'attribut index dans l'url, on scroll jusqu'au logement
-            let index = <?php echo $index ?>;
+            let index = <?php echo $_GET["index"] ?>;
+            console.log(index);
             if (index != null){
                 let logement = document.getElementById("logements");
                 logement.scrollIntoView();
