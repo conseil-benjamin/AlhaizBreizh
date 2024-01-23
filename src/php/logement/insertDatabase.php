@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Insert création</title>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
@@ -39,34 +39,43 @@ if (isset($_SESSION['id'])) {
     $logementEnLigne = 1;
 
     $installations=[];
-    $installElement=$_POST['installDispo'];
+    $hollow=$_POST['installDispo'];
     $i=0;
-    while (isset($installElement)){
-        $installations[$i]=$installElement;
+
+    while (isset($hollow)){
+        if (!($hollow=="")){
+            array_push($installations, $hollow);
+        }
         $i=$i+1;
-        $installElement=$_POST['InstallDispo'.$i+1];
+        $hollow=$_POST['InstallDispo'.$i+1];
     }
 
     //EQUIPEMENT
 
     $equipements=[];
     $equipementElement=$_POST['equipement'];
-    $x=0;
+    $j=0;
+
     while (isset($equipementElement)){
-        $equipements[$i]=$equipementElement;
-        $x=$x+1;
-        $equipementElement=$_POST['equipement'.$x+1];
+        if (!($equipementElement=="")){
+            array_push($equipements, $equipementElement);
+        }
+        $j=$j+1;
+        $equipementElement=$_POST['equipement'.$j+1];
     }
 
     //SERVICE
 
     $services=[];
     $serviceElement=$_POST['service'];
-    $j=0;
+    $k=0;
+
     while (isset($serviceElement)){
-        $services[$i]=$serviceElement;
-        $j=$j+1;
-        $serviceElement=$_POST['service'.$j+1];
+        if (!($serviceElement=="")){
+            array_push($services, $serviceElement);
+        }
+        $k=$k+1;
+        $serviceElement=$_POST['service'.$k+1];
     }
 
     //CHAMBRES
@@ -125,6 +134,7 @@ if (isset($_SESSION['id'])) {
 
             $id_logem = $pdo->lastInsertId();
 
+            //CHAMBRES
             foreach ($chambres as $key => $value){
                 $stmtChambre = $pdo->prepare(
                     "INSERT INTO ldc.chambre (numChambre, nblitssimples, nblitsdoubles, numlogement) VALUES (?, ?, ?, ?)"
@@ -136,6 +146,7 @@ if (isset($_SESSION['id'])) {
                 $stmtChambre->execute();
             }
             
+            //INSTALLATIONS
             foreach($installations as $key => $value){
                 $stmtInstallation = $pdo->prepare(
                     "INSERT INTO ldc.installation (numlogement, numinstall, nom) VALUES (?, ?, ?)"
@@ -146,6 +157,7 @@ if (isset($_SESSION['id'])) {
                 $stmtInstallation->execute();
             }
     
+            //EQUIPEMENTS
             foreach($equipements as $key => $value){
                 $stmtEquipement = $pdo->prepare(
                     "INSERT INTO ldc.equipement (numlogement, numeequip, nom) VALUES (?, ?, ?)"
