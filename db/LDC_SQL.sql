@@ -486,3 +486,10 @@ VALUES
 (6, 1, 'Wifi'),
 (6, 2, 'Accès lave-linge'),
 (6, 3, 'Accès salle de sport');
+
+
+INSERT INTO Calendrier (numCal,numLogement)VALUES
+(3,3),
+(4,4),
+(5,5),
+(6,6);
