@@ -36,7 +36,7 @@
                 }
     
                 //Récupérer les données des plages de disponibilité du calendrier
-                $stmtPlagesDispo = $pdo->prepare("SELECT * FROM ldc.PlageDeDisponibilite WHERE numCal = $numCal");
+                $stmtPlagesDispo = $pdo->prepare("SELECT * FROM ldc.PlageDeDisponibilite WHERE numCal = $numLogement"); //numCal et numLogement sont égales
                 $stmtPlagesDispo->execute(); 
                 $plagesDisponibilite = $stmtPlagesDispo->fetchAll(PDO::FETCH_ASSOC);
                 $evenements = [];
@@ -55,7 +55,7 @@
                 $evenementsJSON = json_encode($evenements);
 
                 //Récupérer les données des plages de disponibilité du calendrier
-                $stmtPlagesIndispo = $pdo->prepare("SELECT * FROM ldc.PlageIndisponibilite WHERE numCal = $numCal");
+                $stmtPlagesIndispo = $pdo->prepare("SELECT * FROM ldc.PlageIndisponibilite WHERE numCal = $numLogement");//numCal et numLogement sont égales
                 $stmtPlagesIndispo->execute(); 
                 $plagesIndisponibilite = $stmtPlagesIndispo->fetchAll(PDO::FETCH_ASSOC);
                 $evenementsI = [];
@@ -83,7 +83,7 @@
                     if (strtotime($datedebutplage) && strtotime($datefinplage) && is_numeric($tarifjournalier)) {
                         $stmt = $pdo->prepare("INSERT INTO ldc.PlageDeDisponibilite (numCal, datedebutplage, datefinplage, tarifjournalier) 
                             VALUES (?, ?, ?, ?) ");
-                        $stmt->bindParam(1, $numCal);
+                        $stmt->bindParam(1, $numLogement);
                         $stmt->bindParam(2, $datedebutplage);
                         $stmt->bindParam(3, $datefinplage);
                         $stmt->bindParam(4, $tarifjournalier);
