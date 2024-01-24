@@ -36,7 +36,7 @@ if (isset($_SESSION['id'])) {
     $prixParNuit = $_POST['prixParNuit'];
     $nbPersMax = $_POST['nbMaxPers'];
     $proprio = $id;
-    $logementEnLigne = 1;
+    $logementEnLigne = 0;
 
     $installations=[];
     $hollow=$_POST['installDispo'];
@@ -177,6 +177,11 @@ if (isset($_SESSION['id'])) {
                 $stmtServcie->bindParam(3, $value);
                 $stmtServcie->execute();
             }
+
+
+            //Création Calendrier
+            $stmt=$pdo->prepare("INSERT INTO Calendrier (numCal,numLogement)VALUES($id_logem,$id_logem)");
+            $stmt->execute();
 
 
 
