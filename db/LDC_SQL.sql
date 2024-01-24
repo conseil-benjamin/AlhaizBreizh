@@ -2,6 +2,8 @@ DROP SCHEMA IF EXISTS ldc CASCADE;
 CREATE SCHEMA ldc;
 SET SCHEMA 'ldc';
 
+set datestyle to ISO, DMY;
+
 CREATE TABLE Admin (
     idAdmin SERIAL NOT NULL PRIMARY KEY,
     pseudo_admin VARCHAR(50),
