@@ -183,18 +183,6 @@ if (isset($_SESSION['id'])) {
             $stmt=$pdo->prepare("INSERT INTO Calendrier (numCal,numLogement)VALUES($id_logem,$id_logem)");
             $stmt->execute();
 
-
-
-            $nom_dossier = $_SERVER['DOCUMENT_ROOT'] . "/public/img/logements/" . $id_logem;
-            $nbPhotos = count(glob($nom_dossier . "/*.png"));
-
-            if (!is_dir($nom_dossier)){
-                if (mkdir($nom_dossier)) {
-                    $url = $nom_dossier . "/" . ($nbPhotos + 1) . ".png";
-                    move_uploaded_file($_FILES['photos']['tmp_name'], $url);
-                }
-            }
-
             if ($stmtChambre->affected_rows < 1) {
                 ?>
                 <script>
@@ -222,8 +210,29 @@ if (isset($_SESSION['id'])) {
 }
 
 $pdo = null;
+
+//Créer un dossier pour les photos du logement
+$nom_dossier = $_SERVER['DOCUMENT_ROOT'] . "/public/img/logements/" . $id_logem;
+$nbPhotos = count(glob($nom_dossier . "/*.png"));
+
+if (!is_dir($nom_dossier)){
+    if (mkdir($nom_dossier)) {
+        $url = $nom_dossier . "/" . ($nbPhotos + 1) . ".png";
+        move_uploaded_file($_FILES['photos']['tmp_name'], $url);
+    }
+}
+
 ?>
 <script>
+
+    //Faire une popup de confirmation
+    Swal.fire({
+            icon: "success",
+            title: "Logement bien créé",
+            showConfirmButton: false,
+            timer: 2000
+        });
+
     setTimeout(() => {
          window.location.href = '/src/php/logement/mesLogements.php';
 }, 2000);
