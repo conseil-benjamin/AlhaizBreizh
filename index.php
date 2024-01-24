@@ -86,14 +86,22 @@
                 </div>
 
                     <div class="menu_tri">
+                        <?php
+                            if (isset($_GET['tri'])){
+                                $tri=$_GET['tri'];
+                            }
+                            else{
+                                $tri=null;
+                            }
+                        ?>
                         <button class="boutton">Trier</button>
                         <div class="menu_deroulant">
                         <ul>
-                            <li <?php if ($_GET['tri']=="ancien"){?> class="select"><a href="index.php#logements"> <?php }else{?> ><a href="index.php?tri=ancien#logements"><?php }?>Offre de la plus ancienne à la plus récente</li>
-                            <li <?php if ($_GET['tri']=="tarifmoins"){?> class="select"><a href="index.php#logements"> <?php }else{?> ><a href="index.php?tri=tarifmoins#logements"><?php }?>Tarif (- cher en premier)</li>
-                            <li <?php if ($_GET['tri']=="tarifplus"){?> class="select"><a href="index.php#logements"> <?php }else{?> ><a href="index.php?tri=tarifplus#logements"><?php }?>Tarif (+ cher en premier)</li>
-                            <li <?php if ($_GET['tri']=="notes"){?> class="select"><a href="index.php#logements"> <?php }else{?> ><a href="index.php?tri=notes#logements"><?php }?>Notes (meilleures en premier)</li>
-                            <li <?php if ($_GET['tri']=="avis"){?> class="select"><a href="index.php#logements"> <?php }else{?> ><a href="index.php?tri=avis#logements"><?php }?>Avis positifs (+ d'avis positifs)</li>
+                            <li <?php if ($tri=="ancien"){?> class="select"><a href="index.php#logements"> <?php }else{?> ><a href="index.php?tri=ancien#logements"><?php }?>Offre de la plus ancienne à la plus récente</li>
+                            <li <?php if ($tri=="tarifmoins"){?> class="select"><a href="index.php#logements"> <?php }else{?> ><a href="index.php?tri=tarifmoins#logements"><?php }?>Tarif (- cher en premier)</li>
+                            <li <?php if ($tri=="tarifplus"){?> class="select"><a href="index.php#logements"> <?php }else{?> ><a href="index.php?tri=tarifplus#logements"><?php }?>Tarif (+ cher en premier)</li>
+                            <li <?php if ($tri=="notes"){?> class="select"><a href="index.php#logements"> <?php }else{?> ><a href="index.php?tri=notes#logements"><?php }?>Notes (meilleures en premier)</li>
+                            <li <?php if ($tri=="avis"){?> class="select"><a href="index.php#logements"> <?php }else{?> ><a href="index.php?tri=avis#logements"><?php }?>Avis positifs (+ d'avis positifs)</li>
                         </ul>
                         </div>
                     </div>
