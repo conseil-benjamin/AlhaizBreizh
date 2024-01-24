@@ -8,7 +8,7 @@
     //Connection à la base de donnée
     try{
         $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
-        $stmt = $pdo->prepare("SELECT numLogement,proprio,libelle,accroche,ville,tarifNuitees,note FROM ldc.Logement");
+        $stmt = $pdo->prepare("SELECT numLogement,proprio,libelle,accroche,ville,tarifNuitees,note,typeLogement,nbpersmax FROM ldc.Logement");
 
         //Recherche des logements dans la base de données
         $stmt->execute();
@@ -40,17 +40,42 @@
             <h2>Mes logements</h2>
             <div id="options">
                 <div>
-                    <input class="textfield" type="text" placeholder="Search..">
-                    <button class="boutton">Filtrer</button>
+                <div class="menu_filtre">
+                    <div id="sidebar">
+                        <input id="side_recherche" class="textfield" type="text" placeholder="Rechercher..">
+                        <h2>Nombre de personnes</h2>
+                            <input id="side_nb" type="number" min="1">
+                        <?php //<h2>Propriétaire</h2>
+                        //<input class="textfield" type="text" placeholder="Nom du propriétaire..."> ?>
+                        <h2>Type du logement</h2>
+                            <select id="side_type">
+                                <option value="">---</option>
+                                <option value="appart">Appartement</option>
+                                <option value="maison">Maison</option>
+                                <option value="villa">Villa</option>
+                            </select>
+                    </div>
+
+
+                    <button id="menu-btn" class="boutton">Filtrer</button>
+                </div>
                     <div class="menu_tri">
                         <button class="boutton">Trier</button>
                         <div class="menu_deroulant">
+                        <?php
+                            if (isset($_GET['tri'])){
+                                $tri=$_GET['tri'];
+                            }
+                            else{
+                                $tri=null;
+                            }
+                        ?>
                         <ul>
-                            <li <?php if ($_GET['tri']=="ancien"){?> class="select"><a href="mesLogements.php"> <?php }else{?> ><a href="mesLogements.php?tri=ancien"><?php }?>Offre de la plus ancienne à la plus récente</li>
-                            <li <?php if ($_GET['tri']=="tarifmoins"){?> class="select"><a href="mesLogements.php"> <?php }else{?> ><a href="mesLogements.php?tri=tarifmoins"><?php }?>Tarif (- cher en premier)</li>
-                            <li <?php if ($_GET['tri']=="tarifplus"){?> class="select"><a href="mesLogements.php"> <?php }else{?> ><a href="mesLogements.php?tri=tarifplus"><?php }?>Tarif (+ cher en premier)</li>
-                            <li <?php if ($_GET['tri']=="notes"){?> class="select"><a href="mesLogements.php"> <?php }else{?> ><a href="mesLogements.php?tri=notes"><?php }?>Notes (meilleures en premier)</li>
-                            <li <?php if ($_GET['tri']=="avis"){?> class="select"><a href="mesLogements.php"> <?php }else{?> ><a href="mesLogements.php?tri=avis"><?php }?>Avis positifs (+ d'avis positifs)</li>
+                            <li <?php if ($tri=="ancien"){?> class="select"><a href="mesLogements.php"> <?php }else{?> ><a href="mesLogements.php?tri=ancien"><?php }?>Offre de la plus ancienne à la plus récente</li>
+                            <li <?php if ($tri=="tarifmoins"){?> class="select"><a href="mesLogements.php"> <?php }else{?> ><a href="mesLogements.php?tri=tarifmoins"><?php }?>Tarif (- cher en premier)</li>
+                            <li <?php if ($tri=="tarifplus"){?> class="select"><a href="mesLogements.php"> <?php }else{?> ><a href="mesLogements.php?tri=tarifplus"><?php }?>Tarif (+ cher en premier)</li>
+                            <li <?php if ($tri=="notes"){?> class="select"><a href="mesLogements.php"> <?php }else{?> ><a href="mesLogements.php?tri=notes"><?php }?>Notes (meilleures en premier)</li>
+                            <li <?php if ($tri=="avis"){?> class="select"><a href="mesLogements.php"> <?php }else{?> ><a href="mesLogements.php?tri=avis"><?php }?>Avis positifs (+ d'avis positifs)</li>
                         </ul>
                         </div>
                     </div>
@@ -137,10 +162,11 @@
                 } else{
                     /*Créations de carte pour chaque logements*/
                     foreach ($logements as $logement) { ?>
-                        <a href="/src/php/logement/PageDetailLogement.php?numLogement=<?php echo $logement[0] ?>"><div class="logement">
-                            <img src="/public/img/logements/<?php echo $logement[0] ?>/1.png" alt="logement">
-                            <div>
-                                <h3><?php echo $logement[2] ?></h3>
+                        <a href="/src/php/logement/PageDetailLogement.php?numLogement=<?php echo $logement[0] ?>">
+                        <div class="logement">
+                            <img src="/public/img/logements/<?php echo $logement[0] ?>/1.png" alt="logement" data-informationnb=<?php echo $logement[8];?>>
+                            <div data-information=<?php echo $logement[7];?>>
+                            <h3><?php echo $logement[2] ?></h3>
                                 <p><?php echo $logement[3] ?></p>
                                 <div><img src="/public/icons/map.svg" alt="Map"><?php echo $logement[4] ?></div>
                                 <a class="boutton" href="/src/php/logement/modificationLogement.php?numLogement=<?php echo $logement[0]; ?>"><img src="/public/icons/edit.svg" alt="Editer">Editer</a>
@@ -151,6 +177,7 @@
                 ?>
             </div>
         </div>
+        <script src="/src/js/side_bis.js"></script>
         <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'); ?>
     </body>
 </html>
