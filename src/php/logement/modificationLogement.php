@@ -239,7 +239,7 @@
                             <rect x="0" y="0" width="100%" height="100%" mask="url(#mask)" />
                         </svg>
                         <!-- Lien vers la page d'accueil avec un message d'erreur -->
-                        <a class="lien" href="/accueil">
+                        <a class="lien" href="/">
                             <div>
                                 Cette page est inexistante. Cliquez ici pour retourner à l'accueil.
                             </div>
