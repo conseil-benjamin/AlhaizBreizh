@@ -27,11 +27,11 @@
                         <?php } ?>
                         <div>
                             <label for="identifiant">Identifiant</label>
-                            <input type="text" name="identifiant" id="identifiant" placeholder="Entrez votre identifiant"  required>
+                            <input class="textfield" type="text" name="identifiant" id="identifiant" placeholder="Identifiant"  required>
                         </div>
                         <div>
                             <label for="mdp">Mot de passe</label>
-                            <input type="password" name="mdp" id="mdp" placeholder="Entrez votre mot de passe" required>
+                            <input class="textfield" type="password" name="mdp" id="mdp" placeholder="Mot de passe" required>
                             <a href="">Mot de passe oublié ?</a>
                         </div>
                         <input id="submitBtn" class="boutton" type="submit" value="Se connecter">
