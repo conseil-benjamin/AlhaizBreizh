@@ -148,16 +148,17 @@
 }
 
 /*Conteneur de "logement"*/
-#logements > div{
+#contenur_logements{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 4em;
     padding: 2em;
+    scale: 1.1;
+    margin-top: 2em;
 }
 
-#logements > div a:hover{
+#contenur_logements a:hover{
     filter: none;
     border: none;
 }
@@ -174,8 +175,8 @@
     border: 1px solid #000;
     border-radius: 15px;
     transition: all 0.5s ease;
-    scale: 1.1;
-    margin-bottom: 2em;
+    margin-bottom: 3em;
+    margin: 1em;
 }
 
 .logement > a{
@@ -282,6 +283,30 @@
 .logement:hover{
     filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.75));
     transform: translateY(-5px);
+}
+
+/*Options de filtre*/
+#options{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1em;
+    z-index: 2;
+}
+
+#options .boutton{
+    background-color: var(--col6);
+}
+
+#options > div{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: .5em;
+    height: 100%;
+    width: 100%;
 }
 
 @media screen and (max-width: 760px) {

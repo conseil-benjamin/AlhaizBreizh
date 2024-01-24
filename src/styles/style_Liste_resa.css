@@ -80,6 +80,15 @@
     margin: 1px;
 }
 
+.menu_deroulant{
+    left:72%;
+}
+
+.menu_deroulant li{
+    padding-left:2em;
+    padding-right:2em;
+}
+
 @media screen and (max-width: 768px) {
     .reservation-card {
         flex-direction: column;

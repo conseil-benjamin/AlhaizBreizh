@@ -51,7 +51,7 @@
     cursor: pointer;
 }
 
-#options > div+div > a.boutton{
+#options a.boutton{
     display: block;
     background-color: var(--col6);
 }
