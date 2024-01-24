@@ -68,6 +68,7 @@ $reservations = obtenirLogementsProprio($_SESSION['id']);
     <link rel="stylesheet" type="text/css" href="/src/styles/styles.css">
     <link rel="stylesheet" type="text/css" href="/src/styles/index.css">
     <link rel="stylesheet" type="text/css" href="/src/styles/style_Liste_resa.css">
+     <link rel="icon" href="/public/logos/logo-black.svg">
 
     <!-- Titre de la page -->
     <title>ALHaiz Breizh</title>
