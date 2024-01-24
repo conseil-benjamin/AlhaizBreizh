@@ -10,7 +10,7 @@
         $logements = array();
         try {
             $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
-            $stmt = $pdo->prepare("SELECT numLogement,proprio,libelle,accroche,ville FROM ldc.Logement ORDER BY numLogement DESC");
+            $stmt = $pdo->prepare("SELECT numLogement,proprio,libelle,accroche,ville FROM ldc.Logement");
             $stmt->execute();
             while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
                 if ($row[1] == $id){

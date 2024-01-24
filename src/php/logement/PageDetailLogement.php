@@ -43,11 +43,16 @@ if (isset($_GET['numLogement'])) {
 
 
                 // Récupération des chambres
-                $stmt = $pdo->prepare("SELECT nbLitsSimples, nbLitsDoubles FROM ldc.Chambre WHERE numLogement = $numLogement");
-                $stmt->execute();
+                $numChambre=[];
+                $i=0;
+    
+                $query = "SELECT * FROM ldc.chambre WHERE numlogement = $numLogement";
+                $stmt = $pdo->query($query);
+    
                 while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-                    $nbLitsSimples = isset($row[0]) ? $row[0] : null;
-                    $nbLitsDoubles = isset($row[1]) ? $row[1] : null;
+                    $numChambre[$i][0] = $row[1]; //Simples
+                    $numChambre[$i][1] = $row[2]; //Doubles
+                    $i=$i+1;
                 }
 
                 if ($etat_logement || (isset($_SESSION['id']) && $_SESSION['id'] == $proprio)){
@@ -365,49 +370,34 @@ if (!isset($liste_langue_parle)) {
                         Chambre<?php echo ($nb_chambres > 1) ? 's' : '' ?> :
                         </h2>
                         <?php
-                            /*
-                            $liste_chambres = array(
-                                array(
-                                    'nom' => 'Chambre 1',
-                                    'lits' => array(
-                                        array('type' => 'simple', 'quantite' => 5),
-                                        array('type' => 'double', 'quantite' => 2)
-                                    )
-                                ),
-                                array(
-                                    'nom' => 'Chambre 2',
-                                    'lits' => array(
-                                        array('type' => 'double', 'quantite' => 1)
-                                    )
-                                )
-                            ); 
-                            */
-                            if (empty($liste_chambres)|| $liste_chambres == null) {
-                                echo "<p> Cette section est vide.</p>";
-                            } else {
-                                echo "<ul class='chambres'>";
-                                foreach ($liste_chambres as $chambre) {
-                                    echo "<li>";
-                                    echo "<ul class='chambre'>";
-                                    echo "<p>" . $chambre['nom'] . " : </p>";
-                                    foreach ($chambre['lits'] as $lit) {
-                                        echo "<li>";
-                                        if ($lit['type'] == 'simple') {
-                                            echo "<img src='/public/icons/single-bed.svg' id='icone' alt='icone'>";
-                                        } elseif ($lit['type'] == 'double') {
-                                            echo "<img src='/public/icons/double-bed.svg' id='icone' alt='icone'>";
+                            if (empty($numChambre)|| $numChambre == null) {
+                                    echo "<p> Cette section est vide.</p>";
+                                } else {
+                                    echo "<div class=\"chambres\">";
+                                    foreach($numChambre as $key => $chambre){
+                                        if ($key==3){
+                                            echo "<span id='plus'>";
                                         }
-                                        echo "</li>";
-                                        echo "<li id='nb_lit'>";
-                                        echo "<p>" . ($lit['type'] == 'simple' ? 'Lit simple' : 'Lit double') . "</p>";
-                                        echo "<p>" . $lit['quantite'] . "</p>";
-                                        echo "</li>";
+                                        echo "<div class='etiquette_chambre'>";
+                                        echo "<img src='/public/icons/single-bed.svg' id='icone' alt='icone'>";
+                                        echo "X ".$chambre[0];
+                                        echo "<div>";
+                                        echo "</div>";
+                                        echo "<img src='/public/icons/double-bed.svg' id='icone' alt='icone'>";
+                                        echo "X ".$chambre[1];
+                                        echo "<div>";
+                                        echo "</div>";
+                                        echo "</div>";
+                                        echo "<br>";
+                                        if (($key>=3)&&($key+1==sizeof($numChambre))){
+                                            echo "</span>";
+                                            echo "<div id='frd'>";
+                                            echo '<button onclick="AfficherPlus()" id="myBtn">Afficher plus</button>';
+                                            echo "</div>";
+                                        }
                                     }
-                                    echo "</ul>";
-                                    echo "</li>";
+                                    echo "</div>";
                                 }
-                                echo "</ul>";
-                            }
                         ?>
                         <br>
                         <h2>Installations disponibles :</h2>
