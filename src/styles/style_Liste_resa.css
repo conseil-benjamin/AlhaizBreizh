@@ -63,6 +63,16 @@
     margin: 50px;
 }
 
+.alert-danger h1 {
+    margin:10p;
+    font-family: "NoirPro", Arial, sans-serif;
+}
+.alert-danger{
+    text-align: center;
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
 .card-container:hover {
     border: 1px solid #000;
 }
@@ -78,15 +88,6 @@
     padding: 20px;
     box-sizing: border-box;
     margin: 1px;
-}
-
-.menu_deroulant{
-    left:72%;
-}
-
-.menu_deroulant li{
-    padding-left:2em;
-    padding-right:2em;
 }
 
 @media screen and (max-width: 768px) {
