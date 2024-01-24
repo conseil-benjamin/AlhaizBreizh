@@ -2,15 +2,21 @@
 if (!isset($_POST["prenom"])) {
     die();
 }
-$characters = 'abcdefghijklmnopqrstuvwxyz';
-$nomRnd = '';
 
-for ($i = 0; $i < 5; $i++) {
-    $nomRnd .= $characters[rand(0, strlen($characters) - 1)];
-}
+//Récupérer l'id du dernier client et l'incrémenter
+$pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
 
-global $pdo;
-require("../connect.php");
+$stmt = $pdo->prepare("SELECT MAX(idCompte) FROM ldc.Client");
+$stmt->execute();
+$img = $stmt->fetch(PDO::FETCH_NUM)[0] + 1;
+$img = strval($img);
+$img .= ".png";
+
+$pdo = null;
+
+//Ajouter le client dans la base de données
+$pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
+
 $stmt = $pdo->prepare("INSERT INTO ldc.Client (firstName, lastName, mail, numeroTel, photoProfil, civilite, adressePostale, pseudoCompte, motDePasse, dateNaissance, notationMoyenne)
 VALUES(:firstName, :lastName, :mail, :numeroTel, :photoProfil, :civilite, :adressePostale, :pseudoCompte, :motDePasse, :dateNaissance, :notationMoyenne)");
 try {
@@ -19,7 +25,7 @@ try {
         ':lastName' => $_POST["nom"],
         ':mail' => $_POST["email"],
         ':numeroTel' => str_replace(' ', '', $_POST["num_tel"]),
-        ':photoProfil' => $nomRnd.".png",
+        ':photoProfil' => $img,
         ':civilite' => $_POST["civilite"],
         ':adressePostale' => $_POST["adresse"],
         ':pseudoCompte' => $_POST["identifiant"],
@@ -35,10 +41,15 @@ catch (Error $err) {
     die();
 }
 
+$pdo = null;
+
+//Ajouter la photo de profil dans le dossier
+print_r($_FILES);
+
 $dest = $_SERVER['DOCUMENT_ROOT']."/public/img/photos_profil/";
 if (isset($_FILES['photo_profil']) && $_FILES['photo_profil']['error'] === UPLOAD_ERR_OK) {
     $src = $_FILES['photo_profil']['tmp_name'];
-    $destinationChemin = $dest . $nomRnd.".png";
+    $destinationChemin = $dest . $img;
     move_uploaded_file($src, $destinationChemin);
 }
 

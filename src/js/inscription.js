@@ -22,7 +22,7 @@ function validerForm() {
     const email = document.forms["formulaire"]["email"].value;
     const mdp = document.forms["formulaire"]["mdp"].value;
     const confirmerMdp = document.forms["formulaire"]["confirmer_mdp"].value;
-    const photoProfil = document.forms["formulaire"]["photo_profil"].files[0];
+    const photoProfil = document.forms["formulaire"]["file"].files[0];
     const acceptConditions = document.forms["formulaire"]["accept_conditions"].checked;
     let msgErreur = ""
     if (nom === "") {

@@ -5,11 +5,21 @@
     display: flex;
     flex-direction: column;
     margin-top: 95px;
+    border-radius: 25px;
+    border-top-right-radius: 50px;
+    border-top-left-radius: 50px;
 }
 
-h1 {
-    align-self: center;
-    color: white;
+#titre {
+    display: flex;
+    color: #000;
+    background-color: #fff;
+    border-top-right-radius: 25px;
+    border-top-left-radius: 25px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100px;;
 }
 
 form {
@@ -38,28 +48,14 @@ form > div > div {
 input:not([type="file"]):not([type="checkbox"]), select {
     width: 30vw;
     height: 5vh;
-
     padding-left: 10px;
-
-    background: white;
-    border-radius: 10px;
-
-    font-family: 'Montserrat', sans-serif;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 18px;
-    line-height: 22px;
     display: flex;
     align-items: center;
-
-    color: rgba(0, 0, 0, 0.45);
-
 }
 
 label {
     font-family: 'Noir Pro', sans-serif;
     font-style: normal;
-    font-weight: 600;
     font-size: 18px;
     line-height: 22px;
     color: #FFFFFF;
@@ -71,6 +67,7 @@ label {
     display: flex;
     flex-direction: row;
     width: 80%;
+    align-items: end;
 }
 
 #civiliteDateNaissance > .labelGrp, #codePostalVille .labelGrp {
@@ -92,28 +89,32 @@ label {
 
 #civilite {
     padding-left: 5px;
+    height: 5vh;
 }
 
 #infosCompte h2 {
-    margin-top: 3vh;
     color: white;
 }
 
 #validation {
     margin-top: 5vh;
     display: flex;
+    flex-direction: column;
     justify-content: space-around;
+    align-items: center;
     padding: 0 20px;
+    gap: 1em;
 }
 
 #validation div {
     flex-direction: row-reverse;
+    width: 100%;
 }
 
 #validation button {
-    background-color: var(--col5);
-    color: black;
-    width: 20vw;
+    background-color: var(--col6);
+    min-width: 20vw;
+    width: fit-content;
 }
 
 #validation label {
@@ -128,16 +129,6 @@ input[type='checkbox'] {
 
 /** Validation */
 
-#contenu > h1 {
-    margin-top: 3vh;
-}
-
-
-#contenu > h2 {
-    margin-left: 2vw;
-    color: white;
-}
-
 #contenu > ul {
     margin-left: 4vw;
     color: white;
@@ -148,18 +139,35 @@ input[type='file'] {
     display: none;
 }
 
-#photoProfil > img {
-    height: 48px;
-    margin-right: 1vw;
-}
-
-
 #photoProfil {
     display: flex;
     align-items: center;
+    justify-content: left;
+    background-color: #fff;
+    color: #000;
+    border-radius: 50px;
+    height: 100px;
+    padding: .5em;
+    gap: 1em;
+    transition: all .3s ease-in-out;
 }
 
-@media screen and (max-width: 760px) {
+#photoProfil:hover {
+    cursor: pointer;
+    filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.75));
+}
+
+#photo{
+    border-radius: 50%;
+    height: 100px;
+    width: 100px;
+}
+
+label > a{
+    text-decoration: underline;
+}
+
+@media screen and (max-width: 800px) {
     form > div {
         flex-direction: column;
     }
@@ -178,6 +186,7 @@ input[type='file'] {
 
     #civiliteDateNaissance, #codePostalVille {
         flex-direction: column;
+        align-items: baseline;
     }
 
     #civiliteDateNaissance > .labelGrp, #codePostalVille .labelGrp {
