@@ -40,17 +40,64 @@
             <h2>Mes logements</h2>
             <div id="options">
                 <div>
-                    <input class="textfield" type="text" placeholder="Search..">
-                    <button class="boutton">Filtrer</button>
+                <div class="menu_filtre">
+                    <div id="sidebar">
+                        <input id="side_recherche" class="textfield" type="text" placeholder="Rechercher..">
+                        <h2>Plage de tarif</h2>
+                            <div class="hell">
+                                <div class="select_filtr">
+                                    <p>Minimum</p>
+                                    <input id="side_min" class="number" placeholder="En Euros" min="0" style="width: 120px;">
+                                </div>
+                                <div class="select_filtr">
+                                    <p>Maximum</p>
+                                    <input id="side_max" class="number" placeholder="En Euros" min="0" style="width: 120px;">
+                                </div>
+                            </div>
+                        <h2>Nombre de personnes</h2>
+                            <input id="side_nb" type="number" min="1">
+                        <h2>Plage de séjour</h2>
+                            <div class="hell">
+                                <div class="select_filtr">
+                                    <p>Date d'arrivée</p>
+                                    <input class="input1" id="side_arrive" name="date_arrive" placeholder="JJ/MM/YYYY" type="date">
+                                </div>
+                                <div class="select_filtr">
+                                    <p>Date de départ</p>
+                                    <input class="input1" id="side_depart" name="date_depart" placeholder="JJ/MM/YYYY" type="date">
+                                </div>
+                            </div>
+                        <?php //<h2>Propriétaire</h2>
+                        //<input class="textfield" type="text" placeholder="Nom du propriétaire..."> ?>
+                        <h2>Type du logement</h2>
+                            <select id="side_type">
+                                <option value="">---</option>
+                                <option value="appart">Appartement</option>
+                                <option value="maison">Maison</option>
+                                <option value="villa">Villa</option>
+                            </select>
+                    </div>
+
+
+                    <button id="menu-btn" class="boutton">Filtrer</button>
+                </div>
                     <div class="menu_tri">
                         <button class="boutton">Trier</button>
                         <div class="menu_deroulant">
+                        <?php
+                            if (isset($_GET['tri'])){
+                                $tri=$_GET['tri'];
+                            }
+                            else{
+                                $tri=null;
+                            }
+                        ?>
                         <ul>
-                            <li <?php if ($_GET['tri']=="ancien"){?> class="select"><a href="mesLogements.php"> <?php }else{?> ><a href="mesLogements.php?tri=ancien"><?php }?>Offre de la plus ancienne à la plus récente</li>
-                            <li <?php if ($_GET['tri']=="tarifmoins"){?> class="select"><a href="mesLogements.php"> <?php }else{?> ><a href="mesLogements.php?tri=tarifmoins"><?php }?>Tarif (- cher en premier)</li>
-                            <li <?php if ($_GET['tri']=="tarifplus"){?> class="select"><a href="mesLogements.php"> <?php }else{?> ><a href="mesLogements.php?tri=tarifplus"><?php }?>Tarif (+ cher en premier)</li>
-                            <li <?php if ($_GET['tri']=="notes"){?> class="select"><a href="mesLogements.php"> <?php }else{?> ><a href="mesLogements.php?tri=notes"><?php }?>Notes (meilleures en premier)</li>
-                            <li <?php if ($_GET['tri']=="avis"){?> class="select"><a href="mesLogements.php"> <?php }else{?> ><a href="mesLogements.php?tri=avis"><?php }?>Avis positifs (+ d'avis positifs)</li>
+                            <li <?php if ($tri=="ancien"){?> class="select"><a href="mesLogements.php"> <?php }else{?> ><a href="mesLogements.php?tri=ancien"><?php }?>Offre de la plus ancienne à la plus récente</li>
+                            <li <?php if ($tri=="tarifmoins"){?> class="select"><a href="mesLogements.php"> <?php }else{?> ><a href="mesLogements.php?tri=tarifmoins"><?php }?>Tarif (- cher en premier)</li>
+                            <li <?php if ($tri=="tarifplus"){?> class="select"><a href="mesLogements.php"> <?php }else{?> ><a href="mesLogements.php?tri=tarifplus"><?php }?>Tarif (+ cher en premier)</li>
+                            <li <?php if ($tri=="notes"){?> class="select"><a href="mesLogements.php"> <?php }else{?> ><a href="mesLogements.php?tri=notes"><?php }?>Notes (meilleures en premier)</li>
+                            <li <?php if ($tri=="avis"){?> class="select"><a href="mesLogements.php"> <?php }else{?> ><a href="mesLogements.php?tri=avis"><?php }?>Avis positifs (+ d'avis positifs)</li>
                         </ul>
                         </div>
                     </div>
