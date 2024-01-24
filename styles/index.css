@@ -1,0 +1,285 @@
+/********************************************/
+/*Header*/
+
+#header {
+    background: #00000050;
+    backdrop-filter: blur(5px);
+    transition: all 0.5s ease;
+}
+
+#header nav ul li{
+    color: #fff;
+}
+
+#header.scrolled{
+    background-color: var(--col3);
+}
+
+#header.scrolled nav ul li{
+    color: var(--col1);
+}
+
+#header .logo{
+    content: url(/public/logos/logo-white.svg);
+    filter: drop-shadow(px 1px 5px rgba(0, 0, 0, 0.75));
+}
+
+#header.scrolled .logo{
+    content: url(/public/logos/logo-grey.svg);
+    filter: none;
+}
+
+/*Compte*/
+#header .compte{
+    filter: drop-shadow(1px 0px 5px rgba(0, 0, 0, 0.55));
+    background-color: #00000050;
+}
+
+#header .compte:hover{
+    filter: none;
+    background-color: #000000A0;
+}
+
+#header .compte-options{
+    background-color: #000000A0;
+}
+
+#header .compte-options li:hover{
+    background-color: #000000F0;
+}
+
+#header.scrolled .compte{
+    filter: none;
+    background-color: var(--col1);
+}
+
+#header.scrolled .compte:hover{
+    filter: none;
+    background-color: #394142;
+}
+
+#header.scrolled .compte-options{
+    background-color: var(--col1);
+}
+
+#header.scrolled .compte-options li:hover{
+    background-color: #394142;
+}
+
+@media screen and (max-width: 900px){
+
+    #toggleBurger:checked ~ #header > nav > ul{
+        filter: drop-shadow(1px 0px 5px rgba(0, 0, 0, 0.55));
+        background-color: #00000050;
+    }
+
+    #toggleBurger:checked ~ #header.scrolled > nav > ul {
+        background-color: var(--col3);
+        filter: none;
+    }
+
+    #toggleBurger:checked ~ #header > nav > ul li:hover{
+        background-color: #00000050;
+        filter: none;
+    }
+
+    #toggleBurger:checked ~ #header.scrolled > nav > ul li:hover{
+        background-color: var(--col3);
+        filter: brightness(0.9);
+    }
+}
+
+/********************************************/
+/*Titre*/
+
+#titre{
+    display: block;
+    width: 100%;
+    height: 100px;
+    text-align: center;
+    line-height: 80px;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    position: absolute;
+    top: 33%;
+    left: 0;
+    z-index: 1;
+    transition: all 0.5s ease;
+    filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.75));
+}
+
+/********************************************/
+/*Content*/
+
+#logements{
+    min-height: 100vh;
+    margin-bottom: calc(100vh - 200px);
+    background-color: #fff;
+    padding: 2em;
+}
+
+#logements h2{
+    color: var(--col1);
+}
+
+#logements > h2{
+    text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+    color: var(--col1);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    padding: 1em;
+}
+/*Conteneur de "logement"*/
+#logements > div{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4em;
+    padding: 2em;
+}
+
+#options > div{
+    display: flex;
+    flex-direction: row;
+}
+
+#logements > div a:hover{
+    filter: none;
+    border: none;
+}
+/*Une carte logement*/
+.logement{
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: start;
+    position: relative;
+    width: 230px;
+    background-color: #fff;
+    overflow: hidden;
+    border: 1px solid #000;
+    border-radius: 15px;
+    transition: all 0.5s ease;
+    scale: 1.2;
+    margin-bottom: 2em;
+}
+
+.logement > a{
+    display: block;
+    height: 50%;
+}
+
+.logement img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+/*Div contenant notation + like*/
+.logement > div{
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #00000050;
+    backdrop-filter: blur(1px);
+}
+
+.logement > div > div{
+    margin-left: 5px;
+}
+
+.logement > div img{
+    width: 25px;
+    height: 25px;
+    margin-right: 5px;
+}
+
+.logement #rating{
+    display: flex;
+    align-items: center;
+    color: #fff;
+}
+
+.logement #rating img {
+    margin-right: 8px;
+}
+
+.logement button{
+    background: none;
+    cursor: pointer;
+    border: none;
+    margin-top: 5px;
+    margin-right: 5px;
+}
+
+/*Informations d'un logement*/
+
+.logement #description{
+    display: block;
+    height: 50%;
+    width: 100%;
+}
+
+.logement #description div > * {
+    margin: 3px;
+}
+
+
+
+.logement #description > div{
+    display: block;
+    margin: 1em 1em 0em 1em;
+    height: calc(100% - 2em);
+    width: calc(100% - 2em);
+    word-wrap: break-word;
+    word-break:keep-all;
+}
+
+.logement a > div img{
+    height: 25px;
+    width: 25px;
+}
+
+.logement a > div > div{
+    display: flex;
+    gap: 5px;
+    align-items: baseline;
+}
+/*Prix*/
+.logement a > div > div+div{
+    padding-bottom: 5em;
+}
+.logement a > div > div+div+div{
+    position: absolute;
+    bottom: 0;
+    line-height: normal;
+    padding-bottom: 1em;
+}
+
+.logement strong{
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--col5);
+}
+
+.logement:hover{
+    filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.75));
+    transform: translateY(-5px);
+}
+
+@media screen and (max-width: 760px) {
+    .logement{
+        scale: 1;
+    }
+}
+
+/*Lorem is here*/

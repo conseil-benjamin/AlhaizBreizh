@@ -1,0 +1,241 @@
+#etatDevis img {
+    height: 48px;
+}
+
+body {
+    background-color: white;
+}
+
+#titreLogement {
+    margin-top: 10vh;
+    margin-bottom: 4vh;
+    padding-left: 3vw;
+}
+
+#infosContainer {
+    display: flex;
+}
+
+#infosContainer > div {
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    margin-left: 3vw;
+}
+
+figure {
+    width: max-content;
+    max-width: 50vw;
+}
+
+figure > img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.container {
+    display: flex;
+}
+
+fieldset {
+    display: flex;
+    justify-content: center;
+    color: var(--col4);
+    border-style: none;
+    margin-top: 5px;
+}
+
+fieldset a {
+    width: max-content;
+    border-bottom: 1px solid var(--col4);
+    transform: matrix(1, 0, 0, 1, 0, 0);
+}
+
+body {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+
+#contactPropio  button {
+    background: var(--col5);
+    border-radius: 30px;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    text-align: center;
+    color: white;
+    width: 40%;
+}
+
+#contactPropio {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5vh;
+}
+
+#carteProprio > div {
+    border: 2px solid #333;
+    display: inline-block;
+    margin-right: 20px;
+}
+
+#carteProprio {
+    display: flex;
+    align-items: center;
+    width: 45vw;
+    margin-bottom: 2vh;
+
+}
+
+#carteProprio  img {
+    width: 65px;
+    height: 65px;
+    background: #D9D9D9;
+}
+
+#annulerAccepter > button {
+    width: 14vw;
+    height: 82px;
+    background: var(--col3);
+    border-radius: 10px;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    text-align: center;
+    color: black;
+}
+
+#etatResa {
+    width: 10vw;
+    background: var(--col4);
+    border-radius: 10px;
+    padding: 20px 10px;
+    color: #FFFFFF;
+}
+
+#dateDiv {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#nbPersonne {
+    height: 9vh;
+    width: 6vw;
+    background: var(--col5);
+    justify-content: space-around !important;
+    border-radius: 10px;
+}
+
+#nbPersonne > img {
+    height: 80%;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#etatDevis {
+    width: 30vw;
+    height: 11vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    border-radius: 10px;
+}
+
+.recu {
+    background: var(--col2);
+}
+
+.enattente {
+    background-color: var(--col4);
+    color: white;
+}
+
+#etatDevis h2 {
+    font-weight: normal;
+    font-size: 1.6em;
+}
+
+#autreInfo > * {
+    margin-top: 6vh;
+}
+
+#localisationEtat {
+    justify-content: space-between;
+}
+
+#localisation {
+    background-color: var(--col5);
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 18vw;
+}
+
+#localisation > h2 {
+    font-weight: lighter;
+}
+
+.gris {
+    opacity: 0.5;
+}
+
+#annulerAccepter {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-around;
+}
+
+/********/
+/* Media Queries */
+/********/
+
+@media screen and (max-width: 926px) {
+    #infosContainer {
+        flex-direction: column;
+    }
+
+    #annulerAccepter > button {
+        width: 35vw;
+    }
+    #prixDiv  {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    #etatDevis {
+        width: 90vw;
+    }
+
+    #localisation {
+        width: 60vw;
+    }
+
+    #etatResa {
+        width: 20vw;
+    }
+
+    #nbPersonne {
+        width: 25vw;
+    }
+
+    #contactPropio {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    figure {
+        max-width: 100%;
+    }
+}
