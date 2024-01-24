@@ -120,11 +120,36 @@
             <h1>Mes logements</h1>
             <div id="options">
                 <div>
-                    <input class="textfield" type="text" placeholder="Search..">
-                    <button class="boutton">Filtrer</button>
+                <div class="menu_filtre">
+                    <div id="sidebar">
+                        <input id="side_recherche" class="textfield" type="text" placeholder="Rechercher..">
+                        <h2>Nombre de personnes</h2>
+                            <input id="side_nb" type="number" min="1">
+                        <?php //<h2>Propriétaire</h2>
+                        //<input class="textfield" type="text" placeholder="Nom du propriétaire..."> ?>
+                        <h2>Type du logement</h2>
+                            <select id="side_type">
+                                <option value="">---</option>
+                                <option value="appart">Appartement</option>
+                                <option value="maison">Maison</option>
+                                <option value="villa">Villa</option>
+                            </select>
+                    </div>
+
+
+                    <button id="menu-btn" class="boutton">Filtrer</button>
+                </div>
                     <div class="menu_tri">
                         <button class="boutton">Trier</button>
                         <div class="menu_deroulant">
+                        <?php
+                            if (isset($_GET['tri'])){
+                                $tri=$_GET['tri'];
+                            }
+                            else{
+                                $tri=null;
+                            }
+                        ?>
                         <ul>
                             <li <?php if ($tri=="ancien"){?> class="select"><a href="mesLogements.php"> <?php }else{?> ><a href="mesLogements.php?tri=ancien"><?php }?>Offre de la plus ancienne à la plus récente</li>
                             <li <?php if ($tri=="tarifmoins"){?> class="select"><a href="mesLogements.php"> <?php }else{?> ><a href="mesLogements.php?tri=tarifmoins"><?php }?>Tarif (- cher en premier)</li>
@@ -163,6 +188,7 @@
                 ?>
             </div>
         </div>
+        <script src="/src/js/side_bis.js"></script>
         <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'); ?>
     </body>
 </html>
