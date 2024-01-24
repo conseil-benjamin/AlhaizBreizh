@@ -265,8 +265,7 @@ if (!isset($liste_langue_parle)) {
         <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/header.php'); ?>
         <main>
             <?php
-            if (($numLogementExists && $etat_logement) || ($numLogementExists && isset($_SESSION['id']) && $_SESSION['id'] == $proprio && !$etat_logement) || ($etat_logement && isset($_SESSION['id']) && $_SESSION['id'] != $proprio)) {#gestion_exisence70
-
+            if (($numLogementExists && $etat_logement) || ($numLogementExists && isset($_SESSION['id']) && $_SESSION['id'] == $proprio && !$etat_logement) || ($etat_logement && isset($_SESSION['id']) && $_SESSION['id'] != $proprio)) {
                 if (isset($_SESSION['id']) && $numLogementExists && $_SESSION['id'] == $proprio) { ?>
                     <section class="tete_offre_proprio"> <?php
                 }else { ?>
@@ -279,8 +278,8 @@ if (!isset($liste_langue_parle)) {
                         <div class="proprio">
                             <p>
                                 Le logement est 
-                                <?php if($etat_logement){ ?>en ligne
-                                <?php } else { ?>hors ligne <?php } ?>
+                                <?php if($etat_logement){ ?>en ligne<div id="icone_en_ligne"> <img id="icone" src="/public/icons/rond_vert.svg"></div>
+                                <?php } else { ?>hors ligne <div id="icone_en_ligne"><img id="icone" src="/public/icons/rond_rouge.svg"></div> <?php } ?>
                             </p>
                             <div>
                                 <?php
@@ -550,7 +549,7 @@ if (!isset($liste_langue_parle)) {
                             <rect x="0" y="0" width="100%" height="100%" mask="url(#mask)" />
                         </svg>
                         <!-- Lien vers la page d'accueil avec un message d'erreur -->
-                        <a class="lien" href="/accueil">
+                        <a class="lien" href="/">
                             <div>
                                 Cette page est inexistante. Cliquez ici pour retourner à l'accueil.
                             </div>

@@ -5,18 +5,23 @@
 session_start(); 
 error_reporting(E_ALL & ~E_WARNING);
 
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>update bdd</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+<?php
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    /*
-    if (isset($_SESSION['id'])) {
-        $proprio = $_SESSION['id'];
-    } else{
-        header("Location: golden.php");
-    }
-    */
-    $proprio=2;
-    $id_logem=3;
-    
+    $id_logem=$_POST['id_logem'];    
     
     $title = $_POST['title'];
     $description = $_POST['description'];
@@ -46,8 +51,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $hollow=$_POST['InstallDispo'.$i+1];
 
     }
-
-    echo "BEGIN ";
 
     //EQUIPEMENT
 
@@ -110,6 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $nbChambres=count($chambres);
+    $erreur=false; //il va verifier si une erreur s'est produite durant la modification d'une des donnees
     
     try {
         $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
@@ -117,6 +121,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $pdo->prepare("UPDATE ldc.logement SET surfaceHabitable=$surface, libelle='$title',accroche='$accroche',descriptionLogement='$description',natureLogement='$natureLogement',nbpersmax=$nbPersMax,photoCouverture='$photos',nbChambres=$nbChambres,nbSalleDeBain=$nbSalleDeBain,tarifNuitees=$prixParNuit,adresse='$adresse',cp=$cp,ville='$ville',LogementEnLigne=false WHERE numlogement=$id_logem");
 
         $stmt->execute();
+
+        if (!$stmt){
+            ECHO "ITS ME";
+            $erreur=true;
+        }
 
         //CHAMBRES
 
@@ -127,7 +136,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             "SELECT COUNT(*) FROM ldc.chambre WHERE numlogement=$id_logem ");
         $stmt->execute();
         $resultC = $stmt->fetch();
-        print_r($resultC);
 
         foreach ($chambres as $key => $value){
             if ($resultC['count']>=$key){ //Si la chambre est deja presente dans la bdd on l'update
@@ -137,8 +145,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             else{ //Si le numero de la chambre est plus eleve que le nombre de chambre de la bdd, on l'ajoute
                 $stmt = $pdo->prepare(
-                    "INSERT INTO ldc.chambre VALUES ($id_logem, $key, $value[1], $value[0])");
+                    "INSERT INTO ldc.chambre VALUES ($key, $value[1], $value[0],$id_logem)");
                 $stmt->execute();
+            }
+            if (!$stmt){
+                $erreur=true;
             }
         }
         /*
@@ -148,6 +159,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt = $pdo->prepare(
                 "DELETE from ldc.chambre WHERE numlogement=$id_logem and numchambre=$i");
             $stmt->execute();
+            if (!$stmt){
+                $erreur=true;
+            }
         }
 
 
@@ -156,10 +170,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         /*
         On compte le nombre d'installations du logement pour savoir si l'utilisateur en a ajoute ou retire
         */
-
-        print_r($installations);
-        print_r($equipements);
-        print_r($services);
 
         $stmt = $pdo->prepare(
             "SELECT COUNT(*) FROM ldc.installation WHERE numlogement=$id_logem");
@@ -178,12 +188,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     "INSERT INTO ldc.installation VALUES ($id_logem, $key, '$value')");
                 $stmt->execute();
             }
+            if (!$stmt){
+                $erreur=true;
+            }
         }
         //On enleve les elements en trop
         for ($i = count($installations); $i <= $resultI['count']; $i++) {
             $stmt = $pdo->prepare(
                 "DELETE from ldc.installation WHERE numlogement=$id_logem and numinstall=$i");
             $stmt->execute();
+            if (!$stmt){
+                $erreur=true;
+            }
         }
 
         //EQUIPEMENTS
@@ -207,12 +223,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     "INSERT INTO ldc.equipement VALUES ($id_logem, $key, '$value')");
                 $stmt->execute();
             }
+            if (!$stmt){
+                $erreur=true;
+            }
         }
         //On enleve les elements en trop
         for ($i = count($equipements); $i <= $resultE['count']; $i++) {
             $stmt = $pdo->prepare(
                 "DELETE from ldc.equipement WHERE numlogement=$id_logem and numeequip=$i");
             $stmt->execute();
+            if (!$stmt){
+                $erreur=true;
+            }
         }
 
 
@@ -238,22 +260,59 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     "INSERT INTO ldc.service VALUES ($id_logem, $key, '$value')");
                 $stmt->execute();
             }
+            if (!$stmt){
+                $erreur=true;
+            }
         }
         //On enleve les elements en trop
         for ($i = count($services); $i <= $resultS['count']; $i++) {
             $stmt = $pdo->prepare(
                 "DELETE from ldc.service WHERE numlogement=$id_logem and numserv=$i");
             $stmt->execute();
+            if (!$stmt){
+                $erreur=true;
+            }
         }
 
+        if (!$erreur) {
+            ?>
+            <script>
+           Swal.fire({
+            icon: "success",
+            title: "Logement bien modifié",
+            showConfirmButton: false,
+            timer: 2000
+        });
+           </script>
+        <?php   
+        } else {
+            ?>
+            <script>
+            Swal.fire({
+            title: "Erreur : logement non modifié",
+            icon: "error",
+            });
+           </script>
+            <?php
+        }
 
-        $pdo = null;
     } catch (PDOException $e) {
         print "Erreur !: " . $e->getMessage() . "<br/>";
         die();
     }
 
-    //header('Location: golden.php');
+    $pdo = null;
 
+    ?>
+
+    <script>
+    setTimeout(() => {
+        window.location.href = '/src/php/logement/mesLogements.php';
+    }, 2000);
+    </script>
+<?php
+    exit;
 }
     ?>
+</body>
+</html>
