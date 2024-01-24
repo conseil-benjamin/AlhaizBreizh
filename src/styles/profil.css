@@ -62,8 +62,6 @@ div.notation img{
     background-color: var(--col4);
     color: #fff;
     transition: all .5s ease;
-    min-height: 10em;
-    text-align: center;
 }
 
 .monprofil #info > div{
@@ -78,16 +76,12 @@ div.notation img{
 
 .monprofil #info ul{
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-between;
-    word-wrap: break-word;
-    gap: 1em;
     align-items: center;
     flex-direction: row;
 }
 
 .monprofil #info li{
-    word-break: break-all;
     margin-top: .5em;
     margin-bottom: .5em;
 }
@@ -115,16 +109,6 @@ div.notation img{
 }
 
 @media screen and (max-width: 1000px) {
-
-    .monprofil #info ul{
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        word-wrap: break-word;
-        align-items: center;
-        flex-direction: column;
-        gap: 0;
-    }
     
     .monprofil #info > div{
         width: 90%;

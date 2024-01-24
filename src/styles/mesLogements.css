@@ -6,40 +6,24 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    margin-top: calc(1em + 75px);
+    margin: calc(1em + 75px) 1em 1em 1em;
 }
-
 
 /*****************************************************/
 /*Options*/
 
 #options{
-    position: relative;
     display: flex;
     flex-direction: row;
+    position: relative;
     justify-content: space-between;
-    flex-wrap: wrap;
-    gap: .5em;
     width: 80%;
-    height: fit-content;
+    height: 50px;
     margin-top: 1em;
 }
 
 #options > div{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: .5em;
     height: 100%;
-}
-
-#options > div > div{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: .5em;
 }
 
 #options > div button{
@@ -51,21 +35,9 @@
     cursor: pointer;
 }
 
-#options > div+div > a.boutton{
+#options > a.boutton{
     display: block;
     background-color: var(--col6);
-}
-
-@media screen and (max-width: 950px){
-    #options{
-        justify-content: center;
-        width: 100%;
-    } 
-    
-    #options > div{
-        justify-content: center;
-        margin: 0 1em;
-    } 
 }
 
 /*****************************************************/
@@ -74,121 +46,101 @@
 #content #logements{
     width: 80%;
     margin-top: 1em;
-    transition: all .5s ease-in-out;
+    border-radius: 15px;
+    overflow: hidden;
 }
 
-#content #logements h3{
-    font-size: 1.5em;
-}
-
-#content #logements p{
-    font-size: 1em;
-}
-
-@media screen and (max-width: 1000px){
-    #content #logements{
-        width: 100%;
-        height: fit-content;
-    }  
+#content #logements > h3{
+    text-align: center;
 }
 
 /*****************************************************/
 /*Un logement*/
 
+@keyframes slideIn{
+    from{
+        height: 150px;
+    }
+    25%{
+        height: 155px
+    }
+    50%{
+        height: 160px;
+    }
+    75%{
+        height: 170px;
+    }
+    to{
+        height: 180px;
+    }
+}
+
+@keyframes slideOut{
+    from{
+        height: 180px;
+    }
+    25%{
+        height: 170px;
+    }
+    50%{
+        height: 160px;
+    }
+    75%{
+        height: 155px;
+    }
+    to{
+        height: 150px;
+    }
+}
+
 #content .logement{
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: fit-content;
-    max-height: fit-content;
-    background-color: #fff;
+    height: 150px;
+    background-color: white;
+    animation: slideOut .3s ease;
     transition: all .3s ease-in;
     filter: drop-shadow(0px 0px 1px #00000033);
-    margin-bottom: 1em;
-    transition: all .5s ease-in-out;
 }
 
 #content .logement:hover{
-    scale: 1.02;
+    height: 180px;
+    animation: slideIn .3s ease-in;
     filter: drop-shadow(0px 0px 10px #00000033);
     z-index: 2;
 }
 
-#content .logement > img{
+#content .logement a > img{
+    height: 100%;
     width: 300px;
-    max-height: 200px;
     object-fit: cover;
     image-rendering: optimizeQuality;
-    transition: all .5s ease-in-out;
 }
 
 /*Informations*/
 #content .logement > div{
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-    margin: 1em 1em 0 1em;
-}
-
-#content .logement > div p{
-    inline-size: 90%;
-    overflow-wrap: break-word;
+    margin: 1em;
 }
 
 #content .logement > div img{
     width: 25px;
     height: 25px;
-    margin-right: .5em;
 }
 
 #content .logement > div .boutton{
     background-color: var(--col6);
     height: fit-content;
-    z-index: 3;
-    margin-bottom: 1em;
+    padding: .5em;
 }
 
 #content .logement > div .boutton img{
-    width: 30px;
-    height: 30px;
-    margin-right: .5em;
+    width: 20px;
+    height: 20px;
 }
 
-#content .logement > div > div{
-    display: flex;
-    flex-direction: row;
-    align-items: end;
-    justify-content: start;
-    margin-bottom: 5em;
-}
+/*Menu deroulant d'option*/
 
-#content .logement > div > nav{
-    position: absolute;
-    display: flex;
-    flex-direction: row;
-    justify-content: start;
-    gap: .5em;
-    width: 100%;
-    margin-top: .5em;
-    bottom: 0;
-    right: 0;
-}
-
-@media screen and (max-width: 1000px){
-    #content .logement:hover{
-        scale: 1;
-    } 
-}
-
-@media screen and (max-width: 950px){
-    #content .logement{
-        height: fit-content;
-        flex-wrap: wrap;
-    }
-
-    #content .logement > img {
-        width: 100%;
-        height: 100%;
-        max-height: 200px;
-    }
+.menu_deroulant{
+    left:15%;
 }

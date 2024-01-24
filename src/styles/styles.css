@@ -77,19 +77,16 @@ h1, h2, h3{
 /*****************************************************/
 /*Bouttons*/
 .boutton{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
     border-radius: 50px;
     border: #ffffff00 1px solid;
-    color: #000;
+    color: var(--col1);
     height: 50px;
     width: fit-content;
     font-size: 20px;
     line-height: 50px;
     text-align: center;
     font-weight: bold;
+    color: #000;
     padding: 0 1em;
     cursor: pointer;
     transition: all .3s ease-in-out;
@@ -121,12 +118,8 @@ h1, h2, h3{
     transition: all .3s ease-in-out;
 }
 
-.textfield:hover{
-    filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.5));
-}
-
 .textfield:focus{
-    filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.75));
+    filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.25));
 }
 
 /*****************************************************/
@@ -318,10 +311,6 @@ h1, h2, h3{
         position: relative;
     }
 
-    #header .compte-options{
-
-    }
-
     #header > nav{
         display: none;
     }
@@ -372,7 +361,7 @@ h1, h2, h3{
     top: 100%;
     left: 0;
     height: fit-content;
-    width: 100vw;
+    width: 100%;
     color: #fff;
 }
 
@@ -409,6 +398,95 @@ h1, h2, h3{
     justify-content: center;
     font-size: 16px;
 }
+
+/* Menu de tri*/
+
+.menu_deroulant{
+    position:absolute;
+    color:white;
+    background-color: #627099;
+    display: none;
+    left:40%;
+    z-index:99;
+}
+
+.menu_tri:hover .menu_deroulant {
+    display: block; /* Affiche l'élément lorsque son parent est survolé */
+}
+
+.menu_filtre:hover .menu_deroulant {
+    display: block; /* Affiche l'élément lorsque son parent est survolé */
+}
+
+.menu_deroulant li{
+    display: block; /* Prend toute la largeur disponible */
+    text-align: center;
+    padding: 1em;
+}
+
+.menu_deroulant li:hover{
+    background-color: #515D5E;
+}
+
+.menu_deroulant li.select{
+    background-color: #16A1EF;
+    font-weight: bold;
+}
+
+#options > div{
+    display: flex;
+    flex-direction: row;
+}
+
+#coco{
+    left:30%;
+}
+
+#sidebar {
+    height: 100vh;
+    width: 20em;
+    position: fixed;
+    top: 0;
+    left: -22em;
+    background-color: var(--col2);
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    padding-left:2em;
+    color: var(--col5);
+    z-index: 90;
+    margin-top:5em;
+  }
+
+#sidebar > h2 {
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+    padding-left:0em;
+  }
+
+.hell{
+    display:flex;
+    justify-content: space-around;
+}
+
+#sidebar > .number{
+    color:pink;
+    width:25px;
+}
+
+#sidebar > #valid_case{
+    display:flex;
+    align-items: center;
+    justify-content:center;
+}
+
+#sidebar > [type="checkbox"]{
+    size:5em;
+}
+
 
 /**
 

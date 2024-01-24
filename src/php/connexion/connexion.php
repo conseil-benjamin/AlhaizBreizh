@@ -39,10 +39,8 @@
                 </form>
             </div>
             <div id="inscription">
-                <div>
-                    <p>Pas encore inscrit ?<br>Inscrivez-vous dès maintenant !</p>
-                    <a href="/src/php/inscription/inscription.php" class="boutton">S'inscrire</a>
-                </div>
+                <p>Pas encore inscrit ? Inscrivez-vous dès maintenant !</p>
+                <a href="/src/php/inscription/inscription.php" class="boutton">S'inscrire</a>
             </div>
         </div>
         <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'); ?>

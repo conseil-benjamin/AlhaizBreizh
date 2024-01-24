@@ -11,47 +11,37 @@ try {
 
 // Assurez-vous que la session 'id' est définie pour éviter des erreurs
 if (isset($_SESSION['id'])) {
-    function obtenirLogementsProprio($id) {
-        $logements = array();
-        try {
-            $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
-            $stmt = $pdo->prepare("SELECT DISTINCT numLogement,libelle,dateDebut,dateFin,idCompte, pseudoCompte,proprio,numReservation FROM ldc.Reservation NATURAL JOIN ldc.Logement NATURAL JOIN ldc.Client WHERE proprio = $id "
-        );
-        $stmt->execute();
-        $logements = array();
-        while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-                $logements[] = $row;
-            
-        }
-
-        $pdo = null;
-    } catch (PDOException $e) {
-        $logements = array();
+    // Utilisez des requêtes préparées pour éviter les injections SQL
+    $stmt = $pdo->prepare("SELECT DISTINCT numLogement,libelle,dateDebut,dateFin,pseudoCompte,proprio FROM ldc.Reservation NATURAL JOIN ldc.Logement NATURAL JOIN ldc.Client WHERE proprio = :id AND pseudoCompte = :pseudo");
+    $stmt->bindParam(':id', $_SESSION['id'], PDO::PARAM_INT);
+    $stmt->bindParam(':pseudo', $_SESSION['pseudo'], PDO::PARAM_STR);
+    $stmt->execute();
+    
+    // Vérifiez si l'utilisateur a des réservations
+    if ($stmt->rowCount() > 0) {
+        // Récupérez les réservations
+        $reservations = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } else {
+        $reservations = array();
     }
-    return $logements;
-}
+    // Si l'utilisateur n'est pas le propriétaire, obtenir ses reservations
+    $stmt = $pdo->prepare("SELECT DISTINCT numLogement,libelle,dateDebut,dateFin,pseudoCompte,proprio FROM ldc.Reservation NATURAL JOIN ldc.Logement NATURAL JOIN ldc.Client WHERE numClient = :id AND proprio != :id");
+    $stmt->bindParam(':id', $_SESSION['id'], PDO::PARAM_INT);
+    $stmt->execute();
+    $reservations = $reservations + $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+    // Utilisez une boucle foreach pour afficher les réservations
+    /*foreach ($reservations as $reservation) {
+        // Affichez les détails de la réservation
+        echo "Numéro de logement: " . $reservation['numLogement'] . "<br>";
+        echo "Date de début: " . $reservation['dateDebut'] . "<br>";
+        echo "Date de fin: " . $reservation['dateFin'] . "<br>";
+        // Ajoutez d'autres détails selon votre structure de base de données
+    }*/
 } else {
-
-    // Affichez un message d'erreur
-    echo '<div class="alert-danger"> <h1>Vous n\'êtes pas connecté. Veuillez vous connecter pour accéder à vos réservations.</h1> </div>';
-     // Masquer la barre de recherche
-     echo '<style>
-     .recherche {
-         display: none;
-        }
-        </style>';
-
-        // Masquer les options de tri et de filtrage
-        echo '<style>
-            .options {
-                display: none;
-            }
-        </style>';
-
+    // Ajustez en conséquence si l'utilisateur n'est pas connecté
+    echo "Utilisateur non connecté";
 }
-
-$reservations = obtenirLogementsProprio($_SESSION['id']);
 ?>
 
 
@@ -68,10 +58,17 @@ $reservations = obtenirLogementsProprio($_SESSION['id']);
     <link rel="stylesheet" type="text/css" href="/src/styles/styles.css">
     <link rel="stylesheet" type="text/css" href="/src/styles/index.css">
     <link rel="stylesheet" type="text/css" href="/src/styles/style_Liste_resa.css">
-     <link rel="icon" href="/public/logos/logo-black.svg">
 
     <!-- Titre de la page -->
     <title>ALHaiz Breizh</title>
+
+    <!-- Code PHP pour vérifier la session utilisateur et définir l'image de profil -->
+    <?php
+// Supposons que vous ayez déjà une variable $reservations récupérée de la base de données
+
+?>
+
+
 </head>
 
 <!-- Section En-tête -->
@@ -79,6 +76,40 @@ $reservations = obtenirLogementsProprio($_SESSION['id']);
 
 <!-- Section Corps -->
 <body>
+    <?php 
+    // Code PHP pour gérer la soumission du formulaire
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        try {
+            // Connexion à la base de données et préparation de la requête
+            $pdo = new PDO("pgsql:host=localhost;port=5432;dbname=postgres;user=postgres;password=root");
+            $stmt = $pdo->prepare("INSERT INTO ldc.Reservation (numLogement, dateDebut, dateFin) VALUES (:numLogement, :dateDebut, :dateFin)");
+
+            // Récupération des données du formulaire
+            $numLogement = $_POST['numLogement'];
+            $dateDebut = $_POST['dateDebut'];
+            $dateFin = $_POST['dateFin'];
+
+            // Liaison des paramètres et exécution de la requête
+            $stmt->bindParam(':numLogement', $numLogement, PDO::PARAM_INT);
+            $stmt->bindParam(':dateDebut', $dateDebut, PDO::PARAM_STR);
+            $stmt->bindParam(':dateFin', $dateFin, PDO::PARAM_STR);
+            $stmt->execute();
+
+            $pdo = null;
+
+            // Redirection vers la page de confirmation
+            header('Location: confirmation.php');
+            exit();
+        } catch (PDOException $e) {
+            // Gestion des erreurs de la base de données
+            echo "Erreur : " . $e->getMessage();
+        }
+    }
+    ?>
+
+
+
     <!-- Section Contenu -->
     <div class="content">
         <!-- Recherche et options de réservation -->
@@ -87,34 +118,58 @@ $reservations = obtenirLogementsProprio($_SESSION['id']);
             <div id="options">
                 <div>
                     <input type="text" placeholder="Rechercher..">
-                    <button class="boutton-tri">Date</button>
-                    <button class="boutton-tri">Prix</button>
+                    <div class="menu_tri">
+                        <button class="boutton">Trier</button>
+                        <div class="menu_deroulant">
+                        <ul>
+                            <li <?php if ($_GET['tri'] == "date") { ?>class="select" > <a  href="listeResa.php">Date (plus ancien)</a><?php } else { ?> > <a href="listeResa.php?tri=date">Date (plus ancien)</a><?php } ?></li>
+                            <li <?php if ($_GET['tri'] == "date_e") { ?>class="select" > <a class="select" href="listeResa.php">Date (plus récent)</a><?php } else { ?> > <a href="listeResa.php?tri=prix">Date (plus récent)</a><?php } ?></li>
+                        </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-  
+
       
+        <!--Trie des reserv -->
+        <?php
+
+        function dater($a, $b) {
+            return $a[5] - $b[5]; //fonction de tri par tarif le moins eleve
+        }
+
+        function dater_envers($a, $b) {
+            return $a[5] - $b[5]; //fonction de tri par tarif le moins eleve
+            $reservations = array_reverse($reservations);
+        }
+
+        if ($_GET['tri']=="date"){
+            usort($reservations, 'dater');
+        }
+        else if ($_GET['tri']=="date_e"){
+            usort($reservations, 'dater_envers');
+        }
+
+        ?>
+
         <!-- Affiche les cartes de réservation -->
         <?php foreach ($reservations as $reservation): ?>
             <div class="card-container">    
                 <div class="reservation-card">
-                    <a href="/src/php/logement/PageDetailLogement.php?numLogement=<?php echo $reservation[0] ?>">
-                        <div class="logement">
-                            <img src="/public/img/logements/<?php echo $reservation[0]; ?>/1.png" alt="Photo du logement">
-                        </div>
-                    </a>
+                    <div class="logement">
+                        <img src="/public/img/logements/<?php echo $reservation['numlogement']; ?>/1.png" alt="Photo du logement">
+                    </div>
                     <div class="infos">
-                        <h2><?php echo $reservation[1]; ?></h2>
+                        <h2><?php echo $reservation['libelle']; ?></h2>
                         <div class="details">
-                            <p>Date d'arrivée : <?php echo $reservation[2]; ?></p>
-                            <p>Date de départ : <?php echo $reservation[3]; ?></p>
+                            <p>Date d'arrivée : <?php echo $reservation['datedebut']; ?></p>
+                            <p>Date de départ : <?php echo $reservation['datefin']; ?></p>
                         </div>
-                        <a href="/src/php/profil/profil.php?user=<?php echo $reservation[6] ?>">
-                            <div class="profile">
-                                <img src="/public/img/photos_profil/<?php echo $reservation[6]; ?>.png" alt="Photo de profil">
-                                <p><?php echo $reservation[5]; ?></p>
-                            </div>
-                        </a>
+                        <div class="profile">
+                            <img src="/public/img/photos_profil/<?php echo $reservation['proprio']; ?>.png" alt="Photo de profil">
+                            <p><?php echo $reservation['pseudocompte']; ?></p>
+                        </div>
                     </div>
                     <label class="button-etat" for="status">État Réservation</label>
                     <div>
@@ -125,7 +180,7 @@ $reservations = obtenirLogementsProprio($_SESSION['id']);
                         </button>
                     </div>
                     <div>
-                    <a  href="/src/php/reservation/details_reservation.php?numLogement=<?php echo $reservation[0]?>" class="button-resa">Voir Réservation</a>
+                        <a href="details_reservation.php?numLogement=<?=$reservation['numlogement']?>" class="button-resa">Voir Réservation</a>
                     </div>
                 </div>
             </div>

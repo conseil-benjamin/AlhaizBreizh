@@ -1,47 +1,31 @@
 body {
-  --main-bg-color: var(--col4);
+  margin-top: 10%;
+  --main-bg-color: var(--col1);
   --color-btn-submit: var(--col3);
   --main-font-color: #ffffff;
   --secondary-font-color: #000000;
   --h1-font-color: var(--col5);
-  cursor: unset !important;
-}
-
-.main{
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: calc(75px + 1em);
-  color: var(--main-font-color);
-  width: 90%;
-}
-
-.titre{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100px;
-  background-color: #fff;
-  border-top-right-radius: 25px;
-  border-top-left-radius: 25px;
 }
 
 .container-main {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  flex-wrap: wrap;
   background-color: var(--main-bg-color);
-  border-bottom-left-radius: 25px;
-  border-bottom-right-radius: 25px;
-  padding: 1em;
+  border-radius: 25px;
+  margin: 5em;
+  margin-left: auto;
+  margin-right: auto;
+  color: var(--main-font-color);
+  flex-wrap: wrap;
+  width: 90%;
 }
 
-.container-left, .container-right {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
+.container-left {
+  width: fit-content;
+}
+
+.container-right {
   width: fit-content;
 }
 
@@ -53,14 +37,46 @@ select {
   display: block;
 }
 
+.custom-file-input {
+  background-color: var(--col5);
+  margin: 1em 0 1em 1em;
+  color: var(--secondary-font-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  background-color: #ffffff;
+  border-radius: 10px;
+  width: 10rem;
+  height: 2em;
+  cursor: pointer;
+}
+
 /* Styles pour le bouton de type file */
 #photos {
-  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
 }
 
 #photosName {
+  margin: 0 0 0 1em;
+}
+
+button {
   margin: 1em;
-  margin-left: 2em;
+  border-radius: 45px;
+  padding: 0.8em;
+  display: block;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: var(--col3);
+  transition: 0.7s;
 }
 
 #surface {
@@ -68,7 +84,7 @@ select {
 }
 
 .container-main label {
-  margin: .5em 1em;
+  margin: 2em 0 0 1em;
   display: block;
 }
 
@@ -76,13 +92,19 @@ textarea {
   margin-left: 1em;
   border-radius: 15px;
   padding: 1em;
-  resize: none;
+  width: max-content;
 }
 
 h1 {
   text-align: center;
   font-size: clamp(1.5rem, 2.5vw, 2rem);
   color: var(--col5);
+}
+
+.creerAnnonce {
+  background-color: var(--color-btn-submit);
+  height: 4em;
+  cursor: pointer;
 }
 
 .villeDiv {
@@ -115,25 +137,19 @@ h1 {
 }
 
 .nbPrixEtPersonnesDiv {
-  align-items: end;
-  height: auto;
-  width: auto;
+  margin-bottom: 6em;
 }
 
-litsElement > label{
-  margin-top: 1em;
+hr {
+  width: 20%;
+  margin: auto;
+  border: 1.52px solid black;
 }
 
 .inputPlusIconeSupprimer {
   display: flex;
-  align-items: center;
-  line-height: 100%;
   flex-direction: row;
-  margin-top: 1em;
-}
-
-.litsElement .inputPlusIconeSupprimer  {
-  margin-top: 0;
+  max-width: 25rem;
 }
 
 .inputPlusIconeSupprimer > label {
@@ -167,6 +183,10 @@ litsElement > label{
   cursor: pointer;
 }
 
+#lits {
+  width: 22.5em;
+}
+
 .testValeurInputAnnonce {
   color: red;
 }
@@ -175,19 +195,26 @@ litsElement > label{
   margin: 2em 0 0 0;
 }
 
+.addButton,
+.addChambre,
+.btnAddLits {
+  background-color: var(--col5);
+  border-radius: 10px;
+}
+
+.addChambre{
+  margin: 5em 0 0 1em;
+}
+
+.addButton:hover,
+.addChambre:hover {
+  background-color: var(--main-font-color);
+  color: black;
+}
+
 .conditionsGenerale {
   margin: auto;
   width: 60%;
-}
-
-/********************************/
-/*Bouttons*/
-.boutton{
-  background-color: var(--col6);
-  font-size: 1em;
-  padding: 0em 1em;
-  margin-left: 1em;
-  margin-top: 1em;
 }
 
 .creerAnnonce {
@@ -195,171 +222,41 @@ litsElement > label{
   margin-bottom: 2em;
 }
 
-
-.wrapper {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  top: 0;
-  bottom: 0;
-}
-
-/* CSS pour l'élément vidéo à l'intérieur du wrapper */
-.wrapper video {
-  height: 100%;
-}
-
-/* CSS pour l'élément SVG à l'intérieur du wrapper */
-.wrapper svg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-/* CSS pour le texte à l'intérieur de l'élément SVG */
-.wrapper svg text {
-  font-family: "NoirPro", Arial, sans-serif;
-  font-weight: 400;
-  text-transform: uppercase;
-  font-size:12px; /* Taille initiale du texte */
-}
-
-/* CSS pour le rectangle à l'intérieur de l'élément SVG */
-.wrapper svg rect {
-  fill: #fff;
-}
-
-/* CSS pour la classe lien */
-.lien {
-  position: absolute;
-  margin: 1px;
-  bottom: 40%;
-  left: 50%;
-  transform: translateX(-50%);
-  color: black;
-  text-align: center;
-  z-index: 1;
-}
-
-.wrapper {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  top: 0;
-  bottom: 0;
-}
-
-/* CSS pour l'élément vidéo à l'intérieur du wrapper */
-.wrapper video {
-  height: 100%;
-}
-
-/* CSS pour l'élément SVG à l'intérieur du wrapper */
-.wrapper svg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-/* CSS pour le texte à l'intérieur de l'élément SVG */
-.wrapper svg text {
-  font-family: "NoirPro", Arial, sans-serif;
-  font-weight: 400;
-  text-transform: uppercase;
-  font-size:12px; /* Taille initiale du texte */
-}
-
-/* CSS pour le rectangle à l'intérieur de l'élément SVG */
-.wrapper svg rect {
-  fill: #fff;
-}
-
-/* CSS pour la classe lien */
-.lien {
-  position: absolute;
-  margin: 1px;
-  bottom: 40%;
-  left: 50%;
-  transform: translateX(-50%);
-  color: black;
-  text-align: center;
-  z-index: 1;
-}
-
-.creerAnnonce:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-span a{
-  text-decoration: underline;
-}
-
-/********************************/
-/*TextFields*/
-.textfield{
-  width: calc(100% - 4em);
-  height: 1em;
-}
-
-textarea.textfield {
-  height: 5em;
-  padding: 1.5em;
-  padding-bottom: 2em;
-}
-
-select.textfield {
-  height: auto;
-}
-
-/********************************/
-/*Media Queries*/
-@media screen and (max-width: 800px) {
-  .textfield{
-    font-size:small;
+@media (max-width: 830px) {
+  h1 {
+    margin-top: calc(75px + 1em);
   }
-}
-
-@media screen and (max-width: 1070px) {
-  .wrapper svg text {
-    font-size: 10px; 
+  textarea{
+    width: 80%;
   }
-}
-
-@media screen and (max-width: 860px) {
-  .wrapper svg text {
-    font-size: 8px; 
+  select{
+    max-width: 20em;
   }
-}
-
-@media screen and (max-width: 710px) {
-  .wrapper svg text {
-    font-size:6px; 
+  input{
+    width: 80%;
   }
-}
-
-@media screen and (max-width: 550px) {
-  .wrapper svg text {
-    font-size:4px; 
+  .container-main {
+    margin: auto;
+    margin-top: 2em;
+    min-width: 20rem;
   }
-}
-
-@media screen and (max-width: 360px) {
-  .wrapper svg text {
-    font-size:3px; 
+  .container-left {
+    margin: 0 0 0 0;
   }
-
-  .lien {
-    font-size:1px; 
+  .container-right {
+    margin: 0 0 0 0;
+  }
+  .villeDiv, .typeLogementDiv{
+    flex-direction: column;
+  }
+  .div-prix-nuit{
+    margin: 0em 0 30em 0;
+  }
+  .nbPrixEtPersonnesDiv{
+    flex-direction: column;
+    margin: 0 0 15em 0;
+  }
+  .div-nbSalleBain{
+    margin: 5em 0 0 0;
   }
 }

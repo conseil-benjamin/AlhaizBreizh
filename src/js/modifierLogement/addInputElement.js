@@ -234,7 +234,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function createLogement(placeholder, name, val) {
     let newElement = document.createElement("input");
-    newElement.className = "textfield";
     newElement.setAttribute("type", "text");
     newElement.setAttribute("size", "60");
     newElement.setAttribute("placeholder", placeholder);
@@ -317,7 +316,7 @@ La fonction
   addLits.addEventListener("click", () => {
     let newElement = document.createElement("select");
 
-    newElement.className = "litsElement textfield";
+    newElement.className = "litsElement";
 
     var option1 = document.createElement("option");
     option1.value = "Lit double (140 * 190)";
@@ -359,12 +358,11 @@ La fonction
     console.log(nbChambres);
 
     btnAddLits.textContent = "Ajouter lit";
-    btnAddLits.className = "btnAddLits boutton";
+    btnAddLits.className = "btnAddLits";
 
     titre.textContent = "Chambre " + nbChambres;
     let newElement = document.createElement("select");
     newElement.name = nbChambres + "lits" + 0;
-    newElement.className = "textfield";
 
     var option1 = document.createElement("option");
     option1.value = "Lit double (140 * 190)";
@@ -429,11 +427,10 @@ La fonction
     let btnAddLits = document.createElement("button");
   
     btnAddLits.textContent = "Ajouter lit";
-    btnAddLits.className = "btnAddLits boutton";
+    btnAddLits.className = "btnAddLits";
   
     titre.textContent = "Chambre " + nbChambres;
     let newElement = document.createElement("select");
-    newElement.className = "textfield";
     newElement.name = nbChambres+"lits"+0;
   
     var option1 = document.createElement("option");
@@ -527,7 +524,6 @@ La fonction
     ella[nChambre]++;
 
     let newElement = document.createElement("select");
-    newElement.className = "textfield";
     newElement.setAttribute("type", "text");
     newElement.name = nChambre + "lits" + ella[nChambre];
 
