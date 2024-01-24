@@ -11,37 +11,47 @@ try {
 
 // Assurez-vous que la session 'id' est définie pour éviter des erreurs
 if (isset($_SESSION['id'])) {
-    // Utilisez des requêtes préparées pour éviter les injections SQL
-    $stmt = $pdo->prepare("SELECT DISTINCT numLogement,libelle,dateDebut,dateFin,pseudoCompte,proprio FROM ldc.Reservation NATURAL JOIN ldc.Logement NATURAL JOIN ldc.Client WHERE proprio = :id AND pseudoCompte = :pseudo");
-    $stmt->bindParam(':id', $_SESSION['id'], PDO::PARAM_INT);
-    $stmt->bindParam(':pseudo', $_SESSION['pseudo'], PDO::PARAM_STR);
-    $stmt->execute();
-    
-    // Vérifiez si l'utilisateur a des réservations
-    if ($stmt->rowCount() > 0) {
-        // Récupérez les réservations
-        $reservations = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } else {
-        $reservations = array();
-    }
-    // Si l'utilisateur n'est pas le propriétaire, obtenir ses reservations
-    $stmt = $pdo->prepare("SELECT DISTINCT numLogement,libelle,dateDebut,dateFin,pseudoCompte,proprio FROM ldc.Reservation NATURAL JOIN ldc.Logement NATURAL JOIN ldc.Client WHERE numClient = :id AND proprio != :id");
-    $stmt->bindParam(':id', $_SESSION['id'], PDO::PARAM_INT);
-    $stmt->execute();
-    $reservations = $reservations + $stmt->fetchAll(PDO::FETCH_ASSOC);
+    function obtenirLogementsProprio($id) {
+        $logements = array();
+        try {
+            $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
+            $stmt = $pdo->prepare("SELECT DISTINCT numLogement,libelle,dateDebut,dateFin,idCompte, pseudoCompte,proprio,numReservation FROM ldc.Reservation NATURAL JOIN ldc.Logement NATURAL JOIN ldc.Client WHERE proprio = $id "
+        );
+        $stmt->execute();
+        $logements = array();
+        while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+                $logements[] = $row;
+            
+        }
 
-    // Utilisez une boucle foreach pour afficher les réservations
-    /*foreach ($reservations as $reservation) {
-        // Affichez les détails de la réservation
-        echo "Numéro de logement: " . $reservation['numLogement'] . "<br>";
-        echo "Date de début: " . $reservation['dateDebut'] . "<br>";
-        echo "Date de fin: " . $reservation['dateFin'] . "<br>";
-        // Ajoutez d'autres détails selon votre structure de base de données
-    }*/
-} else {
-    // Ajustez en conséquence si l'utilisateur n'est pas connecté
-    echo "Utilisateur non connecté";
+        $pdo = null;
+    } catch (PDOException $e) {
+        $logements = array();
+    }
+    return $logements;
 }
+
+} else {
+
+    // Affichez un message d'erreur
+    echo '<div class="alert-danger"> <h1>Vous n\'êtes pas connecté. Veuillez vous connecter pour accéder à vos réservations.</h1> </div>';
+     // Masquer la barre de recherche
+     echo '<style>
+     .recherche {
+         display: none;
+        }
+        </style>';
+
+        // Masquer les options de tri et de filtrage
+        echo '<style>
+            .options {
+                display: none;
+            }
+        </style>';
+
+}
+
+$reservations = obtenirLogementsProprio($_SESSION['id']);
 ?>
 
 
@@ -61,14 +71,6 @@ if (isset($_SESSION['id'])) {
 
     <!-- Titre de la page -->
     <title>ALHaiz Breizh</title>
-
-    <!-- Code PHP pour vérifier la session utilisateur et définir l'image de profil -->
-    <?php
-// Supposons que vous ayez déjà une variable $reservations récupérée de la base de données
-
-?>
-
-
 </head>
 
 <!-- Section En-tête -->
@@ -76,40 +78,6 @@ if (isset($_SESSION['id'])) {
 
 <!-- Section Corps -->
 <body>
-    <?php 
-    // Code PHP pour gérer la soumission du formulaire
-
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        try {
-            // Connexion à la base de données et préparation de la requête
-            $pdo = new PDO("pgsql:host=localhost;port=5432;dbname=postgres;user=postgres;password=root");
-            $stmt = $pdo->prepare("INSERT INTO ldc.Reservation (numLogement, dateDebut, dateFin) VALUES (:numLogement, :dateDebut, :dateFin)");
-
-            // Récupération des données du formulaire
-            $numLogement = $_POST['numLogement'];
-            $dateDebut = $_POST['dateDebut'];
-            $dateFin = $_POST['dateFin'];
-
-            // Liaison des paramètres et exécution de la requête
-            $stmt->bindParam(':numLogement', $numLogement, PDO::PARAM_INT);
-            $stmt->bindParam(':dateDebut', $dateDebut, PDO::PARAM_STR);
-            $stmt->bindParam(':dateFin', $dateFin, PDO::PARAM_STR);
-            $stmt->execute();
-
-            $pdo = null;
-
-            // Redirection vers la page de confirmation
-                header('Location: confirmation.php');
-            exit();
-        } catch (PDOException $e) {
-            // Gestion des erreurs de la base de données
-            echo "Erreur : " . $e->getMessage();
-        }
-    }
-    ?>
-
-
-
     <!-- Section Contenu -->
     <div class="content">
         <!-- Recherche et options de réservation -->
@@ -129,21 +97,21 @@ if (isset($_SESSION['id'])) {
         <?php foreach ($reservations as $reservation): ?>
             <div class="card-container">    
                 <div class="reservation-card">
-                    <a href="/src/php/logement/PageDetailLogement.php?numLogement=<?php echo $reservation['numlogement'] ?>">
+                    <a href="/src/php/logement/PageDetailLogement.php?numLogement=<?php echo $reservation[0] ?>">
                         <div class="logement">
-                            <img src="/public/img/logements/<?php echo $reservation['numlogement']; ?>/1.png" alt="Photo du logement">
+                            <img src="/public/img/logements/<?php echo $reservation[0]; ?>/1.png" alt="Photo du logement">
                         </div>
                     </a>
                     <div class="infos">
-                        <h2><?php echo $reservation['libelle']; ?></h2>
+                        <h2><?php echo $reservation[1]; ?></h2>
                         <div class="details">
-                            <p>Date d'arrivée : <?php echo $reservation['datedebut']; ?></p>
-                            <p>Date de départ : <?php echo $reservation['datefin']; ?></p>
+                            <p>Date d'arrivée : <?php echo $reservation[2]; ?></p>
+                            <p>Date de départ : <?php echo $reservation[3]; ?></p>
                         </div>
-                        <a href="/src/php/profil/profil.php?user=<?php echo $reservation['proprio'] ?>">
+                        <a href="/src/php/profil/profil.php?user=<?php echo $reservation[6] ?>">
                             <div class="profile">
-                                <img src="/public/img/photos_profil/<?php echo $reservation['proprio']; ?>.png" alt="Photo de profil">
-                                <p><?php echo $reservation['pseudocompte']; ?></p>
+                                <img src="/public/img/photos_profil/<?php echo $reservation[6]; ?>.png" alt="Photo de profil">
+                                <p><?php echo $reservation[5]; ?></p>
                             </div>
                         </a>
                     </div>
@@ -156,7 +124,7 @@ if (isset($_SESSION['id'])) {
                         </button>
                     </div>
                     <div>
-                        <a href="details_reservation.php?numLogement=<?=$reservation['numlogement']?>" class="button-resa">Voir Réservation</a>
+                    <a  href="/src/php/reservation/details_reservation.php?numLogement=<?php echo $reservation[0]?>" class="button-resa">Voir Réservation</a>
                     </div>
                 </div>
             </div>
