@@ -10,6 +10,19 @@ CREATE TABLE Admin (
     mdp_admin VARCHAR(50)
 );
 
+CREATE TABLE APIkey (
+    num_api SERIAL NOT NULL PRIMARY KEY,
+    apikey VARCHAR(50) NOT NULL,
+    droit VARCHAR(4) NOT NULL,
+    id_proprio integer,
+    id_admin integer,
+    est_admin boolean NOT NULL,
+    CHECK (
+        (est_admin = true AND id_admin IS NOT NULL AND id_proprio IS NULL) OR
+        (est_admin = false AND id_proprio IS NOT NULL AND id_admin IS NULL)
+    )
+);
+
 -- Table Client
 CREATE TABLE Client (
     idCompte SERIAL NOT NULL PRIMARY KEY,
@@ -267,6 +280,8 @@ ALTER TABLE AvisClient ADD CONSTRAINT avisclient_avis_fk FOREIGN KEY (idAvis) RE
 ALTER TABLE AvisLogement ADD CONSTRAINT avislogement_logement_fk FOREIGN KEY (numLogement) REFERENCES Logement(numLogement);
 ALTER TABLE AvisLogement ADD CONSTRAINT avislogement_proprietaire_fk FOREIGN KEY (idCompte) REFERENCES Proprietaire(idCompte);
 ALTER TABLE AvisLogement ADD CONSTRAINT avislogement_avis_fk FOREIGN KEY (idAvis) REFERENCES Avis(numAvis);
+ALTER TABLE APIkey ADD CONSTRAINT apikey_proprio_fk1 FOREIGN KEY (id_proprio) REFERENCES Proprietaire (idcompte);
+ALTER TABLE APIkey ADD CONSTRAINT apikey_admin_fk1 FOREIGN KEY (id_admin) REFERENCES Admin (idAdmin);
 
 -- Insertion de données dans la table Avis
 INSERT INTO Avis (contenuAvis, nbEtoiles)
