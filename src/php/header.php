@@ -33,7 +33,8 @@
                     <!--<a href=""><li>Mes Réservations</li></a>-->
                     <?php
                         if ($_SESSION['proprio']) { ?>
-                            <a href="/src/php/logement/mesLogements.php"><li>Mes Logements</li></a> <?php
+                            <a href="/src/php/logement/mesLogements.php"><li>Mes Logements</li></a> 
+                            <a href="/src/php/reservation/les_reservations.php"><li>Les Reservations</li></a><?php 
                         } else { ?>
                             <!--<a href=""><li>Devenir propriétaire</li></a>--> <?php
                         } ?>
@@ -53,4 +54,3 @@
 <script src="/src/js/compte-click.js"></script>
 <script src="/src/js/header/menu-burger.js"></script>
 <script src="/src/js/header/menu-compte.js"></script>
-<script src="/src/js/removeCustomScrollbar.js"></script>
