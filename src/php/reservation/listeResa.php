@@ -19,7 +19,7 @@ if (isset($_SESSION['id'])) {
             proprio.lastName as nom_proprio FROM ldc.Reservation NATURAL JOIN ldc.Logement inner JOIN ldc.Client on ldc.Reservation.numClient=idCompte INNER JOIN
             ldc.Client as proprio ON proprio.idCompte = Logement.proprio WHERE Client.idCompte = $id;");
 
-//requete github 2h
+    //requete github 2h
     //$stmt = $pdo->prepare("SELECT DISTINCT numLogement,libelle,dateDebut,dateFin,idCompte, pseudoCompte,proprio,numReservation FROM ldc.Reservation NATURAL JOIN ldc.Logement NATURAL JOIN ldc.Client WHERE proprio = $id ");
 
         $stmt->execute();
@@ -38,21 +38,9 @@ if (isset($_SESSION['id'])) {
 
 } else {
 
-    // Affichez un message d'erreur
-    echo '<div class="alert-danger"> <h1>Vous n\'êtes pas connecté. Veuillez vous connecter pour accéder à vos réservations.</h1> </div>';
-     // Masquer la barre de recherche
-     echo '<style>
-     .recherche {
-         display: none;
-        }
-        </style>';
-
-        // Masquer les options de tri et de filtrage
-        echo '<style>
-            .options {
-                display: none;
-            }
-        </style>';
+    // Redirige l'utilisateur vers la page de connexion
+    header("Location: /src/php/connexion/connexion.php");
+    exit();
 
 }
 
