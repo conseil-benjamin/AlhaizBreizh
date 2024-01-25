@@ -1,6 +1,5 @@
 <?php
 session_start();
-error_reporting(E_ALL & ~E_WARNING);
 
 try {
     $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
