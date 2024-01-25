@@ -82,7 +82,9 @@ CREATE TABLE Logement (
     nbPersMax INTEGER,
     nbChambres INTEGER,
     nbSalleDeBain INTEGER,
-    tarifNuitees DOUBLE PRECISION
+    tarifNuitees DOUBLE PRECISION,
+    note DOUBLE PRECISION,
+    typeLogement VARCHAR(255)
 );
 
 CREATE TABLE Chambre (

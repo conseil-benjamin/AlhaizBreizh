@@ -36,7 +36,7 @@ function confirmerResa() {
  * Affiche le Pop-up pour confirmer de l'annulation de la réservation
  */
 function confirmationAnnulerPopUp() {
-    swal({
+    Swal.fire({
         title: "Êtes-vous sur de vouloir annuler cette réservation",
         text: "Cette action est définitive",
         icon: "warning",
@@ -54,7 +54,7 @@ function confirmationAnnulerPopUp() {
  * Affiche le Pop-up pour confirmer la validation de la réservation
  */
 function confirmationValiderPopUp() {
-    swal({
+    Swal.fire({
         title: "Êtes-vous sur de vouloir confirmer cette réservation",
         text: "Vous allez être redirigé vers la page de paiment",
         icon: "warning",
@@ -72,7 +72,7 @@ function confirmationValiderPopUp() {
  * Pop-up du succès de l'annulation
  */
 function annulerSuccesPopUp() {
-    swal({
+    Swal.fire({
         title: "La réservation à bien été supprimée",
         icon: "success",
         button : "Revenir à la liste des réservations"
@@ -88,7 +88,7 @@ function annulerSuccesPopUp() {
  * Pop-up erreur de l'annulation
  */
 function annulerErreurPopUp() {
-    swal({
+    Swal.fire({
         title: "Erreur",
         text: "Le serveur à rencontrer un erreur, réessayer plus tard",
         icon: "error",
@@ -100,7 +100,7 @@ function annulerErreurPopUp() {
  * Pop-up du succès de la confirmation
  */
 function confirmerSuccesPopUp() {
-    swal({
+    Swal.fire({
         title: "La réservation à bien été confirmer",
         text : "l'équipe d'ALHaIZ vous souhaite agréable séjour !",
         icon: "success",
@@ -115,7 +115,7 @@ function confirmerSuccesPopUp() {
  * Pop-up erreur de la confirmation
  */
 function confirmerErreurPopUp() {
-    swal({
+    Swal.fire({
         title: "Erreur",
         text: "Le serveur à rencontrer un erreur, réessayer plus tard",
         icon: "error",

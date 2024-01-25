@@ -109,7 +109,8 @@ $dateDuJour = $date->format('Y-m-d');
     <link href="/src/styles/styles.css" rel="stylesheet" type="text/css">
     <link href="/src/styles/details_reservation.css" rel="stylesheet" type="text/css">
     <link rel="icon" href="/public/logos/logo-black.svg">
-    <script src="../../js/detailsReservation.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/src/js/detailsReservation.js"></script>
 </head>
 <?php include($_SERVER['DOCUMENT_ROOT'] . '/src/php/header.php'); ?>
 <body>
@@ -176,7 +177,6 @@ $dateDuJour = $date->format('Y-m-d');
 </div>
 <?php include($_SERVER['DOCUMENT_ROOT'] . '/src/php/footer.php'); ?>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
         function supprimerReservation() {
             <?php
