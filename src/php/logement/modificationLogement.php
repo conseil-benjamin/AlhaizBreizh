@@ -24,6 +24,8 @@
                 }else {
                     $numLogement=$_SESSION['num_logement'];
                 }
+
+                $_SESSION['num_logement']=$numLogement;
                 
                 // Connexion à la base de données
                 $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');

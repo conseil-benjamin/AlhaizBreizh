@@ -21,7 +21,7 @@ error_reporting(E_ALL & ~E_WARNING);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $id_logem=$_POST['id_logem'];    
+    $id_logem=$_SESSION['num_logement'];    
     
     $title = $_POST['title'];
     $description = $_POST['description'];
