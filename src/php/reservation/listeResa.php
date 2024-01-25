@@ -91,45 +91,11 @@ $reservations = obtenirLogementsProprio($_SESSION['id']);
             <div id="options">
                 <div>
                     <input type="text" placeholder="Rechercher..">
-                    <div class="menu_tri">
-                        <button class="boutton">Trier</button>
-                        <div class="menu_deroulant">
-                        <ul>
-                            <li <?php if ($_GET['tri'] == "date") { ?>class="select" > <a  href="listeResa.php">Date (plus ancien)</a><?php } else { ?> > <a href="listeResa.php?tri=date">Date (plus ancien)</a><?php } ?></li>
-                            <li <?php if ($_GET['tri'] == "date_e") { ?>class="select" > <a class="select" href="listeResa.php">Date (plus récent)</a><?php } else { ?> > <a href="listeResa.php?tri=prix">Date (plus récent)</a><?php } ?></li>
-                        </ul>
-                        </div>
-                    </div>
+                    <button class="boutton-tri">Date</button>
+                    <button class="boutton-tri">Prix</button>
                 </div>
             </div>
         </div>
-
-        <!--Trie des reserv -->
-        <?php
-
-        if (isset($_GET['tri'])) {
-            $tri = $_GET['tri'];
-        } else {
-            $tri = "date";
-        }
-
-        function dater($a, $b) {
-            return $a[5] - $b[5]; //fonction de tri par tarif le moins eleve
-        }
-
-        function dater_envers($a, $b) {
-            return $a[5] - $b[5]; //fonction de tri par tarif le moins eleve
-            $reservations = array_reverse($reservations);
-        }
-
-        if ($_GET['tri']=="date"){
-            usort($reservations, 'dater');
-        }
-        else if ($_GET['tri']=="date_e"){
-            usort($reservations, 'dater_envers');
-        }
-
-        ?>
   
       
         <!-- Affiche les cartes de réservation -->
