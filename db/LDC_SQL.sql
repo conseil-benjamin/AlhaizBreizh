@@ -2,25 +2,10 @@ DROP SCHEMA IF EXISTS ldc CASCADE;
 CREATE SCHEMA ldc;
 SET SCHEMA 'ldc';
 
-set datestyle to ISO, DMY;
-
 CREATE TABLE Admin (
     idAdmin SERIAL NOT NULL PRIMARY KEY,
     pseudo_admin VARCHAR(50),
     mdp_admin VARCHAR(50)
-);
-
-CREATE TABLE APIkey (
-    num_api SERIAL NOT NULL PRIMARY KEY,
-    apikey VARCHAR(50) NOT NULL,
-    droit VARCHAR(4) NOT NULL,
-    id_proprio integer,
-    id_admin integer,
-    est_admin boolean NOT NULL,
-    CHECK (
-        (est_admin = true AND id_admin IS NOT NULL AND id_proprio IS NULL) OR
-        (est_admin = false AND id_proprio IS NOT NULL AND id_admin IS NULL)
-    )
 );
 
 -- Table Client
@@ -97,9 +82,7 @@ CREATE TABLE Logement (
     nbPersMax INTEGER,
     nbChambres INTEGER,
     nbSalleDeBain INTEGER,
-    tarifNuitees DOUBLE PRECISION,
-    note DOUBLE PRECISION,
-    typeLogement VARCHAR(255)
+    tarifNuitees DOUBLE PRECISION
 );
 
 CREATE TABLE Chambre (
@@ -163,8 +146,7 @@ CREATE TABLE PlageDeDisponibilite (
     numCal INTEGER NOT NULL,    
     dateDebutPlage DATE,
     dateFinPlage DATE,
-    tarifJournalier INTEGER,
-    disponibilite BOOLEAN
+    tarifJournalier INTEGER
 );
 
 CREATE TABLE PlageIndisponibilite(
@@ -242,13 +224,14 @@ CREATE TABLE FavorisClient (
 );
 
 CREATE TABLE AvisClient (
-    idAvis INTEGER PRIMARY KEY,
+    idAvisClient SERIAL PRIMARY KEY, 
     idCompte INTEGER, 
-    idDestinataire INTEGER
+    idDestinataire INTEGER,
+    idAvis INTEGER
 );
 
-CREATE TABLE AvisLogement (
-    idAvis SERIAL PRIMARY KEY,
+CREATE TABLE LogementProprio (
+    idLogementProprio SERIAL PRIMARY KEY,
     numLogement INTEGER,
     idCompte INTEGER
 );
@@ -275,13 +258,11 @@ ALTER TABLE Devis_Client_Reservation ADD CONSTRAINT devis_client_reservation_fk3
 ALTER TABLE FavorisClient ADD CONSTRAINT favorisclient_logement_fk FOREIGN KEY (numLogement) REFERENCES Logement(numLogement);
 ALTER TABLE FavorisClient ADD CONSTRAINT favorisclient_client_fk FOREIGN KEY (idCompte) REFERENCES Client(idCompte);
 ALTER TABLE AvisClient ADD CONSTRAINT avisclient_client_fk FOREIGN KEY (idCompte) REFERENCES Client(idCompte);
-ALTER TABLE AvisClient ADD CONSTRAINT avisclient_destinataire_fk FOREIGN KEY (idDestinataire) REFERENCES Client(idCompte);
 ALTER TABLE AvisClient ADD CONSTRAINT avisclient_avis_fk FOREIGN KEY (idAvis) REFERENCES Avis(numAvis);
-ALTER TABLE AvisLogement ADD CONSTRAINT avislogement_logement_fk FOREIGN KEY (numLogement) REFERENCES Logement(numLogement);
-ALTER TABLE AvisLogement ADD CONSTRAINT avislogement_proprietaire_fk FOREIGN KEY (idCompte) REFERENCES Proprietaire(idCompte);
-ALTER TABLE AvisLogement ADD CONSTRAINT avislogement_avis_fk FOREIGN KEY (idAvis) REFERENCES Avis(numAvis);
-ALTER TABLE APIkey ADD CONSTRAINT apikey_proprio_fk1 FOREIGN KEY (id_proprio) REFERENCES Proprietaire (idcompte);
-ALTER TABLE APIkey ADD CONSTRAINT apikey_admin_fk1 FOREIGN KEY (id_admin) REFERENCES Admin (idAdmin);
+ALTER TABLE LogementProprio ADD CONSTRAINT logementproprio_logement_fk FOREIGN KEY (numLogement) REFERENCES Logement(numLogement);
+ALTER TABLE LogementProprio ADD CONSTRAINT logementproprio_proprietaire_fk FOREIGN KEY (idCompte) REFERENCES Proprietaire(idCompte);
+
+
 
 -- Insertion de données dans la table Avis
 INSERT INTO Avis (contenuAvis, nbEtoiles)
@@ -291,9 +272,7 @@ VALUES
     ('Personne très accueillante', 4.0),
     ('A laissé en bon état ma maison !', 5.0),
     ('Elle a offert à ma propre personne un très bon jus de pomme et je suis tellement ému par rapport à ça !', 4.5),
-    ('Personne très mal élévée', 1.0),
-    ('PARADE !', 5.0),
-    ('No Nightingale', 4.2);
+    ('Personne très mal élévée', 1.0);
 
 -- Insertion de données dans la table Client
 INSERT INTO Client (firstName, lastName, mail, numeroTel, photoProfil, civilite, adressePostale, pseudoCompte, motDePasse, dateNaissance, notationMoyenne)
@@ -346,10 +325,10 @@ VALUES
 
     
 -- Insertion de données dans la table Logement
-INSERT INTO Logement (surfaceHabitable, libelle, accroche, descriptionLogement, natureLogement, adresse, cp, ville, proprio, photoCouverture, LogementEnLigne, nbPersMax, nbChambres, nbSalleDeBain, tarifNuitees,typeLogement)
+INSERT INTO Logement (surfaceHabitable, libelle, accroche, descriptionLogement, natureLogement, adresse, cp, ville, proprio, photoCouverture, LogementEnLigne, nbPersMax, nbChambres, nbSalleDeBain, tarifNuitees)
 VALUES
-    (80, 'Maison en pierre', 'Une adorable maison de charactère', 'Cette maison est parfaite pour un weekend en famille.', 'maison','9 rue des serpentins','22500','Lannion', 1, 'maison.jpg', TRUE, 4, 2, 1, 150.0,'maison'),
-    (100.2, 'Cave spacieuse', 'Au coeur de la ville', 'Profitez de la vie urbaine grâce à cette magnifique cave.', 'cave','2 rue des tulipes','29000','Brest', 2, 'cave.jpg', TRUE, 3, 1, 2, 120.0,'maison');
+    (80, 'Maison en pierre', 'Une adorable maison de charactère', 'Cette maison est parfaite pour un weekend en famille.', 'maison','9 rue des serpentins','22500','Lannion', 1, 'maison.jpg', TRUE, 4, 2, 1, 150.0),
+    (100.2, 'Cave spacieuse', 'Au coeur de la ville', 'Profitez de la vie urbaine grâce à cette magnifique cave.', 'cave','2 rue des tulipes','29000','Brest', 2, 'cave.jpg', TRUE, 3, 1, 2, 120.0);
 
 INSERT INTO Chambre (numChambre,numLogement, nbLitsSimples, nbLitsDoubles) VALUES (1,1, 2, 3);
 INSERT INTO Chambre (numChambre,numLogement, nbLitsSimples, nbLitsDoubles) VALUES (2,1, 2, 3);
@@ -357,8 +336,8 @@ INSERT INTO Chambre (numChambre,numLogement, nbLitsSimples, nbLitsDoubles) VALUE
 -- Insertion de données dans la table Reservation
 INSERT INTO Reservation (numClient, numLogement, dateReservation, nbPersonnes, dateDebut, dateFin, dateDevis, nbJours, optionAnnulation)
 VALUES
-    (1, 1, '2023-10-18', 2, '2023-11-01', '2023-11-07', '2023-10-15', 7, 'Stricte'),
-    (2, 2, '2023-10-20', 3, '2023-11-05', '2023-11-10', '2023-10-16', 6, 'Flexible');
+    (1, 2, '2023-10-18', 2, '2023-11-01', '2023-11-07', '2023-10-15', 7, 'Stricte'),
+    (2, 1, '2023-10-20', 3, '2023-11-05', '2023-11-10', '2023-10-16', 6, 'Flexible');
 
 -- Insertion de données dans la table Devis
 INSERT INTO Devis (nbPersonnes, numReservation, numLogement, dateDebut, dateFin, dateDevis, dateValid, optionAnnulation, dureeDelaisAcceptation)
@@ -373,10 +352,10 @@ VALUES
     (TRUE, 3, 2, 'Départ avant midi, arrivées le jeudi', 2);
 
 -- Insertion de données dans la table PlageDeDisponibilite
-INSERT INTO PlageDeDisponibilite (numCal, dateDebutPlage, dateFinPlage, tarifJournalier,disponibilite)
+INSERT INTO PlageDeDisponibilite (numCal, dateDebutPlage, dateFinPlage, tarifJournalier)
 VALUES
-    (2, '2023-11-20', '2023-11-27', 100,true),
-    (1, '2023-11-10', '2023-11-12', 120,true);
+    (2, '2023-11-20', '2023-11-27', 100),
+    (1, '2023-11-10', '2023-11-12', 120);
     
 -- Insertion de données dans la table PlageDeDisponibilite
 INSERT INTO PlageIndisponibilite (numCal, dateDebutPlageI, dateFinPlageI)
@@ -399,12 +378,18 @@ VALUES
     (2, 90, 100, 600, 660, 60, 72, 18, 720);
 
 -- Insertion de données dans la table Avis_Client
-INSERT INTO AvisClient (idAvis, idCompte, idDestinataire)
+INSERT INTO AvisClient (idCompte, idDestinataire, idAvis)
 VALUES
-    (3, 1, 2),
-    (4, 2, 1),
-    (5, 3, 2),
-    (6, 1, 2);
+    (1, 2, 3),
+    (2, 1, 4),
+    (3, 2, 5),
+    (1, 2, 6);
+
+-- Insertion de données dans la table LogementProprio
+INSERT INTO LogementProprio (numLogement,idCompte) 
+VALUES 
+    ('2','2'),
+    ('1','2');
 
 -- Insertion de données dans la table PhotosComplementairesLogement
 INSERT INTO PhotosComplementairesLogement (numLogement, photosComplementaires) 
@@ -423,6 +408,13 @@ VALUES
 (80, 'Gîte au bord du lac', 'Un gîte confortable en pleine nature', 'Ce gîte est situé au bord du lac de Guerlédan. Il est idéal pour des vacances en amoureux ou un week-end en randonnée.', 'gite', '10 rue du lac', 22590, 'Mûr-de-Bretagne', 2, 'gite_guerledan.jpg', TRUE, 4, 2, 1, 150.0),
 (100, 'Château de charme', 'Une expérience unique dans un château historique', 'Ce château est situé au cœur de la campagne bretonne. Il est idéal pour un séjour romantique ou un événement spécial.', 'chateau', '1 rue du château', 29500, 'Quimper', 2, 'chateau_quimper.jpg', TRUE, 10, 5, 3, 300.0);
 
+INSERT INTO LogementProprio (numLogement,idCompte) 
+VALUES 
+    ('3','2'),
+    ('4','2'),
+    ('5','2'),
+    ('6','2');
+    
 
 INSERT INTO Chambre (numChambre,numLogement, nbLitsSimples, nbLitsDoubles) VALUES (1,3, 0, 1);
 
@@ -482,39 +474,5 @@ VALUES
 (6, 2, 'Accès lave-linge'),
 (6, 3, 'Accès salle de sport');
 
--- Insertion de données dans la table LogementProprio
-INSERT INTO AvisLogement (idAvis, numLogement,idCompte) 
-VALUES 
-    (1,'2','2'),
-    (2,'1','2'),
-    (7,'3','2'),
-    (8,'2','2');
 
 
-UPDATE Logement
-SET note = (
-    SELECT COALESCE(SUM(nbEtoiles), 0) / NULLIF(COUNT(*), 0)
-    FROM Avis
-    JOIN AvisLogement ON Avis.numAvis = AvisLogement.idAvis
-    WHERE AvisLogement.numLogement = Logement.numLogement
-);
-
-drop function if exists ftg_note_logement();
-create or replace function ftg_note_logement() returns trigger as $$
-BEGIN
-UPDATE Logement
-SET note = (
-    SELECT COALESCE(SUM(nbEtoiles), 0) / NULLIF(COUNT(*), 0)
-    FROM Avis
-    JOIN AvisLogement ON Avis.numAvis = AvisLogement.idAvis
-    WHERE AvisLogement.numLogement = Logement.numLogement
-) WHERE numLogement=new.numLogement;
-return new;
-end;
-$$ language plpgsql;
-
-CREATE TRIGGER tg_cre_note_logement after INSERT ON Avis 
-for each row execute function ftg_note_logement();
-
-CREATE TRIGGER tg_upd_note_logement after UPDATE ON Avis 
-for each row execute function ftg_note_logement();
