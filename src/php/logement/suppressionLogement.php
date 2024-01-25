@@ -22,11 +22,11 @@ $stmt->execute();
 $stmt = $pdo->prepare("DELETE FROM ldc.calendrier WHERE numLogement=$numLogement");
 $stmt->execute(); 
 $stmt = $pdo->prepare("DELETE FROM ldc.favorisclient WHERE numLogement=$numLogement");
-$stmt->execute(); 
+$stmt->execute();  /*
 $stmt = $pdo->prepare("DELETE FROM ldc.AvisLogement WHERE numLogement=$numLogement");
-$stmt->execute(); /*
-$stmt = $pdo->prepare("DELETE FROM ldc.logementproprio WHERE numLogement=$numLogement");
 $stmt->execute(); */
+$stmt = $pdo->prepare("DELETE FROM ldc.logementproprio WHERE numLogement=$numLogement");
+$stmt->execute();
 $stmt = $pdo->prepare("DELETE FROM ldc.logement WHERE numLogement=$numLogement");
 $stmt->execute(); 
 $stmt = $pdo->prepare("DELETE FROM ldc.tarification WHERE numDevis IN (SELECT numDevis FROM ldc.devis WHERE numLogement=$numLogement)");
