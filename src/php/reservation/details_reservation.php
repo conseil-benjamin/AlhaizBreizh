@@ -62,14 +62,7 @@ try {
         $localisationDetail = $reservation['adresse'];
         $localisation = $reservation['ville'];
         $titreLogement = $reservation['libelle'];
-        $dateArr = $reservation['dateDebut'];
-        $dateDep = $reservation['dateFin'];
-        $dateDevis = $reservation['dateDevis'];
         $prixTotal = $reservation['total'];
-        $dateResa = $reservation['dateValid'];
-        $devisRecu = $reservation['devisRecu'];
-        $conlue = $reservation['conlue'];
-        $etatResa = $reservation['etatResa'];
         $nbPersonnes = $reservation['nbpersonnes'];
         $cheminPhoto = "/public/img/logements/".$reservation['numlogement']."/1.png";
         $cheminPhotoProprio="/public/img/photos_profil/".$proprio.".png";
@@ -116,7 +109,6 @@ $dateDuJour = $date->format('Y-m-d');
     <link href="/src/styles/styles.css" rel="stylesheet" type="text/css">
     <link href="/src/styles/details_reservation.css" rel="stylesheet" type="text/css">
     <link rel="icon" href="/public/logos/logo-black.svg">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../../js/detailsReservation.js"></script>
 </head>
 <?php include($_SERVER['DOCUMENT_ROOT'] . '/src/php/header.php'); ?>
@@ -169,20 +161,13 @@ $dateDuJour = $date->format('Y-m-d');
     align-items: end;">
                 <div id="annulerAccepter">
                 <?php
-                if(!$conlue){
                     if ($_SESSION['id']==$numclient) {?>
 
                     <button class="boutton" onclick="confirmationValiderPopUp()">Accepter le devis et payer</button>
                     <button class="boutton" onclick="confirmationAnnulerPopUp()">Annuler ma réservation</button>
                 <?php }else {?>
                     <button class="boutton" onclick="supprimerReservation()">Supprimer la réservation</button>
-
-
-                <?php }
-                }else {?>
-                    <button class="boutton gris" disabled>Laisser un avis sur le logement</button>
-                    <button class="boutton gris" disabled>Laisser un avis sur l\'hôte</button>
-                 <?php }?>
+                <?php }?>
                 </div>
                 <p>Logement reservé le <span id="dateResa"><?= $dateResa ?></span></p>
             </div>
@@ -191,7 +176,7 @@ $dateDuJour = $date->format('Y-m-d');
 </div>
 <?php include($_SERVER['DOCUMENT_ROOT'] . '/src/php/footer.php'); ?>
 </body>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
         function supprimerReservation() {
             <?php
@@ -211,33 +196,9 @@ $dateDuJour = $date->format('Y-m-d');
         })
         .then((result) => {
             if (result.value) {
-                // Lance la suppression de l'annonce
-                fetch('supprimerResaDB.php?numReservation=' + numReservation, {
-                    method: 'DELETE'
-                })
-                .then(response => response.json())
-                .then(data => {
-                    Swal.fire({
-                        icon: "success",
-                        title: `${data.message}`,
-                        showConfirmButton: false,
-                        timer: 2000,
-                    });
-                    setTimeout(() => {
-                        window.location.href = "/src/php/logement/les_reservations.php";
-                    }, 2000);
-                })
-                .catch(error => {
-                    Swal.fire({
-                        icon: "success",
-                        title: `${data.message}`,
-                        showConfirmButton: false,
-                        timer: 2000,
-                    });
-                    setTimeout(() => {
-                        window.location.href = "/src/php/logement/les_reservations.php";
-                    }, 2000);
-                });
+                //Changer l'url pour la suppression
+                window.location.href = "/src/php/reservation/supprimerResaDB.php?numReservation=" + numReservation;
+
             }
         });
     } else {

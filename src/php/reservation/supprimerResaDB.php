@@ -1,5 +1,4 @@
 <?php
-print_r($_GET);
 $numReservation = $_GET['numReservation'];
 global $pdo;
 include("../connect.php");
@@ -13,26 +12,19 @@ try {
     // En cas d'erreur, affichez un message d'erreur
     echo "Erreur : " . $e->getMessage();
 }
-
-
-$response = array();
-$response['message'] =' Réservation supprimé avec succés';
-header ('Content-Type: application/json');
-echo json_encode($response);
-
 ?>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    Swal.fire({
+        icon: "success",
+        title: "La réservation a bien été supprimée !",
+        showConfirmButton: false,
+        timer: 2000,
+    });
+    setTimeout(() => {
+        window.location.href = "/src/php/reservation/les_reservations.php";
+    }, 2000);
+});
+</script>
 
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> <!-- Librairie pour les alertes -->
-<script src="/src/js/detailsReservation.js"></script>
- 
-</body>
-</html>
