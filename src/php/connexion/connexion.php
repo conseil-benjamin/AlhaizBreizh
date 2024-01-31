@@ -1,4 +1,10 @@
-<?php session_start(); ?>
+<?php 
+    session_start(); 
+
+    if (isset($_SESSION['id'])) {
+        header("Location: /index.php");
+    }
+?>
 <!DOCTYPE html>
 <html lang="fr-fr">
     <head>
@@ -28,15 +34,17 @@
                             <input type="password" name="mdp" id="mdp" placeholder="Entrez votre mot de passe" required>
                             <a href="">Mot de passe oublié ?</a>
                         </div>
-                        <input id="submit" class="boutton" type="submit" value="Se connecter">
+                        <input id="submitBtn" class="boutton" type="submit" value="Se connecter">
                     </div>
                 </form>
             </div>
             <div id="inscription">
                 <p>Pas encore inscrit ? Inscrivez-vous dès maintenant !</p>
-                <a href="/src/php/inscription.php" class="boutton">S'inscrire</a>
+                <a href="/src/php/inscription/inscription.php" class="boutton">S'inscrire</a>
             </div>
         </div>
         <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'); ?>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="/src/js/connexion/popup.js"></script>
     </body>
 </html>
