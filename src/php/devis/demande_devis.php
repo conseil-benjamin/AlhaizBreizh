@@ -4,9 +4,23 @@ if (isset($_SESSION["id"])) {
         $nom = $_SESSION["nom_bien"];
         $nbNuit = $_POST["date_arrivee"];
         $prixNuit = $_SESSION["prixNuit"];
+        $nbPersonne = $_SESSION["nbPersonneMax"];
+        $numlogement = $_SESSION["numLogement"];
     } else {
     header("Location: /src/php/connexion/connexion.php");
-    }
+}
+global $pdo;
+try {
+    $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
+    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $stmt = $pdo->prepare(
+        "SELECT nom FROM ldc.Service where numlogement=$numlogement"
+    );
+    $stmt->execute();
+    $tabServices = $stmt->fetchAll();
+} catch (PDOException $e) {
+
+}
     ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -79,7 +93,7 @@ if (isset($_SESSION["id"])) {
                             <h2>Services complémentaires : (cocher les services que vous souhaitez)</h2>
                             <ul>
                                 <?php
-                                $MAX = 6;
+                                $MAX = sizeof($tabServices);
                                 for ($i = 1; $i <= $MAX; $i++) {
                                     if ($i === 1) {
                                         $classe = "supplement first";
@@ -93,7 +107,7 @@ if (isset($_SESSION["id"])) {
                                     echo "<li>
                                     <div class='$classe'>
                                         <input id='$id' type='checkbox' name='$name'>
-                                        <label for='$id'>Service 01</label>
+                                        <label for='$id'>$tabServices[$i]</label>
                                         <p class='prix''><span>66,6</span>€</p>
                                     </div>
                                 </li>
@@ -119,6 +133,11 @@ if (isset($_SESSION["id"])) {
     if(isset($_POST["nb_personne"])) {
         require("submitDevisDB.php");
     }
+    unset($_SESSION["nom_bien"]);
+   unset($_POST["date_arrivee"]);
+    unset($_SESSION["prixNuit"]);
+    unset($_SESSION["nbPersonneMax"]);
+    unset($_SESSION["numLogement"]);
     ?>
 </html>
 
