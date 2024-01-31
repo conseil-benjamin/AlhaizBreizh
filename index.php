@@ -74,7 +74,7 @@
                                 <h3><?php echo $titre ?></h3> <!-- Titre du logement -->
                                 <div><img src="/public/icons/nb_personnes.svg"><?php echo $nombre_personnes ?> personnes</div> <!-- Nombre de personnes -->
                                 <div><img src="/public/icons/map.svg"><?php echo $localisation ?></div> <!-- Localisation -->
-                                <div><strong><?php echo $prix ?>€</strong> / nuit</div> <!-- Prix du logement -->
+                                <div><strong><?php echo $prix ?>€fghfhfghfhfgh</strong> / nuit</div> <!-- Prix du logement -->
                             </div></a>
                         </div> <?php
                     } else{
