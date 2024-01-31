@@ -309,6 +309,18 @@
     width: 100%;
 }
 
+.menu_tri > .boutton{
+    margin-bottom:2em;
+}
+
+#side_recherche{
+    margin-bottom:2em;
+}
+
+h2 + * {
+    margin-bottom: 1em;
+}
+
 @media screen and (max-width: 760px) {
     .logement{
         scale: 1;

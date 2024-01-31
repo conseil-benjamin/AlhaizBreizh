@@ -318,10 +318,6 @@ h1, h2, h3{
         position: relative;
     }
 
-    #header .compte-options{
-
-    }
-
     #header > nav{
         display: none;
     }
@@ -417,7 +413,7 @@ h1, h2, h3{
     color:white;
     background-color: #627099;
     display: none;
-    left:40%;
+    left:10%;
     z-index:99;
 }
 
@@ -425,9 +421,7 @@ h1, h2, h3{
     display: block; /* Affiche l'élément lorsque son parent est survolé */
 }
 
-.menu_filtre:hover .menu_deroulant {
-    display: block; /* Affiche l'élément lorsque son parent est survolé */
-}
+
 
 .menu_deroulant li{
     display: block; /* Prend toute la largeur disponible */
