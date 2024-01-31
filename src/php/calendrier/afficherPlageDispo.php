@@ -3,7 +3,7 @@
 
     // Connexion à la base de données
     $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
-    $isProprio = $_SESSION['proprio'];
+    $isProprio = $_POST['proprio'];
     $isProprioJSON = json_encode($isProprio);
 
     if (isset($_GET['numLogement'])) {
@@ -290,10 +290,10 @@
                                 <form method="POST">
                                     <label for="datedebutplagei">Date de début :</label>
                                     <input type="date" name="datedebutplagei" required>
-
+                                    <br>
                                     <label for="datefinplagei">Date de fin :</label>
                                     <input type="date" name="datefinplagei" required>
-
+                                
                                     <input type="submit" name="submitPlageIndispo" value="Ajouter">
                                 </form>
                             </div>

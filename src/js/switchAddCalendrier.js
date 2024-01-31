@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var forms = document.getElementById("forms").children;
 
   // Initialisation : Afficher le premier formulaire et masquer les autres
-  for (var i = 1; i < forms.length; i++) {
+  for (var i = 2; i < forms.length; i++) {
     forms[i].style.display = "none";
   }
 
