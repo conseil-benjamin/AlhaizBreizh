@@ -19,7 +19,7 @@
                 $stmt->execute([$logement[0]]);
                 $ville = $stmt->fetch(PDO::FETCH_NUM)[1];
                 $logements[($logement[0] - 1)][] = $ville;
-            }
+            }fhfhfhfhjhjhh,h
         }
         $pdo = null;
     } catch (PDOException $e) {
