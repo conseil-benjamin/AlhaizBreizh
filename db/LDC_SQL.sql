@@ -382,18 +382,18 @@ INSERT INTO LogementChambre(numLogement,numChambre) VALUES (2,1);
 INSERT INTO LogementChambre(numLogement,numChambre) VALUES (3,3);
 
 
-INSERT INTO LogementChambre(numLogement,numChambre) VALUES (3,3);
-INSERT INTO LogementChambre(numLogement,numChambre) VALUES (3,2);
-INSERT INTO LogementChambre(numLogement,numChambre) VALUES (3,1);
-
-INSERT INTO LogementChambre(numLogement,numChambre) VALUES (4,1);
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (4,3);
 INSERT INTO LogementChambre(numLogement,numChambre) VALUES (4,2);
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (4,1);
 
-INSERT INTO LogementChambre(numLogement,numChambre) VALUES (5,3);
-INSERT INTO LogementChambre(numLogement,numChambre) VALUES (5,2);
-INSERT INTO LogementChambre(numLogement,numChambre) VALUES (5,1);
 INSERT INTO LogementChambre(numLogement,numChambre) VALUES (5,1);
 INSERT INTO LogementChambre(numLogement,numChambre) VALUES (5,2);
+
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (6,3);
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (6,2);
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (6,1);
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (6,1);
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (6,2);
 
 -- Insertion de données dans la table Reservation
 INSERT INTO Reservation (numClient, numLogement, dateReservation, nbPersonnes, dateDebut, dateFin, dateDevis, nbJours, optionAnnulation)
