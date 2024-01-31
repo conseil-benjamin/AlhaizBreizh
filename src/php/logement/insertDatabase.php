@@ -158,13 +158,15 @@ if (isset($_SESSION['id'])) {
 
                     // Exécuter la requête
                     $statement->execute();
-                    $numChambre = $statement->fetchColumn();
+                    $numChambre = $pdo->lastInsertId();
                 }
                 $stmtChambre = $pdo->prepare(
                     "INSERT INTO ldc.LogementChambre (numChambre,numlogement) VALUES (?, ?)"
                 );
                 $stmtChambre->bindParam(1, $numChambre);
                 $stmtChambre->bindParam(2, $id_logem);
+                print_r($numChambre);
+                print_r($id_logem);
                 $stmtChambre->execute();
             }
             //INSTALLATIONS
