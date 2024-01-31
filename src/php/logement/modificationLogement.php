@@ -55,13 +55,13 @@
     
                 $numChambre=[];
                 $i=0;
-    
-                $query = "SELECT * FROM ldc.chambre WHERE numLogement = $numLogement";
-                $result = $pdo->query($query);
-    
-                while ($row = $result->fetch(PDO::FETCH_NUM)) {
-                    $numChambre[$i][0] = $row[2]; //Doubles
-                    $numChambre[$i][1] = $row[1]; //Simples
+
+                $query = "SELECT * FROM ldc.chambre JOIN ldc.logementchambre l on chambre.numchambre = l.numchambre WHERE l.numlogement = $numLogement";
+                $stmt = $pdo->query($query);
+
+                while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+                    $numChambre[$i][0] = $row[1]; //Simples
+                    $numChambre[$i][1] = $row[2]; //Doubles
                     $i=$i+1;
                 }
     
