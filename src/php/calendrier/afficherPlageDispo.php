@@ -3,8 +3,13 @@
 
     // Connexion à la base de données
     $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
+
+    // Pour savoir si l'utilisateur connecté est un propriétaire ou non
     $isProprio = $_POST['proprio'];
     $isProprioJSON = json_encode($isProprio);
+
+    $idSession = $_SESSION['id'];
+    $idSessionJSON = json_encode($idSession);
 
     if (isset($_GET['numLogement'])) {
         $numLogement = $_GET['numLogement'];
@@ -73,6 +78,13 @@
                 }
                 $evenementsIJSON = json_encode($evenementsI);
 
+                // Récupérer l'ID du propriétaire du logement
+                $stmtProprio = $pdo->prepare("SELECT proprio FROM ldc.Logement WHERE numLogement = $numLogement");
+                $stmtProprio->execute();
+                $proprioArray = $stmtProprio->fetch();
+                $proprioId = $proprioArray[0];
+                $proprioIdJSON = json_encode($proprioId);
+
                 //Insérer une plage de disponibilité
                 if (isset($_POST['submitPlageDispo'])) {
                     $datedebutplage = $_POST['datedebutplage'];
@@ -82,17 +94,17 @@
                     // Vérifie si les dates sont valides et le tarif est numérique
                     if (strtotime($datedebutplage) && strtotime($datefinplage) && is_numeric($tarifjournalier)) {
                         //vérifie si la nouvelle plage de disponibilité n'intersecte pas avec une plage de disponibilité existante
-                        $intersectionQuerry = $pdo->prepare("SELECT COUNT(*) FROM ldc.PlageDeDisponibilite WHERE numCal = ? AND NOT (? >= datefinplage OR  ? <= datedebutplage)");
-                        $intersectionQuerry->execute([$numCal, $datedebutplage, $datefinplage]);
-                        $inteserctionCount = $intersectionQuerry->fetchColumn();
+                        // $intersectionQuerry = $pdo->prepare("SELECT COUNT(*) FROM ldc.PlageDeDisponibilite WHERE numCal = ? AND NOT (? >= datefinplage OR  ? <= datedebutplage)");
+                        // $intersectionQuerry->execute([$numCal, $datedebutplage, $datefinplage]);
+                        // $inteserctionCount = $intersectionQuerry->fetchColumn();
 
-                        if($inteserctionCount == 0){
-                            //vérifie si la nouvelle plage de disponibilité n'intersecte pas avec une plage d'indisponibilité existante
-                            $intersectionQuerryIndispo = $pdo->prepare("SELECT COUNT(*) FROM Ldc. WHERE numCal = ? AND NOT (? >= datefinplage OR ? <= datedebutplage)");
-                            $intersectionQuerryIndispo->execute([$numCal, $datedebutplage, $datefinplage]);
-                            $intersectionCountIndispo = $intersectionQuerryIndispo->fetchColumn();
+                        // if($inteserctionCount == 0){
+                        //     //vérifie si la nouvelle plage de disponibilité n'intersecte pas avec une plage d'indisponibilité existante
+                        //     $intersectionQuerryIndispo = $pdo->prepare("SELECT COUNT(*) FROM Ldc. WHERE numCal = ? AND NOT (? >= datefinplage OR ? <= datedebutplage)");
+                        //     $intersectionQuerryIndispo->execute([$numCal, $datedebutplage, $datefinplage]);
+                        //     $intersectionCountIndispo = $intersectionQuerryIndispo->fetchColumn();
 
-                            if($intersectionCountIndispo == 0){
+                        //     if($intersectionCountIndispo == 0){
 
                                 $stmt = $pdo->prepare("INSERT INTO ldc.PlageDeDisponibilite (numCal, datedebutplage, datefinplage, tarifjournalier) 
                                     VALUES (?, ?, ?, ?) ");
@@ -133,8 +145,8 @@
             }else{
                 echo "Le numéro de logement spécifié n'existe pas.";
             }
-        }
-    }
+    //     }
+    // }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -173,7 +185,9 @@
                         //script de création du calendrier
                         let evenements = <?php echo $evenementsJSON; ?>;
                         let evenementsI = <?php echo $evenementsIJSON; ?>;
-                        let isProprio = <?php echo $isProprioJSON;?>;
+                        let isProprio = <?php echo $isProprioJSON; ?>;
+                        let proprioID = <?php echo $proprioIdJSON; ?>;
+                        let idSession = <?php echo $idSessionJSON; ?>;
                         document.addEventListener('DOMContentLoaded', function() {
                             var calendarEl = document.getElementById('calendar');
                             var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -188,13 +202,13 @@
                                 selectable: true,
                                 unselectAuto: true,
                                 events: evenements.concat(evenementsI),
-                                eventColor: function(event) {
-                                    if (event.title === 'Indisponible') {
-                                        return 'red';
-                                    }
-                                },
+                                // eventColor: function(event) {
+                                //     if (event.title === 'Indisponible') {
+                                //         return 'red';
+                                //     }
+                                // },
                                 eventClick: function(info) {
-                                    if(isProprio){
+                                    if(isProprio && idSession == proprioID){
                                         Swal.fire({
                                             title: "Voulez-vous supprimer la plage ?",
                                             showCancelButton: true,
@@ -258,7 +272,7 @@
                 <?php
                     //Formulaire permettant l'ajout d'une plage de disponibilité
                     if (isset($_SESSION['id']) && $numLogementExists) {
-                        if ($_SESSION['proprio'] == true) { 
+                        if ($_SESSION['proprio'] == true && $_SESSION['id'] == $proprioId) {
                 ?>      
                         <div id="forms">
                             <div class="select">

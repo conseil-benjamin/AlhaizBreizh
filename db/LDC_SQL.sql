@@ -140,21 +140,16 @@ CREATE TABLE Calendrier (
     numLogement INTEGER
 );
 
--- Table PlageDeDisponibilite
-CREATE TABLE PlageDeDisponibilite (
+-- Table Plage
+CREATE TABLE Plage (
     numPlage SERIAL PRIMARY KEY,
+    isIndispo BOOLEAN,
     numCal INTEGER NOT NULL,    
     dateDebutPlage DATE,
     dateFinPlage DATE,
     tarifJournalier INTEGER
 );
 
-CREATE TABLE PlageIndisponibilite(
-    numPlageI SERIAL PRIMARY KEY,
-    numCal INTEGER NOT NULL,
-    dateDebutPlageI DATE,
-    dateFinPlageI DATE
-);
 
 -- Table Proprietaire
 CREATE TABLE Proprietaire (
@@ -248,8 +243,7 @@ ALTER TABLE PhotosComplementairesLogement ADD CONSTRAINT phtoscomplementaireslog
 ALTER TABLE Reservation ADD CONSTRAINT reservation_client_fk FOREIGN KEY (numClient) REFERENCES Client (idCompte);
 ALTER TABLE Reservation ADD CONSTRAINT reservation_logement_fk FOREIGN KEY (numLogement) REFERENCES Logement (numLogement);
 ALTER TABLE Calendrier ADD CONSTRAINT calendrier_logement_fk FOREIGN KEY (numLogement) REFERENCES Logement (numLogement);
-ALTER TABLE PlageDeDisponibilite ADD CONSTRAINT plagededisponibilite_calendrier_fk FOREIGN KEY (numCal) REFERENCES Calendrier (numCal);
-ALTER TABLE PlageIndisponibilite ADD CONSTRAINT plageindisponibilite_calendrier_fk FOREIGN KEY (numCal) REFERENCES Calendrier (numCal);
+ALTER TABLE Plage ADD CONSTRAINT plage_calendrier_fk FOREIGN KEY (numCal) REFERENCES Calendrier (numCal);
 ALTER TABLE Proprietaire ADD CONSTRAINT proprietaire_client_fk FOREIGN KEY (idCompte) REFERENCES Client (idCompte);
 ALTER TABLE Tarification ADD CONSTRAINT tarification_devis_fk FOREIGN KEY (numDevis) REFERENCES Devis (numDevis);
 ALTER TABLE Devis_Client_Reservation ADD CONSTRAINT devis_client_reservation_fk1 FOREIGN KEY (numDevis) REFERENCES Devis (numDevis);
@@ -351,17 +345,17 @@ VALUES
     (TRUE, 2, 3, 'Arrivées le samedi', 1),
     (TRUE, 3, 2, 'Départ avant midi, arrivées le jeudi', 2);
 
--- Insertion de données dans la table PlageDeDisponibilite
-INSERT INTO PlageDeDisponibilite (numCal, dateDebutPlage, dateFinPlage, tarifJournalier)
+-- Insertion de plage dispo dans la table Plage
+INSERT INTO Plage (isIndispo, numCal, dateDebutPlage, dateFinPlage, tarifJournalier)
 VALUES
-    (2, '2023-11-20', '2023-11-27', 100),
-    (1, '2023-11-10', '2023-11-12', 120);
+    (false, 2, '2023-11-20', '2023-11-27', 100),
+    (false, 1, '2023-11-10', '2023-11-12', 120);
     
--- Insertion de données dans la table PlageDeDisponibilite
-INSERT INTO PlageIndisponibilite (numCal, dateDebutPlageI, dateFinPlageI)
+-- Insertion de plage indispo dans la table Plage
+INSERT INTO Plage (isIndispo, numCal, dateDebutPlageI, dateFinPlageI)
 VALUES
-    (2, '2023-11-10', '2023-11-20'),
-    (1, '2023-11-20', '2023-11-23');
+    (true, 2, '2023-11-10', '2023-11-20'),
+    (true, 1, '2023-11-20', '2023-11-23');
 
 
 -- Insertion de données dans la table Favoris
@@ -473,6 +467,3 @@ VALUES
 (6, 1, 'Wifi'),
 (6, 2, 'Accès lave-linge'),
 (6, 3, 'Accès salle de sport');
-
-
-
