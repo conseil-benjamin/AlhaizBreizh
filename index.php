@@ -68,8 +68,7 @@
                             <a href="<?php echo $lien ?>"><img src="<?php echo $img ?>"></a> <!-- Image du logement -->
                             <div>
                                 <div id="rating"><img src="/public/icons/star_fill.svg">4.9</div> <!-- Notation -->
-                                <button type="button"><img src="/public/icons/heart_white.svg"></button> <!-- Coeur pour liker -->
-                            </div>   
+                                <button type="button"><img src="/publiij bu__uh_èè_
                             <a id="description" href="<?php echo $lien ?>"><div> 
                                 <h3><?php echo $titre ?></h3> <!-- Titre du logement -->
                                 <div><img src="/public/icons/nb_personnes.svg"><?php echo $nombre_personnes ?> personnes</div> <!-- Nombre de personnes -->
