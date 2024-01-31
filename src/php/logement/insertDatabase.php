@@ -111,7 +111,8 @@ if (isset($_SESSION['id'])) {
     $nbChambres=count($chambres);
 
     try {
-        $pdo = require($_SERVER['DOCUMENT_ROOT'].'/src/php/connect.php');
+        global $pdo;
+        require($_SERVER['DOCUMENT_ROOT'].'/src/php/connect.php');
         $stmt = $pdo->prepare("INSERT INTO ldc.Logement (surfaceHabitable, libelle, accroche, descriptionLogement, natureLogement, adresse, cp, ville ,proprio, photoCouverture, LogementEnLigne, nbPersMax, nbChambres, nbSalleDeBain, tarifNuitees) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
             $stmt->bindParam(1, $surface);
@@ -159,15 +160,13 @@ if (isset($_SESSION['id'])) {
                     $statement->execute();
                     $numChambre = $statement->fetchColumn();
                 }
-            }
-
                 $stmtChambre = $pdo->prepare(
                     "INSERT INTO ldc.LogementChambre (numChambre,numlogement) VALUES (?, ?)"
                 );
                 $stmtChambre->bindParam(1, $numChambre);
                 $stmtChambre->bindParam(2, $id_logem);
                 $stmtChambre->execute();
-            
+            }
             //INSTALLATIONS
             foreach($installations as $key => $value){
                 $stmtInstallation = $pdo->prepare(
