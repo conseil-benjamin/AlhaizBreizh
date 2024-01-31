@@ -492,6 +492,42 @@ h1, h2, h3{
     size:5em;
 }
 
+/*Options de filtre*/
+#options{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 3em;
+    z-index: 2;
+}
+
+#options .boutton{
+    background-color: var(--col6);
+}
+
+#options > div{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: .5em;
+    height: 100%;
+    width: 100%;
+}
+
+.menu_tri {
+    margin-bottom:2em;
+}
+
+#side_recherche{
+    margin-bottom:2em;
+}
+
+h2 + * {
+    margin-bottom: 1em;
+}
+
 
 /**
 
