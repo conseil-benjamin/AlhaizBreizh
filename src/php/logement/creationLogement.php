@@ -104,7 +104,7 @@
                 <button class="addButton boutton" id="btnAddEquipements" type="button">Ajouter Equipements disponibles</button>
             </div>
             <div class="bottom">
-                <p>Les champs marqués par (*) sont obligatoire</p>
+                <p>Les champs marqués par (*) sont obligatoires</p>
                 <span class="conditionsGenerale">J'ai lu et j'accepte les <a href="">Conditions Générales d'Utilisation</a>, la Politique des données personnelles et les Conditions Générales de Ventes d’Alhaiz Breizh (*)</span>
                 <input class="textfield" type="checkbox" name="conditionsGenerale" id="conditionsGenerale">
                 <button class="creerAnnonce boutton" type="submit" id="creerAnnonce">Créer annonce</button>

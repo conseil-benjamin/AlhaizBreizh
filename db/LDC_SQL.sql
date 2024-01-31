@@ -103,7 +103,7 @@ CREATE TABLE Logement (
 );
 
 CREATE TABLE Chambre (
-    numChambre    INTEGER,
+    numChambre    SERIAL NOT NULL ,
     nbLitsSimples INTEGER,
     nbLitsDoubles INTEGER,
     PRIMARY KEY (numChambre)
@@ -370,9 +370,9 @@ VALUES
      'Ce château est situé au cœur de la campagne bretonne. Il est idéal pour un séjour romantique ou un événement spécial.',
      'chateau', '1 rue du château', 29500, 'Quimper', 2, 'chateau_quimper.jpg', TRUE, 10, 5, 3, 300.0);
 
-INSERT INTO Chambre (numChambre, nbLitsSimples, nbLitsDoubles) VALUES (1, 2, 3);
-INSERT INTO Chambre (numChambre, nbLitsSimples, nbLitsDoubles) VALUES (2, 1, 1);
-INSERT INTO Chambre (numChambre, nbLitsSimples, nbLitsDoubles) VALUES (3, 1, 2);
+INSERT INTO Chambre (nbLitsSimples, nbLitsDoubles) VALUES ( 2, 3);
+INSERT INTO Chambre (nbLitsSimples, nbLitsDoubles) VALUES ( 1, 1);
+INSERT INTO Chambre (nbLitsSimples, nbLitsDoubles) VALUES ( 1, 2);
 
 INSERT INTO LogementChambre(numLogement,numChambre) VALUES (1,1);
 INSERT INTO LogementChambre(numLogement,numChambre) VALUES (1,2);
