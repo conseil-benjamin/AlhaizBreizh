@@ -16,10 +16,12 @@ coordX = parseFloat(coordX);
 coordY = parseFloat(coordY);
 
 //nombre random entre -9 et 9
-let random = Math.random() * (9 - (-9)) + (-9);
-coordX = coordX + (random / 1000);
-random = Math.random() * (9 - (-9)) + (-9);
-coordY = coordY + (random / 1000);
+if (!estProprio){
+    let random = Math.random() * (9 - (-9)) + (-9);
+    coordX = coordX + (random / 1000);
+    random = Math.random() * (9 - (-9)) + (-9);
+    coordY = coordY + (random / 1000);
+}
 
 let bzhLayer = L.tileLayer('https://tile.openstreetmap.bzh/br/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'

@@ -603,6 +603,7 @@ if ($coordX == null || $coordY == null) { //Si l'adresse avec les coordonnées p
             var coordX = <?php echo json_encode($coordX); ?>;
             var coordY = <?php echo json_encode($coordY); ?>;
             var localisation = <?php echo json_encode($localisation); ?>;
+            var estProprio = <?php echo json_encode(isset($_SESSION['id']) && $_SESSION['id'] == $proprio); ?>;
         </script>
         <script src="/src/js/logement/map.js"></script>
         <script>

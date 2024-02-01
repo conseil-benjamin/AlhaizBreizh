@@ -354,21 +354,21 @@ VALUES
 -- Insertion de données dans la table Logement
 INSERT INTO Logement (surfaceHabitable, libelle, accroche, descriptionLogement, natureLogement, adresse, cp, ville, proprio, photoCouverture, LogementEnLigne, nbPersMax, nbChambres, nbSalleDeBain, tarifNuitees)
 VALUES
-    (80, 'Maison en pierre', 'Une adorable maison de charactère', 'Cette maison est parfaite pour un weekend en famille.', 'maison','9 rue des serpentins','22500','Lannion', 1, 'maison.jpg', TRUE, 4, 2, 1, 150.0),
+    (80, 'Maison en pierre', 'Une adorable maison de charactère', 'Cette maison est parfaite pour un weekend en famille.', 'maison','9 Rue Joseph Morand','22300','Lannion', 1, 'maison.jpg', TRUE, 4, 2, 1, 150.0),
     (100.2, 'Cave spacieuse', 'Au coeur de la ville', 'Profitez de la vie urbaine grâce à cette magnifique cave.',
-     'cave', '2 rue des tulipes', '29000', 'Brest', 2, 'cave.jpg', TRUE, 3, 1, 2, 120.0),
+     'cave', '5 Rue Colbert', '29000', 'Brest', 2, 'cave.jpg', TRUE, 3, 1, 2, 120.0),
     (50, 'Appartement de charme', 'Un appartement cosy en plein centre-ville de Rennes',
      'Cet appartement est situé au cœur de Rennes, à proximité de toutes les commodités. Il est idéal pour un séjour en amoureux ou un week-end en ville.',
-     'appartement', '2 rue du Chapitre', 35000, 'Rennes', 2, 'appartement_rennes.jpg', TRUE, 2, 1, 1, 100.0),
+     'appartement', 'Rue du 21 Juillet 1954', 35000, 'Rennes', 2, 'appartement_rennes.jpg', TRUE, 2, 1, 1, 100.0),
     (70, 'Grande maison familiale', 'Une maison de famille au bord de la mer',
      'Cette maison est située à seulement quelques minutes de la plage de Saint-Malo. Elle est idéale pour des vacances en famille ou entre amis.',
-     'maison', '12 rue de la plage', 35400, 'Saint-Malo', 2, 'maison_saintmalo.jpg', TRUE, 6, 3, 2, 200.0),
+     'maison', '12 Rue de la Maison Neuve', 35400, 'Saint-Malo', 2, 'maison_saintmalo.jpg', TRUE, 6, 3, 2, 200.0),
     (80, 'Gîte au bord du lac', 'Un gîte confortable en pleine nature',
      'Ce gîte est situé au bord du lac de Guerlédan. Il est idéal pour des vacances en amoureux ou un week-end en randonnée.',
-     'gite', '10 rue du lac', 22590, 'Mûr-de-Bretagne', 2, 'gite_guerledan.jpg', TRUE, 4, 2, 1, 150.0),
+     'gite', '2 Rue Sainte-Suzanne', 22530, 'Guerlédan', 2, 'gite_guerledan.jpg', TRUE, 4, 2, 1, 150.0),
     (100, 'Château de charme', 'Une expérience unique dans un château historique',
      'Ce château est situé au cœur de la campagne bretonne. Il est idéal pour un séjour romantique ou un événement spécial.',
-     'chateau', '1 rue du château', 29500, 'Quimper', 2, 'chateau_quimper.jpg', TRUE, 10, 5, 3, 300.0);
+     'chateau', '84 Rue de Kergestin', 29000, 'Quimper', 2, 'chateau_quimper.jpg', TRUE, 10, 5, 3, 300.0);
 
 INSERT INTO Chambre (nbLitsSimples, nbLitsDoubles) VALUES ( 2, 3);
 INSERT INTO Chambre (nbLitsSimples, nbLitsDoubles) VALUES ( 1, 1);
