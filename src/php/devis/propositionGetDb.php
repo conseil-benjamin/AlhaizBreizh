@@ -10,7 +10,7 @@ try {
     $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     $stmt = $pdo->prepare(
-        "SELECT * FROM ldc.Devis where numlogement=$numlogement order by numdevis ASC"
+        "SELECT * FROM ldc.Devis where numlogement=$numlogement order by numdevis"
     );
     $stmt->execute();
     $result = $stmt->fetchAll();

@@ -269,7 +269,7 @@ footer{
   background-color: var(--col6);
   font-size: 16px;
   line-height: 25px;
-  height: 25;
+  height: 25px;
 }
 
 .proprio:hover{
@@ -456,11 +456,6 @@ footer{
   display: flex;
   background-color: var(--col6);
   color: #000;
-}
-
-hs{
-  font-size: large;
-  margin-right: 10px;
 }
 
 .page_inexistante{
