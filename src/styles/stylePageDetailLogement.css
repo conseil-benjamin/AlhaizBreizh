@@ -509,6 +509,35 @@ hs{
 }
 
 /*****************************************************/
+/*Map*/
+.map{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 1em;
+}
+
+.map > div{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90%;
+  height: 300px;
+  border-radius: 20px;
+  background-color: #fff;
+  transition: all 0.5s ease;
+  z-index: 0;
+  border: none;
+}
+
+#map:hover{
+  filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.5));
+  height: 400px;
+}
+
+/*****************************************************/
 /*Responsive Corps*/
 
 @media screen and (max-width: 900px){

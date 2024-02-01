@@ -252,6 +252,41 @@ if (!isset($liste_langue_parle)) {
     $liste_langue_parle = 'Non renseigné';
 }
 
+// Récupération des coordonnées GPS
+$adresse = $localisation . ' ' . $localisation_speci;
+$adresse = urlencode($adresse);
+$context = stream_context_create(
+    array(
+        'http' => array(
+            'method' => 'GET',
+            'header' => "User-Agent: MyApplication/1.0\r\n"
+        )
+    )
+);
+function recupCoordGps($adresse){
+    $url = "https://nominatim.openstreetmap.org/search?q=".$adresse."&format=json&polygon=1&addressdetails=1";
+    global $context;
+    $data = file_get_contents($url, false, $context);
+    $json = json_decode($data, true);
+
+    if (isset($json[0])) {
+        $coordX = $json[0]['lat'];
+        $coordY = $json[0]['lon'];
+        $limites = $json[0]['boundingbox'];
+    } else {
+        $coordX = null;
+        $coordY = null;
+        $limites = null;
+    }
+    return [$coordX, $coordY, $limites];
+}
+
+[$coordX, $coordY, $limites] = recupCoordGps($adresse);
+if ($coordX == null || $coordY == null) { //Si l'adresse avec les coordonnées précises ne fonctionne pas
+    $adresse = urlencode($localisation); //Utiliser le nom de la ville seulement
+    [$coordX, $coordY, $limites] = recupCoordGps($adresse);
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="fr-fr">
@@ -263,8 +298,9 @@ if (!isset($liste_langue_parle)) {
         <link rel="stylesheet" type="text/css" href="/src/styles/stylePageDetailLogement.css">
         <title>ALHaiz Breizh</title>
         <link rel="icon" href="/public/logos/logo-black.svg">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
     </head>
     <body>
         <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/header.php'); ?>
@@ -506,6 +542,19 @@ if (!isset($liste_langue_parle)) {
                 </div>
             </div>
 
+            <section class="map">
+                <div 
+                    <?php if (!($coordX == null || $coordY == null || $limites == null)): ?>
+                        id="map"
+                    <?php endif; ?>>
+                    <?php
+                        if (($coordX == null || $coordY == null || $limites == null)) { ?>
+                            <h2 class="error_map">Une erreur est survenue avec la carte :/</h2> <?php
+                        }
+                    ?>
+                </div>
+            </section>
+
             <section class="commentaires">
                 <br>
                 <div id="comment">
@@ -549,7 +598,14 @@ if (!isset($liste_langue_parle)) {
             </main>
         <?php
         }; ?>  
-        <script src="/src/js/carrousel.js"></script>
+        <script src="/src/js/carrousel.js"></script>      
+        <script>
+            var coordX = <?php echo json_encode($coordX); ?>;
+            var coordY = <?php echo json_encode($coordY); ?>;
+            var limites = <?php echo json_encode($limites); ?>;
+            var localisation = <?php echo json_encode($localisation); ?>;
+        </script>
+        <script src="/src/js/logement/map.js"></script>
         <script>
         function supprimerAnnonce() {
             <?php
