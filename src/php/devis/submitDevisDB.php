@@ -36,6 +36,9 @@ else {
     $demande = "Un petit déjeuner au lit";
 }
 
+
+$diffEnJours = $sqlDateDep->diff($sqlDateArr)->days;
+
 $numReservation = time();
 
 $optionAnnulation = "";
@@ -49,6 +52,10 @@ try {
         "INSERT INTO ldc.Devis(nbPersonnes, numReservation, numLogement, dateDebut, dateFin, dateDevis, dateValid, optionAnnulation, dureeDelaisAcceptation) 
         VALUES(:nb_personne, :numReservation, :numLogement, :sqlDateArr, :sqlDateDep, :EPOCH, :EPOCH, :optionAnnulation, :dureeDelaisAcceptation)"
     );
+    $smt2 = $pdo->prepare(
+        "INSERT INTO ldc.reservation(numclient, numlogement, datereservation, nbpersonnes, datedebut, datefin, datedevis, nbjours, optionannulation) 
+        VALUES (:numClient,:numLogement,:EPOCH,:nbPersonne,:sqlDateArr, :sqlDateDep, :EPOCH,:nbJour,'')"
+    );
     $stmt->execute([
         'nb_personne' => $nb_personne,
         'numReservation' => $numReservation,
@@ -57,7 +64,16 @@ try {
         'sqlDateDep' => $sqlDateDep,
         'EPOCH' => $EPOCH,
         'optionAnnulation' => $optionAnnulation,
-        'dureeDelaisAcceptation' => 0
+        'dureeDelaisAcceptation' => 14
+    ]);
+    $smt2->execute([
+        "numClient" => $id_client,
+    "numLogement" => $numLogement,
+        "EPOCH" => $EPOCH,
+    "nbPersonne" => $nb_personne,
+        "sqlDateArr" => $sqlDateArr,
+        "sqlDateDep" => $sqlDateDep,
+        "nbJour" => $diffEnJours
     ]);
     $pdo = null;
     echo '<script>
