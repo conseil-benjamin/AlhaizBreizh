@@ -106,7 +106,7 @@ session_start();
                                     echo "<li>
                                     <div class='$classe'>
                                         <label for='$id'>$nom</label>
-                                        <p class='prix''><span>66,6</span>€</p>
+                                        <p class='prix''><span>$service[prix]</span>€</p>
                                     </div>
                                 </li>
                             ";

@@ -14,7 +14,7 @@ try {
     $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     $stmt = $pdo->prepare(
-        "SELECT nom FROM ldc.Service where numlogement=$numlogement"
+        "SELECT nom,prix FROM ldc.Service where numlogement=$numlogement"
     );
     $stmt->execute();
     $tabServices = $stmt->fetchAll();
@@ -117,7 +117,7 @@ try {
                                         <label for='$id'>
                                         $service[nom]
                                         </label>
-                                        <p class='prix''><span>66,6</span>€</p>
+                                        <p class='prix''><span>$service[prix]</span>€</p>
                                     </div>
                                 </li>
                             ";

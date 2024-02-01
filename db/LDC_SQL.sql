@@ -204,6 +204,7 @@ CREATE TABLE Service(
   numLogement INTEGER NOT NULL,
   numServ INTEGER NOT NULL,
   nom VARCHAR(255),
+  prix FLOAT DEFAULT 0,
   PRIMARY KEY (numLogement,numServ),
   CONSTRAINT fk_numService
         FOREIGN KEY (numLogement)
