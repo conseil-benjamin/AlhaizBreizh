@@ -456,6 +456,7 @@ footer{
   display: flex;
   background-color: var(--col6);
   color: #000;
+  margin: 0;
 }
 
 hs{

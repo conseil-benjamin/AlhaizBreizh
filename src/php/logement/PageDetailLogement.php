@@ -542,11 +542,11 @@ if ($coordX == null || $coordY == null) { //Si l'adresse avec les coordonnées p
 
             <section class="map">
                 <div 
-                    <?php if (!($coordX == null || $coordY == null || $limites == null)): ?>
+                    <?php if (!($coordX == null || $coordY == null)): ?>
                         id="map"
                     <?php endif; ?>>
                     <?php
-                        if (($coordX == null || $coordY == null || $limites == null)) { ?>
+                        if (($coordX == null || $coordY == null)) { ?>
                             <h2 class="error_map">Une erreur est survenue avec la carte :/</h2> <?php
                         }
                     ?>
