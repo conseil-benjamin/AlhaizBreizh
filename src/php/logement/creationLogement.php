@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="/src/styles/styles.css">
     <link rel="stylesheet" type="text/css" href="/src/styles/styleCreationLogement.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="/src/js/addInputElement.js"></script>
+    <script src="/src/js/modifierLogement/addInputElement.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="icon" href="/public/logos/logo-black.svg">
 

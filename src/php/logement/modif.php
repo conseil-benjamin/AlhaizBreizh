@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="/src/styles/styleCreationLogement.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
    
-    <script src="/src/js/addInputElement.js"></script>
+    <script src="/src/js/modifierLogement/addInputElement.js"></script>
     <title>Creation Logement</title>
 </head>
 <body>
