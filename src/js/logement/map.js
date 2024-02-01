@@ -39,12 +39,13 @@ let map = L.map('map', {
     center: [coordX, coordY-100],
     zoom: 14,
     layers: [bzhLayer], // set the default layer
-    closePopupOnClick: false
+    closePopupOnClick: false,
+    gestureHandling: true
 
 }).setView([coordX, coordY], 10);
 
 let baseMaps = {
-    "Défaut": bzhLayer,
+    "Bretonne": bzhLayer,
     "OpenStreetMap": osmLayer,
     "Topographic": topoLayer
 };
