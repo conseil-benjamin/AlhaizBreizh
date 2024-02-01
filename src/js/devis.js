@@ -61,7 +61,11 @@ inputDateDepart.addEventListener("change", function () {
  */
 inputDateArivee.addEventListener("change", function () {
     const dateArrivee = this.value;
-    const dateDepart = inputDateDepart.value
+    let dateDepart = inputDateDepart.value
+    if (dateArrivee > dateDepart) {
+        inputDateDepart.value = dateArrivee;
+        dateDepart = dateArrivee;
+    }
     updatePrix(dateDepart,dateArrivee)
     updateNBNuit()
 });
@@ -94,11 +98,10 @@ function updateNBNuit() {
  * @returns {number} le nombre de jours entre les deux dates
  */
 function compteJour(dateDepart,dateArriver) {
-    const dateArr = new Date(dateArriver);
-    const dateDep = new Date(dateDepart);
-
+    const dateArr = new Date(Date.parse(dateArriver));
+    const dateDep = new Date(Date.parse(dateDepart));
     const differenceEnMillisecondes =  (dateDep-dateArr)-1;
-    return (differenceEnMillisecondes / (1000 * 60 * 60 * 24));
+    return Math.ceil((differenceEnMillisecondes / (1000 * 60 * 60 * 24)));
 }
 
 /**
@@ -108,7 +111,11 @@ function compteJour(dateDepart,dateArriver) {
  */
 function updatePrix(dateArriver,dateDepart) {
     const nbjour = compteJour(dateArriver,dateDepart)
-    prixTotal.innerText =  ((nbjour*PRIX)+getTotalService()).toFixed(2).toString().replace('.', ',')
+    if (nbjour === 0) {
+        prixTotal.innerText = "0,00";
+    } else {
+        prixTotal.innerText = ((nbjour * PRIX) + getTotalService()).toFixed(2).toString().replace('.', ',')
+    }
 }
 
 /**
