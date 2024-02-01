@@ -25,7 +25,6 @@ $stmt = $pdo->prepare("DELETE FROM ldc.favorisclient WHERE numLogement=$numLogem
 $stmt->execute();  /*
 $stmt = $pdo->prepare("DELETE FROM ldc.AvisLogement WHERE numLogement=$numLogement");
 $stmt->execute(); */
-$stmt = $pdo->prepare("DELETE FROM ldc.logementproprio WHERE numLogement=$numLogement");
 $stmt->execute();
 $stmt = $pdo->prepare("DELETE FROM ldc.logement WHERE numLogement=$numLogement");
 $stmt->execute(); 

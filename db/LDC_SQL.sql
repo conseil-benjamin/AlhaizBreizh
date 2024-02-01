@@ -447,12 +447,6 @@ VALUES
     (3, 2, 5),
     (1, 2, 6);
 
--- Insertion de données dans la table LogementProprio
-INSERT INTO LogementProprio (numLogement,idCompte) 
-VALUES 
-    ('2','2'),
-    ('1','2');
-
 -- Insertion de données dans la table PhotosComplementairesLogement
 INSERT INTO PhotosComplementairesLogement (numLogement, photosComplementaires) 
 VALUES 
@@ -461,13 +455,6 @@ VALUES
 
 INSERT INTO Admin (pseudo_admin, mdp_admin) VALUES ('admin', 'admin');
 
-INSERT INTO LogementProprio (numLogement,idCompte) 
-VALUES 
-    ('3','2'),
-    ('4','2'),
-    ('5','2'),
-    ('6','2');
-    
 
 INSERT INTO Equipement (numLogement, numeEquip, nom)
 VALUES
