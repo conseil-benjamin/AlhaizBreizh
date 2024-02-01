@@ -432,7 +432,6 @@ h1, h2, h3{
 .menu_deroulant li:hover{
     background-color: #515D5E;
 }
-
 .menu_deroulant li.select{
     background-color: #16A1EF;
     font-weight: bold;
@@ -526,6 +525,12 @@ h1, h2, h3{
 
 h2 + * {
     margin-bottom: 1em;
+}
+
+#suppr{
+    cursor:pointer;
+    margin-top:-5em;
+    margin-bottom:1em;
 }
 
 
