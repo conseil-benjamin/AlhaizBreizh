@@ -18,7 +18,6 @@ try {
     );
     $stmt->execute();
     $tabServices = $stmt->fetchAll();
-    print_r($tabServices);
 } catch (PDOException $e) {
 
 }
@@ -31,10 +30,16 @@ try {
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <link href="/src/styles/demande_devis.css" rel="stylesheet" type="text/css">
         <link href="/src/styles/styles.css" rel="stylesheet" type="text/css">
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> <!-- Librairie pour les alertes -->
         <title>Demande de devis</title>
     </head>
     <body>
-        <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/header.php'); ?>
+
+        <?php
+        if(isset($_POST["nb_personne"])) {
+            require("submitDevisDB.php");
+        }
+        include($_SERVER['DOCUMENT_ROOT'].'/src/php/header.php'); ?>
         <div style="height: 75px"></div>
         <div id="fond">
             <section id="entete">
@@ -79,7 +84,7 @@ try {
                                         </label>
                                     </div>
                                     <div>
-                                        <input class="input1" id="nbpersonne" max="<?=$nbPersonne?>" min="0" name="nb_personne"
+                                        <input class="input1" id="nbpersonne" max="<?=$nbPersonne?>" min="1" name="nb_personne"
                                             placeholder="nbpersonne" type="number" value="0">
                                     </div>
                                 </li>
@@ -130,15 +135,11 @@ try {
         </div>
         <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'); ?>
     </body>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> <!-- Librairie pour les alertes -->
     <script src="../../js/devis.js"></script>
 
     <?php
-    if(isset($_POST["nb_personne"])) {
-        require("submitDevisDB.php");
-    }
     unset($_SESSION["nom_bien"]);
-   unset($_POST["date_arrivee"]);
+    unset($_POST["date_arrivee"]);
     unset($_SESSION["prixNuit"]);
     unset($_SESSION["nbPersonneMax"]);
     unset($_SESSION["numLogement"]);

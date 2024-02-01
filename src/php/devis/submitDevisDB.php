@@ -37,7 +37,7 @@ else {
 }
 
 
-$diffEnJours = $sqlDateDep->diff($sqlDateArr)->days;
+$diffEnJours = $dateDep->diff($dateArr)->days;
 
 $numReservation = time();
 
@@ -45,7 +45,7 @@ $optionAnnulation = "";
 $dateValid = "";
 
 $EPOCH ="2000-01-01";
-
+echo '<script src="../../js/devis.js"></script>';
 try {
     $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
     $stmt = $pdo->prepare(
@@ -88,9 +88,8 @@ try {
 
     // Output data
     foreach ($result as $row) {
-        echo "numServ: " . $row["numServ"] . "<br>";
-        $numServ = $row['numServ'];
-        $sql = "INSERT INTO Devis_Services (numDevis, numLogement, numServ) VALUES ($numDevis, $numLogement, $numServ)";
+        $numServ = $row['numserv'];
+        $sql = "INSERT INTO ldc.Devis_Services (numDevis, numLogement, numServ) VALUES ($numDevis, $numLogement, $numServ)";
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
     }
