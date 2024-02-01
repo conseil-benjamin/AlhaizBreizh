@@ -11,7 +11,7 @@ function switchClass(event){
     boutons.forEach(function(em){
         em.classList.remove("select")
     })
-    let bal=event.target.parentNode;
+    let bal=event.target;
     if (bal){
         bal.classList.add("select")
     }
@@ -158,6 +158,7 @@ function trierLogements(liste) {
 
 //Application des filtres
 async function enfer() {
+    console.log(charlie);
     const promises = [];
 
     for (let cle in charlie) {
@@ -181,7 +182,7 @@ async function enfer() {
                 result1 &&
                 result2
             ) {
-                charlie[cle].style.display = "block";
+                charlie[cle].style.display = "flex";
             } else {
                 charlie[cle].style.display = "none";
             }
@@ -377,11 +378,33 @@ function dateBDD(num) {
     });
 }
 
+const arrivee = document.getElementById("side_arrive");
+const depart = document.getElementById("side_depart");
+
+depart.addEventListener("change", () => {
+  const dateArrivee = new Date(arrivee.value);
+  const dateDepart = new Date(depart.value);
+
+  if (dateArrivee > dateDepart) {
+    depart.value = ""; // Remet la date d'arrivée à vide si elle dépasse la date de départ
+    alert("La date d'arrivée doit être antérieure à la date de départ.");
+  }
+});
+
+arrivee.addEventListener("change", () => {
+  const dateArrivee = new Date(arrivee.value);
+  const dateDepart = new Date(depart.value);
+
+  if (dateArrivee > dateDepart) {
+    arrivee.value = ""; // Remet la date d'arrivée à vide si elle dépasse la date de départ
+    alert("La date d'arrivée doit être antérieure à la date de départ.");
+  }
+});
+
 document.getElementById('side_nb').addEventListener('input',enfer);
 document.getElementById('side_max').addEventListener('input',enfer);
 document.getElementById('side_min').addEventListener('input',enfer);
 document.getElementById('side_recherche').addEventListener('input',enfer);
 document.getElementById('side_type').addEventListener('change',enfer);
-document.getElementById('side_arrive').addEventListener('input  ',enfer);
-document.getElementById('side_depart').addEventListener('input',enfer);
-
+document.getElementById('side_arrive').addEventListener('change',enfer);
+document.getElementById('side_depart').addEventListener('change',enfer);

@@ -417,22 +417,24 @@ h1, h2, h3{
     z-index:99;
 }
 
-.menu_tri:hover .menu_deroulant {
+.boutton:hover + .menu_deroulant {
     display: block; /* Affiche l'élément lorsque son parent est survolé */
 }
 
+.menu_deroulant:hover{
+    display:block;
+}
 
-
-.menu_deroulant li{
+.menu_deroulant a{
     display: block; /* Prend toute la largeur disponible */
     text-align: center;
     padding: 1em;
 }
 
-.menu_deroulant li:hover{
+.menu_deroulant a:hover{
     background-color: #515D5E;
 }
-.menu_deroulant li.select{
+.menu_deroulant a.select{
     background-color: #16A1EF;
     font-weight: bold;
 }

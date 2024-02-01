@@ -1,4 +1,5 @@
-<?php session_start(); 
+<?php
+    session_start(); 
     //connexion à la base de donnée
     try {
         $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
@@ -16,8 +17,11 @@
         $logements = array();
     }
 
+    $json = json_encode($logements);
+        echo $json;
+
     if(isset($_GET["json"])) {
         $json = json_encode($logements);
         echo $json;
-    } 
+    }
     ?>

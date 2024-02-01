@@ -31,23 +31,15 @@
                         <div id="sidebar">
                             <img id="suppr" src="public/icons/supprimer.png" alt="Icône Supprimer" onclick="abime()">
                             <div class="menu_tri">
-                                <?php
-                                    if (isset($_GET['tri'])){
-                                        $tri=$_GET['tri'];
-                                    }
-                                    else{
-                                        $tri=null;
-                                    }
-                                ?>
                                 <button class="boutton">Trier</button>
                                 <div class="menu_deroulant">
                                     <ul>
-                                        <li  class="item_tri select"><a onclick="num(event)">Ancienneté (Ordre décroissant)</a></li>
-                                        <li  class="item_tri"><a onclick="unnum(event)">Ancienneté (Ordre décroissant)</a></li>
-                                        <li  class="item_tri" <?php if ($tri=="tarifmoins"){?> class="select"<?php }?>><a onclick="tarif(event)">Tarif (Ordre croissant)</a></li>
-                                        <li  class="item_tri" <?php if ($tri=="tarifplus"){?> class="select"<?php }?>><a onclick="untarif(event)">Tarif (Ordre décroissant)</a></li>
-                                        <li  class="item_tri" <?php if ($tri=="notes"){?> class="select"<?php }?>><a onclick="notes(event)">Notes</a></li>
-                                        <li  class="item_tri" <?php if ($tri=="avis"){?> class="select"<?php }?>><a href="index.php?tri=avis#logements">Avis positifs</a></li>
+                                        <a class="item_tri select" onclick="num(event)">Ancienneté (Ordre décroissant)</a>
+                                        <a  class="item_tri" onclick="unnum(event)">Ancienneté (Ordre décroissant)</a>
+                                        <a  class="item_tri" onclick="tarif(event)">Tarif (Ordre croissant)</a>
+                                        <a  class="item_tri" onclick="untarif(event)">Tarif (Ordre décroissant)</a>
+                                        <a  class="item_tri" onclick="notes(event)">Notes</a>
+                                        <a  class="item_tri" href="index.php?tri=avis#logements">Avis positifs</a>
                                     </ul>
                                 </div>
                             </div>
@@ -82,7 +74,7 @@
                             <h2>Type du logement</h2>
                                 <select id="side_type">
                                     <option value="">---</option>
-                                    <option value="appart">Appartement</option>
+                                    <option value="appartement">Appartement</option>
                                     <option value="maison">Maison</option>
                                     <option value="villa">Villa</option>
                                 </select>
