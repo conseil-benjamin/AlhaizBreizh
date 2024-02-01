@@ -37,6 +37,8 @@ if (isset($_GET['numLogement'])) {
                     $prix = isset($row[15]) ? $row[15] : null;
                     $_SESSION["nom_bien"] = $titre_offre;
                     $_SESSION["prixNuit"] = $prix;
+                    $_SESSION["nbPersonneMax"] = $nb_personnes;
+                    $_SESSION["numLogement"] = $numLogement;
                 }
 
                 // le nom pour la demande de devis
@@ -46,7 +48,7 @@ if (isset($_GET['numLogement'])) {
                 $numChambre=[];
                 $i=0;
     
-                $query = "SELECT * FROM ldc.chambre WHERE numlogement = $numLogement";
+                $query = "SELECT * FROM ldc.chambre JOIN ldc.logementchambre l on chambre.numchambre = l.numchambre WHERE l.numlogement = $numLogement";
                 $stmt = $pdo->query($query);
     
                 while ($row = $stmt->fetch(PDO::FETCH_NUM)) {

@@ -103,14 +103,19 @@ CREATE TABLE Logement (
 );
 
 CREATE TABLE Chambre (
-    numChambre INTEGER,
+    numChambre    SERIAL NOT NULL ,
     nbLitsSimples INTEGER,
     nbLitsDoubles INTEGER,
-    numLogement INTEGER,
-    PRIMARY KEY (numChambre,numLogement),
-    CONSTRAINT fk_numLogement
-        FOREIGN KEY (numLogement)
-        REFERENCES Logement (numLogement)
+    PRIMARY KEY (numChambre)
+);
+
+CREATE TABLE LogementChambre
+(
+    id          SERIAL NOT NULL PRIMARY KEY,
+    numChambre  INT    NOT NULL,
+    numLogement INT    NOT NULL,
+    FOREIGN KEY (numChambre) REFERENCES Chambre (numChambre),
+    FOREIGN KEY (numLogement) REFERENCES Logement (numLogement)
 );
 
 CREATE TABLE PhotosComplementairesLogement (
@@ -299,7 +304,10 @@ VALUES
     ('Jeanne', 'Robert', 'jeanne.robert@email.com', '987654321', 'photo2.jpg', 'Madame', '456 Avenue Charles de Gaule', 'propro', '1234', '1998-07-25', 4.0),
     ('Julien', 'LeBras', 'julien.lebras@email.com', '895432156', 'photo2.jpg', 'Monsieur', '2 Rue du moine', 'JuJu', '1234', '1999-07-25', 4.0),
     ('Thierry', 'Richard', 'thierry.richard@email.com', '123456789', 'photo1.jpg', 'Monsieur', '123 Rue des lilas', 'trich', '1234', '15-01-2000', 4.5),
-    ('Jeanne', 'Robert', 'jeanne.robert@email.com', '987654321', 'photo2.jpg', 'Madame', '456 Avenue Charles de Gaule', 'jrob', '1234', '25-07-1998', 4.0);
+    ('Jeanne', 'Robert', 'jeanne.robert@email.com', '987654321', 'photo2.jpg', 'Madame', '456 Avenue Charles de Gaule',
+     'jrob', '1234', '25-07-1998', 4.0),
+    ('Quentin', 'Dupond', 'Quentin.Dupond@free.fr', '987654321', 'photo1.jpg', 'Monsieur', '123 Rue des lilas',
+     'quendpd', '1234', '15-01-1997', 4.4);
 
 
 -- Insertion de données dans la table Message
@@ -338,7 +346,8 @@ VALUES
 INSERT INTO Proprietaire (idCompte, RIB, pieceIdentite, languesParlees, messageType)
 VALUES
     (1, 'FR7630001007941234567890185', TRUE,  'Français, Anglais', 'Message A'),
-    (2, 'FR7630004000031234567890143', TRUE, 'Espagnol, Français, Anglais', 'Message B');
+    (2, 'FR7630004000031234567890143', TRUE, 'Espagnol, Français, Anglais', 'Message B'),
+    (6, 'FR7630004000031234567890143', TRUE, 'Espagnol, Français, Anglais', 'Message B');
 
 
     
@@ -346,10 +355,45 @@ VALUES
 INSERT INTO Logement (surfaceHabitable, libelle, accroche, descriptionLogement, natureLogement, adresse, cp, ville, proprio, photoCouverture, LogementEnLigne, nbPersMax, nbChambres, nbSalleDeBain, tarifNuitees)
 VALUES
     (80, 'Maison en pierre', 'Une adorable maison de charactère', 'Cette maison est parfaite pour un weekend en famille.', 'maison','9 rue des serpentins','22500','Lannion', 1, 'maison.jpg', TRUE, 4, 2, 1, 150.0),
-    (100.2, 'Cave spacieuse', 'Au coeur de la ville', 'Profitez de la vie urbaine grâce à cette magnifique cave.', 'cave','2 rue des tulipes','29000','Brest', 2, 'cave.jpg', TRUE, 3, 1, 2, 120.0);
+    (100.2, 'Cave spacieuse', 'Au coeur de la ville', 'Profitez de la vie urbaine grâce à cette magnifique cave.',
+     'cave', '2 rue des tulipes', '29000', 'Brest', 2, 'cave.jpg', TRUE, 3, 1, 2, 120.0),
+    (50, 'Appartement de charme', 'Un appartement cosy en plein centre-ville de Rennes',
+     'Cet appartement est situé au cœur de Rennes, à proximité de toutes les commodités. Il est idéal pour un séjour en amoureux ou un week-end en ville.',
+     'appartement', '2 rue du Chapitre', 35000, 'Rennes', 2, 'appartement_rennes.jpg', TRUE, 2, 1, 1, 100.0),
+    (70, 'Grande maison familiale', 'Une maison de famille au bord de la mer',
+     'Cette maison est située à seulement quelques minutes de la plage de Saint-Malo. Elle est idéale pour des vacances en famille ou entre amis.',
+     'maison', '12 rue de la plage', 35400, 'Saint-Malo', 2, 'maison_saintmalo.jpg', TRUE, 6, 3, 2, 200.0),
+    (80, 'Gîte au bord du lac', 'Un gîte confortable en pleine nature',
+     'Ce gîte est situé au bord du lac de Guerlédan. Il est idéal pour des vacances en amoureux ou un week-end en randonnée.',
+     'gite', '10 rue du lac', 22590, 'Mûr-de-Bretagne', 2, 'gite_guerledan.jpg', TRUE, 4, 2, 1, 150.0),
+    (100, 'Château de charme', 'Une expérience unique dans un château historique',
+     'Ce château est situé au cœur de la campagne bretonne. Il est idéal pour un séjour romantique ou un événement spécial.',
+     'chateau', '1 rue du château', 29500, 'Quimper', 2, 'chateau_quimper.jpg', TRUE, 10, 5, 3, 300.0);
 
-INSERT INTO Chambre (numChambre,numLogement, nbLitsSimples, nbLitsDoubles) VALUES (1,1, 2, 3);
-INSERT INTO Chambre (numChambre,numLogement, nbLitsSimples, nbLitsDoubles) VALUES (2,1, 2, 3);
+INSERT INTO Chambre (nbLitsSimples, nbLitsDoubles) VALUES ( 2, 3);
+INSERT INTO Chambre (nbLitsSimples, nbLitsDoubles) VALUES ( 1, 1);
+INSERT INTO Chambre (nbLitsSimples, nbLitsDoubles) VALUES ( 1, 2);
+
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (1,1);
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (1,2);
+
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (2,1);
+
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (3,3);
+
+
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (4,3);
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (4,2);
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (4,1);
+
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (5,1);
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (5,2);
+
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (6,3);
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (6,2);
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (6,1);
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (6,1);
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (6,2);
 
 -- Insertion de données dans la table Reservation
 INSERT INTO Reservation (numClient, numLogement, dateReservation, nbPersonnes, dateDebut, dateFin, dateDevis, nbJours, optionAnnulation)
@@ -413,18 +457,9 @@ VALUES
 INSERT INTO PhotosComplementairesLogement (numLogement, photosComplementaires) 
 VALUES 
     (1, 'photo.png'),
-    (2, 'photo.jgp');
+    (2, 'photo.jpg');
 
 INSERT INTO Admin (pseudo_admin, mdp_admin) VALUES ('admin', 'admin');
-
-
-
-INSERT INTO Logement (surfaceHabitable, libelle, accroche, descriptionLogement, natureLogement, adresse, cp, ville, proprio, photoCouverture, LogementEnLigne, nbPersMax, nbChambres, nbSalleDeBain, tarifNuitees)
-VALUES
-(50, 'Appartement de charme', 'Un appartement cosy en plein centre-ville de Rennes', 'Cet appartement est situé au cœur de Rennes, à proximité de toutes les commodités. Il est idéal pour un séjour en amoureux ou un week-end en ville.', 'appartement', '2 rue du Chapitre', 35000, 'Rennes', 2, 'appartement_rennes.jpg', TRUE, 2, 1, 1, 100.0),
-(70, 'Grande maison familiale', 'Une maison de famille au bord de la mer', 'Cette maison est située à seulement quelques minutes de la plage de Saint-Malo. Elle est idéale pour des vacances en famille ou entre amis.', 'maison', '12 rue de la plage', 35400, 'Saint-Malo', 2, 'maison_saintmalo.jpg', TRUE, 6, 3, 2, 200.0),
-(80, 'Gîte au bord du lac', 'Un gîte confortable en pleine nature', 'Ce gîte est situé au bord du lac de Guerlédan. Il est idéal pour des vacances en amoureux ou un week-end en randonnée.', 'gite', '10 rue du lac', 22590, 'Mûr-de-Bretagne', 2, 'gite_guerledan.jpg', TRUE, 4, 2, 1, 150.0),
-(100, 'Château de charme', 'Une expérience unique dans un château historique', 'Ce château est situé au cœur de la campagne bretonne. Il est idéal pour un séjour romantique ou un événement spécial.', 'chateau', '1 rue du château', 29500, 'Quimper', 2, 'chateau_quimper.jpg', TRUE, 10, 5, 3, 300.0);
 
 INSERT INTO LogementProprio (numLogement,idCompte) 
 VALUES 
@@ -433,9 +468,6 @@ VALUES
     ('5','2'),
     ('6','2');
     
-
-INSERT INTO Chambre (numChambre,numLogement, nbLitsSimples, nbLitsDoubles) VALUES (1,3, 0, 1);
-
 
 INSERT INTO Equipement (numLogement, numeEquip, nom)
 VALUES
