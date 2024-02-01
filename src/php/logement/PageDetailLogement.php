@@ -272,19 +272,17 @@ function recupCoordGps($adresse){
     if (isset($json[0])) {
         $coordX = $json[0]['lat'];
         $coordY = $json[0]['lon'];
-        $limites = $json[0]['boundingbox'];
     } else {
         $coordX = null;
         $coordY = null;
-        $limites = null;
     }
-    return [$coordX, $coordY, $limites];
+    return [$coordX, $coordY];
 }
 
-[$coordX, $coordY, $limites] = recupCoordGps($adresse);
+[$coordX, $coordY] = recupCoordGps($adresse);
 if ($coordX == null || $coordY == null) { //Si l'adresse avec les coordonnées précises ne fonctionne pas
     $adresse = urlencode($localisation); //Utiliser le nom de la ville seulement
-    [$coordX, $coordY, $limites] = recupCoordGps($adresse);
+    [$coordX, $coordY] = recupCoordGps($adresse);
 }
 
 ?>
@@ -602,7 +600,6 @@ if ($coordX == null || $coordY == null) { //Si l'adresse avec les coordonnées p
         <script>
             var coordX = <?php echo json_encode($coordX); ?>;
             var coordY = <?php echo json_encode($coordY); ?>;
-            var limites = <?php echo json_encode($limites); ?>;
             var localisation = <?php echo json_encode($localisation); ?>;
         </script>
         <script src="/src/js/logement/map.js"></script>

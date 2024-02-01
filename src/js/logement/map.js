@@ -57,6 +57,8 @@ let circle = L.circle([coordX, coordY], {
     radius: 1000
 }).addTo(map);
 
+L.control.scale().addTo(map);
+
 // Ajout d'une tuile
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
