@@ -79,7 +79,7 @@ try {
                                         </label>
                                     </div>
                                     <div>
-                                        <input class="input1" id="nbpersonne" max="10" min="0" name="nb_personne"
+                                        <input class="input1" id="nbpersonne" max="<?=$nbPersonne?>" min="0" name="nb_personne"
                                             placeholder="nbpersonne" type="number" value="0">
                                     </div>
                                 </li>
