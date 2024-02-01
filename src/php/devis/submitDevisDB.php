@@ -56,6 +56,7 @@ try {
         "INSERT INTO ldc.reservation(numclient, numlogement, datereservation, nbpersonnes, datedebut, datefin, datedevis, nbjours, optionannulation) 
         VALUES (:numClient,:numLogement,:EPOCH,:nbPersonne,:sqlDateArr, :sqlDateDep, :EPOCH,:nbJour,'')"
     );
+
     $stmt->execute([
         'nb_personne' => $nb_personne,
         'numReservation' => $numReservation,
@@ -66,6 +67,7 @@ try {
         'optionAnnulation' => $optionAnnulation,
         'dureeDelaisAcceptation' => 14
     ]);
+    $numDevis = $pdo->lastInsertId();
     $smt2->execute([
         "numClient" => $id_client,
     "numLogement" => $numLogement,
@@ -75,6 +77,24 @@ try {
         "sqlDateDep" => $sqlDateDep,
         "nbJour" => $diffEnJours
     ]);
+
+    // Services
+    $sql = "SELECT numServ FROM ldc.Service WHERE numlogement = $numLogement";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+
+    // Fetch all rows
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Output data
+    foreach ($result as $row) {
+        echo "numServ: " . $row["numServ"] . "<br>";
+        $numServ = $row['numServ'];
+        $sql = "INSERT INTO Devis_Services (numDevis, numLogement, numServ) VALUES ($numDevis, $numLogement, $numServ)";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+    }
+
     $pdo = null;
     echo '<script>
         notifSuccess()

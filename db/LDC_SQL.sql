@@ -210,6 +210,16 @@ CREATE TABLE Service(
         REFERENCES Logement (numLogement)
 );
 
+CREATE TABLE Devis_Services (
+    ID SERIAL NOT NULL,
+    numDevis INTEGER NOT NULL ,
+    numServ INT NOT NULL ,
+    numLogement INT NOT NULL ,
+    PRIMARY KEY (ID),
+    FOREIGN KEY (numDevis) REFERENCES Devis (numDevis),
+    FOREIGN KEY (numLogement,numServ) REFERENCES Service (numLogement,numServ)
+);
+
 CREATE TABLE Equipement(
   numLogement INTEGER NOT NULL,
   numeEquip INTEGER NOT NULL,
