@@ -18,6 +18,7 @@ try {
     );
     $stmt->execute();
     $tabServices = $stmt->fetchAll();
+    print_r($tabServices);
 } catch (PDOException $e) {
 
 }
@@ -94,10 +95,11 @@ try {
                             <ul>
                                 <?php
                                 $MAX = sizeof($tabServices);
-                                for ($i = 1; $i <= $MAX; $i++) {
-                                    if ($i === 1) {
+                                for ($i = 0; $i < $MAX; $i++) {
+                                    $service = $tabServices[$i];
+                                    if ($i === 0) {
                                         $classe = "supplement first";
-                                    } else if ($i === $MAX) {
+                                    } else if ($i === $MAX - 1) {
                                         $classe = "supplement last";
                                     } else {
                                         $classe = "supplement";
@@ -107,7 +109,9 @@ try {
                                     echo "<li>
                                     <div class='$classe'>
                                         <input id='$id' type='checkbox' name='$name'>
-                                        <label for='$id'>$tabServices[$i]</label>
+                                        <label for='$id'>
+                                        $service[nom]
+                                        </label>
                                         <p class='prix''><span>66,6</span>€</p>
                                     </div>
                                 </li>
