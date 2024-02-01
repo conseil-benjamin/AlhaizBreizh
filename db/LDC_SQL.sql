@@ -352,7 +352,7 @@ VALUES
     (false, 1, '2023-11-10', '2023-11-12', 120);
     
 -- Insertion de plage indispo dans la table Plage
-INSERT INTO Plage (isIndispo, numCal, dateDebutPlageI, dateFinPlageI)
+INSERT INTO Plage (isIndispo, numCal, dateDebutPlage, dateFinPlage)
 VALUES
     (true, 2, '2023-11-10', '2023-11-20'),
     (true, 1, '2023-11-20', '2023-11-23');

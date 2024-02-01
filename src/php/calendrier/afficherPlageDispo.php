@@ -41,7 +41,7 @@
                 }
     
                 //Récupérer les données des plages de disponibilité du calendrier
-                $stmtPlagesDispo = $pdo->prepare("SELECT * FROM ldc.PlageDeDisponibilite WHERE numCal = $numCal");
+                $stmtPlagesDispo = $pdo->prepare("SELECT * FROM ldc.Plage WHERE numCal = $numCal AND isIndispo = false");
                 $stmtPlagesDispo->execute(); 
                 $plagesDisponibilite = $stmtPlagesDispo->fetchAll(PDO::FETCH_ASSOC);
                 $evenements = [];
@@ -59,19 +59,19 @@
                 }
                 $evenementsJSON = json_encode($evenements);
 
-                //Récupérer les données des plages de disponibilité du calendrier
-                $stmtPlagesIndispo = $pdo->prepare("SELECT * FROM ldc.PlageIndisponibilite WHERE numCal = $numCal");
+                //Récupérer les données des plages d'indisponibilité du calendrier
+                $stmtPlagesIndispo = $pdo->prepare("SELECT * FROM ldc.Plage WHERE numCal = $numCal AND (isIndispo = true OR tarifjournalier = 0)");
                 $stmtPlagesIndispo->execute(); 
                 $plagesIndisponibilite = $stmtPlagesIndispo->fetchAll(PDO::FETCH_ASSOC);
                 $evenementsI = [];
 
                 foreach ($plagesIndisponibilite as $plage) {
-                    if (isset($plage['datedebutplagei'], $plage['datefinplagei'])) {
+                    if (isset($plage['datedebutplage'], $plage['datefinplage'])) {
                         $evenementI = [
-                            'id' => $plage['numplagei'],
+                            'id' => $plage['numplage'],
                             'title' => 'Indisponible',
-                            'start' => $plage['datedebutplagei'],
-                            'end' => $plage['datefinplagei'],
+                            'start' => $plage['datedebutplage'],
+                            'end' => $plage['datefinplage'],
                         ];
                         $evenementsI[] = $evenementI;
                     }
@@ -105,13 +105,14 @@
                         //     $intersectionCountIndispo = $intersectionQuerryIndispo->fetchColumn();
 
                         //     if($intersectionCountIndispo == 0){
-
-                                $stmt = $pdo->prepare("INSERT INTO ldc.PlageDeDisponibilite (numCal, datedebutplage, datefinplage, tarifjournalier) 
-                                    VALUES (?, ?, ?, ?) ");
-                                $stmt->bindParam(1, $numCal);
-                                $stmt->bindParam(2, $datedebutplage);
-                                $stmt->bindParam(3, $datefinplage);
-                                $stmt->bindParam(4, $tarifjournalier);
+                                $isDispo = false;
+                                $stmt = $pdo->prepare("INSERT INTO ldc.Plage (isIndispo, numCal, datedebutplage, datefinplage, tarifjournalier) 
+                                    VALUES (?, ?, ?, ?, ?) ");
+                                $stmt->bindParam(1, $isDispo, PDO::PARAM_BOOL);
+                                $stmt->bindParam(2, $numCal);
+                                $stmt->bindParam(3, $datedebutplage);
+                                $stmt->bindParam(4, $datefinplage);
+                                $stmt->bindParam(5, $tarifjournalier);
                                 $stmt->execute();
                         
                                 // Rafraîchit les plages de disponibilité
@@ -126,16 +127,20 @@
 
                 //Insérer une plage d'indisponibilité
                 if (isset($_POST['submitPlageIndispo'])) {
-                    $datedebutplagei = $_POST['datedebutplagei'];
-                    $datefinplagei = $_POST['datefinplagei'];
+                    $datedebutplage = $_POST['datedebutplage'];
+                    $datefinplage = $_POST['datefinplage'];
                 
                     // Vérifie si les dates sont valides et le tarif est numérique
-                    if (strtotime($datedebutplagei) && strtotime($datefinplagei)) {
-                        $stmt = $pdo->prepare("INSERT INTO ldc.PlageIndisponibilite (numCal, datedebutplagei, datefinplagei) 
-                            VALUES (?, ?, ?) ");
-                        $stmt->bindParam(1,$numCal);
-                        $stmt->bindParam(2,$datedebutplagei);
-                        $stmt->bindParam(3,$datefinplagei);
+                    if (strtotime($datedebutplage) && strtotime($datefinplage)) {
+                        $idIndisponible = true;
+                        $tarif = 0;
+                        $stmt = $pdo->prepare("INSERT INTO ldc.Plage (isIndispo, numCal, datedebutplage, datefinplage, tarifjournalier) 
+                            VALUES (?, ?, ?, ?, ?) ");
+                        $stmt->bindParam(1,$isIndisponible, PDO::PARAM_BOOL);    
+                        $stmt->bindParam(2,$numCal);
+                        $stmt->bindParam(3,$datedebutplage);
+                        $stmt->bindParam(4,$datefinplage);
+                        $stmt->bindParam(5,$tarif);
                         $stmt->execute();
                 
                         // Rafraîchit les plages de disponibilité
@@ -222,43 +227,23 @@
                                                     showConfirmButton: false,
                                                     timer: 2000
                                                 });
-                                                if (info.event.title.startsWith("Tarif journalier :")) {
-                                                    $.ajax({
-                                                        url: 'supprimerPlage.php', 
-                                                        type: 'POST',
-                                                        data: {
-                                                            numPlage: info.event.id
-                                                        },
-                                                        success: function(response) {
-                                                            console.log(response);
-                                                            calendar.refetchEvents();
-                                                            setTimeout(()=> {
-                                                                location.reload(); // Rafraîchit la page après la suppression
-                                                            }, 2000);
-                                                        },
-                                                        error: function(xhr, status, error) {
-                                                            console.error('Erreur lors de la suppression :', error);
-                                                        }
-                                                    });
-                                                }else{
-                                                    $.ajax({
-                                                        url: 'supprimerPlageIndispo.php',
-                                                        type: 'POST',
-                                                        data: {
-                                                            numPlageI: info.event.id
-                                                        },
-                                                        success: function(response) {
-                                                            console.log(response);
-                                                            calendar.refetchEvents();
-                                                            setTimeout(() => {
-                                                                location.reload(); // Rafraîchit la page après la suppression
-                                                            }, 2000);
-                                                        },
-                                                        error: function(xhr, status, error) {
-                                                            console.error('Erreur lors de la suppression :', error);
-                                                        }
-                                                    });
-                                                }                                       
+                                                $.ajax({
+                                                    url: 'supprimerPlage.php', 
+                                                    type: 'POST',
+                                                    data: {
+                                                        numPlage: info.event.id
+                                                    },
+                                                    success: function(response) {
+                                                        console.log(response);
+                                                        calendar.refetchEvents();
+                                                        setTimeout(()=> {
+                                                            location.reload(); // Rafraîchit la page après la suppression
+                                                        }, 2000);
+                                                    },
+                                                    error: function(xhr, status, error) {
+                                                        console.error('Erreur lors de la suppression :', error);
+                                                    }
+                                                });                                  
                                             }
                                         });
                                     }                                
@@ -302,11 +287,11 @@
                             <div id="plage-indisp-form">
                                 <h3>Ajouter une plage d'indisponibilité :</h3>
                                 <form method="POST">
-                                    <label for="datedebutplagei">Date de début :</label>
-                                    <input type="date" name="datedebutplagei" required>
+                                    <label for="datedebutplage">Date de début :</label>
+                                    <input type="date" name="datedebutplage" required>
                                     <br>
-                                    <label for="datefinplagei">Date de fin :</label>
-                                    <input type="date" name="datefinplagei" required>
+                                    <label for="datefinplage">Date de fin :</label>
+                                    <input type="date" name="datefinplage" required>
                                 
                                     <input type="submit" name="submitPlageIndispo" value="Ajouter">
                                 </form>
