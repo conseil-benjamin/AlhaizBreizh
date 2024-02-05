@@ -21,7 +21,7 @@
 
 #header .logo{
     content: url(/public/logos/logo-white.svg);
-    filter: drop-shadow(px 1px 5px rgba(0, 0, 0, 0.75));
+    filter: drop-shadow(1px 1px 5px rgba(0, 0, 0, 0.75));
 }
 
 #header.scrolled .logo{

@@ -5,7 +5,7 @@ const prixTotal = document.getElementById('prixTotal')
 const prixHTMLelement = document.getElementById('prixSpan')
 const nbpersonne = document.getElementById('nbpersonne')
 const nbNuitHTMLelement = document.getElementById('nbNuit')
-
+const prixTotalHTMLelement = document.getElementById("prixTotalInput")
 
 const PRIX = parseFloat(prixHTMLelement.innerText.replace(",", "."))
 const NBNUIT = parseInt(nbNuitHTMLelement.innerText, 10)
@@ -61,7 +61,11 @@ inputDateDepart.addEventListener("change", function () {
  */
 inputDateArivee.addEventListener("change", function () {
     const dateArrivee = this.value;
-    const dateDepart = inputDateDepart.value
+    let dateDepart = inputDateDepart.value
+    if (dateArrivee > dateDepart) {
+        inputDateDepart.value = dateArrivee;
+        dateDepart = dateArrivee;
+    }
     updatePrix(dateDepart,dateArrivee)
     updateNBNuit()
 });
@@ -94,11 +98,10 @@ function updateNBNuit() {
  * @returns {number} le nombre de jours entre les deux dates
  */
 function compteJour(dateDepart,dateArriver) {
-    const dateArr = new Date(dateArriver);
-    const dateDep = new Date(dateDepart);
-
+    const dateArr = new Date(Date.parse(dateArriver));
+    const dateDep = new Date(Date.parse(dateDepart));
     const differenceEnMillisecondes =  (dateDep-dateArr)-1;
-    return (differenceEnMillisecondes / (1000 * 60 * 60 * 24));
+    return Math.ceil((differenceEnMillisecondes / (1000 * 60 * 60 * 24)));
 }
 
 /**
@@ -108,7 +111,16 @@ function compteJour(dateDepart,dateArriver) {
  */
 function updatePrix(dateArriver,dateDepart) {
     const nbjour = compteJour(dateArriver,dateDepart)
-    prixTotal.innerText =  ((nbjour*PRIX)+getTotalService()).toFixed(2).toString().replace('.', ',')
+    let prix
+    if (nbjour === 0) {
+        prix = 0
+        prixTotal.innerText = "0,00"
+        prixTotalHTMLelement.value = prix
+    } else {
+        prix = ((nbjour * PRIX) + getTotalService()).toFixed(2)
+        prixTotal.innerText = prix.toString().replace('.', ',')
+        prixTotalHTMLelement.value = prix
+    }
 }
 
 /**

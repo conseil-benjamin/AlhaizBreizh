@@ -204,10 +204,21 @@ CREATE TABLE Service(
   numLogement INTEGER NOT NULL,
   numServ INTEGER NOT NULL,
   nom VARCHAR(255),
+  prix FLOAT DEFAULT 0,
   PRIMARY KEY (numLogement,numServ),
   CONSTRAINT fk_numService
         FOREIGN KEY (numLogement)
         REFERENCES Logement (numLogement)
+);
+
+CREATE TABLE Devis_Services (
+    ID SERIAL NOT NULL,
+    numDevis INTEGER NOT NULL ,
+    numServ INT NOT NULL ,
+    numLogement INT NOT NULL ,
+    PRIMARY KEY (ID),
+    FOREIGN KEY (numDevis) REFERENCES Devis (numDevis),
+    FOREIGN KEY (numLogement,numServ) REFERENCES Service (numLogement,numServ)
 );
 
 CREATE TABLE Equipement(
@@ -447,12 +458,6 @@ VALUES
     (3, 2, 5),
     (1, 2, 6);
 
--- Insertion de données dans la table LogementProprio
-INSERT INTO LogementProprio (numLogement,idCompte) 
-VALUES 
-    ('2','2'),
-    ('1','2');
-
 -- Insertion de données dans la table PhotosComplementairesLogement
 INSERT INTO PhotosComplementairesLogement (numLogement, photosComplementaires) 
 VALUES 
@@ -461,13 +466,6 @@ VALUES
 
 INSERT INTO Admin (pseudo_admin, mdp_admin) VALUES ('admin', 'admin');
 
-INSERT INTO LogementProprio (numLogement,idCompte) 
-VALUES 
-    ('3','2'),
-    ('4','2'),
-    ('5','2'),
-    ('6','2');
-    
 
 INSERT INTO Equipement (numLogement, numeEquip, nom)
 VALUES
