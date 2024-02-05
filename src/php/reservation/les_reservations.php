@@ -18,13 +18,13 @@ try {
     r.dateDebut,
     r.dateFin,
     r.nbPersonnes,
-    l.numLogement,
+    l.numlogement,
     l.libelle,
     c.idCompte AS idClient,
     c.pseudoCompte,
     l.proprio
     FROM ldc.reservation r
-    JOIN ldc.logement l ON r.numLogement = l.numLogement
+    JOIN ldc.logement l ON r.numlogement = l.numlogement
     JOIN ldc.client c ON r.numClient = c.idCompte
     WHERE l.proprio = :idProprio;");
 
@@ -87,7 +87,7 @@ try {
                                     <nav>
                                         <a class="boutton" href="/src/php/reservation/supprimerResaDB.php?numReservation=<?php echo $uneReservation['numreservation']?>">Supprimer</a>
                                         <a class="boutton" href="/src/php/reservation/details_reservation.php?numReservation=<?php echo $uneReservation['numreservation']?>" >Voir Réservation</a>
-                                        <a class="boutton" href="/src/php/logement/PageDetailLogement.php?numLogement=<?php echo $uneReservation['numLogement'] ?>" > Voir Logement</a>
+                                        <a class="boutton" href="/src/php/logement/PageDetailLogement.php?numLogement=<?php echo $uneReservation['numlogement'] ?>" > Voir Logement</a>
                                     </nav>
                                 </div>
                             </div>
