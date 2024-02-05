@@ -17,9 +17,6 @@
         $logements = array();
     }
 
-    $json = json_encode($logements);
-        echo $json;
-
     if(isset($_GET["json"])) {
         $json = json_encode($logements);
         echo $json;

@@ -380,6 +380,7 @@ function dateBDD(num) {
 
 const arrivee = document.getElementById("side_arrive");
 const depart = document.getElementById("side_depart");
+src="https://cdn.jsdelivr.net/npm/sweetalert2@11";
 
 depart.addEventListener("change", () => {
   const dateArrivee = new Date(arrivee.value);
@@ -387,7 +388,12 @@ depart.addEventListener("change", () => {
 
   if (dateArrivee > dateDepart) {
     depart.value = ""; // Remet la date d'arrivée à vide si elle dépasse la date de départ
-    alert("La date d'arrivée doit être antérieure à la date de départ.");
+    Swal.fire({
+        icon: "Erreur",
+        title: "La date d'arrivée doit être antérieure à la date de départ.",
+        showConfirmButton: true,
+        timer: 3000
+    }); 
   }
 });
 
@@ -397,7 +403,12 @@ arrivee.addEventListener("change", () => {
 
   if (dateArrivee > dateDepart) {
     arrivee.value = ""; // Remet la date d'arrivée à vide si elle dépasse la date de départ
-    alert("La date d'arrivée doit être antérieure à la date de départ.");
+    Swal.fire({
+        icon: "Erreur",
+        title: "La date d'arrivée doit être antérieure à la date de départ.",
+        showConfirmButton: true,
+        timer: 3000
+    });
   }
 });
 
