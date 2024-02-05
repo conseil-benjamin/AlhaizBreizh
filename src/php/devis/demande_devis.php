@@ -128,6 +128,7 @@ try {
                     </div>
                     <div id="total">
                         <h2> Total de la réservation : <span id="prixTotal">0</span>€</h2>
+                        <input type="hidden" name="total" value="0" id="prixTotalInput">
                         <button class="boutton" type="submit" id="envoyer">Envoyer la demande de devis</button>
                     </div>
                 </form>

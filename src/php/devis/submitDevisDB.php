@@ -1,5 +1,5 @@
 <?php
-
+global $prixNuit;
 // Vérifie que la session est bien initialisée
 if(isset($_SESSION)) {
     $id_client = $_SESSION['id'];
@@ -39,8 +39,6 @@ else {
 
 $diffEnJours = $dateDep->diff($dateArr)->days;
 
-$numReservation = time();
-
 $optionAnnulation = "";
 $dateValid = "";
 
@@ -48,16 +46,29 @@ $EPOCH ="2000-01-01";
 echo '<script src="../../js/devis.js"></script>';
 try {
     $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
-    $stmt = $pdo->prepare(
+    $insertDevis = $pdo->prepare(
         "INSERT INTO ldc.Devis(nbPersonnes, numReservation, numLogement, dateDebut, dateFin, dateDevis, dateValid, optionAnnulation, dureeDelaisAcceptation) 
         VALUES(:nb_personne, :numReservation, :numLogement, :sqlDateArr, :sqlDateDep, :EPOCH, :EPOCH, :optionAnnulation, :dureeDelaisAcceptation)"
     );
-    $smt2 = $pdo->prepare(
+    $insertResa = $pdo->prepare(
         "INSERT INTO ldc.reservation(numclient, numlogement, datereservation, nbpersonnes, datedebut, datefin, datedevis, nbjours, optionannulation) 
         VALUES (:numClient,:numLogement,:EPOCH,:nbPersonne,:sqlDateArr, :sqlDateDep, :EPOCH,:nbJour,'')"
     );
-
-    $stmt->execute([
+    $insertTarif = $pdo->prepare(
+        "INSERT INTO ldc.tarification(numdevis, tarifnuitees, chargesht, soustotalht, soustotalttc, fraisserviceplateformeht, fraisserviceplateformettc, taxesejour, total) 
+VALUES (:numDevis,:prixNuit,80, 560, 600, 40, 48, 12,:total) "
+    );
+    $insertResa->execute([
+        "numClient" => $id_client,
+        "numLogement" => $numLogement,
+        "EPOCH" => $EPOCH,
+        "nbPersonne" => $nb_personne,
+        "sqlDateArr" => $sqlDateArr,
+        "sqlDateDep" => $sqlDateDep,
+        "nbJour" => $diffEnJours
+    ]);
+    $numReservation = $pdo->lastInsertId();
+    $insertDevis->execute([
         'nb_personne' => $nb_personne,
         'numReservation' => $numReservation,
         'numLogement' => $numLogement,
@@ -68,30 +79,26 @@ try {
         'dureeDelaisAcceptation' => 14
     ]);
     $numDevis = $pdo->lastInsertId();
-    $smt2->execute([
-        "numClient" => $id_client,
-    "numLogement" => $numLogement,
-        "EPOCH" => $EPOCH,
-    "nbPersonne" => $nb_personne,
-        "sqlDateArr" => $sqlDateArr,
-        "sqlDateDep" => $sqlDateDep,
-        "nbJour" => $diffEnJours
+    $insertTarif->execute([
+        'numDevis' => $numDevis,
+        'prixNuit' => $prixNuit,
+        'total' => $_POST["total"]
     ]);
 
     // Services
     $sql = "SELECT numServ FROM ldc.Service WHERE numlogement = $numLogement";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute();
+    $insertDevis = $pdo->prepare($sql);
+    $insertDevis->execute();
 
     // Fetch all rows
-    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $result = $insertDevis->fetchAll(PDO::FETCH_ASSOC);
 
     // Output data
     foreach ($result as $row) {
         $numServ = $row['numserv'];
         $sql = "INSERT INTO ldc.Devis_Services (numDevis, numLogement, numServ) VALUES ($numDevis, $numLogement, $numServ)";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute();
+        $insertDevis = $pdo->prepare($sql);
+        $insertDevis->execute();
     }
 
     $pdo = null;

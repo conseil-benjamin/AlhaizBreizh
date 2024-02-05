@@ -5,7 +5,7 @@ const prixTotal = document.getElementById('prixTotal')
 const prixHTMLelement = document.getElementById('prixSpan')
 const nbpersonne = document.getElementById('nbpersonne')
 const nbNuitHTMLelement = document.getElementById('nbNuit')
-
+const prixTotalHTMLelement = document.getElementById("prixTotalInput")
 
 const PRIX = parseFloat(prixHTMLelement.innerText.replace(",", "."))
 const NBNUIT = parseInt(nbNuitHTMLelement.innerText, 10)
@@ -111,10 +111,15 @@ function compteJour(dateDepart,dateArriver) {
  */
 function updatePrix(dateArriver,dateDepart) {
     const nbjour = compteJour(dateArriver,dateDepart)
+    let prix
     if (nbjour === 0) {
-        prixTotal.innerText = "0,00";
+        prix = 0
+        prixTotal.innerText = "0,00"
+        prixTotalHTMLelement.value = prix
     } else {
-        prixTotal.innerText = ((nbjour * PRIX) + getTotalService()).toFixed(2).toString().replace('.', ',')
+        prix = ((nbjour * PRIX) + getTotalService()).toFixed(2)
+        prixTotal.innerText = prix.toString().replace('.', ',')
+        prixTotalHTMLelement.value = prix
     }
 }
 
