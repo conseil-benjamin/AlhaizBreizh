@@ -9,6 +9,7 @@ $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
 $stmt = $pdo->prepare("SELECT MAX(idCompte) FROM ldc.Client");
 $stmt->execute();
 $img = $stmt->fetch(PDO::FETCH_NUM)[0] + 1;
+$numClient=$img;
 $img = strval($img);
 $img .= ".png";
 
@@ -54,5 +55,26 @@ if (isset($_FILES['photo_profil']) && $_FILES['photo_profil']['error'] === UPLOA
 }
 
 echo "<script> notifSucessInscription()  </script>";
-?>
 
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insert création</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+<script>
+    echo "var numClient = " . json_encode($numClient) . ";\n";
+
+    setTimeout((), 2000);
+</script>
+<?php
+exit;
+
+?>
+</body>
+</html>
