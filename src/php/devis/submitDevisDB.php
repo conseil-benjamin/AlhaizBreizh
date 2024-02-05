@@ -37,6 +37,9 @@ else {
 }
 
 
+$AUJ = new DateTime();
+$AUJ = $sqlDateArr->format('Y-m-d');
+
 $diffEnJours = $dateDep->diff($dateArr)->days;
 
 $optionAnnulation = "";
@@ -52,7 +55,7 @@ try {
     );
     $insertResa = $pdo->prepare(
         "INSERT INTO ldc.reservation(numclient, numlogement, datereservation, nbpersonnes, datedebut, datefin, datedevis, nbjours, optionannulation) 
-        VALUES (:numClient,:numLogement,:EPOCH,:nbPersonne,:sqlDateArr, :sqlDateDep, :EPOCH,:nbJour,'')"
+        VALUES (:numClient,:numLogement,:dateResa,:nbPersonne,:sqlDateArr, :sqlDateDep, :EPOCH,:nbJour,'')"
     );
     $insertTarif = $pdo->prepare(
         "INSERT INTO ldc.tarification(numdevis, tarifnuitees, chargesht, soustotalht, soustotalttc, fraisserviceplateformeht, fraisserviceplateformettc, taxesejour, total) 
@@ -62,6 +65,7 @@ VALUES (:numDevis,:prixNuit,80, 560, 600, 40, 48, 12,:total) "
         "numClient" => $id_client,
         "numLogement" => $numLogement,
         "EPOCH" => $EPOCH,
+        "dateResa" => $AUJ,
         "nbPersonne" => $nb_personne,
         "sqlDateArr" => $sqlDateArr,
         "sqlDateDep" => $sqlDateDep,
