@@ -38,7 +38,7 @@ else {
 
 
 $AUJ = new DateTime();
-$AUJ = $sqlDateArr->format('Y-m-d');
+$AUJ = $AUJ->format('Y-m-d');
 
 $diffEnJours = $dateDep->diff($dateArr)->days;
 
