@@ -133,20 +133,68 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         On compte le nombre de chambres du logement pour savoir si l'utilisateur en a ajoute ou retire
         */
         $stmt = $pdo->prepare(
-            "SELECT COUNT(*) FROM ldc.chambre WHERE numlogement=$id_logem ");
+            "SELECT COUNT(*) FROM ldc.logementchambre WHERE numlogement=$id_logem ");
         $stmt->execute();
         $resultC = $stmt->fetch();
 
         foreach ($chambres as $key => $value){
             if ($resultC['count']>=$key){ //Si la chambre est deja presente dans la bdd on l'update
-                $stmt = $pdo->prepare(
-                    "UPDATE ldc.chambre SET nbLitsDoubles=$value[1], nbLitsSimples=$value[0] WHERE numlogement=$id_logem and numchambre=$key");
-                $stmt->execute();
+                $query = "SELECT numChambre FROM ldc.Chambre WHERE nbLitsDoubles = :nombreDeLitsDoubles AND nblitssimples = :nblitssimples";
+                $statement = $pdo->prepare($query);
+                $statement->bindParam(':nombreDeLitsDoubles', $value[1], PDO::PARAM_INT);
+                $statement->bindParam(':nblitssimples', $value[0], PDO::PARAM_INT);
+                $statement->execute();
+                $result = $statement->fetch(PDO::FETCH_ASSOC);
+                if ($result) {
+                    $numChambre =  $result['numChambre'];
+                } else {
+                    // Préparer la requête SQL avec une colonne auto-incrémentée
+                    $query = "INSERT INTO ldc.Chambre (nbLitsSimples, nbLitsDoubles) VALUES (:nbLitsSimples, :nbLitsDoubles)";
+
+                    // Préparer la requête
+                    $statement = $pdo->prepare($query);
+
+                    // Lier les paramètres
+                    $statement->bindParam(':nbLitsSimples', $value[0], PDO::PARAM_INT);
+                    $statement->bindParam(':nbLitsDoubles', $value[1], PDO::PARAM_INT);
+
+                    // Exécuter la requête
+                    $statement->execute();
+                    $numChambre = $statement->fetchColumn();
+                }
+                $stmtChambre = $pdo->prepare("UPDATE ldc.LogementChambre SET numChambre = ? WHERE numlogement = $id_logem");
+                $stmtChambre->bindParam(1, $numChambre);
+                $stmtChambre->execute();
             }
             else{ //Si le numero de la chambre est plus eleve que le nombre de chambre de la bdd, on l'ajoute
-                $stmt = $pdo->prepare(
-                    "INSERT INTO ldc.chambre VALUES ($key, $value[1], $value[0],$id_logem)");
-                $stmt->execute();
+                $query = "SELECT numChambre FROM ldc.Chambre WHERE nbLitsDoubles = :nombreDeLitsDoubles AND nblitssimples = :nblitssimples";
+                $statement = $pdo->prepare($query);
+                $statement->bindParam(':nombreDeLitsDoubles', $value[1], PDO::PARAM_INT);
+                $statement->bindParam(':nblitssimples', $value[0], PDO::PARAM_INT);
+                $statement->execute();
+                $result = $statement->fetch(PDO::FETCH_ASSOC);
+                if ($result) {
+                    $numChambre =  $result['numChambre'];
+                } else {
+                    $query = "INSERT INTO ldc.Chambre (nbLitsSimples, nbLitsDoubles) VALUES (:nbLitsSimples, :nbLitsDoubles)";
+
+                    // Préparer la requête
+                    $statement = $pdo->prepare($query);
+
+                    // Lier les paramètres
+                    $statement->bindParam(':nbLitsSimples', $value[0], PDO::PARAM_INT);
+                    $statement->bindParam(':nbLitsDoubles', $value[1], PDO::PARAM_INT);
+
+                    // Exécuter la requête
+                    $statement->execute();
+                    $numChambre = $statement->fetchColumn();
+                }
+                $stmtChambre = $pdo->prepare(
+                    "INSERT INTO ldc.LogementChambre (numChambre,numlogement) VALUES (?, ?)"
+                );
+                $stmtChambre->bindParam(1, $numChambre);
+                $stmtChambre->bindParam(2, $id_logem);
+                $stmtChambre->execute();
             }
             if (!$stmt){
                 $erreur=true;
@@ -157,7 +205,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         */
         for ($i = $nbChambres+1; $i <= $resultC['count']; $i++) {
             $stmt = $pdo->prepare(
-                "DELETE from ldc.chambre WHERE numlogement=$id_logem and numchambre=$i");
+                "DELETE from ldc.logementchambre WHERE numlogement=$id_logem");
             $stmt->execute();
             if (!$stmt){
                 $erreur=true;

@@ -120,7 +120,7 @@ h1 {
   width: auto;
 }
 
-litsElement > label{
+.litsElement > label{
   margin-top: 1em;
 }
 

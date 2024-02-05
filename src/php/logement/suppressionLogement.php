@@ -3,7 +3,7 @@
 $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
 $numLogement = $_GET['numLogement'];
 
-$stmt = $pdo->prepare("DELETE FROM ldc.chambre WHERE numLogement=$numLogement");
+$stmt = $pdo->prepare("DELETE FROM ldc.logementchambre WHERE numLogement=$numLogement");
 $stmt->execute(); 
 $stmt = $pdo->prepare("DELETE FROM ldc.service WHERE numLogement=$numLogement");
 $stmt->execute();
@@ -25,7 +25,6 @@ $stmt = $pdo->prepare("DELETE FROM ldc.favorisclient WHERE numLogement=$numLogem
 $stmt->execute();  /*
 $stmt = $pdo->prepare("DELETE FROM ldc.AvisLogement WHERE numLogement=$numLogement");
 $stmt->execute(); */
-$stmt = $pdo->prepare("DELETE FROM ldc.logementproprio WHERE numLogement=$numLogement");
 $stmt->execute();
 $stmt = $pdo->prepare("DELETE FROM ldc.logement WHERE numLogement=$numLogement");
 $stmt->execute(); 

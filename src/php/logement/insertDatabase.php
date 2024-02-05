@@ -111,7 +111,8 @@ if (isset($_SESSION['id'])) {
     $nbChambres=count($chambres);
 
     try {
-        $pdo = require($_SERVER['DOCUMENT_ROOT'].'/src/php/connect.php');
+        global $pdo;
+        require($_SERVER['DOCUMENT_ROOT'].'/src/php/connect.php');
         $stmt = $pdo->prepare("INSERT INTO ldc.Logement (surfaceHabitable, libelle, accroche, descriptionLogement, natureLogement, adresse, cp, ville ,proprio, photoCouverture, LogementEnLigne, nbPersMax, nbChambres, nbSalleDeBain, tarifNuitees) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
             $stmt->bindParam(1, $surface);
@@ -136,16 +137,38 @@ if (isset($_SESSION['id'])) {
 
             //CHAMBRES
             foreach ($chambres as $key => $value){
+                $query = "SELECT numChambre FROM ldc.Chambre WHERE nbLitsDoubles = :nombreDeLitsDoubles AND nblitssimples = :nblitssimples";
+                $statement = $pdo->prepare($query);
+                $statement->bindParam(':nombreDeLitsDoubles', $value[1], PDO::PARAM_INT);
+                $statement->bindParam(':nblitssimples', $value[0], PDO::PARAM_INT);
+                $statement->execute();
+                $result = $statement->fetch(PDO::FETCH_ASSOC);
+                if ($result) {
+                   $numChambre =  $result['numChambre'];
+                } else {
+                    // Préparer la requête SQL avec une colonne auto-incrémentée
+                    $query = "INSERT INTO ldc.Chambre (nbLitsSimples, nbLitsDoubles) VALUES (:nbLitsSimples, :nbLitsDoubles)";
+
+                    // Préparer la requête
+                    $statement = $pdo->prepare($query);
+
+                    // Lier les paramètres
+                    $statement->bindParam(':nbLitsSimples', $value[0], PDO::PARAM_INT);
+                    $statement->bindParam(':nbLitsDoubles', $value[1], PDO::PARAM_INT);
+
+                    // Exécuter la requête
+                    $statement->execute();
+                    $numChambre = $pdo->lastInsertId();
+                }
                 $stmtChambre = $pdo->prepare(
-                    "INSERT INTO ldc.chambre (numChambre, nblitssimples, nblitsdoubles, numlogement) VALUES (?, ?, ?, ?)"
+                    "INSERT INTO ldc.LogementChambre (numChambre,numlogement) VALUES (?, ?)"
                 );
-                $stmtChambre->bindParam(1, $key);
-                $stmtChambre->bindParam(2, $value[0]);
-                $stmtChambre->bindParam(3, $value[1]);
-                $stmtChambre->bindParam(4, $id_logem);
+                $stmtChambre->bindParam(1, $numChambre);
+                $stmtChambre->bindParam(2, $id_logem);
+                print_r($numChambre);
+                print_r($id_logem);
                 $stmtChambre->execute();
             }
-            
             //INSTALLATIONS
             foreach($installations as $key => $value){
                 $stmtInstallation = $pdo->prepare(
