@@ -3,7 +3,7 @@
     //connexion à la base de donnée
     try {
         $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
-        $stmt = $pdo->prepare("SELECT numLogement,libelle,nbPersMax,tarifNuitees,LogementEnLigne,ville,note,typeLogement FROM ldc.Logement");
+        $stmt = $pdo->prepare("SELECT numLogement,libelle,nbPersMax,tarifNuitees,LogementEnLigne,ville,note,typeLogement,adresse FROM ldc.Logement");
 
         //Recherche des logements dans la base de données
         $stmt->execute();
@@ -16,6 +16,39 @@
     } catch (PDOException $e) {
         $logements = array();
     }
+
+    //Tableau des adresses des logements id => [coordX, coordY]
+    include_once($_SERVER['DOCUMENT_ROOT'] . '/src/php/logement/recupCoordGps.php');
+    $adresses = array();
+    foreach ($logements as $logement) {
+
+        $ville = $logement[5];
+        $rue = $logement[8];
+
+        $adresse = urlencode($ville . ' ' . $rue); //Adresse complète
+        $coords = recupCoordGps($adresse);
+        $adresses[$logement[0]] = appoximationCoord($coords[0], $coords[1]);
+
+        if ($adresses[$logement[0]][0] == null || $adresses[$logement[0]][1] == null) { //Si l'adresse avec les coordonnées précises ne fonctionne pas
+            $adresse = urlencode($ville); //Utiliser le nom de la ville seulement
+            $coords = recupCoordGps($adresse);
+            $adresses[$logement[0]] = appoximationCoord($coords[0], $coords[1]);
+        }
+    }
+
+    //Si erreur dans la récupération des coordonnées GPS
+    if (in_array(null, $adresses)) {
+        $erreurMap = true;
+    } else {
+        $erreurMap = false;
+    }
+
+    //Localisation des logements (id => ville)
+    $localisations = array();
+    foreach ($logements as $logement) {
+        $localisations[$logement[0]] = $logement[5];
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="fr-fr">
@@ -25,11 +58,26 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="/src/styles/styles.css">
         <link rel="stylesheet" type="text/css" href="/src/styles/index.css">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
         <title>ALHaiz Breizh</title>
         
     </head>
     <body>
         <?php include $_SERVER['DOCUMENT_ROOT'] .'/src/php/header.php'; ?>
+
+        <div class="map">
+            <button id="bouttonCloseMap" class="boutton"><img src="/public/icons/croix.svg" alt="Fermer"></button>
+            <div 
+                <?php if (!($erreurMap)){ ?>
+                    id="map"
+                <?php } ?>>
+                <?php if ($erreurMap) { ?>
+                    <h2 class="error_map">Une erreur est survenue avec la carte :/</h2>
+                <?php } ?>
+            </div>
+        </div>
+
         <video id="background" autoplay loop muted>
             <source src="/public/videos/video-bretagne.mp4" type="video/mp4">
         </video>
@@ -38,11 +86,11 @@
             <p>Nous avons tout pour vous mettre ALHaIZ</p>
         </div>
 
-
         <div id="logements">
             <h2>Les logements</h2>
             <div id="options">
                 <div>
+                    <button id="bouttonMap" class="boutton">Voir la carte</button>
                     <div class="menu_filtre">
                         <div id="sidebar">
                             <input id="side_recherche" class="textfield" type="text" placeholder="Rechercher..">
@@ -95,19 +143,21 @@
                             }
                         ?>
                         <button class="boutton">Trier</button>
+                        <!-- Menu déroulant pour le tri 
                         <div class="menu_deroulant">
-                        <ul>
-                            <li <?php if ($tri=="ancien"){?> class="select"><a href="index.php#logements"> <?php }else{?> ><a href="index.php?tri=ancien#logements"><?php }?>Offre de la plus ancienne à la plus récente</li>
-                            <li <?php if ($tri=="tarifmoins"){?> class="select"><a href="index.php#logements"> <?php }else{?> ><a href="index.php?tri=tarifmoins#logements"><?php }?>Tarif (- cher en premier)</li>
-                            <li <?php if ($tri=="tarifplus"){?> class="select"><a href="index.php#logements"> <?php }else{?> ><a href="index.php?tri=tarifplus#logements"><?php }?>Tarif (+ cher en premier)</li>
-                            <li <?php if ($tri=="notes"){?> class="select"><a href="index.php#logements"> <?php }else{?> ><a href="index.php?tri=notes#logements"><?php }?>Notes (meilleures en premier)</li>
-                            <li <?php if ($tri=="avis"){?> class="select"><a href="index.php#logements"> <?php }else{?> ><a href="index.php?tri=avis#logements"><?php }?>Avis positifs (+ d'avis positifs)</li>
-                        </ul>
-                        </div>
+                            <ul>
+                                <li <?php if ($tri=="ancien"){?> class="select"><a href="index.php#logements"> <?php }else{?> ><a href="index.php?tri=ancien#logements"><?php }?>Offre de la plus ancienne à la plus récente</li>
+                                <li <?php if ($tri=="tarifmoins"){?> class="select"><a href="index.php#logements"> <?php }else{?> ><a href="index.php?tri=tarifmoins#logements"><?php }?>Tarif (- cher en premier)</li>
+                                <li <?php if ($tri=="tarifplus"){?> class="select"><a href="index.php#logements"> <?php }else{?> ><a href="index.php?tri=tarifplus#logements"><?php }?>Tarif (+ cher en premier)</li>
+                                <li <?php if ($tri=="notes"){?> class="select"><a href="index.php#logements"> <?php }else{?> ><a href="index.php?tri=notes#logements"><?php }?>Notes (meilleures en premier)</li>
+                                <li <?php if ($tri=="avis"){?> class="select"><a href="index.php#logements"> <?php }else{?> ><a href="index.php?tri=avis#logements"><?php }?>Avis positifs (+ d'avis positifs)</li>
+                            </ul>
+                        </div>-->
                     </div>
                 </div>
             </div>
-            <div id="contenur_logements">
+            <div id="conteneur_logements">
+
                 <?php
 
                 //Choix du tri
@@ -192,7 +242,7 @@
                         $localisation = $logement[5];
                         $prix = $logement[3] ?>
     
-                        <div class="logement">
+                        <div class="logement" id="logement<?php echo $logement[0] ?>">
                             <a href="<?php echo $lien ?>"><img src="<?php echo $img ?>"></a> <!-- Image du logement -->
                             <div data-information=<?php echo $logement[7]?>>
                             <button type="button"><img src="/public/icons/heart_white.svg"></button> <!-- Coeur pour liker -->
@@ -216,20 +266,14 @@
                 } ?>
             </div> 
         </div>
+
         <?php include $_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'; ?>
+        <script>
+            var adresses = <?php echo json_encode($adresses); ?>;
+            var localisations = <?php echo json_encode($localisations); ?>;
+        </script>
+        <script src="/src/js/map-accueil.js"></script>
         <script src="/src/js/side.js"></script>
         <script src="/src/js/accueilScroll.js"></script>
-        <script>
-            //Si on a l'attribut index dans l'url, on scroll jusqu'au logement
-            let index = <?php echo $_GET["index"] ?>;
-            console.log(index);
-            if (index != null){
-                let logement = document.getElementById("logements");
-                logement.scrollIntoView();
-            } else {
-                let header = document.querySelector("header");
-                header.scrollIntoView();
-            }
-        </script>
     </body>
 </html>

@@ -257,29 +257,8 @@ if (!isset($liste_langue_parle)) {
 // Récupération des coordonnées GPS
 $adresse = $localisation . ' ' . $localisation_speci;
 $adresse = urlencode($adresse);
-$context = stream_context_create(
-    array(
-        'http' => array(
-            'method' => 'GET',
-            'header' => "User-Agent: MyApplication/1.0\r\n"
-        )
-    )
-);
-function recupCoordGps($adresse){
-    $url = "https://nominatim.openstreetmap.org/search?q=".$adresse."&format=json&polygon=1&addressdetails=1";
-    global $context;
-    $data = file_get_contents($url, false, $context);
-    $json = json_decode($data, true);
 
-    if (isset($json[0])) {
-        $coordX = $json[0]['lat'];
-        $coordY = $json[0]['lon'];
-    } else {
-        $coordX = null;
-        $coordY = null;
-    }
-    return [$coordX, $coordY];
-}
+include_once($_SERVER['DOCUMENT_ROOT'] . '/src/php/logement/recupCoordGps.php');
 
 [$coordX, $coordY] = recupCoordGps($adresse);
 if ($coordX == null || $coordY == null) { //Si l'adresse avec les coordonnées précises ne fonctionne pas
