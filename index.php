@@ -11,6 +11,7 @@
         <link rel="stylesheet" type="text/css" href="/src/styles/styles.css">
         <link rel="stylesheet" type="text/css" href="/src/styles/index.css">
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <link rel="icon" href="/public/logos/logo-black.svg">
         <title>ALHaiz Breizh</title>
         
     </head>

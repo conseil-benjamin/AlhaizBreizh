@@ -6,8 +6,9 @@ const villeHTMLelement = document.getElementById("ville")
 const dateNaissanceInputHTMLelement = document.getElementById("date_naissance")
 
 function setMaxDateNaissanceAuj() {
-    dateNaissanceInputHTMLelement.max = new Date().toISOString().split('T')[0];
-}
+    const dateAuj = new Date();
+    const dateMax = new Date(dateAuj.getFullYear() - 18, dateAuj.getMonth(), dateAuj.getDate());
+    dateNaissanceInputHTMLelement.max = dateMax.toISOString().split('T')[0];}
 
 function validerForm() {
     const nom = document.forms["formulaire"]["nom"].value;
