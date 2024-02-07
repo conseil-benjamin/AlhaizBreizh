@@ -179,6 +179,7 @@ async function enfer() {
                 filtre_min(charlie[cle].innerHTML) &&
                 filtre_recherche(charlie[cle].innerHTML) &&
                 filtre_type(charlie[cle].innerHTML) &&
+                filtre_map(charlie[cle])&&
                 result1 &&
                 result2
             ) {
@@ -287,6 +288,15 @@ function filtre_type(contenu){
     }
     else{
         return true;
+    }
+}
+
+function filtre_map(contenu){
+    if (contenu.classList.contains('filtremap')){
+        return true;
+    }
+    else{
+        return false;
     }
 }
 
