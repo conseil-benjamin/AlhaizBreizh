@@ -67,7 +67,10 @@
         <?php include $_SERVER['DOCUMENT_ROOT'] .'/src/php/header.php'; ?>
 
         <div class="map">
-            <button id="bouttonCloseMap" class="boutton"><img src="/public/icons/croix.svg" alt="Fermer"></button>
+            <nav>
+                <button id="bouttonResetMap" class="boutton"><img src="/public/icons/reset.svg" alt="Reset la vue"></button>
+                <button id="bouttonCloseMap" class="boutton"><img src="/public/icons/croix.svg" alt="Fermer"></button>
+            </nav>
             <div 
                 <?php if (!($erreurMap)){ ?>
                     id="map"
@@ -90,7 +93,6 @@
             <h2>Les logements</h2>
             <div id="options">
                 <div>
-                    <button id="bouttonMap" class="boutton">Voir la carte</button>
                     <div class="menu_filtre">
                         <div id="sidebar">
                             <input id="side_recherche" class="textfield" type="text" placeholder="Rechercher..">
@@ -265,6 +267,13 @@
                     <h2>Aucun logement n'est disponible pour le moment :/</h2><?php
                 } ?>
             </div> 
+            <div class="bandeau">
+                <div>
+                    <button class="boutton" id="precedent"><img src="/public/icons/forward.svg" alt="Précédent"></button>
+                    <button class="boutton" id="suivant"><img src="/public/icons/forward.svg" alt="Suivant"></button>
+                </div>
+                <button id="bouttonMap" class="boutton"><img src="/public/icons/map.svg" alt="Carte"></button>
+            </div>
         </div>
 
         <?php include $_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'; ?>
