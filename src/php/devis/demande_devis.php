@@ -30,6 +30,7 @@ try {
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <link href="/src/styles/demande_devis.css" rel="stylesheet" type="text/css">
         <link href="/src/styles/styles.css" rel="stylesheet" type="text/css">
+        <link rel="icon" href="/public/logos/logo-black.svg">
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> <!-- Librairie pour les alertes -->
         <title>Demande de devis</title>
     </head>

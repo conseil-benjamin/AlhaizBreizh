@@ -25,6 +25,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="/src/styles/styles.css">
         <link rel="stylesheet" type="text/css" href="/src/styles/index.css">
+        <link rel="icon" href="/public/logos/logo-black.svg">
         <title>ALHaiz Breizh</title>
         
     </head>
