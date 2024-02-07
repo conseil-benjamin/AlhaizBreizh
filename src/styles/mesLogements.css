@@ -56,10 +56,6 @@
     background-color: var(--col6);
 }
 
-.menu_deroulant{
-    margin-top:5em;
-}
-
 @media screen and (max-width: 950px){
     #options{
         justify-content: center;

@@ -4,7 +4,7 @@
 let compte = document.querySelector('#header .compte');
 let options = document.querySelector('#header .compte-options');
 
-if(options !== undefined) {
+if(options !== null) {
     options.style.width = compte.offsetWidth + 'px';
 }
 

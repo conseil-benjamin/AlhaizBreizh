@@ -23,10 +23,10 @@ function paradis(liste){
 
 document.getElementById('menu-btn').addEventListener('click', function () {
     let sidebar = document.getElementById('sidebar');
-    if (sidebar.style.left === "-22em") {
+    if (sidebar.style.left === "-30em") {
       sidebar.style.left = "0";
     } else {
-      sidebar.style.left = "-22em";
+      sidebar.style.left = "-30em";
     }
   });
 
