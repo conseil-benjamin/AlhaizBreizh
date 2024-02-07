@@ -76,7 +76,7 @@ inputDateDepart.addEventListener("change", function () {
     let dateArrivee = inputDateArivee.value
     if (dateArrivee >= dateDepart) {
         inputDateArivee.value = formaterDate(new Date(dateDepart),-1);
-        dateArrivee = inputDateDepart.value;
+        dateArrivee = inputDateArivee.value;
     }
     updatePrix(dateDepart,dateArrivee)
     updateNBNuit()
