@@ -43,14 +43,15 @@ function formaterDate(date,decalage) {
     return fullYear + '-' + MM + '-' + DD;
 }
 
-btnEnvoyerHTMLelement.addEventListener("click", () => {
+btnEnvoyerHTMLelement.addEventListener("click", (e) => {
+    e.preventDefault()
     swal({
         title: "Êtes-vous sur ?",
         text: "Cela enverras une demande de devis au propriétaire",
         icon: "warning",
         buttons: [
-            'No, cancel it!',
-            'Yes, I am sure!'
+            'Annuler',
+            'Valider'
         ],
         dangerMode: true,
     }).then(function(isConfirm) {
@@ -72,7 +73,11 @@ nbpersonne.addEventListener('change',()=> {
  */
 inputDateDepart.addEventListener("change", function () {
     const dateDepart = this.value;
-    const dateArrivee = inputDateArivee.value
+    let dateArrivee = inputDateArivee.value
+    if (dateArrivee >= dateDepart) {
+        inputDateArivee.value = formaterDate(new Date(dateDepart),-1);
+        dateArrivee = inputDateDepart.value;
+    }
     updatePrix(dateDepart,dateArrivee)
     updateNBNuit()
 });
