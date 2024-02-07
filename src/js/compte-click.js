@@ -20,7 +20,8 @@ compteDiv.addEventListener('click', () => {
     }
 });
 
-dropdownButton.addEventListener('click', ()=> {
+
+dropdownButton?.addEventListener('click', ()=> {
     if (!isdropDownTelDivVisible) {
         dropDownTelDiv.style.display = 'block';
         isdropDownTelDivVisible = !isdropDownTelDivVisible
