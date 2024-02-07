@@ -389,7 +389,7 @@ depart.addEventListener("change", () => {
   if (dateArrivee > dateDepart) {
     depart.value = ""; // Remet la date d'arrivée à vide si elle dépasse la date de départ
     Swal.fire({
-        icon: "Erreur",
+        icon: "error",
         title: "La date d'arrivée doit être antérieure à la date de départ.",
         showConfirmButton: true,
         timer: 3000
@@ -404,7 +404,7 @@ arrivee.addEventListener("change", () => {
   if (dateArrivee > dateDepart) {
     arrivee.value = ""; // Remet la date d'arrivée à vide si elle dépasse la date de départ
     Swal.fire({
-        icon: "Erreur",
+        icon: "error",
         title: "La date d'arrivée doit être antérieure à la date de départ.",
         showConfirmButton: true,
         timer: 3000

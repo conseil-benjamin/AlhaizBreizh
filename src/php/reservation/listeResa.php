@@ -111,6 +111,7 @@ $reservations = obtenirLogementsProprio($_SESSION['id']);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="/src/styles/styles.css">
     <link rel="stylesheet" type="text/css" href="/src/styles/mesLogements.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <link rel="icon" href="/public/logos/logo-black.svg">
     <title>ALHaiz Breizh</title>
@@ -151,7 +152,7 @@ $reservations = obtenirLogementsProprio($_SESSION['id']);
                                     </div>
                                 </div>
                             <h2>Ville</h2>
-                            <select id="side_type">
+                            <select id="side_ville">
                                 <option value="">---</option>
                                 <?php
                                     foreach ($reservations as $reservation) {
@@ -182,7 +183,7 @@ $reservations = obtenirLogementsProprio($_SESSION['id']);
             } else {
                 foreach ($reservations as $reservation){ ?>
                     <div class="logement">
-                            <img src="/public/img/logements/<?php echo $reservation[0]; ?>/1.png" alt="Photo du logement">
+                            <img src="/public/img/logements/<?php echo $reservation[0]; ?>/1.png" alt="Photo du logement" place=<?php echo $reservation[11]; ?>>
                         <div>
                             <h2><?php echo $reservation[1]; ?></h2>
                             <a href="/src/php/afficherPlageDispo.php?dateDebut=<?php echo $reservation[2] ?>&dateFin=<?php echo $reservation[3] ?>">

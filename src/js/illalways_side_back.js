@@ -96,11 +96,12 @@ function trierLogements(liste) {
         let imageElement = document.createElement('img');
         imageElement.src = '/public/img/logements/' + logement[0] + '/1.png'; //num logement
         imageElement.alt="logement";
+        imageElement.place=logement[11];
         logementDiv.appendChild(imageElement);
 
         let res = document.createElement('div');
 
-        let titre = document.createElement('h3');
+        let titre = document.createElement('h2');
         titre.textContent=logement[1]; //titre
         res.appendChild(titre);
 
@@ -109,11 +110,13 @@ function trierLogements(liste) {
 
         let texte = document.createElement('h4');
         texte.textContent = logement[2]; //description
-        res.appendChild(texte);
+        aa.appendChild(texte);
 
         loc_t = document.createElement('h4');
         loc_t.textContent=logement[3];
-        res.appendChild(loc_t);
+        aa.appendChild(loc_t);
+
+        res.appendChild(aa);
 
         let pictprofil = document.createElement('a');
         pictprofil.href="/src/php/profil/profil.php?user="+logement[6];
@@ -150,6 +153,18 @@ function trierLogements(liste) {
 
 //Application des filtres
 async function enfer() {
+
+    charlie.forEach(logement => {
+        if (
+            filtre_recherche(logement.innerHTML)&&
+            filtre_sej_deb(logement.innerHTML)&&
+            filtre_sej_dep(logement.innerHTML)
+        ) {
+            logement.style.display = "flex";
+        } else {
+            logement.style.display = "none";
+        }
+      });
       
     }
 
@@ -185,18 +200,22 @@ document.body.addEventListener('click', function (event) {
     }
 });
 
-
-function filtre_nb(contenu) {
-    let doc = document.getElementById('side_nb');
+function filtre_ville(contenu) {
+    let doc = document.getElementById('side_ville');
     let filtre = doc.value.toLowerCase();
-    let nb = contenu.match(/\d+/g);
-    if (parseInt(nb[nb.length-2])<parseInt(filtre)){
-        return false;
+    let nb = contenu.match(/data-information="(.*?)"/);
+    if (filtre!== ""){
+        if (nb[1].toLowerCase()==filtre){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
     else{
         return true;
     }
-};
+}
 
 function filtre_max(contenu) {
     let doc = document.getElementById('side_max');
@@ -225,7 +244,7 @@ function filtre_min(contenu) {
 function filtre_recherche(contenu) {
     let doc = document.getElementById('side_recherche');
     let filtre = doc.value.toLowerCase();
-    let nb = contenu.match(/<h3>([\s\S]*?)<\/h3>/);
+    let nb = contenu.match(/<h2>([\s\S]*?)<\/h2>/);
     if (nb[1].toLowerCase().includes(filtre)){
         return true;
     }
@@ -251,96 +270,48 @@ function filtre_type(contenu){
     }
 }
 
-function interrogerBDD(num) {
-    return new Promise((resolve, reject) => {
-        let doc = document.getElementById('side_arrive');
-        if (doc.value !== "") {
-            let dateAVerifier = new Date(doc.value);
-            // Créer un objet XMLHttpRequest
-            let xhr = new XMLHttpRequest();
 
-            // Configurer la requête
-            xhr.open("GET", "src/php/search_date.php?num=" + num, true);
-
-            // Définir la fonction de rappel pour gérer la réponse
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4) {
-                    let channel = xhr.responseText.match(/\d{4}-\d{2}-\d{2}/g);
-                    let tab = channel || [];
-                    let flag = false;
-
-                    if (xhr.responseText !== "") {
-                        for (let i = 0; i < tab.length; i += 2) {
-                            let dateDebut = new Date(tab[i]);
-                            let dateFin = new Date(tab[i + 1]);
-                            if (dateAVerifier >= dateDebut && dateAVerifier <= dateFin) {
-                                flag = true;
-                                break;
-                            }
-                        }
-                    } else {
-                        flag=true;
-                    }
-
-                    resolve(flag);
-                }
-            };
-
-            // Envoyer la requête
-            xhr.send();
-        } else {
-            // Si doc.value est vide, résoudre avec true
-            resolve(true);
+function filtre_sej_deb(contenu){
+    let doc = document.getElementById('side_arrive');
+    let nb = contenu.match(/\d{4}-\d{2}-\d{2}/g);
+    console.log(nb);
+    if (doc.value!== ""){
+        let dateAVerifier = new Date(doc.value);
+        console.log(dateAVerifier,new Date(nb[2]));
+        if (dateAVerifier.getTime()==new Date(nb[2]).getTime()){
+            return true;
         }
-    });
+        else{
+            return false;
+        }
+    }
+    else{
+        return true;
+    }
 }
 
-function dateBDD(num) {
-    return new Promise((resolve, reject) => {
-        let doc = document.getElementById('side_depart');
-        if (doc.value !== "") {
-            let dateAVerifier = new Date(doc.value);
-            // Créer un objet XMLHttpRequest
-            let xhr = new XMLHttpRequest();
-
-            // Configurer le truc
-            xhr.open("GET", "src/php/search_date.php?num=" + num, true);
-
-            // Définir la fonction de rappel pour gérer la réponse
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4) {
-                    let channel = xhr.responseText.match(/\d{4}-\d{2}-\d{2}/g);
-                    let tab = channel || [];
-                    let flag = false;
-
-                    if (xhr.responseText !== "") {
-                        for (let i = 0; i < tab.length; i += 2) {
-                            let dateDebut = new Date(tab[i]);
-                            let dateFin = new Date(tab[i + 1]);
-                            if (dateAVerifier >= dateDebut && dateAVerifier <= dateFin) {
-                                flag = true;
-                                break;
-                            }
-                        }
-                    } else {
-                        flag=true;
-                    }
-
-                    resolve(flag);
-                }
-            };
-
-            // Envoyer la requête
-            xhr.send();
-        } else {
-            // Si doc.value est vide, résoudre avec true
-            resolve(true);
+function filtre_sej_dep(contenu){
+    let doc = document.getElementById('side_depart');
+    let nb = contenu.match(/\d{4}-\d{2}-\d{2}/g);
+    console.log(nb);
+    if (doc.value!== ""){
+        let dateAVerifier = new Date(doc.value);
+        console.log(dateAVerifier,new Date(nb[3]));
+        if (dateAVerifier.getTime()==new Date(nb[3]).getTime()){
+            return true;
         }
-    });
+        else{
+            return false;
+        }
+    }
+    else{
+        return true;
+    }
 }
 
 const arrivee = document.getElementById("side_arrive");
 const depart = document.getElementById("side_depart");
+src="https://cdn.jsdelivr.net/npm/sweetalert2@11";
 
 depart.addEventListener("change", () => {
   const dateArrivee = new Date(arrivee.value);
@@ -348,7 +319,12 @@ depart.addEventListener("change", () => {
 
   if (dateArrivee > dateDepart) {
     depart.value = ""; // Remet la date d'arrivée à vide si elle dépasse la date de départ
-    alert("La date d'arrivée doit être antérieure à la date de départ.");
+    Swal.fire({
+        icon: "error",
+        title: "La date d'arrivée doit être antérieure à la date de départ.",
+        showConfirmButton: true,
+        timer: 3000
+    }); 
   }
 });
 
@@ -358,7 +334,12 @@ arrivee.addEventListener("change", () => {
 
   if (dateArrivee > dateDepart) {
     arrivee.value = ""; // Remet la date d'arrivée à vide si elle dépasse la date de départ
-    alert("La date d'arrivée doit être antérieure à la date de départ.");
+    Swal.fire({
+        icon: "error",
+        title: "La date d'arrivée doit être antérieure à la date de départ.",
+        showConfirmButton: true,
+        timer: 3000
+    });
   }
 });
 

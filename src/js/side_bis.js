@@ -148,7 +148,6 @@ function trierLogements(liste) {
 
 //Application des filtres
 async function enfer() {
-    console.log(charlie);
 
     charlie.forEach(logement => {
         if (
