@@ -1,21 +1,5 @@
 <?php 
-    session_start(); 
-    //connexion à la base de donnée
-    try {
-        $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
-        $stmt = $pdo->prepare("SELECT numLogement,libelle,nbPersMax,tarifNuitees,LogementEnLigne,ville,note,typeLogement FROM ldc.Logement");
-
-        //Recherche des logements dans la base de données
-        $stmt->execute();
-        $logements = array();
-        while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            $logements[] = $row;
-        }
-
-        $pdo = null;
-    } catch (PDOException $e) {
-        $logements = array();
-    }
+    require_once("./src/php/chargerLogements.php")
 ?>
 <!DOCTYPE html>
 <html lang="fr-fr">
@@ -26,6 +10,7 @@
         <link rel="icon" href="/public/logos/logo-black.svg">
         <link rel="stylesheet" type="text/css" href="/src/styles/styles.css">
         <link rel="stylesheet" type="text/css" href="/src/styles/index.css">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <title>ALHaiz Breizh</title>
         
     </head>
@@ -46,6 +31,21 @@
                 <div>
                     <div class="menu_filtre">
                         <div id="sidebar">
+                            <img id="suppr" src="public/icons/supprimer.png" alt="Icône Supprimer" onclick="abime()">
+                            <div class="menu_tri">
+                                <button class="boutton">Trier</button>
+                                <div class="menu_deroulant">
+                                    <ul>
+                                        <a class="item_tri select" onclick="num(event)">Ancienneté (Ordre décroissant)</a>
+                                        <a  class="item_tri" onclick="unnum(event)">Ancienneté (Ordre décroissant)</a>
+                                        <a  class="item_tri" onclick="tarif(event)">Tarif (Ordre croissant)</a>
+                                        <a  class="item_tri" onclick="untarif(event)">Tarif (Ordre décroissant)</a>
+                                        <a  class="item_tri" onclick="notes(event)">Notes</a>
+                                        <a  class="item_tri" href="index.php?tri=avis#logements">Avis positifs</a>
+                                    </ul>
+                                </div>
+                            </div>
+
                             <input id="side_recherche" class="textfield" type="text" placeholder="Rechercher..">
                             <h2>Plage de tarif</h2>
                                 <div class="hell">
@@ -76,107 +76,19 @@
                             <h2>Type du logement</h2>
                                 <select id="side_type">
                                     <option value="">---</option>
-                                    <option value="appart">Appartement</option>
+                                    <option value="appartement">Appartement</option>
                                     <option value="maison">Maison</option>
                                     <option value="villa">Villa</option>
                                 </select>
                         </div>
 
+                        <button id="menu-btn" class="boutton">Filtrer et Trier</button>
 
-                        <button id="menu-btn" class="boutton">Filtrer</button>
-                    </div>
-
-                    <div class="menu_tri">
-                        <?php
-                            if (isset($_GET['tri'])){
-                                $tri=$_GET['tri'];
-                            }
-                            else{
-                                $tri=null;
-                            }
-                        ?>
-                        <button class="boutton">Trier</button>
-                        <div class="menu_deroulant">
-                        <ul>
-                            <li <?php if ($tri=="ancien"){?> class="select"><a href="index.php#logements"> <?php }else{?> ><a href="index.php?tri=ancien#logements"><?php }?>Offre de la plus ancienne à la plus récente</li>
-                            <li <?php if ($tri=="tarifmoins"){?> class="select"><a href="index.php#logements"> <?php }else{?> ><a href="index.php?tri=tarifmoins#logements"><?php }?>Tarif (- cher en premier)</li>
-                            <li <?php if ($tri=="tarifplus"){?> class="select"><a href="index.php#logements"> <?php }else{?> ><a href="index.php?tri=tarifplus#logements"><?php }?>Tarif (+ cher en premier)</li>
-                            <li <?php if ($tri=="notes"){?> class="select"><a href="index.php#logements"> <?php }else{?> ><a href="index.php?tri=notes#logements"><?php }?>Notes (meilleures en premier)</li>
-                            <li <?php if ($tri=="avis"){?> class="select"><a href="index.php#logements"> <?php }else{?> ><a href="index.php?tri=avis#logements"><?php }?>Avis positifs (+ d'avis positifs)</li>
-                        </ul>
-                        </div>
                     </div>
                 </div>
             </div>
             <div id="contenur_logements">
                 <?php
-
-                //Choix du tri
-
-                function tarif($a, $b) {
-                    return $a[3] - $b[3]; //fonction de tri par tarif le moins eleve
-                }
-                function note($a, $b) {
-                    return $a[6] <=> $b[6]; //fonction de tri par note la plus elevee
-                }
-                function avis($a, $b) {
-                    return $a[7] <=> $b[7]; //fonction de tri par le nombre d'avis le plus eleve
-                }
-
-                if ($tri=="tarifmoins"){
-                    usort($logements, 'tarif');
-                }
-                else if ($tri=="tarifplus"){
-                    usort($logements, 'tarif');
-                    $logements = array_reverse($logements);
-                }
-                else if ($tri=="notes"){ //On trie par ceux qui ont la meilleure note en premier
-                    foreach ($logements as $logement){
-                        $l_logement[]=$logement;
-                        if (empty($logement[6])){
-                            $l_logement[6]=2.5;
-                        }
-                    }
-                    usort($l_logement, 'note');
-                    $logements = array_reverse($l_logement);
-                }
-                else if ($tri=="avis"){ //fonction de tri par logement qui a le plus de commentaires superieur a 3 etoiles
-                    $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
-                    $stmt = $pdo->prepare("SELECT nbetoiles,numlogement FROM ldc.Avis INNER JOIN ldc.AvisLogement ON ldc.Avis.numAvis = AvisLogement.idAvis WHERE nbetoiles>=3");
-
-                    //Recherche des avis dans la base de données
-                    $stmt->execute();
-                    $avis = array();
-                    while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-                        $avis[] = $row;
-                    }
-                    $pdo = null;
-                    $l_logements=$logements;
-                    foreach ($l_logements as &$logement){
-                        $logement[]=0;
-                    }
-                    foreach ($avis as $avi){
-                        foreach ($l_logements as &$logement){
-                            if ($logement[0]==$avi[1]){
-                                $logement[8]=$logement[8]+1;
-                            }
-                        }
-                    }
-
-                    usort($l_logements, 'note'); //Cette categorie est sous triee par les notes les plus elevee
-                    usort($l_logements, 'avis'); //puis le tri principal, par nombre d'avis superieur a 3 etoiles
-
-                    $l_logements = array_reverse($l_logements);
-
-                    $logements=unserialize(serialize($l_logements));
-                    
-                }
-                else if ($tri=="ancien"){
-                    //option inverse du defaut : les plus anciens en premier
-                }
-                else{
-                    $logements = array_reverse($logements); //option par defaut : les plus recents en premier
-                }
 
                 /*Créations de carte pour chaque logements*/
 
@@ -195,7 +107,7 @@
     
                         <div class="logement">
                             <a href="<?php echo $lien ?>"><img src="<?php echo $img ?>"></a> <!-- Image du logement -->
-                            <div data-information=<?php echo $logement[7]?>>
+                            <div data-information=<?php echo $logement[7]?> >
                             <button type="button"><img src="/public/icons/heart_white.svg"></button> <!-- Coeur pour liker -->
                                 <?php if ($logement[6]!=NULL){ //Verifie que le logement a recu au moins une note?>                                
                                 <div id="rating"><img src="/public/icons/star_fill.svg"><?php echo $logement[6]; ?></div> <!-- Notation -->
@@ -222,8 +134,7 @@
         <script src="/src/js/accueilScroll.js"></script>
         <script>
             //Si on a l'attribut index dans l'url, on scroll jusqu'au logement
-            let index = <?php echo $_GET["index"] ?>;
-            console.log(index);
+            let index = null;
             if (index != null){
                 let logement = document.getElementById("logements");
                 logement.scrollIntoView();
@@ -231,6 +142,7 @@
                 let header = document.querySelector("header");
                 header.scrollIntoView();
             }
+
         </script>
     </body>
 </html>

@@ -318,10 +318,6 @@ h1, h2, h3{
         position: relative;
     }
 
-    #header .compte-options{
-
-    }
-
     #header > nav{
         display: none;
     }
@@ -417,29 +413,28 @@ h1, h2, h3{
     color:white;
     background-color: #627099;
     display: none;
-    left:40%;
+    left:10%;
     z-index:99;
 }
 
-.menu_tri:hover .menu_deroulant {
+.boutton:hover + .menu_deroulant {
     display: block; /* Affiche l'élément lorsque son parent est survolé */
 }
 
-.menu_filtre:hover .menu_deroulant {
-    display: block; /* Affiche l'élément lorsque son parent est survolé */
+.menu_deroulant:hover{
+    display:block;
 }
 
-.menu_deroulant li{
+.menu_deroulant a{
     display: block; /* Prend toute la largeur disponible */
     text-align: center;
     padding: 1em;
 }
 
-.menu_deroulant li:hover{
+.menu_deroulant a:hover{
     background-color: #515D5E;
 }
-
-.menu_deroulant li.select{
+.menu_deroulant a.select{
     background-color: #16A1EF;
     font-weight: bold;
 }
@@ -496,6 +491,48 @@ h1, h2, h3{
 
 #sidebar > [type="checkbox"]{
     size:5em;
+}
+
+/*Options de filtre*/
+#options{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 3em;
+    z-index: 2;
+}
+
+#options .boutton{
+    background-color: var(--col6);
+}
+
+#options > div{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: .5em;
+    height: 100%;
+    width: 100%;
+}
+
+.menu_tri {
+    margin-bottom:2em;
+}
+
+#side_recherche{
+    margin-bottom:2em;
+}
+
+h2 + * {
+    margin-bottom: 1em;
+}
+
+#suppr{
+    cursor:pointer;
+    margin-top:-5em;
+    margin-bottom:1em;
 }
 
 

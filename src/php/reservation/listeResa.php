@@ -15,11 +15,27 @@ if (isset($_SESSION['id'])) {
         $logements = array();
         try {
             $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
-            $stmt = $pdo->prepare("SELECT DISTINCT numLogement,libelle,dateDebut,dateFin,Reservation.numClient,Client.pseudoCompte,proprio,numReservation,     proprio.firstName as prenom_proprio,
-            proprio.lastName as nom_proprio FROM ldc.Reservation NATURAL JOIN ldc.Logement inner JOIN ldc.Client on ldc.Reservation.numClient=idCompte INNER JOIN
-            ldc.Client as proprio ON proprio.idCompte = Logement.proprio WHERE Client.idCompte = $id;");
+            $stmt = $pdo->prepare("SELECT DISTINCT 
+            numLogement,
+            libelle,
+            dateDebut,
+            dateFin,
+            Reservation.numClient,
+            Client.pseudoCompte,
+            proprio,
+            numReservation,
+            proprio.firstName as prenom_proprio,
+            proprio.lastName as nom_proprio,
+            Logement.tarifNuitees,
+            Logement.ville
+            FROM ldc.Reservation
+            NATURAL JOIN ldc.Logement 
+            INNER JOIN ldc.Client on ldc.Reservation.numClient = idCompte 
+            INNER JOIN ldc.Client as proprio ON proprio.idCompte = Logement.proprio 
+        WHERE 
+            Client.idCompte = $id;");
 
-//requete github 2h
+    //requete github 2h
     //$stmt = $pdo->prepare("SELECT DISTINCT numLogement,libelle,dateDebut,dateFin,idCompte, pseudoCompte,proprio,numReservation FROM ldc.Reservation NATURAL JOIN ldc.Logement NATURAL JOIN ldc.Client WHERE proprio = $id ");
 
         $stmt->execute();
@@ -47,6 +63,7 @@ if (isset($_SESSION['id'])) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="/src/styles/styles.css">
         <link rel="stylesheet" type="text/css" href="/src/styles/mesLogements.css">
+
         <link rel="icon" href="/public/logos/logo-black.svg">
         <title>ALHaiz Breizh</title>
 </head>
@@ -78,18 +95,6 @@ if (isset($_SESSION['id'])) {
                             </a>
                         </div>
                     </div>
-
-        <style>
-     .recherche {
-         display: none;
-        }
-        .options {
-                display: none;
-            }
-    body{
-        min-height:0;
-    }
-        </style>
     </body>
 <?php
 }
@@ -106,7 +111,8 @@ $reservations = obtenirLogementsProprio($_SESSION['id']);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="/src/styles/styles.css">
     <link rel="stylesheet" type="text/css" href="/src/styles/mesLogements.css">
-    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <link rel="icon" href="/public/logos/logo-black.svg">
     <title>ALHaiz Breizh</title>
 </head>
@@ -115,20 +121,69 @@ $reservations = obtenirLogementsProprio($_SESSION['id']);
     <div id="content">
         <h2>Mes réservations</h2>
         <div id="options">
-            <div>
-                <input class="textfield" type="text" placeholder="Rechercher..">
-                <button class="boutton">Filtrer</button>
-                <button class="boutton">Trier</button>
+                <div>
+                    <div class="menu_filtre">
+                        <div id="sidebar">
+                        <img id="suppr" src="../../../public/icons/supprimer.png" alt="Icône Supprimer" onclick="abime()">
+                            <div class="menu_tri">
+                                <button class="boutton">Trier</button>
+                                <div class="menu_deroulant">
+                                    <ul>
+                                        <a class="item_tri select" onclick="num(event)">Date de Réservation (Ordre décroissant)</a>
+                                        <a  class="item_tri" onclick="unnum(event)">Date de Réservation (Ordre décroissant)</a>
+                                        <a  class="item_tri" onclick="date(event)">Date de Séjour (Ordre croissant)</a>
+                                        <a  class="item_tri" onclick="undate(event)">Date de Séjour (Ordre décroissant)</a>
+                                        <a  class="item_tri" onclick="tarif(event)">Tarif (Ordre croissant)</a>
+                                        <a  class="item_tri" onclick="untarif(event)">Tarif (Ordre décroissant)</a>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <input id="side_recherche" class="textfield" type="text" placeholder="Rechercher..">
+                            <h2>Plage de séjour</h2>
+                                <div class="hell">
+                                    <div class="select_filtr">
+                                        <p>Date d'arrivée</p>
+                                        <input class="input1" id="side_arrive" name="date_arrive" placeholder="JJ/MM/YYYY" type="date">
+                                    </div>
+                                    <div class="select_filtr">
+                                        <p>Date de départ</p>
+                                        <input class="input1" id="side_depart" name="date_depart" placeholder="JJ/MM/YYYY" type="date">
+                                    </div>
+                                </div>
+                            <h2>Ville</h2>
+                            <select id="side_ville">
+                                <option value="">---</option>
+                                <?php
+                                    foreach ($reservations as $reservation) {
+                                        $ville = $reservation[11];
+                                        echo $ville;
+                                        echo "<option value=\"{$reservation[11]}\">{$reservation[11]}</option>";
+                                    }
+                                ?>
+                            </select>
+                            <h2>Type du logement</h2>
+                                <select id="side_type">
+                                    <option value="">---</option>
+                                    <option value="appartement">Appartement</option>
+                                    <option value="maison">Maison</option>
+                                    <option value="villa">Villa</option>
+                                </select>
+                        </div>
+
+                        <button id="menu-btn" class="boutton">Filtrer et Trier</button>
+
+                    </div>
+                </div>
             </div>
-        </div>
         <div id="logements">
-            <?php 
+            <?php
             if (count($reservations) === 0) { ?>
                 <h3>Vous n'avez aucune réservation pour le moment :/</h3> <?php
             } else {
                 foreach ($reservations as $reservation){ ?>
                     <div class="logement">
-                            <img src="/public/img/logements/<?php echo $reservation[0]; ?>/1.png" alt="Photo du logement">
+                            <img src="/public/img/logements/<?php echo $reservation[0]; ?>/1.png" alt="Photo du logement" place=<?php echo $reservation[11]; ?>>
                         <div>
                             <h2><?php echo $reservation[1]; ?></h2>
                             <a href="/src/php/afficherPlageDispo.php?dateDebut=<?php echo $reservation[2] ?>&dateFin=<?php echo $reservation[3] ?>">
@@ -151,6 +206,7 @@ $reservations = obtenirLogementsProprio($_SESSION['id']);
             ?>
         </div>
     </div>
+    <script src="/src/js/illalways_side_back.js"></script>
     <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'); ?>
 </body>
 </html>
