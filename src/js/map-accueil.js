@@ -30,7 +30,7 @@ bouttonCloseMap.addEventListener('click', function() {
     mapDiv.style.display = "none";
     mapAffichee = false;
     document.body.style.overflowY = "auto";
-    window.location.hash = "#logements";
+    document.getElementById('logements').scrollIntoView();
 });
 
 /*******************************************************/
@@ -112,6 +112,23 @@ function adaptMarkersOnZoomAndMove(){
             logement.style.display = "flex";
         }
     });
+    testAucunLogementVisible();
+}
+
+function testAucunLogementVisible() {
+    //Afficher un message si aucun logement n'est visible
+    var aucunLogementVisible = true;
+    Object.keys(adresses).forEach(id => {
+        let logement = document.getElementById('logement'+id);
+        if (logement.style.display === "flex") {
+            aucunLogementVisible = false;
+        }
+    });
+    if (aucunLogementVisible) {
+        document.getElementById('aucunLogementVisible').style.display = "block";
+    } else {
+        document.getElementById('aucunLogementVisible').style.display = "none";
+    }
 }
 
 map.on('zoomend', function() {

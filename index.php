@@ -158,6 +158,9 @@
                     </div>
                 </div>
             </div>
+            <div id="aucunLogementVisible">
+                <h2>Aucun logement n'est visible sur la carte :/</h2>
+            </div>
             <div id="conteneur_logements">
 
                 <?php
@@ -277,12 +280,12 @@
         </div>
 
         <?php include $_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'; ?>
+        <script src="/src/js/side.js"></script>
+        <script src="/src/js/accueilScroll.js"></script>
         <script>
             var adresses = <?php echo json_encode($adresses); ?>;
             var localisations = <?php echo json_encode($localisations); ?>;
         </script>
         <script src="/src/js/map-accueil.js"></script>
-        <script src="/src/js/side.js"></script>
-        <script src="/src/js/accueilScroll.js"></script>
     </body>
 </html>

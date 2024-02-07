@@ -10,13 +10,17 @@ $context = stream_context_create(
 function recupCoordGps($adresse){
     $url = "https://nominatim.openstreetmap.org/search?q=".$adresse."&format=json&polygon=1&addressdetails=1";
     global $context;
-    $data = file_get_contents($url, false, $context);
-    $json = json_decode($data, true);
-
-    if (isset($json[0])) {
-        $coordX = $json[0]['lat'];
-        $coordY = $json[0]['lon'];
-    } else {
+    try {
+        $data = file_get_contents($url, false, $context);
+        $json = json_decode($data, true);
+        if (isset($json[0])) {
+            $coordX = $json[0]['lat'];
+            $coordY = $json[0]['lon'];
+        } else {
+            $coordX = null;
+            $coordY = null;
+        }
+    } catch (Exception $e) {
         $coordX = null;
         $coordY = null;
     }

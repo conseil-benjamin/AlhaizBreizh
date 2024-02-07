@@ -111,6 +111,13 @@
     filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.75));
 }
 
+@media screen and (max-width: 760px) {
+    #titre{
+        font-size: auto;
+        line-height: normal;
+    }
+}
+
 /********************************************/
 /*Content*/
 
@@ -118,6 +125,12 @@
     min-height: 100vh;
     margin-bottom: calc(100vh - 200px);
     background-color: #fff;
+}
+
+#logements #aucunLogementVisible{
+    display: none;
+    text-align: center;
+    margin-top: 2em;
 }
 
 #logements h2{
@@ -153,8 +166,8 @@
     flex-wrap: wrap;
     justify-content: center;
     padding: 2em;
-    scale: 1.1;
-    margin-top: 2em;
+    min-height: inherit;
+    margin-left: 3em;
 }
 
 #contenur_logements a:hover{
@@ -169,13 +182,16 @@
     justify-content: start;
     position: relative;
     width: 230px;
+    height: 360px;
+    max-height: fit-content;
     background-color: #fff;
     overflow: hidden;
     border: 1px solid #000;
     border-radius: 15px;
     transition: all 0.5s ease;
+    scale: 1.1;
+    margin-right: 3em;
     margin-bottom: 3em;
-    margin: 1em;
 }
 
 .logement > a{
@@ -209,6 +225,7 @@
     width: 25px;
     height: 25px;
     margin-right: 5px;
+    margin-left: 5px;
 }
 
 .logement #rating{
@@ -241,8 +258,6 @@
     margin: 3px;
 }
 
-
-
 .logement #description > div{
     display: block;
     margin: 1em 1em 0em 1em;
@@ -270,7 +285,7 @@
     position: absolute;
     bottom: 0;
     line-height: normal;
-    padding-bottom: 1em;
+    padding-bottom: .5em;
 }
 
 .logement strong{
@@ -284,14 +299,20 @@
     transform: translateY(-5px);
 }
 
+@media screen and (max-width: 760px) {
+    .logement{
+        scale: 1;
+    }
+}
+
 /*Options de filtre*/
 #options{
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin-bottom: 3em;
     z-index: 2;
+    height: 50px;
 }
 
 #options .boutton{
@@ -306,12 +327,6 @@
     gap: .5em;
     height: 100%;
     width: 100%;
-}
-
-@media screen and (max-width: 760px) {
-    .logement{
-        scale: 1;
-    }
 }
 
 /*Carte logements*/
@@ -418,12 +433,10 @@
 #logements .bandeau > div{
     display: flex;
     flex-direction: row;
-    background-color: #fff;
     width: 200px;
 }
 
 #logements .bandeau > div > .boutton{
-    scale: 1.1;
     border-radius: 0;
 }
 
@@ -433,6 +446,7 @@
 
 #logements .bandeau > div > .boutton:hover{
     transform: translate(0, -5%);
+    scale: 1.1;
     z-index: 5;
 }
 
