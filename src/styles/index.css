@@ -285,29 +285,6 @@
     transform: translateY(-5px);
 }
 
-/*Options de filtre*/
-#options{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 3em;
-    z-index: 2;
-}
-
-#options .boutton{
-    background-color: var(--col6);
-}
-
-#options > div{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: .5em;
-    height: 100%;
-    width: 100%;
-}
 
 @media screen and (max-width: 760px) {
     .logement{

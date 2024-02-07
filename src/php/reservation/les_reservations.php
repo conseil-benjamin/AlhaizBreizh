@@ -13,7 +13,8 @@ try {
     
     $idProprio = $_SESSION['id']; // ID du propriétaire connecté
 
-    $stmt = $pdo->prepare("SELECT
+    $stmt = $pdo->prepare(
+    "SELECT
     r.numReservation,
     r.dateDebut,
     r.dateFin,
@@ -21,12 +22,15 @@ try {
     l.numlogement,
     l.libelle,
     c.idCompte AS idClient,
+    c.firstname,
+    c.lastname,
     c.pseudoCompte,
     l.proprio
     FROM ldc.reservation r
     JOIN ldc.logement l ON r.numlogement = l.numlogement
     JOIN ldc.client c ON r.numClient = c.idCompte
-    WHERE l.proprio = :idProprio;");
+    WHERE l.proprio = :idProprio;"
+    );
 
 
     // Liaison de la variable :idProprio
@@ -77,11 +81,13 @@ try {
                             <div class="logement">
                                 <img src="/public/img/logements/<?php echo $uneReservation['numlogement'] ?>/1.png" alt="logement">
                                 <div>
-                                        <h3><?php echo $uneReservation['datedebut'] ?></h3>
+                                    <h2><?php echo $uneReservation['libelle']; ?></h2>
+                                        <h4><?php echo $uneReservation['datedebut'] ?></h4>
                                         <h4><?php echo $uneReservation['datefin'] ?></h4>
                                     <a href="/src/php/profil/profil.php?user=<?php echo $uneReservation['idclient'] ?>">
                                             <div class="profile">
-                                                <p><?php echo $uneReservation['pseudocompte']; ?></p>
+                                            <p><?php echo $uneReservation['firstname'] . " " . $uneReservation['lastname']; ?></p>
+
                                             </div>
                                     </a>
                                     <nav>

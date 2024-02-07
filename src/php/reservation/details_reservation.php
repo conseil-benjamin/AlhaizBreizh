@@ -153,7 +153,15 @@ $dateDuJour = $date->format('Y-m-d');
             </div>
             <div id="etatDevis" class="recu">
                 <a href='' download='devis.pdf'><img src="/public/icons/contract.svg" alt="icon devis"/></a>
-                <h2>Devis reçu le <span id="dateDevis"> <?= $dateDevis ?></span></h2></div>
+                <?php
+                if ($_SESSION['id']==$numclient) {
+                    echo "<h2>Devis reçu le <span id='dateDevis'>$dateDevis</span></h2></div>";
+                }
+                else {
+                    echo "<h2>Demande de devis reçue le $dateResa</h2></div>";
+                }
+                ?>
+
             <div id="prixDiv">
                 <h2>Total :</h2>
                 <h2><span id="prixSpan"><?= $prixTotal ?></span>€</h2>
@@ -170,7 +178,10 @@ $dateDuJour = $date->format('Y-m-d');
                     <button class="boutton" onclick="supprimerReservation()">Supprimer la réservation</button>
                 <?php }?>
                 </div>
+                <?php
+                if ($_SESSION['id']==$numclient) {?>
                 <p>Logement reservé le <span id="dateResa"><?= $dateResa ?></span></p>
+                <?php } ?>
             </div>
         </div>
     </div>
