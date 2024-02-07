@@ -18,13 +18,13 @@ try {
     r.dateDebut,
     r.dateFin,
     r.nbPersonnes,
-    l.numLogement,
+    l.numlogement,
     l.libelle,
     c.idCompte AS idClient,
     c.pseudoCompte,
     l.proprio
     FROM ldc.reservation r
-    JOIN ldc.logement l ON r.numLogement = l.numLogement
+    JOIN ldc.logement l ON r.numlogement = l.numlogement
     JOIN ldc.client c ON r.numClient = c.idCompte
     WHERE l.proprio = :idProprio;");
 
@@ -59,12 +59,11 @@ try {
 </head>
 <body>
     <?php include($_SERVER['DOCUMENT_ROOT'] . '/src/php/header.php'); ?>
-
     <div id="content">
         <h2>Les réservations</h2>
         <div id="options">
             <div>
-                <input class="textfield" type="text" placeholder="Search..">
+                <input class="textfield" type="text" placeholder="Rechercher..">
                 <button class="boutton">Filtrer</button>
                 <button class="boutton">Trier</button>
             </div>
@@ -73,34 +72,31 @@ try {
             <?php
             if (count($reservation) === 0) { ?>
                 <h3>Vous n'avez aucune réservation pour le moment :/</h3> <?php
-            } else {
-                foreach ($reservation as $uneReservation) {?>                        
-                        <div class="logement">
-                            <img src="/public/img/logements/<?php echo $uneReservation['numlogement'] ?>/1.png" alt="logement">
-                            <div>
-                                <a href="/src/php/afficherPlageDispo.php?dateDebut=<?php echo $uneReservation['datedebut'] ?>&dateFin=<?php echo $uneReservation['datefin'] ?>">
-                                    <h3><?php echo $uneReservation['datedebut'] ?></h3>
-                                    <p><?php echo $uneReservation['datefin'] ?></p>
-                                </a>
-                                <a href="/src/php/profil/profil.php?user=<?php echo $uneReservation['idclient'] ?>">
-                                        <div class="profile">
-                                            <p><?php echo $uneReservation['pseudocompte']; ?></p>
-                                        </div>
-                                </a>
-                                <nav>
-                                    <a class="boutton" href="/src/php/reservation/supprimerResaDB.php?numReservation=<?php echo $uneReservation['numreservation']?>"class="button-resa">Supprimer</a>
-                                    <a class="boutton" href="/src/php/reservation/details_reservation.php?numReservation=<?php echo $uneReservation['numreservation']?>" class="button-resa">Voir Réservation</a>
-                                </nav>
+                } else {
+                    foreach ($reservation as $uneReservation) {?>                        
+                            <div class="logement">
+                                <img src="/public/img/logements/<?php echo $uneReservation['numlogement'] ?>/1.png" alt="logement">
+                                <div>
+                                        <h3><?php echo $uneReservation['datedebut'] ?></h3>
+                                        <h4><?php echo $uneReservation['datefin'] ?></h4>
+                                    <a href="/src/php/profil/profil.php?user=<?php echo $uneReservation['idclient'] ?>">
+                                            <div class="profile">
+                                                <p><?php echo $uneReservation['pseudocompte']; ?></p>
+                                            </div>
+                                    </a>
+                                    <nav>
+                                        <a class="boutton" href="/src/php/reservation/supprimerResaDB.php?numReservation=<?php echo $uneReservation['numreservation']?>">Supprimer</a>
+                                        <a class="boutton" href="/src/php/reservation/details_reservation.php?numReservation=<?php echo $uneReservation['numreservation']?>" >Voir Réservation</a>
+                                        <a class="boutton" href="/src/php/logement/PageDetailLogement.php?numLogement=<?php echo $uneReservation['numlogement'] ?>" > Voir Logement</a>
+                                    </nav>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                    <?php
+                        <?php
+                    }
                 }
-            }
             ?>
         </div>
     </div>
-    
     <?php include($_SERVER['DOCUMENT_ROOT'] . '/src/php/footer.php'); ?>
 </body>
 </html>

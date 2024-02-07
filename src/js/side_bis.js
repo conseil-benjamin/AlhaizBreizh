@@ -264,8 +264,8 @@ function filtre_type(contenu){
     }
 }
 
-document.getElementById('side_nb').addEventListener('input',enfer);
-document.getElementById('side_max').addEventListener('input',enfer);
-document.getElementById('side_min').addEventListener('input',enfer);
-document.getElementById('side_recherche').addEventListener('input',enfer);
-document.getElementById('side_type').addEventListener('change',enfer);
+//document.getElementById('side_nb').addEventListener('input',enfer);
+//document.getElementById('side_max').addEventListener('input',enfer);
+//document.getElementById('side_min').addEventListener('input',enfer);
+//document.getElementById('side_recherche').addEventListener('input',enfer);
+//document.getElementById('side_type').addEventListener('change',enfer);

@@ -43,21 +43,6 @@
                             </div>
 
                             <input id="side_recherche" class="textfield" type="text" placeholder="Rechercher..">
-                            <h2>Plage de tarif</h2>
-                                <div class="hell">
-                                    <div class="select_filtr">
-                                        <p>Minimum</p>
-                                        <input id="side_min" class="number" placeholder="En Euros" min="0" style="width: 120px;">
-                                    </div>
-                                    <div class="select_filtr">
-                                        <p>Maximum</p>
-                                        <input id="side_max" class="number" placeholder="En Euros" min="0" style="width: 120px;">
-                                    </div>
-                                </div>
-                            <h2>Nombre de personnes</h2>
-                                <input id="side_nb" type="number" min="1">
-                            <?php //<h2>Propriétaire</h2>
-                            //<input class="textfield" type="text" placeholder="Nom du propriétaire..."> ?>
                             <h2>Type du logement</h2>
                                 <select id="side_type">
                                     <option value="">---</option>
