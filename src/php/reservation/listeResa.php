@@ -47,7 +47,6 @@ if (isset($_SESSION['id'])) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="/src/styles/styles.css">
         <link rel="stylesheet" type="text/css" href="/src/styles/mesLogements.css">
-        
         <link rel="icon" href="/public/logos/logo-black.svg">
         <title>ALHaiz Breizh</title>
 </head>

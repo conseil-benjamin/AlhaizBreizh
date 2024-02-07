@@ -21,6 +21,7 @@ session_start();
         <link href="/src/styles/proposition_devis.css" rel="stylesheet" type="text/css">
         <link href="/src/styles/demande_devis.css" rel="stylesheet" type="text/css">
         <link href="/src/styles/styles.css" rel="stylesheet" type="text/css">
+        <link rel="icon" href="/public/logos/logo-black.svg">
         <title>Proposition de devis</title>
     </head>
     <body>

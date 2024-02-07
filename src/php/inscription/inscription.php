@@ -6,6 +6,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <link href="/src/styles/inscription.css" rel="stylesheet" type="text/css">
     <link href="/src/styles/styles.css" rel="stylesheet" type="text/css">
+    <link rel="icon" href="/public/logos/logo-black.svg">
     <title>S'inscrire</title>
 </head>
 <body>
