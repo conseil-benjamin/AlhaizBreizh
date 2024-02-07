@@ -6,12 +6,14 @@ const prixHTMLelement = document.getElementById('prixSpan')
 const nbpersonne = document.getElementById('nbpersonne')
 const nbNuitHTMLelement = document.getElementById('nbNuit')
 const prixTotalHTMLelement = document.getElementById("prixTotalInput")
+const btnEnvoyerHTMLelement = document.getElementById("envoyer")
+const formHTMLelement = document.getElementById("form")
 
 const PRIX = parseFloat(prixHTMLelement.innerText.replace(",", "."))
 const NBNUIT = parseInt(nbNuitHTMLelement.innerText, 10)
 const AUJ = new Date();
-const DATEFORMAT_ARR = formaterDate(5);
-const DATEFORMAT_DEP = formaterDate(NBNUIT + 6)
+const DATEFORMAT_ARR = formaterDate(AUJ,5);
+const DATEFORMAT_DEP = formaterDate(AUJ,NBNUIT + 6)
 
 inputDateArivee.min = DATEFORMAT_ARR
 inputDateArivee.value = DATEFORMAT_ARR
@@ -20,25 +22,44 @@ inputDateDepart.min = DATEFORMAT_DEP
 inputDateDepart.value = DATEFORMAT_DEP
 
 function nbJourDansLeMois(annee, mois) {
-    const dernierJourDuMois = new Date(annee, mois, 0);
-    return dernierJourDuMois.getDate();
+    const dernierJourDuMois = new Date(annee, mois, 0)
+    return dernierJourDuMois.getDate()
 }
 
 
 /**
  * Permet de formater une date afin de l'utiliser comme valeur par default pour un input date
+ * @param date la date à partir de laquelle faire le décalage
  * @param decalage le nombre de jours de decalage avec la date d'aujourd'hui
  * @returns {string} la date formatter
  */
-function formaterDate(decalage) {
-    const fullYear = AUJ.getFullYear();
-    const MOIS_DATE = (AUJ.getMonth() + 1).toString().padStart(2, '0');
-    const JOUR = AUJ.getDate() + decalage;
+function formaterDate(date,decalage) {
+    const fullYear = date.getFullYear();
+    const MOIS_DATE = (date.getMonth() + 1).toString().padStart(2, '0');
+    const JOUR = date.getDate() + decalage;
     const DECALAGEMOIS = 1 + Math.floor(JOUR / nbJourDansLeMois(fullYear, MOIS_DATE))
-    const MM = (AUJ.getMonth() + DECALAGEMOIS).toString().padStart(2, '0');
-    const DD = (JOUR % nbJourDansLeMois(fullYear, MM)+1).toString().padStart(2, '0');
+    const MM = (date.getMonth() + DECALAGEMOIS).toString().padStart(2, '0');
+    const DD = (JOUR % nbJourDansLeMois(fullYear, MOIS_DATE)).toString().padStart(2, '0');
     return fullYear + '-' + MM + '-' + DD;
 }
+
+btnEnvoyerHTMLelement.addEventListener("click", () => {
+    swal({
+        title: "Êtes-vous sur ?",
+        text: "Cela enverras une demande de devis au propriétaire",
+        icon: "warning",
+        buttons: [
+            'No, cancel it!',
+            'Yes, I am sure!'
+        ],
+        dangerMode: true,
+    }).then(function(isConfirm) {
+        if (isConfirm) {
+            formHTMLelement.submit()
+        }
+    })
+
+})
 
 nbpersonne.addEventListener('change',()=> {
     if (this.value > this.max) {
@@ -62,9 +83,9 @@ inputDateDepart.addEventListener("change", function () {
 inputDateArivee.addEventListener("change", function () {
     const dateArrivee = this.value;
     let dateDepart = inputDateDepart.value
-    if (dateArrivee > dateDepart) {
-        inputDateDepart.value = dateArrivee;
-        dateDepart = dateArrivee;
+    if (dateArrivee >= dateDepart) {
+        inputDateDepart.value = formaterDate(new Date(dateArrivee),1);
+        dateDepart = inputDateDepart.value;
     }
     updatePrix(dateDepart,dateArrivee)
     updateNBNuit()
