@@ -55,6 +55,9 @@
                         <button id="menu-btn" class="boutton">Filtrer et Trier</button>
 
                     </div>
+                    <div>
+                        <a href="/src/php/logement/creationLogement.php" class="boutton">Ajouter un logement</a>
+                    </div>
                 </div>
             </div>
             <div id="logements">

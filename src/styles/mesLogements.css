@@ -287,10 +287,6 @@
     }
 }
 
-.menu_filtre{
-    padding-left:10em;
-}
-
 #prof > div {
     display:flex;
     flex-direction: row;
