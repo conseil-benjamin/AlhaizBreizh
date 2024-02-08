@@ -27,6 +27,20 @@ function recupCoordGps($adresse){
     return [$coordX, $coordY];
 }
 
+function recupAllCoordGps($adresses, $approximation = false){
+    $coords = [];
+    foreach ($adresses as $adresse) {
+        $coord = recupCoordGps($adresse);
+        if ($approximation) {
+            $coord = appoximationCoord($coord[0], $coord[1]);
+        }
+        if ($coord[0] != null && $coord[1] != null) {
+            $coords[] = $coord;
+        }
+    }
+    return $coords;
+}
+
 function appoximationCoord($coordX, $coordY){
 
     $random = mt_rand(-9, 9) / 1000;

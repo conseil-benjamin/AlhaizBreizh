@@ -17,23 +17,10 @@
         $logements = array();
     }
 
-    //Tableau des adresses des logements id => [coordX, coordY]
-    include_once($_SERVER['DOCUMENT_ROOT'] . '/src/php/logement/recupCoordGps.php');
+    //Tableau des adresses des logements id => "ville rue"
     $adresses = array();
     foreach ($logements as $logement) {
-
-        $ville = $logement[5];
-        $rue = $logement[8];
-
-        $adresse = urlencode($ville . ' ' . $rue); //Adresse complète
-        $coords = recupCoordGps($adresse);
-        $adresses[$logement[0]] = appoximationCoord($coords[0], $coords[1]);
-
-        if ($adresses[$logement[0]][0] == null || $adresses[$logement[0]][1] == null) { //Si l'adresse avec les coordonnées précises ne fonctionne pas
-            $adresse = urlencode($ville); //Utiliser le nom de la ville seulement
-            $coords = recupCoordGps($adresse);
-            $adresses[$logement[0]] = appoximationCoord($coords[0], $coords[1]);
-        }
+        $adresses[$logement[0]] = $logement[5].' '.$logement[8];
     }
 
     //Si erreur dans la récupération des coordonnées GPS
@@ -145,7 +132,7 @@
                             }
                         ?>
                         <button class="boutton">Trier</button>
-                        <!-- Menu déroulant pour le tri 
+
                         <div class="menu_deroulant">
                             <ul>
                                 <li <?php if ($tri=="ancien"){?> class="select"><a href="index.php#logements"> <?php }else{?> ><a href="index.php?tri=ancien#logements"><?php }?>Offre de la plus ancienne à la plus récente</li>
@@ -154,7 +141,7 @@
                                 <li <?php if ($tri=="notes"){?> class="select"><a href="index.php#logements"> <?php }else{?> ><a href="index.php?tri=notes#logements"><?php }?>Notes (meilleures en premier)</li>
                                 <li <?php if ($tri=="avis"){?> class="select"><a href="index.php#logements"> <?php }else{?> ><a href="index.php?tri=avis#logements"><?php }?>Avis positifs (+ d'avis positifs)</li>
                             </ul>
-                        </div>-->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -256,10 +243,10 @@
                                 <?php } ?>
                             </div>   
                             <a id="description" href="<?php echo $lien ?>"><div id="resultat"> 
-                                <h3><?php echo $titre ?></h3> <!-- Titre du logement -->
-                                <div><img src="/public/icons/nb_personnes.svg"><p><?php echo $nombre_personnes ?> personnes</p></div> <!-- Nombre de personnes -->
-                                <div><img src="/public/icons/map.svg"><p><?php echo $localisation ?></p></div> <!-- Localisation -->
-                                <div><p><strong><?php echo $prix ?>€</strong> / nuit</p></div> <!-- Prix du logement -->
+                                <h3 class="titre-logement"><?php echo $titre ?></h3> <!-- Titre du logement -->
+                                <div><img src="/public/icons/nb_personnes.svg"><p class="nb-pers"><?php echo $nombre_personnes ?> personnes</p></div> <!-- Nombre de personnes -->
+                                <div><img src="/public/icons/map.svg"><p class="localisation"><?php echo $localisation ?></p></div> <!-- Localisation -->
+                                <div><p class="prix"><strong><?php echo $prix ?>€</strong> / nuit</p></div> <!-- Prix du logement -->
                             </div></a>
                         </div> <?php
                     } else{
@@ -284,8 +271,7 @@
         <script src="/src/js/accueilScroll.js"></script>
         <script>
             var adresses = <?php echo json_encode($adresses); ?>;
-            var localisations = <?php echo json_encode($localisations); ?>;
         </script>
-        <script src="/src/js/map-accueil.js"></script>
+        <script type="module" src="/src/js/map-accueil.js"></script>
     </body>
 </html>

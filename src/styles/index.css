@@ -199,6 +199,11 @@
     height: 50%;
 }
 
+.logement a:hover{
+    filter: none;
+    border: none;
+}
+
 .logement img{
     width: 100%;
     height: 100%;

@@ -1,9 +1,4 @@
 /*******************************************************/
-/*Fonctions*/
-
-
-
-/*******************************************************/
 /*Afficher/Fermer la carte*/
 
 //Récupérer la carte
@@ -73,71 +68,86 @@ var pin = L.icon({
     popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
 });
 
-//Pour chaque adresse, on ajoute un marqueur
-Object.keys(adresses).forEach(id => {
-    let adresse = adresses[id];
-    console.log(adresse);
-
-    let popup = L.popup()
-        .setLatLng(adresse)
-        .setContent("<h1>"+localisations[id]+"</h1><a target='_blank' class='.boutton' href='/src/php/logement/PageDetailLogement.php?numLogement="+id+"'><strong>Voir logement</strong></a>")
-        .openOn(map);
-
-    let marker = L.marker(adresse, {icon: pin}).addTo(map);
-});
-
 /*******************************************************/
-/*Afficher les logements suivant le zoom*/
+/*Récupérer les coordonnees des logements*/
+import {recupAllCoordGps, recupCoordGps} from '/src/js/logement/recupCoordGps.js';
+async function fetchCoordinates() {
 
-var logements = document.querySelectorAll('.logement');
+    var logements = document.querySelectorAll('.logement');
+    var coordonnees = [];
+    console.log(logements);
 
-//Vérifier les markers qui ne sont pas visibles suite à un zoom
-function adaptMarkersOnZoomAndMove(){
-    if (mapDiv.style.display === "none") {
-        return; // Si la carte n'est pas affichée, on ne fait rien
+    for (let logement of logements) {
+        let id = logement.id.substring(8);
+        let titre = logement.querySelector('.titre-logement').innerText;
+        let personnes = logement.querySelector('.nb-pers').innerText;
+        let localisation = logement.querySelector('.localisation').innerText;
+        let prix = logement.querySelector('.prix').innerText;
+
+        let coords = await recupCoordGps(localisation);
+
+        if (coords[0] != null && coords[1] != null) {
+            coordonnees[id] = coords;
+            let marker = L.marker(coords, {icon: pin}).addTo(map);
+            marker.bindPopup("<h3>"+titre+"</h3>"+personnes+"<br>"+prix+"<br><a href='/src/php/logement/PageDetailLogement.php?numLogement="+id+"'><strong>Voir le Logement</strong></a>");
+        }
     }
-    mapX = map.getCenter().lat;
-    mapY = map.getCenter().lng;
-    Object.keys(adresses).forEach(id => {
-        let adresse = adresses[id];
-        //Vérifier si le marker n'est pas visible
-        let point = map.latLngToContainerPoint(adresse);
-        let size = map.getSize();
-        let logement = document.getElementById('logement'+id);
-        if(point.x < 0 || point.y < 0 || point.x > size.x || point.y > size.y) {
-            console.log("logement"+id+" n'est pas visible");
-            logement.style.display = "none";
+
+    /*******************************************************/
+    /*Afficher les logements suivant le zoom*/
+
+    //Vérifier les markers qui ne sont pas visibles suite à un zoom
+    function adaptMarkersOnZoomAndMove(){
+        if (mapDiv.style.display === "none") {
+            return; // Si la carte n'est pas affichée, on ne fait rien
+        }
+        mapX = map.getCenter().lat;
+        mapY = map.getCenter().lng;
+        Object.keys(coordonnees).forEach(id => {
+            let adresse = coordonnees[id];
+            //Vérifier si le marker n'est pas visible
+            let point = map.latLngToContainerPoint(adresse);
+            let size = map.getSize();
+            let logement = document.getElementById('logement'+id);
+            if(point.x < 0 || point.y < 0 || point.x > size.x || point.y > size.y) {
+                console.log("logement"+id+" n'est pas visible");
+                logement.style.display = "none";
+                logement.classList.add('filtremap');
+            } else {
+                console.log("logement"+id+" est visible");
+                logement.style.display = "flex";
+                logement.classList.remove('filtremap');
+            }
+        });
+        testAucunLogementVisible();
+    }
+
+    function testAucunLogementVisible() {
+        //Afficher un message si aucun logement n'est visible
+        var aucunLogementVisible = true;
+        Object.keys(coordonnees).forEach(id => {
+            let logement = document.getElementById('logement'+id);
+            if (logement.style.display === "flex") {
+                aucunLogementVisible = false;
+            }
+        });
+        if (aucunLogementVisible) {
+            document.getElementById('aucunLogementVisible').style.display = "block";
         } else {
-            console.log("logement"+id+" est visible");
-            logement.style.display = "flex";
+            document.getElementById('aucunLogementVisible').style.display = "none";
         }
-    });
-    testAucunLogementVisible();
-}
-
-function testAucunLogementVisible() {
-    //Afficher un message si aucun logement n'est visible
-    var aucunLogementVisible = true;
-    Object.keys(adresses).forEach(id => {
-        let logement = document.getElementById('logement'+id);
-        if (logement.style.display === "flex") {
-            aucunLogementVisible = false;
-        }
-    });
-    if (aucunLogementVisible) {
-        document.getElementById('aucunLogementVisible').style.display = "block";
-    } else {
-        document.getElementById('aucunLogementVisible').style.display = "none";
     }
+
+    map.on('zoomend', function() {
+        adaptMarkersOnZoomAndMove();
+    });
+
+    map.on('moveend', function() {
+        adaptMarkersOnZoomAndMove();
+    });
 }
 
-map.on('zoomend', function() {
-    adaptMarkersOnZoomAndMove();
-});
-
-map.on('moveend', function() {
-    adaptMarkersOnZoomAndMove();
-});
+fetchCoordinates();
 
 /*******************************************************/
 /*Resset la vue sur la carte*/
