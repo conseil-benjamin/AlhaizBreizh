@@ -1,5 +1,34 @@
 <?php 
-    require_once("./src/php/chargerLogements.php")
+    require_once("./src/php/chargerLogements.php");
+    //connexion à la base de donnée
+    try {
+        $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
+        $stmt = $pdo->prepare("SELECT numLogement,libelle,nbPersMax,tarifNuitees,LogementEnLigne,ville,note,typeLogement,adresse FROM ldc.Logement");
+
+        //Recherche des logements dans la base de données
+        $stmt->execute();
+        $logements = array();
+        while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+            $logements[] = $row;
+        }
+
+        $pdo = null;
+    } catch (PDOException $e) {
+        $logements = array();
+    }
+
+    //Tableau des adresses des logements id => "ville rue"
+    $adresses = array();
+    foreach ($logements as $logement) {
+        $adresses[$logement[0]] = $logement[5].' '.$logement[8];
+    }
+
+    //Si erreur dans la récupération des coordonnées GPS
+    if (in_array(null, $adresses)) {
+        $erreurMap = true;
+    } else {
+        $erreurMap = false;
+    }
 ?>
 <!DOCTYPE html>
 <html lang="fr-fr">
@@ -12,11 +41,29 @@
         <link rel="stylesheet" type="text/css" href="/src/styles/index.css">
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <link rel="icon" href="/public/logos/logo-black.svg">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
         <title>ALHaiz Breizh</title>
         
     </head>
     <body>
         <?php include $_SERVER['DOCUMENT_ROOT'] .'/src/php/header.php'; ?>
+
+        <div class="map">
+            <nav>
+                <button id="bouttonResetMap" class="boutton"><img src="/public/icons/reset.svg" alt="Reset la vue"></button>
+                <button id="bouttonCloseMap" class="boutton"><img src="/public/icons/croix.svg" alt="Fermer"></button>
+            </nav>
+            <div 
+                <?php if (!($erreurMap)){ ?>
+                    id="map"
+                <?php } ?>>
+                <?php if ($erreurMap) { ?>
+                    <h2 class="error_map">Une erreur est survenue avec la carte :/</h2>
+                <?php } ?>
+            </div>
+        </div>
+
         <video id="background" autoplay loop muted>
             <source src="/public/videos/video-bretagne.mp4" type="video/mp4">
         </video>
@@ -24,7 +71,6 @@
             <h1>Envie de découvrir la Bretagne ?</h1>
             <p>Nous avons tout pour vous mettre ALHaIZ</p>
         </div>
-
 
         <div id="logements">
             <h2>Les logements</h2>
@@ -88,7 +134,11 @@
                     </div>
                 </div>
             </div>
-            <div id="contenur_logements">
+            <div id="aucunLogementVisible">
+                <h2>Aucun logement n'est visible sur la carte :/</h2>
+            </div>
+            <div id="conteneur_logements">
+
                 <?php
 
                 /*Créations de carte pour chaque logements*/
@@ -106,7 +156,7 @@
                         $localisation = $logement[5];
                         $prix = $logement[3] ?>
     
-                        <div class="logement">
+                        <div class="logement" id="logement<?php echo $logement[0] ?>">
                             <a href="<?php echo $lien ?>"><img src="<?php echo $img ?>"></a> <!-- Image du logement -->
                             <div data-information=<?php echo $logement[7]?> >
                             <button type="button"><img src="/public/icons/heart_white.svg"></button> <!-- Coeur pour liker -->
@@ -115,10 +165,10 @@
                                 <?php } ?>
                             </div>   
                             <a id="description" href="<?php echo $lien ?>"><div id="resultat"> 
-                                <h3><?php echo $titre ?></h3> <!-- Titre du logement -->
-                                <div><img src="/public/icons/nb_personnes.svg"><p><?php echo $nombre_personnes ?> personnes</p></div> <!-- Nombre de personnes -->
-                                <div><img src="/public/icons/map.svg"><p><?php echo $localisation ?></p></div> <!-- Localisation -->
-                                <div><p><strong><?php echo $prix ?>€</strong> / nuit</p></div> <!-- Prix du logement -->
+                                <h3 class="titre-logement"><?php echo $titre ?></h3> <!-- Titre du logement -->
+                                <div><img src="/public/icons/nb_personnes.svg"><p class="nb-pers"><?php echo $nombre_personnes ?> personnes</p></div> <!-- Nombre de personnes -->
+                                <div><img src="/public/icons/map.svg"><p class="localisation"><?php echo $localisation ?></p></div> <!-- Localisation -->
+                                <div><p class="prix"><strong><?php echo $prix ?>€</strong> / nuit</p></div> <!-- Prix du logement -->
                             </div></a>
                         </div> <?php
                     } else{
@@ -129,21 +179,21 @@
                     <h2>Aucun logement n'est disponible pour le moment :/</h2><?php
                 } ?>
             </div> 
+            <div class="bandeau">
+                <div>
+                    <button class="boutton" id="precedent"><img src="/public/icons/forward.svg" alt="Précédent"></button>
+                    <button class="boutton" id="suivant"><img src="/public/icons/forward.svg" alt="Suivant"></button>
+                </div>
+                <button id="bouttonMap" class="boutton"><img src="/public/icons/map.svg" alt="Carte"></button>
+            </div>
         </div>
+
         <?php include $_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'; ?>
         <script src="/src/js/side.js"></script>
         <script src="/src/js/accueilScroll.js"></script>
         <script>
-            //Si on a l'attribut index dans l'url, on scroll jusqu'au logement
-            let index = null;
-            if (index != null){
-                let logement = document.getElementById("logements");
-                logement.scrollIntoView();
-            } else {
-                let header = document.querySelector("header");
-                header.scrollIntoView();
-            }
-
+            var adresses = <?php echo json_encode($adresses); ?>;
         </script>
+        <script type="module" src="/src/js/map-accueil.js"></script>
     </body>
 </html>
