@@ -27,7 +27,8 @@ if (isset($_SESSION['id'])) {
             proprio.firstName as prenom_proprio,
             proprio.lastName as nom_proprio,
             Logement.tarifNuitees,
-            Logement.ville
+            Logement.ville,
+            Logement.typeLogement
             FROM ldc.Reservation
             NATURAL JOIN ldc.Logement 
             INNER JOIN ldc.Client on ldc.Reservation.numClient = idCompte 
@@ -155,10 +156,13 @@ $reservations = obtenirLogementsProprio($_SESSION['id']);
                             <select id="side_ville">
                                 <option value="">---</option>
                                 <?php
+                                    $tab=[];
                                     foreach ($reservations as $reservation) {
                                         $ville = $reservation[11];
-                                        echo $ville;
-                                        echo "<option value=\"{$reservation[11]}\">{$reservation[11]}</option>";
+                                        if (!in_array($ville,$tab)){
+                                            echo "<option value=\"{$reservation[11]}\">{$reservation[11]}</option>";
+                                            $tab[]=$ville;
+                                        }
                                     }
                                 ?>
                             </select>
@@ -183,7 +187,7 @@ $reservations = obtenirLogementsProprio($_SESSION['id']);
             } else {
                 foreach ($reservations as $reservation){ ?>
                     <div class="logement">
-                            <img src="/public/img/logements/<?php echo $reservation[0]; ?>/1.png" alt="Photo du logement" place=<?php echo $reservation[11]; ?>>
+                            <img src="/public/img/logements/<?php echo $reservation[0]; ?>/1.png" alt="Photo du logement" place=<?php echo $reservation[11];?> data-information=<?php echo $reservation[12]; ?>>
                         <div>
                             <h2><?php echo $reservation[1]; ?></h2>
                             <a href="/src/php/afficherPlageDispo.php?dateDebut=<?php echo $reservation[2] ?>&dateFin=<?php echo $reservation[3] ?>">

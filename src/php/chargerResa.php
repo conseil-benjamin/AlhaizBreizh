@@ -26,7 +26,8 @@ if (isset($_SESSION['id'])) {
             proprio.firstName as prenom_proprio,
             proprio.lastName as nom_proprio,
             Logement.tarifNuitees,
-            Logement.ville
+            Logement.ville,
+            Logement.typeLogement
             FROM ldc.Reservation
             NATURAL JOIN ldc.Logement 
             INNER JOIN ldc.Client on ldc.Reservation.numClient = idCompte 

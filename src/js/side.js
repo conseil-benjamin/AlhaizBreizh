@@ -15,7 +15,6 @@ function switchClass(event){
     if (bal){
         bal.classList.add("select")
     }
-    console.log(bal);
 }
 
 function num(event){
@@ -99,6 +98,7 @@ function trierLogements(liste) {
         logementDiv.appendChild(imageLink);
 
         let divType = document.createElement('div');
+        divType.setAttribute("data-information",logement[7]);
         let boutlike = document.createElement('button');
         let determination = document.createElement('img');
         determination.src='/public/icons/heart_white.svg';
@@ -158,7 +158,6 @@ function trierLogements(liste) {
 
 //Application des filtres
 async function enfer() {
-    console.log(charlie);
     const promises = [];
 
     for (let cle in charlie) {
@@ -293,10 +292,10 @@ function filtre_type(contenu){
 
 function filtre_map(contenu){
     if (contenu.classList.contains('filtremap')){
-        return true;
+        return false;
     }
     else{
-        return false;
+        return true;
     }
 }
 

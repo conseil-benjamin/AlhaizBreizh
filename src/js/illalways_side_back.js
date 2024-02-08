@@ -96,7 +96,8 @@ function trierLogements(liste) {
         let imageElement = document.createElement('img');
         imageElement.src = '/public/img/logements/' + logement[0] + '/1.png'; //num logement
         imageElement.alt="logement";
-        imageElement.place=logement[11];
+        imageElement.setAttribute("place",logement[11]);
+        imageElement.setAttribute("data-information",logement[12]);
         logementDiv.appendChild(imageElement);
 
         let res = document.createElement('div');
@@ -158,7 +159,9 @@ async function enfer() {
         if (
             filtre_recherche(logement.innerHTML)&&
             filtre_sej_deb(logement.innerHTML)&&
-            filtre_sej_dep(logement.innerHTML)
+            filtre_sej_dep(logement.innerHTML)&&
+            filtre_ville(logement.innerHTML)&&
+            filtre_type(logement.innerHTML)
         ) {
             logement.style.display = "flex";
         } else {
@@ -203,7 +206,7 @@ document.body.addEventListener('click', function (event) {
 function filtre_ville(contenu) {
     let doc = document.getElementById('side_ville');
     let filtre = doc.value.toLowerCase();
-    let nb = contenu.match(/data-information="(.*?)"/);
+    let nb = contenu.match(/place="(.*?)"/);
     if (filtre!== ""){
         if (nb[1].toLowerCase()==filtre){
             return true;
@@ -216,30 +219,6 @@ function filtre_ville(contenu) {
         return true;
     }
 }
-
-function filtre_max(contenu) {
-    let doc = document.getElementById('side_max');
-    let filtre = doc.value.toLowerCase();
-    let nb = contenu.match(/\d+/g);
-    if (parseInt(nb[nb.length-1])>parseInt(filtre)){
-        return false;
-    }
-    else{
-        return true;
-    }
-};
-
-function filtre_min(contenu) {
-    let doc = document.getElementById('side_min');
-    let filtre = doc.value.toLowerCase();
-    let nb = contenu.match(/\d+/g);
-    if (parseInt(nb[nb.length-1])<parseInt(filtre)){
-        return false;
-    }
-    else{
-        return true;
-    }
-};
 
 function filtre_recherche(contenu) {
     let doc = document.getElementById('side_recherche');
@@ -274,10 +253,8 @@ function filtre_type(contenu){
 function filtre_sej_deb(contenu){
     let doc = document.getElementById('side_arrive');
     let nb = contenu.match(/\d{4}-\d{2}-\d{2}/g);
-    console.log(nb);
     if (doc.value!== ""){
         let dateAVerifier = new Date(doc.value);
-        console.log(dateAVerifier,new Date(nb[2]));
         if (dateAVerifier.getTime()==new Date(nb[2]).getTime()){
             return true;
         }
@@ -293,10 +270,8 @@ function filtre_sej_deb(contenu){
 function filtre_sej_dep(contenu){
     let doc = document.getElementById('side_depart');
     let nb = contenu.match(/\d{4}-\d{2}-\d{2}/g);
-    console.log(nb);
     if (doc.value!== ""){
         let dateAVerifier = new Date(doc.value);
-        console.log(dateAVerifier,new Date(nb[3]));
         if (dateAVerifier.getTime()==new Date(nb[3]).getTime()){
             return true;
         }
@@ -347,3 +322,4 @@ document.getElementById('side_recherche').addEventListener('input',enfer);
 document.getElementById('side_type').addEventListener('change',enfer);
 document.getElementById('side_arrive').addEventListener('change',enfer);
 document.getElementById('side_depart').addEventListener('change',enfer);
+document.getElementById('side_ville').addEventListener('change',enfer);
