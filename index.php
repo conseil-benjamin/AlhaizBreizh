@@ -29,13 +29,6 @@
     } else {
         $erreurMap = false;
     }
-
-    //Localisation des logements (id => ville)
-    $localisations = array();
-    foreach ($logements as $logement) {
-        $localisations[$logement[0]] = $logement[5];
-    }
-
 ?>
 <!DOCTYPE html>
 <html lang="fr-fr">

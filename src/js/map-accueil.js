@@ -70,7 +70,7 @@ var pin = L.icon({
 
 /*******************************************************/
 /*Récupérer les coordonnees des logements*/
-import {recupAllCoordGps, recupCoordGps} from '/src/js/logement/recupCoordGps.js';
+import {recupAllCoordGps, recupCoordGps, appoximationCoord} from '/src/js/logement/recupCoordGps.js';
 async function fetchCoordinates() {
 
     var logements = document.querySelectorAll('.logement');
@@ -85,6 +85,7 @@ async function fetchCoordinates() {
         let prix = logement.querySelector('.prix').innerText;
 
         let coords = await recupCoordGps(localisation);
+        coords = appoximationCoord(coords[0], coords[1]);
 
         if (coords[0] != null && coords[1] != null) {
             coordonnees[id] = coords;

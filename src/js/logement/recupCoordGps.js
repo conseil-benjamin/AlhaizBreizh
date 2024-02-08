@@ -36,7 +36,7 @@ export async function recupAllCoordGps(adresses, approximation = false) {
     return coords;
 }
 
-function appoximationCoord(coordX, coordY) {
+export function appoximationCoord(coordX, coordY) {
     const random = Math.floor(Math.random() * 19 - 9) / 1000;
     coordX = parseFloat(coordX) + random;
     coordY = parseFloat(coordY) + random;

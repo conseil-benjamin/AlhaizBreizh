@@ -254,18 +254,6 @@ if (!isset($liste_langue_parle)) {
     $liste_langue_parle = 'Non renseigné';
 }
 
-// Récupération des coordonnées GPS
-$adresse = $localisation . ' ' . $localisation_speci;
-$adresse = urlencode($adresse);
-
-include_once($_SERVER['DOCUMENT_ROOT'] . '/src/php/logement/recupCoordGps.php');
-
-[$coordX, $coordY] = recupCoordGps($adresse);
-if ($coordX == null || $coordY == null) { //Si l'adresse avec les coordonnées précises ne fonctionne pas
-    $adresse = urlencode($localisation); //Utiliser le nom de la ville seulement
-    [$coordX, $coordY] = recupCoordGps($adresse);
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="fr-fr">
@@ -524,16 +512,7 @@ if ($coordX == null || $coordY == null) { //Si l'adresse avec les coordonnées p
             </div>
 
             <section class="map">
-                <div 
-                    <?php if (!($coordX == null || $coordY == null)): ?>
-                        id="map"
-                    <?php endif; ?>>
-                    <?php
-                        if (($coordX == null || $coordY == null)) { ?>
-                            <h2 class="error_map">Une erreur est survenue avec la carte :/</h2> <?php
-                        }
-                    ?>
-                </div>
+                <div id="map"></div>
             </section>
 
             <section class="commentaires">
@@ -581,12 +560,10 @@ if ($coordX == null || $coordY == null) { //Si l'adresse avec les coordonnées p
         }; ?>  
         <script src="/src/js/carrousel.js"></script>      
         <script>
-            var coordX = <?php echo json_encode($coordX); ?>;
-            var coordY = <?php echo json_encode($coordY); ?>;
-            var localisation = <?php echo json_encode($localisation); ?>;
+            var localisation = <?php echo json_encode($localisation.' '.$localisation_speci); ?>;
             var estProprio = <?php echo json_encode(isset($_SESSION['id']) && $_SESSION['id'] == $proprio); ?>;
         </script>
-        <script src="/src/js/logement/map.js"></script>
+        <script type="module" src="/src/js/logement/map.js"></script>
         <script>
         function supprimerAnnonce() {
             <?php
