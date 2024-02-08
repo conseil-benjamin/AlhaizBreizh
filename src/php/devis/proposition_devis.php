@@ -9,6 +9,7 @@ session_start();
         $nbPersonne = 10;
         $demande = "Petit déjeuner au lit";
     }
+    $tabServices = [];
     require "propositionGetDb.php";
 ?>
 <!DOCTYPE html>
@@ -20,6 +21,7 @@ session_start();
         <link href="/src/styles/proposition_devis.css" rel="stylesheet" type="text/css">
         <link href="/src/styles/demande_devis.css" rel="stylesheet" type="text/css">
         <link href="/src/styles/styles.css" rel="stylesheet" type="text/css">
+        <link rel="icon" href="/public/logos/logo-black.svg">
         <title>Proposition de devis</title>
     </head>
     <body>
@@ -90,8 +92,9 @@ session_start();
                             <h2>Services complémentaires :</h2>
                             <ul>
                                 <?php
-                                $MAX = 6;
+                                $MAX = sizeof($tabServices);
                                 for ($i = 1; $i <= $MAX; $i++) {
+                                    $service = $tabServices[$i];
                                     if ($i === 1) {
                                         $classe = "supplement first";
                                     } else if ($i === $MAX) {
@@ -100,11 +103,11 @@ session_start();
                                         $classe = "supplement";
                                     }
                                     $id = 'checkBox' . $i;
-                                    $name = 'service' . $i;
+                                    $nom = $service['nom'];
                                     echo "<li>
                                     <div class='$classe'>
-                                        <label for='$id'>Service 01</label>
-                                        <p class='prix''><span>66,6</span>€</p>
+                                        <label for='$id'>$nom</label>
+                                        <p class='prix''><span>$service[prix]</span>€</p>
                                     </div>
                                 </li>
                             ";

@@ -34,7 +34,9 @@ headerLogo.addEventListener('click', function(){
 
 window.addEventListener('resize', function(){
     if ((window.innerWidth >= 900) && (!headerLogo.querySelector('.retourAccueil'))){
-        headerNav.removeChild(headerNav.querySelector('.retourAccueil'));
+            if (headerNav.querySelector('.retourAccueil') !== null) {
+                headerNav.removeChild(headerNav.querySelector('.retourAccueil'));
+            }
     } else{
         // Ajouter le bouton accueil dans le menu burger
         if (!headerNav.querySelector('.retourAccueil')){

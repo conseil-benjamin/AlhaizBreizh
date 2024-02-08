@@ -11,7 +11,7 @@ $dureeAcceptation = 300;
 
 global $pdo;
 try {
-    $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
+    include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
     $stmt = $pdo->prepare(
         "UPDATE ldc.devis
         SET dateDevis = '$dateDevis'

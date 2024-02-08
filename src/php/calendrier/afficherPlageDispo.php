@@ -139,17 +139,45 @@
             <div id="logement-name">
                 <?php
                     // Récupérer le nom du logement depuis la base de données                
-                    if ($numLogementExists) {
-                        $stmt = $pdo->prepare("SELECT libelle FROM ldc.Logement WHERE numLogement = ?");
-                        $stmt->execute([$numLogement]);
-                        $logementName = $stmt->fetchColumn();
-                        echo "<h2>$logementName :</h2>";
-                    } else {
-                        echo "<p>Le logement n'existe pas</p>";
-                    }
-                ?>
+                    if (!$numLogementExists) { ?>
+                            <style> body{min-height:0;} </style>
+
+                        <div class="wrapper">
+                            <video autoplay playsinline muted loop preload poster="http://i.imgur.com/xHO6DbC.png">
+                                <source src="/public/videos/video-bretagne.mp4" />
+                            </video>
+                            <div class="container">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 285 80" preserveAspectRatio="xMidYMid slice">
+                                    <defs>
+                                        <mask id="mask" x="0" y="0" width="100%" height="100%">
+                                            <rect x="0" y="0" width="100%" height="100%" />
+                                            <!-- Texte principal -->
+                                            <text x="50%" y="50%" text-anchor="middle" alignment-baseline="middle" font-family="NoirPro" font-weight="200" text-transform="uppercase" font-size="20">
+                                                ALHaIZ Breizh
+                                            </text>
+                                        </mask>
+                                    </defs>
+                                    <!-- Rectangle pour masquer le texte principal -->
+                                    <rect x="0" y="0" width="100%" height="100%" mask="url(#mask)" />
+                                </svg>
+                                <!-- Lien vers la page d'accueil avec un message d'erreur -->
+                                <a class="lien" href="/">
+                                    <div>
+                                        Cette page est inexistante. Cliquez ici pour retourner à l'accueil.
+                                    </div>
+                                </a>
+                            </div>
+                        </div> 
+                    </body>
+                    </html>
+                    <?php } else {                    
+                
+                    $stmt = $pdo->prepare("SELECT libelle FROM ldc.Logement WHERE numLogement = ?");
+                    $stmt->execute([$numLogement]);
+                    $logementName = $stmt->fetchColumn();
+                    echo "<h2>$logementName :</h2>"; ?>
             </div>
-            
+             
             <div id='calendar'>
                 <script> 
                     //script de création du calendrier
@@ -295,6 +323,8 @@
                 }
              ?>
         </main>
+        <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'); ?>
+
     </body>
-    <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'); ?>
 </html>
+<?php   } ?>

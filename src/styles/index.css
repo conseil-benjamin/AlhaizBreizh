@@ -21,7 +21,7 @@
 
 #header .logo{
     content: url(/public/logos/logo-white.svg);
-    filter: drop-shadow(px 1px 5px rgba(0, 0, 0, 0.75));
+    filter: drop-shadow(1px 1px 5px rgba(0, 0, 0, 0.75));
 }
 
 #header.scrolled .logo{
@@ -285,29 +285,6 @@
     transform: translateY(-5px);
 }
 
-/*Options de filtre*/
-#options{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 3em;
-    z-index: 2;
-}
-
-#options .boutton{
-    background-color: var(--col6);
-}
-
-#options > div{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: .5em;
-    height: 100%;
-    width: 100%;
-}
 
 @media screen and (max-width: 760px) {
     .logement{

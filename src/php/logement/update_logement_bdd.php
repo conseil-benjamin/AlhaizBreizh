@@ -118,7 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
         $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-        $stmt = $pdo->prepare("UPDATE ldc.logement SET surfaceHabitable=$surface, libelle='$title',accroche='$accroche',descriptionLogement='$description',natureLogement='$natureLogement',nbpersmax=$nbPersMax,photoCouverture='$photos',nbChambres=$nbChambres,nbSalleDeBain=$nbSalleDeBain,tarifNuitees=$prixParNuit,adresse='$adresse',cp=$cp,ville='$ville',LogementEnLigne=false WHERE numlogement=$id_logem");
+        $stmt = $pdo->prepare("UPDATE ldc.logement SET surfaceHabitable=$surface, libelle='$title',accroche='$accroche',descriptionLogement='$description',natureLogement='$natureLogement',nbpersmax=$nbPersMax,photoCouverture='$photos',nbChambres=$nbChambres,nbSalleDeBain=$nbSalleDeBain,tarifNuitees=$prixParNuit,adresse='$adresse',cp=$cp,ville='$ville' WHERE numlogement=$id_logem");
 
         $stmt->execute();
 

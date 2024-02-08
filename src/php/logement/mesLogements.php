@@ -1,108 +1,5 @@
 <?php 
-    session_start(); 
-    if (!isset($_SESSION['id'])) {
-        header('Location: /src/php/connexion/connexion.php');
-    } else if ($_SESSION['proprio'] == false) {
-        header('Location: /');
-    }
-
-    function obtenirLogementsProprio($id) {
-        $logements = array();
-        try {
-            $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
-            $stmt = $pdo->prepare("SELECT numLogement,proprio,libelle,accroche,ville FROM ldc.Logement");
-            $stmt->execute();
-            while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-                if ($row[1] == $id){
-                    $logements[] = $row;
-                }
-            }
-            $pdo = null;
-        } catch (PDOException $e) {
-            $logements = array();
-        }
-        return $logements;
-    }
-
-    $logements = obtenirLogementsProprio($_SESSION['id']);
-
-    if (isset($_GET['tri'])){
-        $tri = $_GET['tri'];
-    } else {
-        $tri = null;
-    }
-
-    //Choix du tri
-
-    function tarif($a, $b) {
-        return $a[5] - $b[5]; //fonction de tri par tarif le moins eleve
-    }
-    function note($a, $b) {
-        return $a[6] <=> $b[6]; //fonction de tri par note la plus elevee
-    }
-    function avis($a, $b) {
-        return $a[7] <=> $b[7]; //fonction de tri par le nombre d'avis le plus eleve
-    }
-
-    if ($tri=="tarifmoins"){
-        usort($logements, 'tarif');
-    }
-    else if ($tri=="tarifplus"){
-        usort($logements, 'tarif');
-        $logements = array_reverse($logements);
-    }
-    else if ($tri=="notes"){ //On trie par ceux qui ont la meilleure note en premier
-        foreach ($logements as $logement){
-            $l_logement[]=$logement;
-            if (empty($logement[6])){
-                $l_logement[6]=2.5;
-            }
-        }
-        usort($l_logement, 'note');
-        $l_logement = array_reverse($l_logement);
-        $logements=unserialize(serialize($l_logement));
-        unset($logements[1]);
-    }
-    else if ($tri=="avis"){ //fonction de tri par logement qui a le plus de commentaires superieur a 3 etoiles
-        $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
-        $stmt = $pdo->prepare("SELECT nbetoiles,numlogement FROM ldc.Avis INNER JOIN ldc.AvisLogement ON ldc.Avis.numAvis = AvisLogement.idAvis WHERE nbetoiles>=3");
-
-        //Recherche des avis dans la base de données
-        $stmt->execute();
-        $avis = array();
-        while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            $avis[] = $row;
-        }
-        $pdo = null;
-
-        $l_logements=$logements;
-
-        foreach ($l_logements as &$logement){
-            $logement[]=0;
-        }
-
-        foreach ($avis as $avi){
-            foreach ($l_logements as &$logement){
-                if ($logement[0]==$avi[1]){
-                    $logement[7]=$logement[7]+1;
-                }
-            }
-        }
-
-        usort($l_logements, 'note'); //Cette categorie est sous triee par les notes les plus elevee
-        usort($l_logements, 'avis'); //puis le tri principal, par nombre d'avis superieur a 3 etoiles
-
-        $l_logements = array_reverse($l_logements);
-
-        $logements=unserialize(serialize($l_logements));
-        
-    }
-    else if ($tri=="ancien"){
-        //option inverse du defaut : les plus anciens en premier
-    }
-    else{
-        $logements = array_reverse($logements); //option par defaut : les plus recents en premier
-    }
+    require_once("../chargerMesLogements.php")
 ?>
 <!DOCTYPE html>
 <html lang="fr-fr">
@@ -112,6 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="/src/styles/styles.css">
         <link rel="stylesheet" type="text/css" href="/src/styles/mesLogements.css">
+        <link rel="icon" href="/public/logos/logo-black.svg">
         <title>ALHaiz Breizh</title>
     </head>
     <body>
@@ -120,49 +18,48 @@
             <h1>Mes logements</h1>
             <div id="options">
                 <div>
-                <div class="menu_filtre">
-                    <div id="sidebar">
-                        <input id="side_recherche" class="textfield" type="text" placeholder="Rechercher..">
-                        <h2>Nombre de personnes</h2>
-                            <input id="side_nb" type="number" min="1">
-                        <?php //<h2>Propriétaire</h2>
-                        //<input class="textfield" type="text" placeholder="Nom du propriétaire..."> ?>
-                        <h2>Type du logement</h2>
-                            <select id="side_type">
-                                <option value="">---</option>
-                                <option value="appart">Appartement</option>
-                                <option value="maison">Maison</option>
-                                <option value="villa">Villa</option>
-                            </select>
-                    </div>
+                    <div class="menu_filtre">
+                        <div id="sidebar">
+                            <img id="suppr" src="../../../public/icons/supprimer.png" alt="Icône Supprimer" onclick="abime()">
+                            <div class="menu_tri">
+                                <?php
+                                    if (isset($_GET['tri'])){
+                                        $tri=$_GET['tri'];
+                                    }
+                                    else{
+                                        $tri=null;
+                                    }
+                                ?>
+                                <button class="boutton">Trier</button>
+                                <div class="menu_deroulant">
+                                    <ul>
+                                        <a class="item_tri select" onclick="num(event)">Ancienneté (Ordre décroissant)</a>
+                                        <a  class="item_tri" onclick="unnum(event)">Ancienneté (Ordre décroissant)</a>
+                                        <a  class="item_tri" onclick="tarif(event)">Tarif (Ordre croissant)</a>
+                                        <a  class="item_tri" onclick="untarif(event)">Tarif (Ordre décroissant)</a>
+                                        <a  class="item_tri" onclick="notes(event)">Notes</a>
+                                        <a  class="item_tri" href="index.php?tri=avis#logements">Avis positifs</a>
+                                    </ul>
+                                </div>
+                            </div>
 
-
-                    <button id="menu-btn" class="boutton">Filtrer</button>
-                </div>
-                    <div class="menu_tri">
-                        <button class="boutton">Trier</button>
-                        <div class="menu_deroulant">
-                        <?php
-                            if (isset($_GET['tri'])){
-                                $tri=$_GET['tri'];
-                            }
-                            else{
-                                $tri=null;
-                            }
-                        ?>
-                        <ul>
-                            <li <?php if ($tri=="ancien"){?> class="select"><a href="mesLogements.php"> <?php }else{?> ><a href="mesLogements.php?tri=ancien"><?php }?>Offre de la plus ancienne à la plus récente</li>
-                            <li <?php if ($tri=="tarifmoins"){?> class="select"><a href="mesLogements.php"> <?php }else{?> ><a href="mesLogements.php?tri=tarifmoins"><?php }?>Tarif (- cher en premier)</li>
-                            <li <?php if ($tri=="tarifplus"){?> class="select"><a href="mesLogements.php"> <?php }else{?> ><a href="mesLogements.php?tri=tarifplus"><?php }?>Tarif (+ cher en premier)</li>
-                            <li <?php if ($tri=="notes"){?> class="select"><a href="mesLogements.php"> <?php }else{?> ><a href="mesLogements.php?tri=notes"><?php }?>Notes (meilleures en premier)</li>
-                            <li <?php if ($tri=="avis"){?> class="select"><a href="mesLogements.php"> <?php }else{?> ><a href="mesLogements.php?tri=avis"><?php }?>Avis positifs (+ d'avis positifs)</li>
-                        </ul>
+                            <input id="side_recherche" class="textfield" type="text" placeholder="Rechercher..">
+                            <h2>Type du logement</h2>
+                                <select id="side_type">
+                                    <option value="">---</option>
+                                    <option value="appart">Appartement</option>
+                                    <option value="maison">Maison</option>
+                                    <option value="villa">Villa</option>
+                                </select>
                         </div>
+
+                        <button id="menu-btn" class="boutton">Filtrer et Trier</button>
+
+                    </div>
+                    <div>
+                        <a href="/src/php/logement/creationLogement.php" class="boutton">Ajouter un logement</a>
                     </div>
                 </div>
-                <div>
-                    <a href="/src/php/logement/creationLogement.php" class="boutton">Ajouter un logement</a>
-                </div>  
             </div>
             <div id="logements">
                 <?php

@@ -14,7 +14,7 @@ try {
     $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     $stmt = $pdo->prepare(
-        "SELECT nom FROM ldc.Service where numlogement=$numlogement"
+        "SELECT nom,prix FROM ldc.Service where numlogement=$numlogement"
     );
     $stmt->execute();
     $tabServices = $stmt->fetchAll();
@@ -30,10 +30,17 @@ try {
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <link href="/src/styles/demande_devis.css" rel="stylesheet" type="text/css">
         <link href="/src/styles/styles.css" rel="stylesheet" type="text/css">
+        <link rel="icon" href="/public/logos/logo-black.svg">
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> <!-- Librairie pour les alertes -->
         <title>Demande de devis</title>
     </head>
     <body>
-        <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/header.php'); ?>
+
+        <?php
+        if(isset($_POST["nb_personne"])) {
+            require("submitDevisDB.php");
+        }
+        include($_SERVER['DOCUMENT_ROOT'].'/src/php/header.php'); ?>
         <div style="height: 75px"></div>
         <div id="fond">
             <section id="entete">
@@ -42,7 +49,7 @@ try {
                 </h1>
             </section>
             <section id="corpsTexte">
-                <form method="post">
+                <form method="post" id="form">
                     <div id="formulaire">
                         <div id="prixDiv">
                             <h2>Prix de base <span id="prixSpan"><?php echo $prixNuit ?></span>€/nuit - <span
@@ -78,8 +85,8 @@ try {
                                         </label>
                                     </div>
                                     <div>
-                                        <input class="input1" id="nbpersonne" max="10" min="0" name="nb_personne"
-                                            placeholder="nbpersonne" type="number" value="0">
+                                        <input class="input1" id="nbpersonne" max="<?=$nbPersonne?>" min="1" name="nb_personne"
+                                               placeholder="nbpersonne" type="number" value="1">
                                     </div>
                                 </li>
                             </ul>
@@ -94,10 +101,11 @@ try {
                             <ul>
                                 <?php
                                 $MAX = sizeof($tabServices);
-                                for ($i = 1; $i <= $MAX; $i++) {
-                                    if ($i === 1) {
+                                for ($i = 0; $i < $MAX; $i++) {
+                                    $service = $tabServices[$i];
+                                    if ($i === 0) {
                                         $classe = "supplement first";
-                                    } else if ($i === $MAX) {
+                                    } else if ($i === $MAX - 1) {
                                         $classe = "supplement last";
                                     } else {
                                         $classe = "supplement";
@@ -107,8 +115,10 @@ try {
                                     echo "<li>
                                     <div class='$classe'>
                                         <input id='$id' type='checkbox' name='$name'>
-                                        <label for='$id'>$tabServices[$i]</label>
-                                        <p class='prix''><span>66,6</span>€</p>
+                                        <label for='$id'>
+                                        $service[nom]
+                                        </label>
+                                        <p class='prix''><span>$service[prix]</span>€</p>
                                     </div>
                                 </li>
                             ";
@@ -119,22 +129,19 @@ try {
                     </div>
                     <div id="total">
                         <h2> Total de la réservation : <span id="prixTotal">0</span>€</h2>
-                        <button class="boutton" type="submit" id="envoyer">Envoyer la demande de devis</button>
+                        <input type="hidden" name="total" value="0" id="prixTotalInput">
+                        <button class="boutton" id="envoyer">Envoyer la demande de devis</button>
                     </div>
                 </form>
             </section>
         </div>
         <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'); ?>
     </body>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> <!-- Librairie pour les alertes -->
     <script src="../../js/devis.js"></script>
 
     <?php
-    if(isset($_POST["nb_personne"])) {
-        require("submitDevisDB.php");
-    }
     unset($_SESSION["nom_bien"]);
-   unset($_POST["date_arrivee"]);
+    unset($_POST["date_arrivee"]);
     unset($_SESSION["prixNuit"]);
     unset($_SESSION["nbPersonneMax"]);
     unset($_SESSION["numLogement"]);
