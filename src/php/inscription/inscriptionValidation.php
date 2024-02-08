@@ -30,20 +30,26 @@ $pdo = null;
 //Ajouter le client dans la base de données
 $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
 
+$dataFiltre = array();
+
+foreach ($_POST as $key => $value) {
+        $dataFiltre[$key] = htmlspecialchars(strip_tags($value), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+}
+
 $stmt = $pdo->prepare("INSERT INTO ldc.Client (firstName, lastName, mail, numeroTel, photoProfil, civilite, adressePostale, pseudoCompte, motDePasse, dateNaissance, notationMoyenne)
 VALUES(:firstName, :lastName, :mail, :numeroTel, :photoProfil, :civilite, :adressePostale, :pseudoCompte, :motDePasse, :dateNaissance, :notationMoyenne)");
 try {
     $stmt->execute([
-        ':firstName' => $_POST["prenom"],
-        ':lastName' => $_POST["nom"],
-        ':mail' => $_POST["email"],
-        ':numeroTel' => str_replace(' ', '', $_POST["num_tel"]),
+        ':firstName' => $dataFiltre["prenom"],
+        ':lastName' => $dataFiltre["nom"],
+        ':mail' => $dataFiltre["email"],
+        ':numeroTel' => str_replace(' ', '', $dataFiltre["num_tel"]),
         ':photoProfil' => $img,
-        ':civilite' => $_POST["civilite"],
-        ':adressePostale' => $_POST["adresse"],
-        ':pseudoCompte' => $_POST["identifiant"],
-        ':motDePasse' => $_POST["mdp"],
-        ':dateNaissance' => $_POST["date_naissance"],
+        ':civilite' => $dataFiltre["civilite"],
+        ':adressePostale' => $dataFiltre["adresse"],
+        ':pseudoCompte' => $dataFiltre["identifiant"],
+        ':motDePasse' => $dataFiltre["mdp"],
+        ':dateNaissance' => $dataFiltre["date_naissance"],
         ':notationMoyenne' => '0.0'
     ]);
 } catch (PDOException $err) {
