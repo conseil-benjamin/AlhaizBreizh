@@ -181,9 +181,34 @@
     <!-- Cas profil non trouvé -->
     <?php if ($user_set == false){ ?>
 
-        <div id="titre">
-            <h2>Profil non trouvé :/</h2>
-        </div>
+        <style> body{min-height:0;} </style>
+
+        <div class="wrapper">
+                    <video autoplay playsinline muted loop preload poster="http://i.imgur.com/xHO6DbC.png">
+                        <source src="/public/videos/video-bretagne.mp4" />
+                    </video>
+                    <div class="container">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 285 80" preserveAspectRatio="xMidYMid slice">
+                            <defs>
+                                <mask id="mask" x="0" y="0" width="100%" height="100%">
+                                    <rect x="0" y="0" width="100%" height="100%" />
+                                    <!-- Texte principal -->
+                                    <text x="50%" y="50%" text-anchor="middle" alignment-baseline="middle" font-family="NoirPro" font-weight="200" text-transform="uppercase" font-size="20">
+                                        ALHaIZ Breizh
+                                    </text>
+                                </mask>
+                            </defs>
+                            <!-- Rectangle pour masquer le texte principal -->
+                            <rect x="0" y="0" width="100%" height="100%" mask="url(#mask)" />
+                        </svg>
+                        <!-- Lien vers la page d'accueil avec un message d'erreur -->
+                        <a class="lien" href="/">
+                            <div>
+                                Cette page est inexistante. Cliquez ici pour retourner à l'accueil.
+                            </div>
+                        </a>
+                    </div>
+                </div>           
 
     <?php } else{ ?>
 
@@ -392,9 +417,10 @@
             </div>
         <?php } ?>
 
-    <?php }} ?>
+    <?php } ?>
     </div>
-    <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'); ?>
+   <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php');
+} ?>
     <script src="/src/js/profil/editImage.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/src/js/profil/popus.js"></script>
