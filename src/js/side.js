@@ -44,6 +44,7 @@ function tarif(event){
     chargerLogements().then((value) => {
         logements=value
         logements.sort(function(a, b) {
+            console.log(a);
             return b[3]-a[3];
         });
         trierLogements(logements);
@@ -98,7 +99,7 @@ function trierLogements(liste) {
         logementDiv.appendChild(imageLink);
 
         let divType = document.createElement('div');
-        divType.setAttribute("data-information",logement[7]);
+        divType.setAttribute("data-information",logement[11]);
         let boutlike = document.createElement('button');
         let determination = document.createElement('img');
         determination.src='/public/icons/heart_white.svg';

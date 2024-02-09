@@ -15,7 +15,6 @@ function switchClass(event){
     if (bal){
         bal.classList.add("select")
     }
-    console.log(bal);
 }
 
 function num(event){
@@ -45,7 +44,8 @@ function tarif(event){
     chargerLogements().then((value) => {
         logements=value
         logements.sort(function(a, b) {
-            return b[3]-a[3];
+            console.log(a);
+            return a[5]-b[5];
         });
         trierLogements(logements);
     })
@@ -56,7 +56,7 @@ function untarif(event){
     chargerLogements().then((value) => {
         logements=value
         logements.sort(function(a, b) {
-            return a[3]-b[3];
+            return b[5]-a[5];
         });
         trierLogements(logements);
     })
@@ -151,9 +151,9 @@ async function enfer() {
 
     charlie.forEach(logement => {
         if (
-            filtre_nb(logement.innerHTML) &&
-            filtre_max(logement.innerHTML) &&
-            filtre_min(logement.innerHTML) &&
+            //filtre_nb(logement.innerHTML) &&
+            //filtre_max(logement.innerHTML) &&
+            //filtre_min(logement.innerHTML) &&
             filtre_recherche(logement.innerHTML) &&
             filtre_type(logement.innerHTML)
         ) {
@@ -266,5 +266,5 @@ function filtre_type(contenu){
 //document.getElementById('side_nb').addEventListener('input',enfer);
 //document.getElementById('side_max').addEventListener('input',enfer);
 //document.getElementById('side_min').addEventListener('input',enfer);
-//document.getElementById('side_recherche').addEventListener('input',enfer);
-//document.getElementById('side_type').addEventListener('change',enfer);
+document.getElementById('side_recherche').addEventListener('input',enfer);
+document.getElementById('side_type').addEventListener('change',enfer);
