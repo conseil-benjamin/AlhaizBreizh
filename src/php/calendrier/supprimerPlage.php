@@ -7,7 +7,7 @@
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['numPlage'])) {
             $numPlage = $_POST['numPlage'];
             
-            $stmt = $pdo->prepare("DELETE FROM ldc.PlageDeDisponibilite WHERE numPlage = $numPlage");
+            $stmt = $pdo->prepare("DELETE FROM ldc.Plage WHERE numPlage = $numPlage");
             if ($stmt->execute()) {
                 http_response_code(200);
                 echo "Plage de disponibilité supprimée avec succès";

@@ -57,6 +57,10 @@ if (isset($_GET['numLogement'])) {
                     $i=$i+1;
                 }
 
+                if ($i > 0) {
+                    $nb_chambres = $i;
+                }
+
                 if ($etat_logement || (isset($_SESSION['id']) && $_SESSION['id'] == $proprio)){
                     // Récupération des services
                     $stmt = $pdo->prepare("SELECT nom FROM ldc.Service WHERE numLogement = $numLogement");

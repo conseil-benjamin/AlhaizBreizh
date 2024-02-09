@@ -1,4 +1,5 @@
 export async function recupCoordGps(adresse) {
+    adresse = adresse.replace(/ /g, '+');
     const url = `https://nominatim.openstreetmap.org/search?q=${adresse}&format=json&polygon=1&addressdetails=1`;
     let coordX = null;
     let coordY = null;

@@ -162,20 +162,14 @@ CREATE TABLE Calendrier (
     numLogement INTEGER
 );
 
--- Table PlageDeDisponibilite
-CREATE TABLE PlageDeDisponibilite (
+-- Table Plage
+CREATE TABLE Plage (
     numPlage SERIAL PRIMARY KEY,
+    isIndispo BOOLEAN,
     numCal INTEGER NOT NULL,    
     dateDebutPlage DATE,
     dateFinPlage DATE,
     tarifJournalier INTEGER
-);
-
-CREATE TABLE PlageIndisponibilite(
-    numPlageI SERIAL PRIMARY KEY,
-    numCal INTEGER NOT NULL,
-    dateDebutPlageI DATE,
-    dateFinPlageI DATE
 );
 
 -- Table Proprietaire
@@ -281,8 +275,7 @@ ALTER TABLE PhotosComplementairesLogement ADD CONSTRAINT phtoscomplementaireslog
 ALTER TABLE Reservation ADD CONSTRAINT reservation_client_fk FOREIGN KEY (numClient) REFERENCES Client (idCompte);
 ALTER TABLE Reservation ADD CONSTRAINT reservation_logement_fk FOREIGN KEY (numLogement) REFERENCES Logement (numLogement);
 ALTER TABLE Calendrier ADD CONSTRAINT calendrier_logement_fk FOREIGN KEY (numLogement) REFERENCES Logement (numLogement);
-ALTER TABLE PlageDeDisponibilite ADD CONSTRAINT plagededisponibilite_calendrier_fk FOREIGN KEY (numCal) REFERENCES Calendrier (numCal);
-ALTER TABLE PlageIndisponibilite ADD CONSTRAINT plageindisponibilite_calendrier_fk FOREIGN KEY (numCal) REFERENCES Calendrier (numCal);
+ALTER TABLE Plage ADD CONSTRAINT plage_calendrier_fk FOREIGN KEY (numCal) REFERENCES Calendrier (numCal);
 ALTER TABLE Proprietaire ADD CONSTRAINT proprietaire_client_fk FOREIGN KEY (idCompte) REFERENCES Client (idCompte);
 ALTER TABLE Tarification ADD CONSTRAINT tarification_devis_fk FOREIGN KEY (numDevis) REFERENCES Devis (numDevis);
 ALTER TABLE Devis_Client_Reservation ADD CONSTRAINT devis_client_reservation_fk1 FOREIGN KEY (numDevis) REFERENCES Devis (numDevis);
@@ -379,7 +372,32 @@ VALUES
      'gite', 'maison', '2 Rue Sainte-Suzanne', 22530, 'Guerlédan', 2, 'gite_guerledan.jpg', TRUE, 4, 2, 1, 150.0),
     (100, 'Château de charme', 'Une expérience unique dans un château historique',
      'Ce château est situé au cœur de la campagne bretonne. Il est idéal pour un séjour romantique ou un événement spécial.',
-     'chateau', 'villa', '84 Rue de Kergestin', 29000, 'Quimper', 2, 'chateau_quimper.jpg', TRUE, 10, 5, 3, 300.0);
+     'chateau', 'villa', '84 Rue de Kergestin', 29000, 'Quimper', 2, 'chateau_quimper.jpg', TRUE, 10, 5, 3, 300.0),
+    (30, 'Maison Moche', 'Une maison moche', 'Cette maison est moche', 'maison','maison','19 Bd de la Fayette','22300','Lannion', 1, 'maison.jpg', TRUE, 4, 2, 1, 25.0),
+    (40, 'Appartement Moche', 'Un appartement moche', 'Cet appartement est moche', 'appartement', 'appartement','10 Rue Jeanne d''Arc', 22300, 'Perros-Guirec', 2, 'appartement_rennes.jpg', TRUE, 2, 1, 1, 30.0),
+    (120, 'Villa de rêve', 'Une villa où tout est possible', 'Cette villa est située au bord de la mer. Elle est idéale pour des vacances en famille ou entre amis.', 'villa', 'villa', '11 Rue des Ajoncs d''Or', 22710, 'Penvénan', 2, 'maison_saintmalo.jpg', TRUE, 6, 3, 2, 200.0),
+    (60, 'Maison bretonne traditionnelle', 'Une charmante maison en pierre typiquement bretonne', 'Cette maison traditionnelle offre tout le confort moderne dans un cadre authentique.', 'maison', 'maison', '4 Rue du Port', 29600, 'Morlaix', 1, 'maison_bretagne.jpg', TRUE, 4, 2, 1, 140.0),
+    (90, 'Appartement avec vue sur la mer', 'Vue imprenable depuis cet appartement en front de mer', 'Profitez du bruit des vagues et de la vue sur l''océan Atlantique depuis ce bel appartement.', 'appartement', 'appartement', '1 Rue de la Plage', 29900, 'Concarneau', 2, 'appartement_mer.jpg', TRUE, 4, 2, 1, 180.0),
+    (55, 'Gîte rustique au milieu des champs', 'Retraite paisible dans cette ancienne ferme rénovée', 'Entouré de champs verdoyants, ce gîte offre calme et tranquillité pour un séjour ressourçant.', 'gite', 'maison', '6 Chemin des Champs', 56400, 'Auray', 1, 'gite_champs.jpg', TRUE, 3, 1, 1, 110.0),
+    (75, 'Maison avec jardin clos', 'Espace extérieur parfait pour les familles', 'Idéal pour les enfants et les animaux de compagnie, cette maison offre un grand jardin clos.', 'maison', 'maison', '8 Rue des Lilas', 56000, 'Vannes', 1, 'maison_jardin.jpg', TRUE, 6, 3, 2, 190.0),
+    (65, 'Appartement en centre-ville historique', 'Séjournez au cœur de la vieille ville', 'Cet appartement est situé dans le quartier historique de la ville, à proximité des sites touristiques et des restaurants.', 'appartement', 'appartement', '3 Rue des Remparts', 56100, 'Lorient', 2, 'appartement_historique.jpg', TRUE, 3, 1, 1, 130.0),
+    (85, 'Villa moderne avec piscine', 'Vacances luxueuses dans cette villa contemporaine', 'Profitez du confort et du luxe dans cette villa équipée d''une piscine privée et d''équipements haut de gamme.', 'villa', 'villa', '2 Allée des Pins', 56800, 'Ploërmel', 2, 'villa_piscine.jpg', TRUE, 8, 4, 3, 280.0),
+    (95, 'Maison de pêcheur rénovée', 'Charme authentique près du port', 'Cette maison de pêcheur rénovée offre un mélange parfait de charme traditionnel et de confort moderne.', 'maison', 'maison', '5 Rue du Port', 56410, 'Étel', 1, 'maison_pecheur.jpg', TRUE, 5, 2, 2, 160.0),
+    (110, 'Château rénové avec parc', 'Un séjour royal dans ce château du XVIIIe siècle', 'Vivez comme la noblesse dans ce château magnifiquement rénové, entouré de vastes jardins et de forêts.', 'chateau', 'villa', '1 Avenue du Château', 56120, 'Josselin', 1, 'chateau_jardin.jpg', TRUE, 12, 6, 4, 350.0),
+    (70, 'Appartement avec terrasse sur le port', 'Vue panoramique depuis cette terrasse ensoleillée', 'Profitez du spectacle des bateaux entrant et sortant du port depuis cette belle terrasse.', 'appartement', 'appartement', '7 Quai de la Douane', 56610, 'Arradon', 2, 'appartement_port.jpg', TRUE, 4, 2, 1, 150.0),
+    (45, 'Gîte dans les collines bretonnes', 'Retraite paisible en pleine nature', 'Niché au cœur des collines bretonnes, ce gîte offre tranquillité et sérénité pour un séjour ressourçant.', 'gite', 'maison', '9 Chemin des Collines', 56700, 'Merlevenez', 2, 'gite_collines.jpg', TRUE, 3, 1, 1, 100.0),
+    (105, 'Villa avec vue panoramique', 'Vues à couper le souffle depuis cette villa moderne', 'Cette villa contemporaine offre des vues imprenables sur la côte bretonne, avec un accès direct à la plage.', 'villa', 'villa', '3 Avenue de la Corniche', 56130, 'Nivillac', 2, 'villa_vue_mer.jpg', TRUE, 8, 4, 3, 270.0),
+    (50, 'Maisonnette dans un village pittoresque', 'Séjour authentique dans ce village traditionnel', 'Cette charmante maisonnette est située dans un village préservé, offrant un cadre authentique pour des vacances en famille.', 'maison', 'maison', '10 Rue du Village', 56200, 'La Gacilly', 1, 'maison_village.jpg', TRUE, 4, 2, 1, 120.0),
+    (75, 'Appartement avec balcon vue sur mer', 'Vues dégagées depuis ce balcon en front de mer', 'Profitez de l''air marin et du panorama sur l''océan Atlantique depuis ce confortable appartement.', 'appartement', 'appartement', '6 Boulevard de la Mer', 56340, 'Carnac', 2, 'appartement_balcon.jpg', TRUE, 4, 2, 1, 180.0),
+    (80, 'Gîte en bordure de forêt', 'Retraite au cœur de la nature', 'Ce gîte est niché au bord d''une forêt préservée, offrant calme et tranquillité pour un séjour ressourçant.', 'gite', 'maison', '12 Chemin des Bois', 56470, 'La Trinité-sur-Mer', 1, 'gite_foret.jpg', TRUE, 4, 2, 1, 140.0),
+    (65, 'Maison de campagne avec jardin', 'Séjour au calme dans la campagne bretonne', 'Cette maison de campagne offre un cadre paisible avec un grand jardin, idéal pour se ressourcer en pleine nature.', 'maison', 'maison', '11 Route de la Campagne', 56190, 'Muzillac', 1, 'maison_campagne.jpg', TRUE, 6, 3, 2, 160.0),
+    (55, 'Appartement en bord de rivière', 'Tranquillité au fil de l''eau', 'Cet appartement offre une vue apaisante sur la rivière, avec la possibilité de pêcher et de se détendre au bord de l''eau.', 'appartement', 'appartement', '8 Quai des Berges', 56300, 'Pontivy', 2, 'appartement_riviere.jpg', TRUE, 3, 1, 1, 110.0),
+    (70, 'Chalet en montagne', 'Séjour rustique au cœur des montagnes bretonnes', 'Ce chalet en bois est idéal pour les amateurs de nature et de randonnée, offrant un refuge chaleureux dans les montagnes bretonnes.', 'chalet', 'maison', '7 Rue des Montagnes', 56640, 'Arzon', 2, 'chalet_montagne.jpg', TRUE, 4, 2, 1, 150.0),
+    (90, 'Villa avec piscine intérieure', 'Détente et luxe dans cette villa d''exception', 'Profitez d''une piscine intérieure privée et de tous les équipements haut de gamme dans cette villa moderne.', 'villa', 'villa', '5 Allée des Roses', 56170, 'Quiberon', 1, 'villa_piscine_interieure.jpg', TRUE, 8, 4, 3, 250.0),
+    (85, 'Maison de vacances', 'Vue imprenable sur la campagne bretonne', 'Cette maison de vacances offre une vue panoramique sur les collines verdoyantes de la Bretagne, idéale pour un séjour reposant en pleine nature.', 'maison', 'maison', '3 Chemin des Prés', 56780, 'Île-aux-Moines', 2, 'maison_vacances.jpg', TRUE, 6, 3, 2, 200.0),
+    (60, 'Appartement lumineux en ville', 'Séjour confortable au cœur de la ville', 'Cet appartement moderne et lumineux est situé en plein centre-ville, à proximité des commerces et des restaurants.', 'appartement', 'appartement', '2 Rue des Artisans', 56330, 'Pluvigner', 1, 'appartement_lumineux.jpg', TRUE, 4, 2, 1, 140.0),
+    (110, 'Manoir historique avec parc privé', 'Un séjour royal dans un cadre enchanteur', 'Ce magnifique manoir du XVIIIe siècle offre un cadre majestueux avec son parc privé, idéal pour des vacances luxueuses en famille ou entre amis.', 'manoir', 'villa', '1 Chemin du Manoir', 56450, 'Theix-Noyalo', 1, 'manoir_historique.jpg', TRUE, 10, 5, 4, 350.0);
+
 
 INSERT INTO Chambre (nbLitsSimples, nbLitsDoubles) VALUES ( 2, 3);
 INSERT INTO Chambre (nbLitsSimples, nbLitsDoubles) VALUES ( 1, 1);
@@ -405,6 +423,32 @@ INSERT INTO LogementChambre(numLogement,numChambre) VALUES (6,2);
 INSERT INTO LogementChambre(numLogement,numChambre) VALUES (6,1);
 INSERT INTO LogementChambre(numLogement,numChambre) VALUES (6,1);
 INSERT INTO LogementChambre(numLogement,numChambre) VALUES (6,2);
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (7,3);
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (8,2);
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (9,3);
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (9,2);
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (9,1);
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (10,1);
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (11,2);
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (12,1);
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (13,1);
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (14,2);
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (15,3);
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (16,2);
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (17,1);
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (18,3);
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (19,2);
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (20,1);
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (21,3);
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (22,2);
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (23,1);
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (24,3);
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (25,2);
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (26,1);
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (27,3);
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (28,2);
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (29,1);
+INSERT INTO LogementChambre(numLogement,numChambre) VALUES (30,3);
 
 -- Insertion de données dans la table Reservation
 INSERT INTO Reservation (numClient, numLogement, dateReservation, nbPersonnes, dateDebut, dateFin, dateDevis, nbJours, optionAnnulation)
@@ -424,17 +468,17 @@ VALUES
     (TRUE, 2, 3, 'Arrivées le samedi', 1),
     (TRUE, 3, 2, 'Départ avant midi, arrivées le jeudi', 2);
 
--- Insertion de données dans la table PlageDeDisponibilite
-INSERT INTO PlageDeDisponibilite (numCal, dateDebutPlage, dateFinPlage, tarifJournalier)
+-- Insertion de plage dispo dans la table Plage
+INSERT INTO Plage (isIndispo, numCal, dateDebutPlage, dateFinPlage, tarifJournalier)
 VALUES
-    (2, '2023-11-20', '2023-11-27', 100),
-    (1, '2023-11-10', '2023-11-12', 120);
+    (false, 2, '2023-11-20', '2023-11-27', 100),
+    (false, 1, '2023-11-10', '2023-11-12', 120);
     
--- Insertion de données dans la table PlageDeDisponibilite
-INSERT INTO PlageIndisponibilite (numCal, dateDebutPlageI, dateFinPlageI)
+-- Insertion de plage indispo dans la table Plage
+INSERT INTO Plage (isIndispo, numCal, dateDebutPlage, dateFinPlage)
 VALUES
-    (2, '2023-11-10', '2023-11-20'),
-    (1, '2023-11-20', '2023-11-23');
+    (true, 2, '2023-11-10', '2023-11-20'),
+    (true, 1, '2023-11-20', '2023-11-23');
 
 
 -- Insertion de données dans la table Favoris
