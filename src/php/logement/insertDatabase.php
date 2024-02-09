@@ -18,7 +18,7 @@ if (isset($_SESSION['id'])) {
 } else{
 }
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $title = htmlspecialchars(strip_tags($_POST['title']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
         $description = htmlspecialchars(strip_tags($_POST['description']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
         $photoCouverture = $_FILES['photos']['name'];
@@ -40,27 +40,26 @@ if (isset($_SESSION['id'])) {
         $installations=[];
     $hollow=$_POST['installDispo'];
     $i=0;
-
-    while (isset($hollow)){
-        if (!($hollow=="")){
-            array_push($installations, $hollow);
+    while (isset($hollow)) {
+        if (!($hollow == "")) {
+            array_push($installations, htmlspecialchars(strip_tags($hollow), ENT_QUOTES | ENT_HTML5, 'UTF-8'));
         }
-        $i=$i+1;
-        $hollow= htmlspecialchars(strip_tags($_POST['InstallDispo'.$i+1]), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $i++;
+        $hollow = htmlspecialchars(strip_tags($_POST['InstallDispo' . ($i + 1)]), ENT_QUOTES | ENT_HTML5, 'UTF-8');
     }
 
-    //EQUIPEMENT
+//EQUIPEMENT
 
-    $equipements=[];
-    $equipementElement=$_POST['equipement'];
-    $j=0;
+    $equipements = [];
+    $equipementElement = $_POST['equipement'];
+    $j = 0;
 
-    while (isset($equipementElement)){
-        if (!($equipementElement=="")){
-            array_push($equipements, $equipementElement);
+    while (isset($equipementElement)) {
+        if (!($equipementElement == "")) {
+            array_push($equipements, htmlspecialchars(strip_tags($equipementElement), ENT_QUOTES | ENT_HTML5, 'UTF-8'));
         }
-        $j=$j+1;
-        $equipementElement=htmlspecialchars(strip_tags($_POST['equipement'.$i+1]), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $j++;
+        $equipementElement = htmlspecialchars(strip_tags($_POST['equipement' . ($j + 1)]), ENT_QUOTES | ENT_HTML5, 'UTF-8');
     }
 
     //SERVICE
@@ -71,10 +70,11 @@ if (isset($_SESSION['id'])) {
 
     while (isset($serviceElement)){
         if (!($serviceElement=="")){
+            $serviceElement = htmlspecialchars(strip_tags($serviceElement), ENT_QUOTES | ENT_HTML5, 'UTF-8');
             array_push($services, $serviceElement);
         }
         $k=$k+1;
-        $serviceElement=htmlspecialchars(strip_tags($_POST['service'.$k+1]), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $serviceElement = $_POST['service' . $k + 1];
     }
 
     //CHAMBRES
