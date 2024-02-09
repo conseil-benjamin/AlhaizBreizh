@@ -5,6 +5,8 @@
 let mapDiv = document.querySelector('.map');
 mapDiv.style.display = "none";
 var mapAffichee = false;
+var popupsVisibles = false;
+var bouttonVisibilite = document.getElementById('bouttonVisibilite');
 
 var bretagne = [48.202047, -3.832382];
 var mapX = bretagne[0];
@@ -86,7 +88,6 @@ async function fetchCoordinates() {
 
     var logements = document.querySelectorAll('.logement');
     var coordonnees = [];
-    console.log(logements);
 
     for (let logement of logements) {
         let id = logement.id.substring(8);
@@ -101,7 +102,18 @@ async function fetchCoordinates() {
         if (coords[0] != null && coords[1] != null) {
             coordonnees[id] = coords;
             let marker = L.marker(coords, {icon: pin}).addTo(map);
-            marker.bindPopup("<h3>"+titre+"</h3>"+personnes+"<br>"+prix+"<br><a href='/src/php/logement/PageDetailLogement.php?numLogement="+id+"'><strong>Voir le Logement</strong></a>");
+            marker.bindPopup("<h3>"+titre+"</h3>"+personnes+"<br>"+prix+"<br><a href='/src/php/logement/PageDetailLogement.php?numLogement="+id+"'><strong>Voir le Logement</strong></a>", {autoClose: false});
+            
+            //Fermer les popups si on clique sur un autre marker
+            marker.on('click', function() {
+                map.eachLayer(function (layer) {
+                    if (layer instanceof L.Marker && layer.isPopupOpen() && layer !== marker) {
+                        layer.closePopup();
+                        popupsVisibles = false;
+                        bouttonVisibilite.children[0].src = "/public/icons/view.svg";
+                    }
+                });
+            });
         }
     }
 
@@ -122,11 +134,9 @@ async function fetchCoordinates() {
             let size = map.getSize();
             let logement = document.getElementById('logement'+id);
             if(point.x < 0 || point.y < 0 || point.x > size.x || point.y > size.y) {
-                console.log("logement"+id+" n'est pas visible");
                 logement.style.display = "none";
                 logement.classList.add('filtremap');
             } else {
-                console.log("logement"+id+" est visible");
                 logement.style.display = "flex";
                 logement.classList.remove('filtremap');
             }
@@ -167,4 +177,31 @@ fetchCoordinates();
 let bouttonResetMap = document.getElementById('bouttonResetMap');
 bouttonResetMap.addEventListener('click', function() {
     map.setView(bretagne, 8);
+});
+
+/*******************************************************/
+/*Aficher / Cacher les popups sur les markers*/
+
+function visibilitePopus() {
+    if (popupsVisibles) {
+        bouttonVisibilite.children[0].src = "/public/icons/view.svg";
+        map.eachLayer(function (layer) {
+            if (layer instanceof L.Marker && layer.isPopupOpen()) {
+                layer.closePopup();
+            }
+        });
+        popupsVisibles = false;
+    } else {
+        bouttonVisibilite.children[0].src = "/public/icons/hide.svg";
+        map.eachLayer(function (layer) {
+            if (layer instanceof L.Marker && !layer.isPopupOpen()) {
+                layer.openPopup();
+            }
+        });
+        popupsVisibles = true;
+    }
+}
+
+bouttonVisibilite.addEventListener('click', function() {
+    visibilitePopus();
 });

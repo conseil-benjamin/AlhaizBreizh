@@ -52,6 +52,7 @@
         <div class="map">
             <nav>
                 <button id="bouttonResetMap" class="boutton"><img src="/public/icons/reset.svg" alt="Reset la vue"></button>
+                <button id="bouttonVisibilite" class="boutton"><img src="/public/icons/view.svg" alt="Visibilité"></button>
                 <button id="bouttonCloseMap" class="boutton"><img src="/public/icons/croix.svg" alt="Fermer"></button>
             </nav>
             <div 
