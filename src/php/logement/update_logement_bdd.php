@@ -42,16 +42,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $installations=[];
     $hollow=$_POST['installDispo1'];
     $i=1;
-
     while (isset($hollow)){
         if (!($hollow=="")){
+            $hollow=htmlspecialchars(strip_tags($hollow), ENT_QUOTES | ENT_HTML5, 'UTF-8');
             array_push($installations, $hollow);
         }
         $i=$i+1;
-        $hollow=htmlspecialchars(strip_tags($_POST['InstallDispo'.$i]), ENT_QUOTES | ENT_HTML5, 'UTF-8');
-
+        $hollow=$_POST['InstallDispo'.$i];
     }
-
     //EQUIPEMENT
 
     $equipements=[];
@@ -60,12 +58,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     while (isset($equipementElement)){
         if (!($equipementElement=="")){
+            $equipementElement=htmlspecialchars(strip_tags($equipementElement), ENT_QUOTES | ENT_HTML5, 'UTF-8');
             array_push($equipements, $equipementElement);
         }
         $i=$i+1;
-        print_r($_POST);
-        die();
-        $equipementElement=htmlspecialchars(strip_tags($_POST['equipement'.$i]), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $equipementElement=$_POST['equipement'.$i];
     }
 
 
@@ -77,10 +74,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     while (isset($serviceElement)){
         if (!($serviceElement=="")){
+            $serviceElement=htmlspecialchars(strip_tags($serviceElement), ENT_QUOTES | ENT_HTML5, 'UTF-8');
             array_push($services, $serviceElement);
         }
         $i=$i+1;
-        $serviceElement=htmlspecialchars(strip_tags($_POST['service'.$i]), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $serviceElement=$_POST['service'.$i];
     }
 
     //CHAMBRES
@@ -148,24 +146,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $statement->execute();
                 $result = $statement->fetch(PDO::FETCH_ASSOC);
                 if ($result) {
-                    $numChambre =  $result['numChambre'];
+                    $numChambre =  $result['numchambre'];
                 } else {
-                    // Préparer la requête SQL avec une colonne auto-incrémentée
                     $query = "INSERT INTO ldc.Chambre (nbLitsSimples, nbLitsDoubles) VALUES (:nbLitsSimples, :nbLitsDoubles)";
 
-                    // Préparer la requête
                     $statement = $pdo->prepare($query);
 
-                    // Lier les paramètres
                     $statement->bindParam(':nbLitsSimples', $value[0], PDO::PARAM_INT);
                     $statement->bindParam(':nbLitsDoubles', $value[1], PDO::PARAM_INT);
 
-                    // Exécuter la requête
                     $statement->execute();
-                    $numChambre = $statement->fetchColumn();
+                    $numChambre = $pdo->lastInsertId();
                 }
-                $stmtChambre = $pdo->prepare("UPDATE ldc.LogementChambre SET numChambre = ? WHERE numlogement = $id_logem");
-                $stmtChambre->bindParam(1, $numChambre);
+                $stmtChambre = $pdo->prepare("UPDATE ldc.LogementChambre SET numChambre = :numChambre WHERE numlogement = $id_logem");
+                $stmtChambre->bindParam(':numChambre', $numChambre);
                 $stmtChambre->execute();
             }
             else{ //Si le numero de la chambre est plus eleve que le nombre de chambre de la bdd, on l'ajoute

@@ -143,7 +143,7 @@ if (isset($_SESSION['id'])) {
                 $statement->execute();
                 $result = $statement->fetch(PDO::FETCH_ASSOC);
                 if ($result) {
-                   $numChambre =  $result['numChambre'];
+                   $numChambre =  $result['numchambre'];
                 } else {
                     // Préparer la requête SQL avec une colonne auto-incrémentée
                     $query = "INSERT INTO ldc.Chambre (nbLitsSimples, nbLitsDoubles) VALUES (:nbLitsSimples, :nbLitsDoubles)";
