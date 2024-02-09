@@ -44,6 +44,20 @@
                             </div>
 
                             <input id="side_recherche" class="textfield" type="text" placeholder="Rechercher..">
+                            <h2>Ville</h2>
+                            <select id="side_ville">
+                                <option value="">---</option>
+                                <?php
+                                    $tab=[];
+                                    foreach ($logements as $logement) {
+                                        $ville = $logement[4];
+                                        if (!in_array($ville,$tab)){
+                                            echo "<option value=\"{$logement[4]}\">{$logement[4]}</option>";
+                                            $tab[]=$ville;
+                                        }
+                                    }
+                                ?>
+                            </select>
                             <h2>Type du logement</h2>
                                 <select id="side_type">
                                     <option value="">---</option>

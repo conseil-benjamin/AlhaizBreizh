@@ -94,6 +94,8 @@ function trierLogements(liste) {
         let imageElement = document.createElement('img');
         imageElement.src = '/public/img/logements/' + logement[0] + '/1.png'; //num logement
         imageElement.alt="logement";
+        imageElement.setAttribute("place",logement[4]);
+        imageElement.setAttribute("data-information",logement[6]);
         logementDiv.appendChild(imageElement);
 
         let res = document.createElement('div');
@@ -151,9 +153,7 @@ async function enfer() {
 
     charlie.forEach(logement => {
         if (
-            //filtre_nb(logement.innerHTML) &&
-            //filtre_max(logement.innerHTML) &&
-            //filtre_min(logement.innerHTML) &&
+            filtre_ville(logement.innerHTML) &&
             filtre_recherche(logement.innerHTML) &&
             filtre_type(logement.innerHTML)
         ) {
@@ -198,41 +198,22 @@ document.body.addEventListener('click', function (event) {
 });
 
 
-function filtre_nb(contenu) {
-    let doc = document.getElementById('side_nb');
+function filtre_ville(contenu) {
+    let doc = document.getElementById('side_ville');
     let filtre = doc.value.toLowerCase();
-    let nb = contenu.match(/\d+/g);
-    if (parseInt(nb[nb.length-2])<parseInt(filtre)){
-        return false;
+    let nb = contenu.match(/place="(.*?)"/);
+    if (filtre!== ""){
+        if (nb[1].toLowerCase()==filtre){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
     else{
         return true;
     }
-};
-
-function filtre_max(contenu) {
-    let doc = document.getElementById('side_max');
-    let filtre = doc.value.toLowerCase();
-    let nb = contenu.match(/\d+/g);
-    if (parseInt(nb[nb.length-1])>parseInt(filtre)){
-        return false;
-    }
-    else{
-        return true;
-    }
-};
-
-function filtre_min(contenu) {
-    let doc = document.getElementById('side_min');
-    let filtre = doc.value.toLowerCase();
-    let nb = contenu.match(/\d+/g);
-    if (parseInt(nb[nb.length-1])<parseInt(filtre)){
-        return false;
-    }
-    else{
-        return true;
-    }
-};
+}
 
 function filtre_recherche(contenu) {
     let doc = document.getElementById('side_recherche');
@@ -263,8 +244,6 @@ function filtre_type(contenu){
     }
 }
 
-//document.getElementById('side_nb').addEventListener('input',enfer);
-//document.getElementById('side_max').addEventListener('input',enfer);
-//document.getElementById('side_min').addEventListener('input',enfer);
 document.getElementById('side_recherche').addEventListener('input',enfer);
 document.getElementById('side_type').addEventListener('change',enfer);
+document.getElementById('side_ville').addEventListener('change',enfer);
