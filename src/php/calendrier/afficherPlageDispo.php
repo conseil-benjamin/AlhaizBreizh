@@ -5,7 +5,7 @@
     $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
 
     // Pour savoir si l'utilisateur connecté est un propriétaire ou non
-    $isProprio = $_POST['proprio'];
+    $isProprio = $_SESSION['proprio'];
     $isProprioJSON = json_encode($isProprio);
 
     $idSession = $_SESSION['id'];
@@ -90,38 +90,62 @@
                     $datedebutplage = $_POST['datedebutplage'];
                     $datefinplage = $_POST['datefinplage'];
                     $tarifjournalier = $_POST['tarifjournalier'];
-                
-                    // Vérifie si les dates sont valides et le tarif est numérique
+
+                    // // On recherche si le logement possède déjà une plage de disponibilité sur la période donnée
+                    // $stmtPrecis = $pdo->prepare("SELECT * FROM ldc.Plage WHERE idLogement = ? AND datedebutplage = ? AND datefinplage = ?");
+                    // $stmtPrecis->execute([$idLogement, $dateDebutPlage, $dateFinPlage]);
+
+                    // $stmtVague = $pdo->prepare("SELECT * FROM ldc.Plage WHERE idLogement = ? AND datedebutplage >= ? AND datefinplage <= ?");
+                    // $stmtVague->execute([$idLogement, $dateDebutPlage, $dateFinPlage]);
+
+                    // // Si le logement possède déjà une plage de disponibilité sur la période donnée, on met à jour la disponibilité du logement
+                    // if ($stmtPrecis->rowCount() > 0) {
+                    //     $plagePrecise = $stmtPrecis->fetch(PDO::FETCH_ASSOC);
+
+                    //     // On vérifie si la plage de disponibilité est déjà indisponible
+                    //     if (!$plagePrecise['disponible']) {
+                    //         echo "La plage sélectionnée est déjà indisponible, veuillez réessayer avec une autre plage disponible";
+                    //         exit(1);
+                    //     }
+
+                    //     // Met à jour la disponibilité de la plage
+                    //     $stmtUpdate = $pdo->prepare("UPDATE ldc.PlageDeDisponibilite SET disponible = false WHERE idPlage = ?");
+                    //     $stmtUpdate->execute([$plagePrecise['idPlage']]);
+
+                    // } elseif ($stmtVague->rowCount() > 0) {
+                    //     $plageVague = $stmtVague->fetch(PDO::FETCH_ASSOC);
+
+                    //     // Divise la plage existante en deux plages distinctes à la date de début de la nouvelle plage d'indisponibilité
+                    //     $stmtUpdateDuree = $pdo->prepare("UPDATE ldc.PlageDeDisponibilite SET datefinplage = ? WHERE idLogement = ? AND datedebutplage <= ? AND datefinplage >= ?");
+                    //     $stmtUpdateDuree->execute([$dateDebutPlage, $idLogement, $dateDebutPlage, $dateFinPlage]);
+            
+                    //     // Insère la nouvelle plage d'indisponibilité
+                    //     $stmtInsertIndispo = $pdo->prepare("INSERT INTO ldc.PlageDeDisponibilite (datedebutplage, datefinplage, tarifjournalier, idLogement, numCal, disponible) VALUES (?, ?, ?, ?, ?, false)");
+                    //     $stmtInsertIndispo->execute([$dateFinPlage, $plageVague['datefinplage'], $plageVague['tarifjournalier'], $idLogement, $idLogement]);
+                    //}
                     if (strtotime($datedebutplage) && strtotime($datefinplage) && is_numeric($tarifjournalier)) {
-                        //vérifie si la nouvelle plage de disponibilité n'intersecte pas avec une plage de disponibilité existante
-                        // $intersectionQuerry = $pdo->prepare("SELECT COUNT(*) FROM ldc.PlageDeDisponibilite WHERE numCal = ? AND NOT (? >= datefinplage OR  ? <= datedebutplage)");
-                        // $intersectionQuerry->execute([$numCal, $datedebutplage, $datefinplage]);
-                        // $inteserctionCount = $intersectionQuerry->fetchColumn();
+                        // Vérifie si les dates sont valides et le tarif est numérique
+                        $isDispo = false;
+                        $stmt = $pdo->prepare("INSERT INTO ldc.Plage (isIndispo, numCal, datedebutplage, datefinplage, tarifjournalier) 
+                            VALUES (?, ?, ?, ?, ?) ");
+                        $stmt->bindParam(1, $isDispo, PDO::PARAM_BOOL);
+                        $stmt->bindParam(2, $numCal);
+                        $stmt->bindParam(3, $datedebutplage);
+                        $stmt->bindParam(4, $datefinplage);
+                        $stmt->bindParam(5, $tarifjournalier);
+                        $stmt->execute();
 
-                        // if($inteserctionCount == 0){
-                        //     //vérifie si la nouvelle plage de disponibilité n'intersecte pas avec une plage d'indisponibilité existante
-                        //     $intersectionQuerryIndispo = $pdo->prepare("SELECT COUNT(*) FROM Ldc. WHERE numCal = ? AND NOT (? >= datefinplage OR ? <= datedebutplage)");
-                        //     $intersectionQuerryIndispo->execute([$numCal, $datedebutplage, $datefinplage]);
-                        //     $intersectionCountIndispo = $intersectionQuerryIndispo->fetchColumn();
-
-                        //     if($intersectionCountIndispo == 0){
-                                $isDispo = false;
-                                $stmt = $pdo->prepare("INSERT INTO ldc.Plage (isIndispo, numCal, datedebutplage, datefinplage, tarifjournalier) 
-                                    VALUES (?, ?, ?, ?, ?) ");
-                                $stmt->bindParam(1, $isDispo, PDO::PARAM_BOOL);
-                                $stmt->bindParam(2, $numCal);
-                                $stmt->bindParam(3, $datedebutplage);
-                                $stmt->bindParam(4, $datefinplage);
-                                $stmt->bindParam(5, $tarifjournalier);
-                                $stmt->execute();
+                        echo "<script>
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Plage de disponibilité ajoutée avec succès',
+                            showConfirmButton: false,
+                            timer: 2000
+                        });
+                        </script>";
                         
-                                // Rafraîchit les plages de disponibilité
-                                header("Refresh:0");
-                            }//else{
-
-                        }//else{
-
-                        //}
+                        // Rafraîchit les plages de disponibilité
+                        header("Refresh:0");
                     }
                 }
 
@@ -142,7 +166,15 @@
                         $stmt->bindParam(4,$datefinplage);
                         $stmt->bindParam(5,$tarif);
                         $stmt->execute();
-                
+
+                        echo "<script>
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Plage d\'indisponibilité ajoutée avec succès',
+                            showConfirmButton: false,
+                            timer: 2000
+                        });
+                        </script>";
                         // Rafraîchit les plages de disponibilité
                         header("Refresh:0");
                     }
@@ -150,8 +182,8 @@
             }else{
                 echo "Le numéro de logement spécifié n'existe pas.";
             }
-    //     }
-    // }
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -183,7 +215,7 @@
                     }
                 ?>
             </div>
-            
+
             <div id='calform'>
                 <div id='calendar'>
                     <script> 
@@ -213,7 +245,7 @@
                                 //     }
                                 // },
                                 eventClick: function(info) {
-                                    if(isProprio && idSession == proprioID){
+                                    if(isProprio && idSession === proprioID){
                                         Swal.fire({
                                             title: "Voulez-vous supprimer la plage ?",
                                             showCancelButton: true,
@@ -257,7 +289,7 @@
                 <?php
                     //Formulaire permettant l'ajout d'une plage de disponibilité
                     if (isset($_SESSION['id']) && $numLogementExists) {
-                        if ($_SESSION['proprio'] == true && $_SESSION['id'] == $proprioId) {
+                        if ($isProprio == true && $_SESSION['id'] == $proprioId) {
                 ?>      
                         <div id="forms">
                             <div class="select">
