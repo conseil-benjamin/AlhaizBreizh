@@ -21,21 +21,21 @@ error_reporting(E_ALL & ~E_WARNING);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $id_logem=$_SESSION['num_logement'];    
-    
-    $title = $_POST['title'];
-    $description = $_POST['description'];
-    $photos = $_POST['photos'];
-    $typeLogement = $_POST['typeLogement'];
-    $surface = $_POST['surface']; 
-    $natureLogement = $_POST['natureLogement'];
-    $adresse = $_POST['adresse'];
-    $cp = $_POST['cdPostal'];
-    $ville = $_POST['ville'];
-    $accroche = $_POST['accroche'];
-    $nbSalleDeBain = $_POST['nbSallesBain'];
-    $nbPersMax = $_POST['nbMaxPers'];
-    $prixParNuit = $_POST['prixParNuit'];
+    $id_logem=$_SESSION['num_logement'];
+
+    $title = htmlspecialchars(strip_tags($_POST['title']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+    $description = htmlspecialchars(strip_tags($_POST['description']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+    $photos = $_POST['photos']; // No filtering required for $_POST['photos']
+    $typeLogement = htmlspecialchars(strip_tags($_POST['typeLogement']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+    $surface = htmlspecialchars(strip_tags($_POST['surface']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+    $natureLogement = htmlspecialchars(strip_tags($_POST['natureLogement']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+    $adresse = htmlspecialchars(strip_tags($_POST['adresse']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+    $cp = htmlspecialchars(strip_tags($_POST['cdPostal']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+    $ville = htmlspecialchars(strip_tags($_POST['ville']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+    $accroche = htmlspecialchars(strip_tags($_POST['accroche']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+    $nbSalleDeBain = htmlspecialchars(strip_tags($_POST['nbSallesBain']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+    $nbPersMax = htmlspecialchars(strip_tags($_POST['nbMaxPers']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+    $prixParNuit = htmlspecialchars(strip_tags($_POST['prixParNuit']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
 
     //INSTALLATIONS
 
@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             array_push($installations, $hollow);
         }
         $i=$i+1;
-        $hollow=$_POST['InstallDispo'.$i+1];
+        $hollow=htmlspecialchars(strip_tags($_POST['InstallDispo'.$i+1]), ENT_QUOTES | ENT_HTML5, 'UTF-8');
 
     }
 
@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             array_push($equipements, $equipementElement);
         }
         $i=$i+1;
-        $equipementElement=$_POST['equipement'.$i+1];
+        $equipementElement=htmlspecialchars(strip_tags($_POST['equipement'.$i+1]), ENT_QUOTES | ENT_HTML5, 'UTF-8');
     }
 
 
@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             array_push($services, $serviceElement);
         }
         $i=$i+1;
-        $serviceElement=$_POST['service'.$i+1];
+        $serviceElement=htmlspecialchars(strip_tags($_POST['service'.$i+1]), ENT_QUOTES | ENT_HTML5, 'UTF-8');
     }
 
     //CHAMBRES
