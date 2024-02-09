@@ -198,8 +198,8 @@
                     </div>
         
                     <div class="installationsElement">
-                        <label for="installDispo!">Installations disponibles</label>
-                        <input class="textfield" type="text" id="installDispo" name="installDispo" placeholder="Installation disponible" size="55" value="<?php echo $installations; ?>" >
+                        <label for="installDispo1">Installations disponibles</label>
+                        <input class="textfield" type="text" id="installDispo1" name="installDispo1" placeholder="Installation disponible" size="55" value="<?php echo $installations; ?>" >
                     </div>
                     <button class="addButton boutton" id="btnInstallations" type="button">Ajouter installations disponibles</button>
         
