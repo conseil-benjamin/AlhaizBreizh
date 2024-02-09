@@ -1,7 +1,7 @@
 let charlie=Array.from(document.getElementsByClassName("logement"));
 
 async function chargerLogements() {
-    let rep =  await fetch("/src/php/chargerResa.php?json=1")
+    let rep =  await fetch("/src/php/chargerLesResa.php?json=1")
     let dataJson = await rep.json()
     return dataJson
 }
@@ -22,9 +22,9 @@ function num(event){
     chargerLogements().then((value) => {
         logements=value
         logements.sort(function(a, b) {
-            return b[6]-a[6];
+            console.log(a,b);
+            return a["numreservation"]-b["numreservation"];
         });
-        console.log(logements);
         trierLogements(logements);
     })
 }
@@ -34,9 +34,10 @@ function unnum(event){
     chargerLogements().then((value) => {
         logements=value
         logements.sort(function(a, b) {
-            return b[6]-a[6];
+            console.log(a,b);
+            return b["numreservation"]-a["numreservation"];
         });
-        trierLogements(logements.reverse());
+        trierLogements(logements);
     })
 }
 
@@ -45,7 +46,7 @@ function tarif(event){
     chargerLogements().then((value) => {
         logements=value
         logements.sort(function(a, b) {
-            return b[10]-a[10];
+            return a["tarifnuitees"]-b["tarifnuitees"];
         });
         trierLogements(logements);
     })
@@ -56,7 +57,7 @@ function untarif(event){
     chargerLogements().then((value) => {
         logements=value
         logements.sort(function(a, b) {
-            return a[10]-b[10];
+            return b["tarifnuitees"]-a["tarifnuitees"];
         });
         trierLogements(logements);
     })
@@ -67,7 +68,7 @@ function date(event){
     chargerLogements().then((value) => {
         logements=value
         logements.sort(function(a, b) {
-            return new Date(a[2])- new Date(b[2]);
+            return new Date(a["datedebut"])- new Date(b["datedebut"]);
         });
         trierLogements(logements);
     })
@@ -78,7 +79,7 @@ function undate(event){
     chargerLogements().then((value) => {
         logements=value
         logements.sort(function(a, b) {
-            return new Date(b[3])- new Date(a[3]);
+            return new Date(b["datefin"])- new Date(a["datefin"]);
         });
         trierLogements(logements);
     })
@@ -89,48 +90,40 @@ function trierLogements(liste) {
     cont.innerHTML="";
 
     liste.forEach(function (logement) {
-        console.log(logement);
-
         //C'est parti pour recreer toutes les etiquettes de logement
         let logementDiv = document.createElement('div');
         logementDiv.className = 'logement';
-
         let imageElement = document.createElement('img');
-        imageElement.src = '/public/img/logements/' + logement[0] + '/1.png'; //num logement
+        imageElement.src = '/public/img/logements/' + logement["numlogement"] + '/1.png'; //num logement
         imageElement.alt="logement";
-        imageElement.setAttribute("place",logement[11]);
-        imageElement.setAttribute("data-information",logement[12]);
+        imageElement.setAttribute("place",logement["ville"]);
+        imageElement.setAttribute("data-information",logement["typelogement"]);
         logementDiv.appendChild(imageElement);
 
         let res = document.createElement('div');
 
         let titre = document.createElement('h2');
-        titre.textContent=logement[1]; //titre
+        titre.textContent=logement['libelle']; //titre
         res.appendChild(titre);
 
-        let aa = document.createElement('a');
-        aa.href="/src/php/afficherPlageDispo.php?dateDebut=2023-11-01&dateFin=2023-11-07";
-
         let texte = document.createElement('h4');
-        texte.textContent = logement[2]; //description
-        aa.appendChild(texte);
+        texte.textContent = logement["datedebut"]; //description
+        res.appendChild(texte);
 
         loc_t = document.createElement('h4');
-        loc_t.textContent=logement[3];
-        aa.appendChild(loc_t);
-
-        res.appendChild(aa);
+        loc_t.textContent=logement["datefin"];
+        res.appendChild(loc_t);
 
         let pictprofil = document.createElement('a');
-        pictprofil.href="/src/php/profil/profil.php?user="+logement[6];
+        pictprofil.href="/src/php/profil/profil.php?user="+logement["idclient"];
         pictprofil.id='prof';
         let profil = document.createElement('div');
         profil.className= 'profile';
         let imageProf = document.createElement('img');
-        imageProf.src = '/public/img/photos_profil/' + logement[6] + '.png';
+        imageProf.src = '/public/img/photos_profil/' + logement["idclient"] + '.png';
         imageProf.alt='Photo de profil';
         nomProf = document.createElement('p');
-        nomProf.textContent=logement[8]+" "+logement[9];
+        nomProf.textContent=logement["firstname"]+" "+logement["lastname"];
         profil.appendChild(imageProf);
         profil.appendChild(nomProf);
         pictprofil.appendChild(profil);
@@ -139,11 +132,23 @@ function trierLogements(liste) {
 
         let boutons = document.createElement('nav');
 
+        let supprimer = document.createElement('a');
+        supprimer.classList.add("boutton");
+        supprimer.href="/src/php/reservation/supprimerResaDB.php?numReservation="+logement["numreservation"];
+        supprimer.append("Supprimer");
+        boutons.appendChild(supprimer);
+
         let voir = document.createElement('a');
         voir.classList.add("boutton");
-        voir.href="/src/php/reservation/details_reservation.php?numReservation="+logement[7];
+        voir.href="/src/php/reservation/details_reservation.php?numReservation="+logement["numreservation"];
         voir.append("Voir Réservation");
         boutons.appendChild(voir);
+
+        let log = document.createElement('a');
+        log.classList.add("boutton");
+        log.href="/src/php/logement/PageDetailLogement.php?numLogement="+logement["numlogement"];
+        log.append("Voir Logement");
+        boutons.appendChild(log);
 
         res.appendChild(boutons);
         logementDiv.appendChild(res);
@@ -180,7 +185,7 @@ let replier = true
 function abime() { //Degage le sidemenu sur la gauche
     let sidebar = document.getElementById('sidebar');
     if (sidebar.style.left === "0px") {
-        sidebar.style.left = "-30em";
+        sidebar.style.left = "-22em";
         replier = !replier
     }
 }
@@ -191,7 +196,7 @@ document.getElementById('menu-btn').addEventListener('click', function () {
       sidebar.style.left = "0";
       replier = !replier
     } else {
-        sidebar.style.left = "-30em";
+        sidebar.style.left = "-22em";
         replier = !replier
     }
   });
@@ -257,7 +262,7 @@ function filtre_sej_deb(contenu){
     let nb = contenu.match(/\d{4}-\d{2}-\d{2}/g);
     if (doc.value!== ""){
         let dateAVerifier = new Date(doc.value);
-        if (dateAVerifier.getTime()==new Date(nb[2]).getTime()){
+        if (dateAVerifier.getTime()==new Date(nb[0]).getTime()){
             return true;
         }
         else{
@@ -274,7 +279,7 @@ function filtre_sej_dep(contenu){
     let nb = contenu.match(/\d{4}-\d{2}-\d{2}/g);
     if (doc.value!== ""){
         let dateAVerifier = new Date(doc.value);
-        if (dateAVerifier.getTime()==new Date(nb[3]).getTime()){
+        if (dateAVerifier.getTime()==new Date(nb[1]).getTime()){
             return true;
         }
         else{

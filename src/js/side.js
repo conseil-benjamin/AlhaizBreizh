@@ -81,7 +81,7 @@ function notes(event){ // A TESTER
 }
 
 function trierLogements(liste) {
-    let cont=document.getElementById("contenur_logements");
+    let cont=document.getElementById("conteneur_logements");
     cont.innerHTML="";
 
     liste.forEach(function (logement) {
@@ -89,6 +89,7 @@ function trierLogements(liste) {
         //C'est parti pour recreer toutes les etiquettes de logement
         let logementDiv = document.createElement('div');
         logementDiv.className = 'logement';
+        logementDiv.id = 'logement'+logement[0];
 
         let imageLink = document.createElement('a');
         imageLink.href = '/src/php/logement/PageDetailLogement.php?numLogement=' + logement[0];
@@ -98,7 +99,7 @@ function trierLogements(liste) {
         logementDiv.appendChild(imageLink);
 
         let divType = document.createElement('div');
-        divType.setAttribute("data-information",logement[7]);
+        divType.setAttribute("data-information",logement[11]);
         let boutlike = document.createElement('button');
         let determination = document.createElement('img');
         determination.src='/public/icons/heart_white.svg';
@@ -118,6 +119,7 @@ function trierLogements(liste) {
 
         let titre = document.createElement('h3');
         titre.textContent=logement[1]; //titre
+        titre.classList.add('titre-logement');
         res.appendChild(titre);
 
         let pers = document.createElement('div');
@@ -158,6 +160,7 @@ function trierLogements(liste) {
 
 //Application des filtres
 async function enfer() {
+    console.log("hell");
     const promises = [];
 
     for (let cle in charlie) {
@@ -264,7 +267,7 @@ function filtre_min(contenu) {
 function filtre_recherche(contenu) {
     let doc = document.getElementById('side_recherche');
     let filtre = doc.value.toLowerCase();
-    let nb = contenu.match(/<h3>([\s\S]*?)<\/h3>/);
+    let nb = contenu.match(/<h3 class="titre-logement">([\s\S]*?)<\/h3>/);
     if (nb[1].toLowerCase().includes(filtre)){
         return true;
     }
