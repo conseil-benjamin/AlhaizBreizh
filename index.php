@@ -99,24 +99,24 @@
                                 <div class="hell">
                                     <div class="select_filtr">
                                         <p>Minimum</p>
-                                        <input id="side_min" class="number" placeholder="En Euros" min="0" style="width: 120px;">
+                                        <input id="side_min" class="number textfield" placeholder="En Euros" min="0" style="width: 120px;">
                                     </div>
                                     <div class="select_filtr">
                                         <p>Maximum</p>
-                                        <input id="side_max" class="number" placeholder="En Euros" min="0" style="width: 120px;">
+                                        <input id="side_max" class="number textfield" placeholder="En Euros" min="0" style="width: 120px;">
                                     </div>
                                 </div>
                             <h2>Nombre de personnes</h2>
-                                <input id="side_nb" type="number" min="1">
+                                <input id="side_nb" class="textfield" type="number" min="1">
                             <h2>Plage de séjour</h2>
                                 <div class="hell">
                                     <div class="select_filtr">
                                         <p>Date d'arrivée</p>
-                                        <input class="input1" id="side_arrive" name="date_arrive" placeholder="JJ/MM/YYYY" type="date">
+                                        <input class="input1 textfield"  id="side_arrive" name="date_arrive" placeholder="JJ/MM/YYYY" type="date">
                                     </div>
                                     <div class="select_filtr">
                                         <p>Date de départ</p>
-                                        <input class="input1" id="side_depart" name="date_depart" placeholder="JJ/MM/YYYY" type="date">
+                                        <input class="input1 textfield" id="side_depart" name="date_depart" placeholder="JJ/MM/YYYY" type="date">
                                     </div>
                                 </div>
                             <?php //<h2>Propriétaire</h2>
