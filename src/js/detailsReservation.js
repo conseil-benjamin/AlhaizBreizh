@@ -67,7 +67,8 @@ function annulerComplexPopUp(numReservation) { // Ajouter le paramètre numReser
         icon: "warning",
         showCancelButton: true,
         confirmButtonText: 'Oui',
-        cancelButtonText: 'Non'
+        cancelButtonText: 'Non',
+        cancelButtonColor:"#7066E0"
     })
     .then((value) => {
         if (value.isConfirmed) {
