@@ -12,7 +12,7 @@ const formHTMLelement = document.getElementById("form")
 const PRIX = parseFloat(prixHTMLelement.innerText.replace(",", "."))
 const NBNUIT = parseInt(nbNuitHTMLelement.innerText, 10)
 const AUJ = new Date();
-const DATEFORMAT_ARR = formaterDate(AUJ,5);
+const DATEFORMAT_ARR = formaterDate(AUJ,1);
 const DATEFORMAT_DEP = formaterDate(AUJ,NBNUIT + 6)
 
 inputDateArivee.min = DATEFORMAT_ARR
@@ -43,15 +43,14 @@ function formaterDate(date,decalage) {
     return fullYear + '-' + MM + '-' + DD;
 }
 
-btnEnvoyerHTMLelement.addEventListener("click", (e) => {
-    e.preventDefault()
+btnEnvoyerHTMLelement.addEventListener("click", () => {
     swal({
         title: "Êtes-vous sur ?",
         text: "Cela enverras une demande de devis au propriétaire",
         icon: "warning",
         buttons: [
-            'Annuler',
-            'Valider'
+            'No, cancel it!',
+            'Yes, I am sure!'
         ],
         dangerMode: true,
     }).then(function(isConfirm) {
@@ -73,11 +72,7 @@ nbpersonne.addEventListener('change',()=> {
  */
 inputDateDepart.addEventListener("change", function () {
     const dateDepart = this.value;
-    let dateArrivee = inputDateArivee.value
-    if (dateArrivee >= dateDepart) {
-        inputDateArivee.value = formaterDate(new Date(dateDepart),-1);
-        dateArrivee = inputDateArivee.value;
-    }
+    const dateArrivee = inputDateArivee.value
     updatePrix(dateDepart,dateArrivee)
     updateNBNuit()
 });
