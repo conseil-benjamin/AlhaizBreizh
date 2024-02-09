@@ -14,23 +14,25 @@ try {
     $idProprio = $_SESSION['id']; // ID du propriétaire connecté
 
     $stmt = $pdo->prepare(
-    "SELECT
-    r.numReservation,
-    r.dateDebut,
-    r.dateFin,
-    r.nbPersonnes,
-    l.numlogement,
-    l.libelle,
-    c.idCompte AS idClient,
-    c.firstname,
-    c.lastname,
-    c.pseudoCompte,
-    l.proprio
-    FROM ldc.reservation r
-    JOIN ldc.logement l ON r.numlogement = l.numlogement
-    JOIN ldc.client c ON r.numClient = c.idCompte
-    WHERE l.proprio = :idProprio;"
-    );
+        "SELECT
+        r.numReservation,
+        r.dateDebut,
+        r.dateFin,
+        r.nbPersonnes,
+        l.numlogement,
+        l.libelle,
+        c.idCompte AS idClient,
+        c.firstname,
+        c.lastname,
+        c.pseudoCompte,
+        l.proprio,
+        l.ville,
+        l.typeLogement
+        FROM ldc.reservation r
+        JOIN ldc.logement l ON r.numlogement = l.numlogement
+        JOIN ldc.client c ON r.numClient = c.idCompte
+        WHERE l.proprio = :idProprio;"
+        );
 
 
     // Liaison de la variable :idProprio
@@ -66,12 +68,64 @@ try {
     <div id="content">
         <h2>Les réservations</h2>
         <div id="options">
-            <div>
-                <input class="textfield" type="text" placeholder="Rechercher..">
-                <button class="boutton">Filtrer</button>
-                <button class="boutton">Trier</button>
+                <div>
+                    <div class="menu_filtre">
+                        <div id="sidebar">
+                        <img id="suppr" src="../../../public/icons/supprimer.png" alt="Icône Supprimer" onclick="abime()">
+                            <div class="menu_tri">
+                                <button class="boutton">Trier</button>
+                                <div class="menu_deroulant">
+                                    <ul>
+                                        <a class="item_tri select" onclick="num(event)">Date de Réservation (Ordre décroissant)</a>
+                                        <a  class="item_tri" onclick="unnum(event)">Date de Réservation (Ordre décroissant)</a>
+                                        <a  class="item_tri" onclick="date(event)">Date de Séjour (Ordre croissant)</a>
+                                        <a  class="item_tri" onclick="undate(event)">Date de Séjour (Ordre décroissant)</a>
+                                        <a  class="item_tri" onclick="tarif(event)">Tarif (Ordre croissant)</a>
+                                        <a  class="item_tri" onclick="untarif(event)">Tarif (Ordre décroissant)</a>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <input id="side_recherche" class="textfield" type="text" placeholder="Rechercher..">
+                            <h2>Plage de séjour</h2>
+                                <div class="hell">
+                                    <div class="select_filtr">
+                                        <p>Date d'arrivée</p>
+                                        <input class="input1" id="side_arrive" name="date_arrive" placeholder="JJ/MM/YYYY" type="date">
+                                    </div>
+                                    <div class="select_filtr">
+                                        <p>Date de départ</p>
+                                        <input class="input1" id="side_depart" name="date_depart" placeholder="JJ/MM/YYYY" type="date">
+                                    </div>
+                                </div>
+                            <h2>Ville</h2>
+                            <select id="side_ville">
+                                <option value="">---</option>
+                                <?php
+                                    $tab=[];
+                                    foreach ($reservation as $reservatio) {
+                                        $ville = $reservatio["ville"];
+                                        if (!in_array($ville,$tab)){
+                                            echo "<option value=\"{$reservatio["ville"]}\">{$reservatio["ville"]}</option>";
+                                            $tab[]=$ville;
+                                        }
+                                    }
+                                ?>
+                            </select>
+                            <h2>Type du logement</h2>
+                                <select id="side_type">
+                                    <option value="">---</option>
+                                    <option value="appartement">Appartement</option>
+                                    <option value="maison">Maison</option>
+                                    <option value="villa">Villa</option>
+                                </select>
+                        </div>
+
+                        <button id="menu-btn" class="boutton">Filtrer et Trier</button>
+
+                    </div>
+                </div>
             </div>
-        </div>
         <div id="logements">
             <?php
             if (count($reservation) === 0) { ?>
@@ -79,7 +133,7 @@ try {
                 } else {
                     foreach ($reservation as $uneReservation) {?>                        
                             <div class="logement">
-                                <img src="/public/img/logements/<?php echo $uneReservation['numlogement'] ?>/1.png" alt="logement">
+                                <img src="/public/img/logements/<?php echo $uneReservation['numlogement'] ?>/1.png" alt="logement" place=<?php echo $uneReservation["ville"];?> data-information=<?php echo $uneReservation["typelogement"]; ?>>
                                 <div>
                                     <h2><?php echo $uneReservation['libelle']; ?></h2>
                                         <h4><?php echo $uneReservation['datedebut'] ?></h4>
@@ -103,6 +157,7 @@ try {
             ?>
         </div>
     </div>
+    <script src="/src/js/side_back.js"></script>
     <?php include($_SERVER['DOCUMENT_ROOT'] . '/src/php/footer.php'); ?>
 </body>
 </html>

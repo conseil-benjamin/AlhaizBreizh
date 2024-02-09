@@ -47,7 +47,7 @@
                             <h2>Type du logement</h2>
                                 <select id="side_type">
                                     <option value="">---</option>
-                                    <option value="appart">Appartement</option>
+                                    <option value="appartement">Appartement</option>
                                     <option value="maison">Maison</option>
                                     <option value="villa">Villa</option>
                                 </select>
@@ -69,7 +69,7 @@
                     /*Créations de carte pour chaque logements*/
                     foreach ($logements as $logement) { ?>
                         <div class="logement">
-                            <img src="/public/img/logements/<?php echo $logement[0] ?>/1.png" alt="logement">
+                            <img src="/public/img/logements/<?php echo $logement[0] ?>/1.png" alt="logement" place=<?php echo $logement[4];?> data-information=<?php echo $logement[6]; ?>>
                             <div>
                                 <h3><?php echo $logement[2] ?></h3>
                                 <p><?php echo $logement[3] ?></p>
@@ -78,7 +78,7 @@
                                     <a class="boutton" href="/src/php/logement/PageDetailLogement.php?numLogement=<?php echo $logement[0] ?>"><img src="/public/icons/type_logement.svg" alt="">Voir</a>
                                     <a class="boutton" href="/src/php/logement/modificationLogement.php?numLogement=<?php echo $logement[0]; ?>"><img src="/public/icons/edit.svg" alt="Editer">Editer</a>
                                 </nav>
-                            </div>   
+                            </div>
                         </div> <?php
                     }
                 }
