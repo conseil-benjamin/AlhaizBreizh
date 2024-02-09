@@ -196,5 +196,6 @@
             var adresses = <?php echo json_encode($adresses); ?>;
         </script>
         <script type="module" src="/src/js/map-accueil.js"></script>
+        <script src="/src/js/navigation-accueil.js"></script>
     </body>
 </html>
