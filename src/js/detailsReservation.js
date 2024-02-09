@@ -62,22 +62,26 @@ function annulerReservation(numReservation) {
 
 function annulerComplexPopUp(numReservation) { // Ajouter le paramètre numReservation
     Swal.fire({
-        title: "Warning",
-        text: "Si vous annulez la réservation maintenant, vous risquez de ne pas totalement être remboursé",
-        icon: "error",
-        buttons: ['annuler',true],
-        dangerMode: true,
+        title: "Vous risquez de ne pas être totalement remboursé",
+        text: "Voulez-vous quand même annuler ?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: 'Oui',
+        cancelButtonText: 'Non'
     })
     .then((value) => {
-        if (value) {
+        if (value.isConfirmed) {
             annulerReservation(numReservation); // Appeler la fonction annulerReservation si l'utilisateur confirme
+        } else {
+            console.log("Annulation de l'annulation de la réservation.");
         }
     })
 }
 
+
 function annulerImpossiblePopUp() {
     Swal.fire({
-        title: "Attetion",
+        title: "Attention",
         text: "Vous ne pouvez pas annuler une réservation 2 jours avant son début",
         icon: "error",
         button : "ok"
