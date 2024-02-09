@@ -14,15 +14,26 @@ var mapY = bretagne[1];
 let bouttonOpenMap = document.getElementById('bouttonMap');
 bouttonOpenMap.addEventListener('click', function() {
     mapDiv.style.display = "block";
-    mapAffichee = true;
-    document.body.style.overflow = "hidden";
-    map.invalidateSize();
+    //Animation pour afficher la carte
+
+    setTimeout(() => {
+        mapDiv.style.transform = "translateY(0) translateX(0)";
+        mapAffichee = true;
+        document.body.style.overflow = "hidden";
+        map.invalidateSize();
+    }, 100);
 });
 
 //Boutton pour cacher la carte
 let bouttonCloseMap = document.getElementById('bouttonCloseMap');
 bouttonCloseMap.addEventListener('click', function() {
-    mapDiv.style.display = "none";
+
+    mapDiv.style.transform = "translate(200%, 100%)";
+
+    setTimeout(() => {
+        mapDiv.style.display = "none";
+    }, 500);
+    
     mapAffichee = false;
     document.body.style.overflowY = "auto";
     document.getElementById('logements').scrollIntoView();
