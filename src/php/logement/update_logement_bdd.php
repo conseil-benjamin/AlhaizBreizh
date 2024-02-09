@@ -40,15 +40,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     //INSTALLATIONS
 
     $installations=[];
-    $hollow=$_POST['installDispo'];
-    $i=0;
+    $hollow=$_POST['installDispo1'];
+    $i=1;
 
     while (isset($hollow)){
         if (!($hollow=="")){
             array_push($installations, $hollow);
         }
         $i=$i+1;
-        $hollow=htmlspecialchars(strip_tags($_POST['InstallDispo'.$i+1]), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $hollow=htmlspecialchars(strip_tags($_POST['InstallDispo'.$i]), ENT_QUOTES | ENT_HTML5, 'UTF-8');
 
     }
 
@@ -56,14 +56,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $equipements=[];
     $equipementElement=$_POST['equipement'];
-    $i=0;
+    $i=1;
 
     while (isset($equipementElement)){
         if (!($equipementElement=="")){
             array_push($equipements, $equipementElement);
         }
         $i=$i+1;
-        $equipementElement=htmlspecialchars(strip_tags($_POST['equipement'.$i+1]), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        print_r($_POST);
+        die();
+        $equipementElement=htmlspecialchars(strip_tags($_POST['equipement'.$i]), ENT_QUOTES | ENT_HTML5, 'UTF-8');
     }
 
 
@@ -71,14 +73,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $services=[];
     $serviceElement=$_POST['service'];
-    $i=0;
+    $i=1;
 
     while (isset($serviceElement)){
         if (!($serviceElement=="")){
             array_push($services, $serviceElement);
         }
         $i=$i+1;
-        $serviceElement=htmlspecialchars(strip_tags($_POST['service'.$i+1]), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $serviceElement=htmlspecialchars(strip_tags($_POST['service'.$i]), ENT_QUOTES | ENT_HTML5, 'UTF-8');
     }
 
     //CHAMBRES

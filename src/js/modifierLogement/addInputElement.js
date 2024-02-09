@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   /* GESTION DES INSTALLATIONS */
     
-  let firstInstall = document.querySelector("#installDispo");
+  let firstInstall = document.querySelector("#installDispo1");
 
   contentInstall = firstInstall.value.split(',');
   if (contentInstall[1]!=null){ //verifie que le contenu existe
@@ -79,7 +79,6 @@ document.addEventListener("DOMContentLoaded", function () {
   let firstRoom = document.querySelector("#chambresElement");  
 
   if (firstRoom!=null){
-    console.log(firstRoom.getAttribute("value"));
     let contentChambres = JSON.parse(firstRoom.getAttribute("value"));
 
   spl=contentChambres[0][0];
