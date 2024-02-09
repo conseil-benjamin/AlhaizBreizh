@@ -12,7 +12,7 @@ const formHTMLelement = document.getElementById("form")
 const PRIX = parseFloat(prixHTMLelement.innerText.replace(",", "."))
 const NBNUIT = parseInt(nbNuitHTMLelement.innerText, 10)
 const AUJ = new Date();
-const DATEFORMAT_ARR = formaterDate(AUJ,5);
+const DATEFORMAT_ARR = formaterDate(AUJ,1);
 const DATEFORMAT_DEP = formaterDate(AUJ,NBNUIT + 6)
 
 inputDateArivee.min = DATEFORMAT_ARR

@@ -19,26 +19,25 @@ if (isset($_SESSION['id'])) {
 }
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $title = $_POST['title'];
-    $description = $_POST['description'];
-    $photoCouverture = $_FILES['photos']['name'];
-    $typeLogement = $_POST['typeLogement'];
-    $surface = $_POST['surface'];
-    $natureLogement = $_POST['natureLogement'];
-    $photos = $_POST['photos'];
-    $lits = $_POST['lits'];
-    $adresse = $_POST['adresse'];
-    $cp = $_POST['cdPostal'];
-    $ville = $_POST['ville'];
-    $accroche = $_POST['accroche'];
-    $nbSalleDeBain = $_POST['nbSallesBain'];
-    $nbMaxPers = $_POST['nbMaxPers'];
-    $prixParNuit = $_POST['prixParNuit'];
-    $nbPersMax = $_POST['nbMaxPers'];
-    $proprio = $id;
-    $logementEnLigne = 0;
-
-    $installations=[];
+        $title = htmlspecialchars(strip_tags($_POST['title']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $description = htmlspecialchars(strip_tags($_POST['description']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $photoCouverture = $_FILES['photos']['name'];
+        $typeLogement = htmlspecialchars(strip_tags($_POST['natureLogement']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $surface = htmlspecialchars(strip_tags($_POST['surface']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $natureLogement = htmlspecialchars(strip_tags($_POST['natureLogement']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $photos = $_POST['photos']; // No filtering required for $_POST['photos']
+        $lits = htmlspecialchars(strip_tags($_POST['lits']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $adresse = htmlspecialchars(strip_tags($_POST['adresse']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $cp = htmlspecialchars(strip_tags($_POST['cdPostal']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $ville = htmlspecialchars(strip_tags($_POST['ville']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $accroche = htmlspecialchars(strip_tags($_POST['accroche']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $nbSalleDeBain = htmlspecialchars(strip_tags($_POST['nbSallesBain']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $nbMaxPers = htmlspecialchars(strip_tags($_POST['nbMaxPers']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $prixParNuit = htmlspecialchars(strip_tags($_POST['prixParNuit']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $nbPersMax = htmlspecialchars(strip_tags($_POST['nbMaxPers']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $proprio = $id; // No filtering required for $id
+        $logementEnLigne = 0; // No filtering required for this value
+        $installations=[];
     $hollow=$_POST['installDispo'];
     $i=0;
 
@@ -47,7 +46,7 @@ if (isset($_SESSION['id'])) {
             array_push($installations, $hollow);
         }
         $i=$i+1;
-        $hollow=$_POST['InstallDispo'.$i+1];
+        $hollow= htmlspecialchars(strip_tags($_POST['InstallDispo'.$i+1]), ENT_QUOTES | ENT_HTML5, 'UTF-8');
     }
 
     //EQUIPEMENT
@@ -61,7 +60,7 @@ if (isset($_SESSION['id'])) {
             array_push($equipements, $equipementElement);
         }
         $j=$j+1;
-        $equipementElement=$_POST['equipement'.$j+1];
+        $equipementElement=htmlspecialchars(strip_tags($_POST['equipement'.$i+1]), ENT_QUOTES | ENT_HTML5, 'UTF-8');
     }
 
     //SERVICE
@@ -75,7 +74,7 @@ if (isset($_SESSION['id'])) {
             array_push($services, $serviceElement);
         }
         $k=$k+1;
-        $serviceElement=$_POST['service'.$k+1];
+        $serviceElement=htmlspecialchars(strip_tags($_POST['service'.$k+1]), ENT_QUOTES | ENT_HTML5, 'UTF-8');
     }
 
     //CHAMBRES

@@ -178,7 +178,7 @@ let replier = true
 function abime() { //Degage le sidemenu sur la gauche
     let sidebar = document.getElementById('sidebar');
     if (sidebar.style.left === "0px") {
-        sidebar.style.left = "-22em";
+        sidebar.style.left = "-30em";
         replier = !replier
     }
 }
@@ -189,7 +189,7 @@ document.getElementById('menu-btn').addEventListener('click', function () {
       sidebar.style.left = "0";
       replier = !replier
     } else {
-        sidebar.style.left = "-22em";
+        sidebar.style.left = "-30em";
         replier = !replier
     }
   });

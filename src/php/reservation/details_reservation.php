@@ -173,7 +173,7 @@ $dateDuJour = $date->format('Y-m-d');
                     if ($_SESSION['id']==$numclient) {?>
 
                     <button class="boutton" onclick="confirmationValiderPopUp()">Accepter le devis et payer</button>
-                    <button class="boutton" onclick="confirmationAnnulerPopUp()">Annuler ma réservation</button>
+                    <button class="boutton" onclick="confirmationAnnulerPopUp(<?php echo $numReservation; ?>, '<?php echo $dateArr; ?>')">Annuler ma réservation</button>
                 <?php }else {?>
                     <button class="boutton" onclick="supprimerReservation()">Supprimer la réservation</button>
                 <?php }?>

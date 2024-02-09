@@ -36,6 +36,7 @@
         <link rel="stylesheet" type="text/css" href="/src/styles/styles.css">
         <link rel="stylesheet" type="text/css" href="/src/styles/profil.css">
         <link rel="stylesheet" type="text/css" href="/src/styles/api.css">
+        <link rel="icon" href="/public/logos/logo-black.svg">
         <title>ALHaiz Breizh</title>
     </head>
     <body>

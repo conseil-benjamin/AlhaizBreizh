@@ -1,26 +1,108 @@
 /**
  * Fonction pour annuler la réservation
  */
-function annulerResa() {
-        let numReservation = 1;
+
+/**function annulerResa() {
+    let numReservation = 1;
+fetch("/src/php/reservation/supprimerResaDB.php?numReservation=" + encodeURIComponent(numReservation.toString()), {
+    method: "GET",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+        },
+    })
+        .then(function (response) {
+            if (response.ok) {
+                annulerSuccesPopUp()
+            }
+            else {
+                annulerErreurPopUp()
+            }
+        })
+        .catch(function (error) {
+            console.log(error.message);
+        });
+}**/
+
+function annulerResa(numReservation, dateArr) {
+    let dateDebutReservation = new Date(dateArr); // Convertir la date de début de réservation en objet Date
+    let dateActuelle = new Date();
+    let differenceTemps = dateDebutReservation.getTime() - dateActuelle.getTime();
+    let differenceJours = differenceTemps / (1000 * 3600 * 24);
+
+    if (differenceJours < 2) {
+        annulerImpossiblePopUp();
+        return; // Sortir de la fonction sans effectuer la requête
+    }
+    if (differenceJours < 14) {
+        annulerComplexPopUp(numReservation); // Appeler la pop-up complexe avec le numéro de réservation
+        return; // Sortir de la fonction sans effectuer la requête
+    }
+
+    annulerReservation(numReservation);
+}
+
+function annulerReservation(numReservation) {
     fetch("/src/php/reservation/supprimerResaDB.php?numReservation=" + encodeURIComponent(numReservation.toString()), {
         method: "GET",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-            },
-        })
-            .then(function (response) {
-                if (response.ok) {
-                    annulerSuccesPopUp()
-                }
-                else {
-                    annulerErreurPopUp()
-                }
-            })
-            .catch(function (error) {
-                console.log(error.message);
-            });
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+        },
+    })
+    .then(function (response) {
+        if (response.ok) {
+            annulerSuccesPopUp();
+        } else {
+            annulerErreurPopUp();
+        }
+    })
+    .catch(function (error) {
+        console.log(error.message);
+    });
 }
+
+function annulerComplexPopUp(numReservation) { // Ajouter le paramètre numReservation
+    Swal.fire({
+        title: "Warning",
+        text: "Si vous annulez la réservation maintenant, vous risquez de ne pas totalement être remboursé",
+        icon: "error",
+        buttons: ['annuler',true],
+        dangerMode: true,
+    })
+    .then((value) => {
+        if (value) {
+            annulerReservation(numReservation); // Appeler la fonction annulerReservation si l'utilisateur confirme
+        }
+    })
+}
+
+function annulerImpossiblePopUp() {
+    Swal.fire({
+        title: "Attetion",
+        text: "Vous ne pouvez pas annuler une réservation 2 jours avant son début",
+        icon: "error",
+        button : "ok"
+    })
+}
+
+/**
+ * Affiche le Pop-up pour confirmer l'annulation de la réservation
+ */
+function confirmationAnnulerPopUp(numReservation, dateArr) {
+    Swal.fire({
+        title: "Êtes-vous sûr de vouloir annuler cette réservation ?",
+        text: "Cette action est définitive",
+        icon: "warning",
+        buttons: ['Annuler', 'Confirmer'],
+        dangerMode: true,
+    })
+    .then((value) => {
+        if (value) {
+            // Appel de la fonction annulerResa() avec le numéro de réservation
+            annulerResa(numReservation, dateArr);
+        }
+    });
+}
+
 
 /**
  * Fonction pour simuler la confirmation de la réservation
@@ -32,23 +114,6 @@ function confirmerResa() {
         confirmerErreurPopUp()
 }
 
-/**
- * Affiche le Pop-up pour confirmer de l'annulation de la réservation
- */
-function confirmationAnnulerPopUp() {
-    Swal.fire({
-        title: "Êtes-vous sur de vouloir annuler cette réservation",
-        text: "Cette action est définitive",
-        icon: "warning",
-        buttons: ['annuler',true],
-        dangerMode: true,
-    })
-        .then((value) => {
-            if (value) {
-                annulerResa()
-            }
-        })
-}
 
 /**
  * Affiche le Pop-up pour confirmer la validation de la réservation
@@ -82,7 +147,6 @@ function annulerSuccesPopUp() {
         }
     )
 }
-
 
 /**
  * Pop-up erreur de l'annulation

@@ -86,7 +86,7 @@ try {
                                     </div>
                                     <div>
                                         <input class="input1" id="nbpersonne" max="<?=$nbPersonne?>" min="1" name="nb_personne"
-                                            placeholder="nbpersonne" type="number" value="0">
+                                               placeholder="nbpersonne" type="number" value="1">
                                     </div>
                                 </li>
                             </ul>

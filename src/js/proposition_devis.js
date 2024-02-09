@@ -66,7 +66,7 @@ function notifErr() {
 function notifSuccess() {
     swal({
         title: "Votre proposition de devis à bien été envoyer",
-        text: "Le client va maintenant y répondre dans les plus bref délais",
+        text: "en attente du propriétaire",
         icon: "success",
         button : "Revenir à l\'acceuil"
     }).then(() => {
