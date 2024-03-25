@@ -196,7 +196,7 @@
                         <label for="nbSalleBain">Nombres de salles de bain (*)</label>
                         <input class="textfield" type="number" id="nbSallesBain" name="nbSallesBain" min="1" placeholder="Nb Salles de Bain" value="<?php echo $nbSalleDeBain ?>">
                     </div>
-        
+                                                
                     <div class="installationsElement">
                         <label for="installDispo1">Installations disponibles</label>
                         <input class="textfield" type="text" id="installDispo1" name="installDispo1" placeholder="Installation disponible" size="55" value="<?php echo $installations; ?>" >
