@@ -101,6 +101,9 @@ try {
                             <ul>
                                 <?php
                                 $MAX = sizeof($tabServices);
+                                if ($MAX == 0) {
+                                    echo "<li> <h1> Aucun Services supplémentaire </h1> </li>";
+                                }
                                 for ($i = 0; $i < $MAX; $i++) {
                                     $service = $tabServices[$i];
                                     if ($i === 0) {
