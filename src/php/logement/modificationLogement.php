@@ -156,7 +156,7 @@
                     <div class="chambresElement" id="chambresElement" value=<?php echo $resting?>>
                         <div class="litsElement" id="Chambre0">
                             <label for="lits">Chambre 1</label>
-                            <select class="textfield" name="1lits0">
+                            <select class="textfield premierElem" name="1lits0" >
                             <option id="option2">Lit double (140 * 190)</option>
                             <option id="option1">Lit simple (90 * 190)</option>
                             </select>
