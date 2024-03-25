@@ -219,7 +219,7 @@
     left: 0;
     width: 100%;
     background-color: #00000050;
-    backdrop-filter: blur(1px);
+    /*backdrop-filter: blur(1px);*/
 }
 
 .logement > div > div{
