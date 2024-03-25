@@ -129,7 +129,6 @@
                                     <option value="villa">Villa</option>
                                 </select>
                         </div>
-
                         <button id="menu-btn" class="boutton">Filtrer et Trier</button>
 
                     </div>

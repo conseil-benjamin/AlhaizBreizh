@@ -130,6 +130,15 @@ h1 {
   line-height: 100%;
   flex-direction: row;
   margin-top: 1em;
+  width: 96%;
+}
+
+.inputPlusIconeSupprimer > .textfield {
+  width: 100%;
+}
+
+.premierElem {
+  width: calc(96% - 55px) !important;
 }
 
 .litsElement .inputPlusIconeSupprimer  {

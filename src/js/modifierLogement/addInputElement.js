@@ -354,16 +354,13 @@ La fonction
     nbChambres++;
     let titre = document.createElement("label");
     let btnAddLits = document.createElement("button");
-
-    console.log(nbChambres);
-
     btnAddLits.textContent = "Ajouter lit";
     btnAddLits.className = "btnAddLits boutton";
 
     titre.textContent = "Chambre " + nbChambres;
     let newElement = document.createElement("select");
     newElement.name = nbChambres + "lits" + 0;
-    newElement.className = "textfield";
+    newElement.className = "textfield premierElem";
 
     var option1 = document.createElement("option");
     option1.value = "Lit double (140 * 190)";
@@ -432,7 +429,7 @@ La fonction
   
     titre.textContent = "Chambre " + nbChambres;
     let newElement = document.createElement("select");
-    newElement.className = "textfield";
+    newElement.className = "textfield premierElem";
     newElement.name = nbChambres+"lits"+0;
   
     var option1 = document.createElement("option");
