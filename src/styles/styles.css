@@ -415,6 +415,7 @@ h1, h2, h3{
     display: none;
     left:10%;
     z-index:99;
+    margin-top:3em;
 }
 
 .boutton:hover + .menu_deroulant {
@@ -479,11 +480,6 @@ h1, h2, h3{
     justify-content: space-around;
 }
 
-#sidebar > .number{
-    color:pink;
-    width:25px;
-}
-
 #sidebar > #valid_case{
     display:flex;
     align-items: center;
@@ -492,6 +488,17 @@ h1, h2, h3{
 
 #sidebar > [type="checkbox"]{
     size:5em;
+}
+
+.menu_tri{
+    display: flex;
+    justify-content: space-around;
+}
+
+#reset{
+    margin-bottom:2em;
+    font-weight:lighter;
+    background-color: #515D5E;
 }
 
 /*Options de filtre*/

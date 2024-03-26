@@ -180,6 +180,11 @@ h1 {
   width: 60%;
 }
 
+.propr{
+  display: flex;
+  flex-direction: line;
+}
+
 /********************************/
 /*Bouttons*/
 .boutton{
