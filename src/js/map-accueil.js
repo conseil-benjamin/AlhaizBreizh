@@ -4,9 +4,9 @@
 //Récupérer la carte
 let mapDiv = document.querySelector('.map');
 mapDiv.style.display = "none";
-var mapAffichee = false;
-var popupsVisibles = false;
-var bouttonVisibilite = document.getElementById('bouttonVisibilite');
+var chargementDiv = mapDiv.querySelector('.chargement-carte');
+var texteChargement = chargementDiv.querySelector('p');
+var coordonnees = [];
 
 var bretagne = [48.202047, -3.832382];
 var mapX = bretagne[0];
@@ -20,7 +20,6 @@ bouttonOpenMap.addEventListener('click', function() {
 
     setTimeout(() => {
         mapDiv.style.transform = "translateY(0) translateX(0)";
-        mapAffichee = true;
         document.body.style.overflow = "hidden";
         map.invalidateSize();
     }, 100);
@@ -36,7 +35,6 @@ bouttonCloseMap.addEventListener('click', function() {
         mapDiv.style.display = "none";
     }, 500);
     
-    mapAffichee = false;
     document.body.style.overflowY = "auto";
     document.getElementById('logements').scrollIntoView();
 });
@@ -45,17 +43,11 @@ bouttonCloseMap.addEventListener('click', function() {
 /*Initialisation de la carte*/
 
 //Map avec leaftlet
-let bzhLayer = L.tileLayer('https://tile.openstreetmap.bzh/br/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap contributors'
-});
+let bzhLayer = L.tileLayer('https://tile.openstreetmap.bzh/br/{z}/{x}/{y}.png');
 
-let osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap contributors'
-});
+let osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
 
-let topoLayer = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-    attribution: '© OpenTopoMap contributors'
-});
+let topoLayer = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png');
 
 let baseMaps = {
     "Bretonne": bzhLayer,
@@ -81,13 +73,23 @@ var pin = L.icon({
     popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
 });
 
+var markers = L.markerClusterGroup({
+    spiderfyOnMaxZoom: false,
+    showCoverageOnHover: false,
+    zoomToBoundsOnClick: true,
+    disableClusteringAtZoom: 14,
+    iconCreateFunction: function() {
+		return pin;
+	}
+});
+
 /*******************************************************/
 /*Récupérer les coordonnees des logements*/
 import {recupAllCoordGps, recupCoordGps, appoximationCoord} from '/src/js/logement/recupCoordGps.js';
 async function fetchCoordinates() {
 
     var logements = document.querySelectorAll('.logement');
-    var coordonnees = [];
+    let i = 1;
 
     for (let logement of logements) {
         let id = logement.id.substring(8);
@@ -96,12 +98,15 @@ async function fetchCoordinates() {
         let localisation = logement.querySelector('.localisation').innerText;
         let prix = logement.querySelector('.prix').innerText;
 
-        let coords = await recupCoordGps(localisation);
-        coords = appoximationCoord(coords[0], coords[1]);
+        let coords = await recupCoordGps(localisation, true);
+
+        texteChargement.innerText = i+"/"+logements.length;
 
         if (coords[0] != null && coords[1] != null) {
             coordonnees[id] = coords;
-            let marker = L.marker(coords, {icon: pin}).addTo(map);
+            let marker = L.marker(coords, {icon: pin})
+            markers.addLayer(marker);
+            map.addLayer(markers);
             marker.bindPopup("<h3>"+titre+"</h3>"+personnes+"<br>"+prix+"<br><a href='/src/php/logement/PageDetailLogement.php?numLogement="+id+"'><strong>Voir le Logement</strong></a>", {autoClose: false});
             
             //Fermer les popups si on clique sur un autre marker
@@ -109,63 +114,69 @@ async function fetchCoordinates() {
                 map.eachLayer(function (layer) {
                     if (layer instanceof L.Marker && layer.isPopupOpen() && layer !== marker) {
                         layer.closePopup();
-                        popupsVisibles = false;
-                        bouttonVisibilite.children[0].src = "/public/icons/view.svg";
                     }
                 });
             });
         }
+        i++;   
     }
-
-    /*******************************************************/
-    /*Afficher les logements suivant le zoom*/
-
-    //Vérifier les markers qui ne sont pas visibles suite à un zoom
-    function adaptMarkersOnZoomAndMove(){
-        if (mapDiv.style.display === "none") {
-            return; // Si la carte n'est pas affichée, on ne fait rien
-        }
-        mapX = map.getCenter().lat;
-        mapY = map.getCenter().lng;
-        Object.keys(coordonnees).forEach(id => {
-            let adresse = coordonnees[id];
-            //Vérifier si le marker n'est pas visible
-            let point = map.latLngToContainerPoint(adresse);
-            let size = map.getSize();
-            let logement = document.getElementById('logement'+id);
-            if(point.x < 0 || point.y < 0 || point.x > size.x || point.y > size.y) {
-                logement.classList.add('filtremap');
-            } else {
-                logement.classList.remove('filtremap');
-            }
-        });
-        enfer();
-    }
-
-    function testAucunLogementVisible() {
-        //Afficher un message si aucun logement n'est visible
-        var aucunLogementVisible = true;
-        Object.keys(coordonnees).forEach(id => {
-            let logement = document.getElementById('logement'+id);
-            if (logement.style.display === "flex") {
-                aucunLogementVisible = false;
-            }
-        });
-        if (aucunLogementVisible) {
-            document.getElementById('aucunLogementVisible').style.display = "block";
-        } else {
-            document.getElementById('aucunLogementVisible').style.display = "none";
-        }
-    }
-
-    map.on('zoomend', function() {
-        adaptMarkersOnZoomAndMove();
-    });
-
-    map.on('moveend', function() {
-        adaptMarkersOnZoomAndMove();
-    });
+    chargementDiv.style.display = "none";
 }
+
+
+/*******************************************************/
+/*Afficher les logements suivant le zoom*/
+
+//Vérifier les markers qui ne sont pas visibles suite à un zoom
+function adaptMarkersOnZoomAndMove(){
+    console.log("adaptMarkersOnZoomAndMove");
+    console.table(coordonnees);
+
+    mapX = map.getCenter().lat;
+    mapY = map.getCenter().lng;
+    Object.keys(coordonnees).forEach(id => {
+        let adresse = coordonnees[id];
+        //Vérifier si le marker n'est pas visible
+        let point = map.latLngToContainerPoint(adresse);
+        let size = map.getSize();
+        let logement = document.getElementById('logement'+id);
+        if(point.x < 0 || point.y < 0 || point.x > size.x || point.y > size.y) {
+            logement.classList.add('filtremap');
+            logement.style.display = "none";
+            console.log("Logement "+id+" caché");
+        } else {
+            logement.classList.remove('filtremap');
+            logement.style.display = "flex";
+        }
+    });
+    enfer();
+}
+
+function testAucunLogementVisible() {
+    //Afficher un message si aucun logement n'est visible
+    var aucunLogementVisible = true;
+    Object.keys(coordonnees).forEach(id => {
+        let logement = document.getElementById('logement'+id);
+        if (logement.style.display === "flex") {
+            aucunLogementVisible = false;
+        }
+    });
+    if (aucunLogementVisible) {
+        document.getElementById('aucunLogementVisible').style.display = "block";
+    } else {
+        document.getElementById('aucunLogementVisible').style.display = "none";
+    }
+}
+
+map.on('moveend', function() {
+    adaptMarkersOnZoomAndMove();
+    testAucunLogementVisible();
+});
+
+map.on('zoomend', function() {  
+    adaptMarkersOnZoomAndMove();
+    testAucunLogementVisible();
+});
 
 fetchCoordinates();
 
@@ -175,31 +186,4 @@ fetchCoordinates();
 let bouttonResetMap = document.getElementById('bouttonResetMap');
 bouttonResetMap.addEventListener('click', function() {
     map.setView(bretagne, 8);
-});
-
-/*******************************************************/
-/*Aficher / Cacher les popups sur les markers*/
-
-function visibilitePopus() {
-    if (popupsVisibles) {
-        bouttonVisibilite.children[0].src = "/public/icons/view.svg";
-        map.eachLayer(function (layer) {
-            if (layer instanceof L.Marker && layer.isPopupOpen()) {
-                layer.closePopup();
-            }
-        });
-        popupsVisibles = false;
-    } else {
-        bouttonVisibilite.children[0].src = "/public/icons/hide.svg";
-        map.eachLayer(function (layer) {
-            if (layer instanceof L.Marker && !layer.isPopupOpen()) {
-                layer.openPopup();
-            }
-        });
-        popupsVisibles = true;
-    }
-}
-
-bouttonVisibilite.addEventListener('click', function() {
-    visibilitePopus();
 });
