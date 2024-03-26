@@ -39,20 +39,29 @@
         <link rel="icon" href="/public/logos/logo-black.svg">
         <link rel="stylesheet" type="text/css" href="/src/styles/styles.css">
         <link rel="stylesheet" type="text/css" href="/src/styles/index.css">
+        <link rel="stylesheet" type="text/css" href="/src/styles/loading.css">
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <link rel="icon" href="/public/logos/logo-black.svg">
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
         <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-        <title>ALHaiz Breizh</title>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
+        <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
+        <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
         
+        <title>ALHaiz Breizh</title>      
     </head>
     <body>
         <?php include $_SERVER['DOCUMENT_ROOT'] .'/src/php/header.php'; ?>
 
         <div class="map">
+            <div class="chargement-carte">
+                <p>0/0</p>
+                <div class="cssload-container">
+                    <div class="cssload-zenith"></div>
+                </div>
+            </div>
             <nav>
                 <button id="bouttonResetMap" class="boutton"><img src="/public/icons/reset.svg" alt="Reset la vue"></button>
-                <button id="bouttonVisibilite" class="boutton"><img src="/public/icons/view.svg" alt="Visibilité"></button>
                 <button id="bouttonCloseMap" class="boutton"><img src="/public/icons/croix.svg" alt="Fermer"></button>
             </nav>
             <div 
@@ -180,10 +189,6 @@
                 } ?>
             </div> 
             <div class="bandeau">
-                <div>
-                    <button class="boutton" id="precedent"><img src="/public/icons/forward.svg" alt="Précédent"></button>
-                    <button class="boutton" id="suivant"><img src="/public/icons/forward.svg" alt="Suivant"></button>
-                </div>
                 <button id="bouttonMap" class="boutton"><img src="/public/icons/map.svg" alt="Carte"></button>
             </div>
         </div>
@@ -194,6 +199,6 @@
         <script>
             var adresses = <?php echo json_encode($adresses); ?>;
         </script>
-        <script type="module" src="/src/js/map-accueil.js"></script>
+        <script type="module" src="/src/js/map-accueil.js" defer></script>
     </body>
 </html>
