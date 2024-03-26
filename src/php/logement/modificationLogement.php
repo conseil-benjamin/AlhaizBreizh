@@ -103,7 +103,7 @@
                 echo "Erreur : " . $e->getMessage();
             }
         ?>
-        <form id="myForm" method="post" action="update_logement_bdd.php">
+        <form id="myForm" method="post" action="update_logement_bdd.php" enctype="multipart/form-data">
         <div class="main">
             <div class="titre">
                 <h1>Modifier un logement</h1>
@@ -117,7 +117,7 @@
                     <textarea class="textfield" name="description" id="description" cols="46" rows="20" placeholder="Description" maxlength="500" required><?php echo $description; ?></textarea>
                     
                     <label for="photos" class="boutton">Ajouter photos</label>
-                    <input class="textfield" type="file" id="photos" name="photos" accept=".jpg, .jpeg, .png" multiple onchange="afficherNomsPhotos()">
+                    <input class="textfield" type="file" id="photos" name="photos[]" accept=".jpg, .jpeg, .png" multiple onchange="afficherNomsPhotos()">
                     <div id="photosName"></div>
         
                     <div class="typeLogementDiv">
@@ -213,7 +213,7 @@
                     <p>Les champs marqués par (*) sont obligatoire</p>
                     <span class="conditionsGenerale">J'ai lu et j'accepte les <a href="">Conditions Générales d'Utilisation</a>, la Politique des données personnelles et les Conditions Générales de Ventes d’Alhaiz Breizh (*)</span>
                     <input class="textfield" type="checkbox" name="conditionsGenerale" id="conditionsGenerale">
-                    <button class="creerAnnonce boutton" type="submit" id="creerAnnonce">Modifier annonce</button>
+                    <button class="creerAnnonce boutton" type="submit" id="creerAnnonce" name="submit">Modifier annonce</button>
                 </div>
             </div>
         </div>

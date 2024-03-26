@@ -318,6 +318,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
+
+        //PHOTOS
+        // PHOTOS
+        if(isset($_FILES['photos'])) {
+            // Le champ 'photos' contient des fichiers téléchargés
+            $photos = $_FILES['photos'];
+            
+            // Chemin du dossier où les images seront stockées
+            $dossier = $_SERVER['DOCUMENT_ROOT'] . '/public/img/logements/' . $id_logem ;
+            
+            // Vérifie si le dossier existe sinon le crée
+            if (!file_exists($dossier)) {
+                mkdir($dossier, 0777, true);
+            }
+            
+            // Compte le nombre de fichiers déjà présents dans le dossier
+            $nombreFichiers = count(glob($dossier . "/*.png"));
+
+            // Boucle à travers les fichiers téléchargés
+            for($i = 0; $i < count($photos['name']); $i++){
+                $nomFichier = $photos['name'][$i];
+                $cheminFichier = $dossier . "/" . ($nombreFichiers + $i + 1) . '.png'; // Nom du fichier avec l'extension .png
+                move_uploaded_file($photos['tmp_name'][$i], $cheminFichier);
+            }
+        }
+
+
         if (!$erreur) {
             ?>
             <script>
