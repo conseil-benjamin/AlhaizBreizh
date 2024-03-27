@@ -36,7 +36,7 @@
                             <a href="/src/php/logement/mesLogements.php"><li>Mes Logements</li></a> 
                             <a href="/src/php/reservation/les_reservations.php"><li>Les Reservations</li></a><?php 
                         } else { ?>
-                            <a href=""><li>Devenir propriétaire</li></a> <?php
+                            <a href="/src/php/profil/becomeProprio.php"><li>Devenir propriétaire</li></a> <?php
                         } ?>
                     <!--<a href=""><li>Mes Favoris</li></a>-->
                     <!--<a href=""><li>Besoin d'Aide</li></a>-->

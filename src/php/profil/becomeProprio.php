@@ -26,28 +26,24 @@
             <input type="file" id="photos" name="photos" accept=".jpg, .jpeg, .png" multiple onchange="afficherNomsPhotos()">
             <div id="photosName"></div>
 
-            <label for="natureLogement">BIC (*)</label>
-            <input class="textfield" type="text" id="bc" name="natureLogement" size="150" placeholder="ABCDEFGH" maxlength="8">
-
             <label for="iban0">IBAN (*)</label>
             <div class="propr">
-                <input class="textfield" type="text" id="ibn1" name="natureLogement" size="60" placeholder="FR00" maxlength="4">
-                <input class="textfield" type="text" id="ibn2" name="natureLogement" size="60" placeholder="1234" maxlength="4">
-                <input class="textfield" type="text" id="ibn3" name="natureLogement" size="60" placeholder="1234" maxlength="4">
-                <input class="textfield" type="text" id="ibn4" name="natureLogement" size="60" placeholder="1234" maxlength="4">
-                <input class="textfield" type="text" id="ibn5" name="natureLogement" size="60" placeholder="1234" maxlength="4">
-                <input class="textfield" type="text" id="ibn6" name="natureLogement" size="60" placeholder="1234" maxlength="4">
-                <input class="textfield" type="text" id="ibn7" name="natureLogement" size="60" placeholder="1234" maxlength="4">
-                <input class="textfield" type="text" id="ibn8" name="natureLogement" size="60" placeholder="123" maxlength="3">
+                <input class="textfield" type="text" name="ibn1" size="60" placeholder="FR00" maxlength="4">
+                <input class="textfield" type="text" name="ibn2" size="60" placeholder="1234" maxlength="4">
+                <input class="textfield" type="text" name="ibn3" size="60" placeholder="1234" maxlength="4">
+                <input class="textfield" type="text" name="ibn4" size="60" placeholder="1234" maxlength="4">
+                <input class="textfield" type="text" name="ibn5" size="60" placeholder="1234" maxlength="4">
+                <input class="textfield" type="text" name="ibn6" size="60" placeholder="1234" maxlength="4">
+                <input class="textfield" type="text" name="ibn7" size="60" placeholder="1234" maxlength="4">
+                <input class="textfield" type="text" name="ibn8" size="60" placeholder="123" maxlength="3">
                 </div>
 
             <div class="typeLogementDiv">
                     <div>
                         <label for="langue">Langue (*)</label>
-                        <select class="textfield" id="typeLogement" name="typeLogement">
+                        <select class="textfield" id="languesparlees" name="languesparlees">
                         <option>Français</option>
-                        <option>Maison</option>
-                        <option>Villa</option>
+                        <option>Anglais</option>
                         </select>
                     </div>
                 </div>

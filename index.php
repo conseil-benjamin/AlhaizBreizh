@@ -92,7 +92,10 @@
                                         <a  class="item_tri" href="index.php?tri=avis#logements">Avis positifs</a>
                                     </ul>
                                 </div>
+                                <button class="boutton" onclick="reset()">Reset</button>
                             </div>
+
+                            
 
                             <input id="side_recherche" class="textfield" type="text" placeholder="Rechercher..">
                             <h2>Plage de tarif</h2>
@@ -160,11 +163,11 @@
                         <div class="logement" id="logement<?php echo $logement[0] ?>">
                             <a href="<?php echo $lien ?>"><img src="<?php echo $img ?>"></a> <!-- Image du logement -->
                             <div data-information=<?php echo $logement[7]?> >
-                            <button type="button"><img src="/public/icons/heart_white.svg"></button> <!-- Coeur pour liker -->
+                            <button type="button" class="like"><img src="/public/icons/heart_white.svg"></button> <!-- Coeur pour liker -->
                                 <?php if ($logement[6]!=NULL){ //Verifie que le logement a recu au moins une note?>                                
                                 <div id="rating"><img src="/public/icons/star_fill.svg"><?php echo $logement[6]; ?></div> <!-- Notation -->
                                 <?php } ?>
-                            </div>   
+                            </div>
                             <a id="description" href="<?php echo $lien ?>"><div id="resultat"> 
                                 <h3 class="titre-logement"><?php echo $titre ?></h3> <!-- Titre du logement -->
                                 <div><img src="/public/icons/nb_personnes.svg"><p class="nb-pers"><?php echo $nombre_personnes ?> personnes</p></div> <!-- Nombre de personnes -->
@@ -191,6 +194,7 @@
 
         <?php include $_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'; ?>
         <script src="/src/js/side.js"></script>
+        <script src="/src/js/favoris.js"></script>
         <script src="/src/js/accueilScroll.js"></script>
         <script>
             var adresses = <?php echo json_encode($adresses); ?>;
