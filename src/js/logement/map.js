@@ -20,17 +20,18 @@ var pin = L.icon({
 import {recupCoordGps, appoximationCoord} from '/src/js/logement/recupCoordGps.js';
 async function fetchCoordinates() {
 
+    localisation = localisation.replace(/ /g, '-');
     var [coordX, coordY] = await recupCoordGps(localisation);
     console.log(coordX, coordY);
     if (coordX == null || coordY == null) {
         console.log("Coordonnées introuvables");
         console.log(localisation);
-        localisation = localisation.split(' ')[0];
+        localisation = localisation.split('-')[0];
         [coordX, coordY] = await recupCoordGps(localisation);
     }
 
     //On récupère seulement le nom de la ville
-    localisation = localisation.split(' ')[0];
+    localisation = localisation.split('-')[0];
 
     if (!estProprio){
         [coordX, coordY] = appoximationCoord(coordX, coordY);

@@ -1,28 +1,85 @@
-export async function recupCoordGps(adresse, approximation = false) {
+export async function recupCoordGps(adresse, idLogement = null, approximation = false) {
     adresse = adresse.replace(/ /g, '+');
-    const url = `https://nominatim.openstreetmap.org/search?q=${adresse}&format=json&polygon=1&addressdetails=1`;
     let coordX = null;
     let coordY = null;
-    try {
-        const response = await fetch(url, {
-            method: 'GET',
-            headers: {
-                'User-Agent': 'MyApplication/1.0'
+
+    //Récupérer les coordonnées dans la BDD
+    if (idLogement != null) {
+        [coordX, coordY] = await recupCoordGpsBDD(idLogement);
+    }
+
+    console.log(coordX, coordY);
+
+    if (coordX == null || coordY == null){
+        console.log("Coordonnées non trouvées dans la BDD, requête à l'API en cours...");
+        try {
+            const url = `https://nominatim.openstreetmap.org/search?q=${adresse}&format=json&polygon=1&addressdetails=1`;
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'User-Agent': 'MyApplication/1.0'
+                }
+            });
+            const data = await response.json();
+            if (data[0]) {
+                coordX = data[0].lat;
+                coordY = data[0].lon;
+
+                //Enregistrer les coordonnées dans la BDD
+                if (idLogement) {
+                    await saveCoordGpsBDD(idLogement, coordX, coordY);
+                }
+
+                if (approximation) {
+                    [coordX, coordY] = appoximationCoord(coordX, coordY);
+                }
             }
-        });
-        const data = await response.json();
-        if (data[0]) {
-            coordX = data[0].lat;
-            coordY = data[0].lon;
+        } catch (e) {
+            console.error(e);
         }
-    } catch (e) {
-        console.error(e);
     }
-    if (approximation) {
-        [coordX, coordY] = appoximationCoord(coordX, coordY);
-    }
+    
     return [coordX, coordY];
 }
+
+async function saveCoordGpsBDD(idLogement, coordX, coordY) {
+    fetch('/src/php/logement/coords/insert.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+            idLogement: idLogement,
+            coordX: coordX,
+            coordY: coordY
+        })
+    });
+}
+
+async function recupCoordGpsBDD(idLogement) {
+
+    const response = await fetch("/src/php/logement/coords/getCoords.php", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+            idLogement: idLogement
+        })
+    });
+
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    if (response.headers.get('content-length') === '0') {
+        return [null, null];
+    }
+
+    const data = await response.json();
+    return [data.coordx, data.coordy];
+}
+
 
 export async function recupAllCoordGps(adresses, approximation = false) {
     const coords = [];
