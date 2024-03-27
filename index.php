@@ -53,6 +53,7 @@
         <?php include $_SERVER['DOCUMENT_ROOT'] .'/src/php/header.php'; ?>
 
         <div class="map">
+            <h2>Chargement terminé !</h2>
             <div class="chargement-carte">
                 <p>0/0</p>
                 <div class="cssload-container">
