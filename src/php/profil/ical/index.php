@@ -53,7 +53,7 @@ $pdo = null;
         </div>
 
 
-        <form id="aboForm" enctype="application/x-www-form-urlencoded" action="" method="get">
+        <form id="aboForm" enctype="application/x-www-form-urlencoded" action="./ical/addAbo.php" method="get">
             <div id="dateAbonnement">
                 <label for="debut">
                     S'abonner du :
@@ -83,6 +83,7 @@ $pdo = null;
                     ?>
                 </ul>
             </div>
+            <button type="submit" class="boutton" >test</button>
         </form>
         <button class="boutton" id="aboBtn"> S'abonner </button>
     </div>
