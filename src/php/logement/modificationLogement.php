@@ -9,6 +9,8 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="/src/js/modifierLogement/addInputElement.js"></script>
+    <script src="/src/js/modifierLogement/suppressionImage.js"></script>
+
     <link rel="icon" href="/public/logos/logo-black.svg">
     <title>Modification Logement</title>
 </head>
@@ -119,8 +121,37 @@
                     <label for="photos" class="boutton">Ajouter photos</label>
                     <input class="textfield" type="file" id="photos" name="photos[]" accept=".jpg, .jpeg, .png" multiple onchange="afficherNomsPhotos()">
                     <div id="photosName"></div>
-        
-                    <div class="typeLogementDiv">
+
+                    <label>Photo(s) actuelle(s) : </label>
+                    <div class="listePhotos">
+                        <?php
+                        // Récupérer les images logement
+                        $chemin_photos = $_SERVER['DOCUMENT_ROOT'] . '/public/img/logements/' . $numLogement;
+                        $liste_photos = scandir($chemin_photos);
+                        $nombre_fichiers = 0;
+                        $i=1;
+                        foreach ($liste_photos as $fichier) {
+                            $chemin_fichier = $chemin_photos .'/'. $fichier;
+                            if (is_file($chemin_fichier)) {
+                                $nombre_fichiers++;
+                            }
+                            ${"img".$i} = '/public/img/logements/'.$numLogement.'/'.$i.'.png';
+
+                            $i++;
+                        }
+
+                        for ($i = 1; $i <= $nombre_fichiers; $i++) {
+                            echo "<div class='photoContainer'>"; ?>
+                            <div class='photo'>
+                                <img src="<?php echo ${"img".$i} ?>" alt="Image<?php echo $i ?>" onclick="afficherCroix(this)">
+                                <img src="/public/icons/croix.svg" class="croix" alt="Supprimer" onclick="supprimerPhoto(<?php echo $i ?>)">
+                            </div>
+                            <?php echo "</div>";
+                        }
+                        ?>
+
+                    </div>
+                                        <div class="typeLogementDiv">
                         <div>
                             <label for="typeLogement">Type de logement (*)</label>
                             <select class="textfield" id="typeLogement" name="typeLogement">
