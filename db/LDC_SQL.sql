@@ -29,6 +29,7 @@ CREATE TABLE APIkey
 CREATE TABLE tokenICal
 (
     num_token  SERIAL      NOT NULL PRIMARY KEY,
+    id_proprio integer     NOT NULL,
     date_debut text        NOT NULL,
     date_fin   text        NOT NULL,
     token      VARCHAR(50) NOT NULL

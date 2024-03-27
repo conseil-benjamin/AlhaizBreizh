@@ -11,6 +11,15 @@
     border-radius: 0;
 }
 
+h2 {
+    margin: 4vh auto;
+
+}
+
+#info > ul {
+    margin: auto;
+}
+
 form {
     width: 100%;
 }

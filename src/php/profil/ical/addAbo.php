@@ -38,12 +38,13 @@ if ($_SESSION['proprio'] != true){
             $logements[] = $value;
         }
     }
-    //Ajouter la clé API à la base de données
+    //Ajouter le token à la base de données
     $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
-    $stmt = $pdo->prepare("INSERT INTO ldc.tokenICal (date_debut,date_fin,token) VALUES (:debut,:fin, :cle)");
+    $stmt = $pdo->prepare("INSERT INTO ldc.tokenICal (date_debut,date_fin,token,id_proprio) VALUES (:debut,:fin, :cle,:id)");
     $stmt->bindParam(':debut', $date_debut);
     $stmt->bindParam(':fin', $date_fin);
     $stmt->bindParam(':cle', $newToken);
+    $stmt->bindParam(':id', $id);
     $stmt->execute();
 
     foreach ($logements as $loge) {

@@ -18,12 +18,18 @@ try {
     while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
         $logements[] = $row;
     }
-
+    $clesIcal = array();
+    $stmt = $pdo->prepare("SELECT token FROM ldc.tokenical WHERE id_proprio = :id");
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    $stmt->execute();
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $clesIcal[] = $row['token'];
+    }
     $pdo = null;
 } catch (PDOException $e) {
     $logements = array();
+    $clesIcal = array();
 }
-
 $pdo = null;
 ?>
 <!DOCTYPE html>
@@ -42,18 +48,24 @@ $pdo = null;
 <?php include $_SERVER['DOCUMENT_ROOT'] . '/src/php/header.php'; ?>
 <div class="monprofil">
     <div id="titre">
-        <img src="/public/icons/calendar.svg" alt="">
+        <img src="/public/icons/calendar.svg" alt="Calendrier Icon">
         <h2>Mes Abonnements Ical</h2>
     </div>
 
     <div id="info">
         <!--TODO La liste des ses abonnements  -->
-        <div>
-            <p>Vous n'avez pas encore d'abonnement</p>
-        </div>
-
-
-        <form id="aboForm" enctype="application/x-www-form-urlencoded" action="./ical/addAbo.php" method="get">
+        <?php
+        if (empty($clesAPI)){ ?>
+            <h2>Vous n'avez pas encore de clé API</h2> <?php
+        }
+        echo '<ul>';
+        foreach ($clesIcal as $value) {
+            echo '<li>'.$value.'</li></ul>';
+            echo '<hr>';
+        }
+        echo '</ul>'
+        ?>
+        <form id="aboForm" enctype="application/x-www-form-urlencoded" action="./addAbo.php" method="get">
             <div id="dateAbonnement">
                 <label for="debut">
                     S'abonner du :
