@@ -85,7 +85,7 @@ var markers = L.markerClusterGroup({
 
 /*******************************************************/
 /*Récupérer les coordonnees des logements*/
-import {recupAllCoordGps, recupCoordGps, appoximationCoord} from '/src/js/logement/recupCoordGps.js';
+import {recupCoordGps} from '/src/js/logement/recupCoordGps.js';
 async function fetchCoordinates() {
 
     var logements = document.querySelectorAll('.logement');
@@ -98,7 +98,7 @@ async function fetchCoordinates() {
         let localisation = logement.querySelector('.localisation').innerText;
         let prix = logement.querySelector('.prix').innerText;
 
-        let coords = await recupCoordGps(localisation, true);
+        let coords = await recupCoordGps(localisation, id, true);
 
         texteChargement.innerText = i+"/"+logements.length;
 
@@ -123,15 +123,11 @@ async function fetchCoordinates() {
     chargementDiv.style.display = "none";
 }
 
-
 /*******************************************************/
 /*Afficher les logements suivant le zoom*/
 
 //Vérifier les markers qui ne sont pas visibles suite à un zoom
 function adaptMarkersOnZoomAndMove(){
-    console.log("adaptMarkersOnZoomAndMove");
-    console.table(coordonnees);
-
     mapX = map.getCenter().lat;
     mapY = map.getCenter().lng;
     Object.keys(coordonnees).forEach(id => {
@@ -143,7 +139,6 @@ function adaptMarkersOnZoomAndMove(){
         if(point.x < 0 || point.y < 0 || point.x > size.x || point.y > size.y) {
             logement.classList.add('filtremap');
             logement.style.display = "none";
-            console.log("Logement "+id+" caché");
         } else {
             logement.classList.remove('filtremap');
             logement.style.display = "flex";

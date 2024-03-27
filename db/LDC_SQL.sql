@@ -99,7 +99,9 @@ CREATE TABLE Logement (
     nbSalleDeBain INTEGER,
     tarifNuitees DOUBLE PRECISION,
     note DOUBLE PRECISION,
-    typeLogement VARCHAR(255)
+    typeLogement VARCHAR(255),
+    coordX DOUBLE PRECISION,
+    coordY DOUBLE PRECISION
 );
 
 CREATE TABLE Chambre (
