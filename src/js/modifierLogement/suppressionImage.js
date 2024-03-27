@@ -1,21 +1,36 @@
 function afficherCroix(image) {
     // Affiche la croix quand l'user clique sur l'image
     var croix = image.nextElementSibling;
-    croix.style.display = 'block';
     croix.style.width = '40px';
     croix.style.height = '40px';
+    croix.style.display = (croix.style.display === 'block') ? 'none' : 'block';
 
-    image.onclick = function() { return false; };//onclick désactivé
+    
 }
-
 function supprimerPhoto(numero) {
-    // Supprimer la photo correspondante
-    var confirmation = confirm("Êtes-vous sûr de vouloir supprimer cette photo ?");
-    if (confirmation) {
-        // Supprimer l'image du DOM
-        var imageContainer = document.getElementsByClassName('photoContainer')[numero - 1];
-        imageContainer.parentNode.removeChild(imageContainer);
-
-        // Ici, vous pouvez également ajouter du code pour supprimer la photo du serveur si nécessaire.
+    // Confirmation de suppression
+    Swal.fire({
+        icon: 'warning',
+        title: 'Confirmation de suppression',
+        text: 'Êtes-vous sûr de vouloir supprimer cette photo ?',
+        showCancelButton: true,
+        confirmButtonText: 'Confirmer',
+        cancelButtonText: 'Annuler',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Suppression de la photo
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'modifierLogement/suppressionImage.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send('numero=' + numero);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // Suppression de la photo dans le DOM
+                    var image = document.getElementById('image' + numero);
+                    image.parentNode.removeChild(image);
+                }
+            }
+        }
     }
+    );
 }
