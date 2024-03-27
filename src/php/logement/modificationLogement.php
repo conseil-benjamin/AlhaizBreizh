@@ -119,7 +119,34 @@
                     <label for="photos" class="boutton">Ajouter photos</label>
                     <input class="textfield" type="file" id="photos" name="photos[]" accept=".jpg, .jpeg, .png" multiple onchange="afficherNomsPhotos()">
                     <div id="photosName"></div>
+
+                    <label>Photo(s) actuelle(s) : </label>
+                    <div class="listePhotos">
+                        <?php
+                        //Récupérer les images logement
+                        $chemin_photos = $_SERVER['DOCUMENT_ROOT'] . '/public/img/logements/' . $numLogement;
+                        $liste_photos = scandir($chemin_photos);
+                        $nombre_fichiers = 0;
+                        $i=1;
+                        foreach ($liste_photos as $fichier) {
+                            $chemin_fichier = $chemin_photos .'/'. $fichier;
+                            if (is_file($chemin_fichier)) {
+                                $nombre_fichiers++;
+                            }
+                            ${"img".$i} = '/public/img/logements/'.$numLogement.'/'.$i.'.png';
+
+                            $i++;
+                        }
+
+                            for ($i = 1; $i <= $nombre_fichiers; $i++) {
+                                echo "<div class='photo'>"; ?>
+                                <img src="<?php echo ${"img".$i} ?>" alt="Image<?php echo $i ?>">
+
+                                <?php  echo "</div>";
+                            }
+                            ?>
         
+                    </div>
                     <div class="typeLogementDiv">
                         <div>
                             <label for="typeLogement">Type de logement (*)</label>
