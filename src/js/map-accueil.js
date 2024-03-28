@@ -6,6 +6,7 @@ let mapDiv = document.querySelector('.map');
 mapDiv.style.display = "none";
 var chargementDiv = mapDiv.querySelector('.chargement-carte');
 var texteChargement = chargementDiv.querySelector('p');
+var loadingComplete = document.querySelector(".map > h2");
 var coordonnees = [];
 
 var bretagne = [48.202047, -3.832382];
@@ -16,6 +17,10 @@ var mapY = bretagne[1];
 let bouttonOpenMap = document.getElementById('bouttonMap');
 bouttonOpenMap.addEventListener('click', function() {
     mapDiv.style.display = "block";
+    if (loadingComplete.style.left === "1em") {
+        loadingComplete.style.display = "none";
+        loadingComplete.style.left = "-10em";
+    }
     //Animation pour afficher la carte
 
     setTimeout(() => {
@@ -121,6 +126,14 @@ async function fetchCoordinates() {
         i++;   
     }
     chargementDiv.style.display = "none";
+
+    loadingComplete.style.display = "block";
+    setTimeout(() => {
+        loadingComplete.style.left = "1em";
+        setTimeout(() => {
+            loadingComplete.style.left = "-10em";
+        }, 2000);
+    }, 100);
 }
 
 /*******************************************************/
@@ -181,4 +194,10 @@ fetchCoordinates();
 let bouttonResetMap = document.getElementById('bouttonResetMap');
 bouttonResetMap.addEventListener('click', function() {
     map.setView(bretagne, 8);
+});
+
+/*******************************************************/
+
+window.addEventListener('resize', function(){
+    map.invalidateSize();
 });

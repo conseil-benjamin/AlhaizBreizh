@@ -519,14 +519,51 @@ if (!isset($liste_langue_parle)) {
                 <div id="map"></div>
             </section>
 
-            <section class="commentaires">
-                <br>
-                <div id="comment">
-                    <h2>
-                        Commentaires
-                    </h2>
-                    <p>Il n'y a pas encore d'avis pour cette annonce.</p>
-                </div>
+           <section class="commentaires">
+                <h4>Avis sur le logement</h4>
+                <?php 
+                    $getAvis = $pdo->prepare("SELECT * FROM ldc.AvisLogement WHERE idLogement = $numLogement");
+                    $getAvis->execute();
+                    while ($row = $getAvis->fetch(PDO::FETCH_NUM)) {
+                    $contenusAvis = isset($row[1]) ? $row[1] : null;
+                    $nbEtoiles = isset($row[2]) ? $row[2] : null;
+                    $idClient = isset($row[3]) ? $row[3] : null;
+                    $getNameClient = $pdo->prepare("SELECT pseudocompte FROM ldc.Client WHERE idcompte = :idClient");
+                    $getNameClient->bindParam(':idClient', $idClient);
+                    $getNameClient->execute();
+                    while ($inner_row = $getNameClient->fetch(PDO::FETCH_ASSOC)) {
+                        $pseudoClient = isset($inner_row['pseudocompte']) ? $inner_row['pseudocompte'] : null;
+                        echo $nomClient;
+                    }
+                    ?>
+                    <div class="div-avis">
+                        <div class="header-avis-logement-main">
+                        <div class="header-avis-logement-left">
+                            <?php
+                                $imagePath = "/public/img/photos_profil/" . $idClient . ".png";
+                            ?>
+                            <a>
+                                <a href="/src/php/profil/profil.php?user=<?php echo $idClient ?>">
+                            <img src="<?php echo $imagePath; ?>" alt="Photo profil utilisateur" width="50" height="50">
+                            </a>
+                            <p><?php echo $pseudoClient?></p>
+                        </div>
+                        <div class="notation-logement-commentaire">
+                            <p><img src="/public/icons/star_fill.svg" id="icone" alt="icone etoile"><?php echo $nbEtoiles?></p>
+                        </div>
+                        </div>
+                        <p><?php echo $contenusAvis?></p>
+                        <?php 
+                            if(strlen($contenusAvis) == 0){
+                                ?>
+                                <p>Aucun commentaire n'a été laissé par cet utilisateur.</p>
+                                <?php
+                            }
+                        ?>
+                    </div>
+                    <?php
+                }                    
+                ?>
             </section>
             </main>
             <?php
