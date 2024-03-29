@@ -35,7 +35,7 @@ if ($_SESSION['proprio'] != true){
             $date_debut = $value;
         }
         else {
-            $logements[] = $value;
+            $logements[] = $cle;
         }
     }
     //Ajouter le token à la base de données
@@ -47,11 +47,12 @@ if ($_SESSION['proprio'] != true){
     $stmt->bindParam(':id', $id);
     $stmt->execute();
 
+    print_r($logements);
     foreach ($logements as $loge) {
-        $stmt = $pdo->prepare("INSERT INTO ldc.logements_tokenical (num_token, num_logement) VALUES (:cle,:lg)");
-        $stmt->bindParam(':cle', $newToken);
-        $stmt->bindParam(':lg,$loge');
-        $stmt->execute();
+        $stmt2 = $pdo->prepare("INSERT INTO ldc.logements_tokenical (token, num_logement) VALUES (:cle,:lg)");
+        $stmt2->bindParam(':cle', $newToken);
+        $stmt2->bindParam(':lg',$loge);
+        $stmt2->execute();
     }
     $pdo = null;
 

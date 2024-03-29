@@ -28,19 +28,19 @@ CREATE TABLE APIkey
 -- Table Abonnement Ical
 CREATE TABLE tokenICal
 (
-    num_token  SERIAL      NOT NULL PRIMARY KEY,
+    token      VARCHAR(50) NOT NULL PRIMARY KEY,
     id_proprio integer     NOT NULL,
     date_debut text        NOT NULL,
-    date_fin   text        NOT NULL,
-    token      VARCHAR(50) NOT NULL
+    date_fin   text        NOT NULL
+
 );
 
 CREATE TABLE logements_tokenIcal
 (
     id           SERIAL NOT NULL PRIMARY KEY,
-    num_token    INT    NOT NULL,
+    token        VARCHAR    NOT NULL,
     num_logement INT    NOT NULL,
-    CONSTRAINT fk_token FOREIGN KEY (num_token) REFERENCES tokenICal (num_token),
+    CONSTRAINT fk_token FOREIGN KEY (token) REFERENCES tokenICal (token),
     CONSTRAINT fk_logements FOREIGN KEY (num_logement) REFERENCES logement(numLogement)
 );
 

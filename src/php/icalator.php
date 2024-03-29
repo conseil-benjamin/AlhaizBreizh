@@ -1,5 +1,5 @@
 <?php
-$idLog = 1;
+$tabIdLog = array();
 
 if (!isset($_GET["token"])) {
     exit();
@@ -19,7 +19,9 @@ catch (PDOException $e) {
     $tokenLogData = array();
 }
 if (sizeof($tokenLogData) > 0) {
-   $idLog = 1;
+   foreach ($tokenLogData as $rowData) {
+        $tabIdLog[] = $rowData["num_logement"];
+   }
 }
 /*
 else {
@@ -27,6 +29,7 @@ else {
 }*/
 
 print_r($tokenData);
+print_r($tabIdLog);
 /*******/
 /* Il faut recup les dates de l'abo, ensuite, on regarde dans la table reservation les réservations qui débute dans la plage
 si elles se terminent après, osef
@@ -39,6 +42,8 @@ Il faut surment ajouter dans le calendrier les Resa plus que juste indispo
 
 
 // Connexion à la base de données
+
+foreach ($tabIdLog as $idLog) {
 $stmtCalendrier = $pdo->prepare("SELECT numcal,statutdispo FROM ldc.Calendrier WHERE numLogement = $idLog");
 $stmtCalendrier->execute();
 
@@ -50,21 +55,22 @@ while($calendrierData = $stmtCalendrier->fetch(PDO::FETCH_NUM)){
 try {
     $dateDeb = new DateTime($tokenData['date_debut']);
 } catch (Exception $e) {
+    var_dump($e);
     die();
 }
 $sqlDatedeb = $dateDeb->format('Y-m-d');
 try {
     $dateFin = new DateTime($tokenData['date_fin']);
 } catch (Exception $e) {
+    var_dump($e);
     die();
 }
 $sqlDateFin = $dateFin->format('Y-m-d');
 
-$stmtPlagesIndispo = $pdo->prepare("SELECT * FROM ldc.Plage WHERE numCal = $numCal AND (isIndispo = true OR tarifjournalier = 0) AND datedebutplage=$sqlDatedeb AND datefinplage=$sqlDateFin");
+$stmtPlagesIndispo = $pdo->prepare("SELECT * FROM ldc.Plage WHERE numCal = $numCal AND (isIndispo = true OR tarifjournalier = 0) AND datedebutplage >= '$sqlDatedeb' AND datefinplage <= '$sqlDateFin'");
 $stmtPlagesIndispo->execute();
 $plagesIndisponibilite = $stmtPlagesIndispo->fetchAll(PDO::FETCH_ASSOC);
 $evenementsI = [];
-
 foreach ($plagesIndisponibilite as $plage) {
     if (isset($plage['datedebutplage'], $plage['datefinplage'])) {
         $evenementI = [
@@ -76,7 +82,6 @@ foreach ($plagesIndisponibilite as $plage) {
         $evenementsI[] = $evenementI;
     }
 }
-
 foreach ($evenementsI as $event) {
 ?>
 BEGIN:VCALENDAR
@@ -94,4 +99,4 @@ SUMMARY:<?= "Logement ".$event['title'] ."\n" ?>
 DESCRIPTION:<?= "Logement ".$event['title'] ."\n" ?>
 END:VEVENT
 END:VCALENDAR
-<?php } ?>
+<?php }} ?>
