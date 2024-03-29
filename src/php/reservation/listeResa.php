@@ -104,9 +104,13 @@ $reservations = obtenirLogementsProprio($_SESSION['id']);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="/src/styles/styles.css">
     <link rel="stylesheet" type="text/css" href="/src/styles/mesLogements.css">
-    
+    <link rel="stylesheet" type="text/css" href="/src/styles/style_Liste_resa.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
     <link rel="icon" href="/public/logos/logo-black.svg">
     <title>ALHaiz Breizh</title>
 </head>
@@ -140,7 +144,7 @@ $reservations = obtenirLogementsProprio($_SESSION['id']);
                                     <p><?php echo "$reservation[8]"." $reservation[9]"; ?></p>
                                 </div>
                             </a>
-                            <nav>
+                            <nav style="display: flex; align-items: center;">
                                 <a class="boutton" href="/src/php/reservation/details_reservation.php?numReservation=<?php echo $reservation[7]?>">Voir Réservation</a>
                                 <?php foreach ($reservations as $reservation) {
                                         // Convertir la date de fin de la réservation en objet DateTime
@@ -154,10 +158,201 @@ $reservations = obtenirLogementsProprio($_SESSION['id']);
                                     <?php
                                 }
                             }
+                        $currentDate = date('Y-m-d');
+                        $stmt = $pdo->prepare("SELECT idClient FROM ldc.AvisLogement WHERE idClient = :idClient AND idLogement = :idLogement");
+                        //echo "idClient : $reservation[4], idLogement : $reservation[0]";
+                        $stmt->bindParam(':idClient', $reservation[4]);
+                        $stmt->bindParam(':idLogement', $reservation[0]);
+                        $stmt->execute();
+                        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                        if ($result) {
                             ?>
+                            <nav style="display: flex; justify-content: center; align-items: center; margin: 0 0 1em 1em;">
+                                <i class='fas fa-check'></i>
+                                <span style="margin: 0.5em;">Avis posté</span>
+                            </nav>
+                        <?php
+                        } else if($currentDate < $reservation[3]){
+                        } else {
+                            echo "<button id='deposer-avis' class='boutton'>Laisser un avis</button>";
+                        } 
+                    ?>
                             </nav>
                         </div>
                     </div>
+                    <script>
+                    document.addEventListener('DOMContentLoaded', (event) => {
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+
+                let notes = [];
+                let moyenne = 0;
+                let total = 0;
+                let count = 0;
+                let buttonDeposerAvis = document.querySelector("#deposer-avis");
+                buttonDeposerAvis.addEventListener("click", async (event) => {
+                    const { value: formValues } = await Swal.fire({
+                        title: "<strong><u>Déposer un avis</u></strong>",
+                        html: ` 
+                            <h4>Propreté du logement</h4>
+                            <div class="div-input-avis">
+                                <input type="radio" id="option1" name="ratingProprete" value="1">
+                                <label for="option1">1</label><br>
+                                <input type="radio" id="option2" name="ratingProprete" value="2">
+                                <label for="option2">2</label><br>
+                                <input type="radio" id="option3" name="ratingProprete" value="3">
+                                <label for="option3">3</label><br>
+                                <input type="radio" id="option4" name="ratingProprete" value="4">
+                                <label for="option4">4</label><br>
+                                <input type="radio" id="option5" name="ratingProprete" value="5">
+                                <label for="option5">5</label><br>
+                            </div>
+                            <h4>Confort du logement</h4>
+                            <div class="div-input-avis">
+                                <input type="radio" id="option1" name="ratingConfort" value="1">
+                                <label for="option1">1</label><br>
+                                <input type="radio" id="option2" name="ratingConfort" value="2">
+                                <label for="option2">2</label><br>
+                                <input type="radio" id="option3" name="ratingConfort" value="3">
+                                <label for="option3">3</label><br>
+                                <input type="radio" id="option4" name="ratingConfort" value="4">
+                                <label for="option4">4</label><br>
+                                <input type="radio" id="option5" name="ratingConfort" value="5">
+                                <label for="option5">5</label><br>
+                            </div>
+                            <h4>Commodités du logement</h4>
+                            <div class="div-input-avis">
+                                <input type="radio" id="option1" name="ratingCommodites" value="1">
+                                <label for="option1">1</label><br>
+                                <input type="radio" id="option2" name="ratingCommodites" value="2">
+                                <label for="option2">2</label><br>
+                                <input type="radio" id="option3" name="ratingCommodites" value="3">
+                                <label for="option3">3</label><br>
+                                <input type="radio" id="option4" name="ratingCommodites" value="4">
+                                <label for="option4">4</label><br>
+                                <input type="radio" id="option5" name="ratingCommodites" value="5">
+                                <label for="option5">5</label><br>
+                            </div>
+                            <h4>Rapport qualité prix</h4>
+                            <div class="div-input-avis">
+                                <input type="radio" id="option1" name="ratingQualitePrix" value="1">
+                                <label for="option1">1</label><br>
+                                <input type="radio" id="option2" name="ratingQualitePrix" value="2">
+                                <label for="option2">2</label><br>
+                                <input type="radio" id="option3" name="ratingQualitePrix" value="3">
+                                <label for="option3">3</label><br>
+                                <input type="radio" id="option4" name="ratingQualitePrix" value="4">
+                                <label for="option4">4</label><br>
+                                <input type="radio" id="option5" name="ratingQualitePrix" value="5">
+                                <label for="option5">5</label><br>
+                            </div>
+                            <h4>Emplacement</h4>
+                            <div class="div-input-avis">
+                                <input type="radio" id="option1" name="ratingEmplacement" value="1">
+                                <label for="option1">1</label><br>
+                                <input type="radio" id="option2" name="ratingEmplacement" value="2">
+                                <label for="option2">2</label><br>
+                                <input type="radio" id="option3" name="ratingEmplacement" value="3">
+                                <label for="option3">3</label><br>
+                                <input type="radio" id="option4" name="ratingEmplacement" value="4">
+                                <label for="option4">4</label><br>
+                                <input type="radio" id="option5" name="ratingEmplacement" value="5">
+                                <label for="option5">5</label><br>
+                            </div>
+                            <h4>Commentaires sur le logement</h4>
+                            <textarea id="text-area-commentaires" name="story" rows="10" cols="40"></textarea>
+                        `,
+                        showCloseButton: true,
+                        showCancelButton: true,
+                        confirmButtonText: `
+                            <i></i> Poster
+                        `,
+                        cancelButtonText: `
+                            <i>Annuler</i>
+                        `,
+                        preConfirm: () => {
+                            return [
+                                document.querySelector('input[name="ratingProprete"]:checked').value !== null ? 
+                                document.querySelector('input[name="ratingProprete"]:checked').value : Swal.fire({
+                            text: "Création avis annulé",
+                            icon: "error"
+                        }),
+                                document.querySelector('input[name="ratingConfort"]:checked').value !== null ? 
+                                document.querySelector('input[name="ratingConfort"]:checked').value : Swal.fire({
+                            text: "Création avis annulé",
+                            icon: "error"
+                        }),
+                                document.querySelector('input[name="ratingCommodites"]:checked').value !== null ? 
+                                document.querySelector('input[name="ratingCommodites"]:checked').value : Swal.fire({
+                            text: "Création avis annulé",
+                            icon: "error"
+                        }),
+                                document.querySelector('input[name="ratingQualitePrix"]:checked').value !== null ? 
+                                document.querySelector('input[name="ratingQualitePrix"]:checked').value : Swal.fire({
+                            text: "Création avis annulé",
+                            icon: "error"
+                        }),
+                                document.querySelector('input[name="ratingEmplacement"]:checked').value !== null ? 
+                                document.querySelector('input[name="ratingEmplacement"]:checked').value : Swal.fire({
+                            text: "Création avis annulé",
+                            icon: "error"
+                        }),
+                            ];
+                        }
+                    });
+                    if (formValues) {
+                        notes = formValues;
+                        moyenne = calculMoyenne();
+                        console.log(moyenne);
+                        let idLogement = <?php echo json_encode($reservation[0]); ?>; 
+                        let contenusAvis = document.querySelector("#text-area-commentaires").value;
+                        console.log(idLogement);
+                        console.log(contenusAvis);
+                        $.ajax({
+                            url: 'insertAvis.php', 
+                            type: 'POST',
+                            data: {
+                                moyenne: moyenne,
+                                idLogement: idLogement,
+                                contenusAvis: contenusAvis
+                            },
+                            success: function(response) {
+                                Toast.fire({
+                                    icon: "success",
+                                    title: "Avis posté avec succès."
+                                });
+                                setTimeout(()=> {
+                                    location.reload();
+                                }, 3500);                            
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('Erreur lors de la suppression :', error);
+                            }
+                        });
+                    } else{
+                        Toast.fire({
+                            text: "Création avis annulé",
+                        });
+                    }
+                });
+                function calculMoyenne() {
+                    for (let note of notes) {
+                        total += parseInt(note);
+                        count++;
+                    }
+                    return total / notes.length;
+                }
+});
+                </script>
                 <?php
                 }
             }
