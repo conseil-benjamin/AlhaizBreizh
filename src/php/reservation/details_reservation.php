@@ -99,166 +99,114 @@ $dateDuJour = $date->format('Y-m-d');
  if ($dateDep > $dateDuJour) {
  $resa_en_cours = true;
  }
-
-if ($reservation) {
 ?>
-    <!DOCTYPE html>
-    <html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <title>Détails de la réservations</title>
-        <link href="/src/styles/styles.css" rel="stylesheet" type="text/css">
-        <link href="/src/styles/details_reservation.css" rel="stylesheet" type="text/css">
-        <link rel="icon" href="/public/logos/logo-black.svg">
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script src="/src/js/detailsReservation.js"></script>
-    </head>
-    <?php include($_SERVER['DOCUMENT_ROOT'] . '/src/php/header.php'); ?>
-    <body>
-    <div style="height: 75px"></div>
-    <div>
-        <h1 id="titreLogement"> <?php $reservation ?></h1>
-        <div id="infosContainer">
-            <div id="photoEtContact">
-                <figure>
-                    <img src="<?= $cheminPhoto ?>" alt="Photo du logement"/>
-                    <fieldset><a>En savoir plus</a></fieldset>
-                </figure>
-                <div id="contactPropio">
-                    <div id="carteProprio">
-                        <?php if ($_SESSION['id']==$numclient) {?>
-                            <div>
-                                <img src="<?= $cheminPhotoProprio ?>" alt="Photo de profil"/>
-                            </div>
-                            <?= $prenom_proprio . " " .$nom_proprio ?></div>
-                            <a id="contactLien" href="/src/php/profil/profil.php?user=<?php echo $proprio ?>"><?php $prenom_proprio?> Contacter</a>
 
-                    <?php }else {?>
-                            <div>
-                                <img src="<?= $cheminPhotoClient ?>" alt="Photo de profil"/>
-                            </div>
-                            <?= $prenom_client . " " .$nom_client ?></div>
-                            <a id="contactLien" href="/src/php/profil/profil.php?user=<?php echo $numclient ?>">Contacter</a>                <?php } ?>
-                </div>
-            </div>
-            <div id="autreInfo">
-                <div class="container" id="localisationEtat">
-                    <div id="localisation">
-                        <img src="../../../public/icons/markerMap.svg" alt="logo"/>
-                        <h2><?= $localisation?> <br/> <?= $localisationDetail ?></h2>
-                    </div>
-                </div>
-                <div id="dateDiv">
-                    <h2 id="date"><span id="dateArr"><?= $dateArr ?></span> - <span id="dateDep"><?= $dateDep ?></span></h2>
-                    <div id="nbPersonne" class="center"> <img src="../../../public/icons/nb_personnes.svg" alt="nbPersonne" /> <h1><?= $nbPersonnes  ?> </h1></div>
-                </div>
-                <div id="etatDevis" class="recu">
-                    <a href='' download='devis.pdf'><img src="/public/icons/contract.svg" alt="icon devis"/></a>
-                    <?php
-                    if ($_SESSION['id']==$numclient) {
-                        echo "<h2>Devis reçu le <span id='dateDevis'>$dateDevis</span></h2></div>";
-                    }
-                    else {
-                        echo "<h2>Demande de devis reçue le $dateResa</h2></div>";
-                    }
-                    ?>
-
-                <div id="prixDiv">
-                    <h2>Total :</h2>
-                    <h2><span id="prixSpan"><?= $prixTotal ?></span>€</h2>
-                </div>
-                <div class="container" style="flex-direction: column;
-        align-items: end;">
-                    <div id="annulerAccepter">
-                    <?php
-                        if ($_SESSION['id']==$numclient) {?>
-
-                        <button class="boutton" onclick="confirmationValiderPopUp()">Accepter le devis et payer</button>
-                        <button class="boutton" onclick="confirmationAnnulerPopUp(<?php echo $numReservation; ?>, '<?php echo $dateArr; ?>')">Annuler ma réservation</button>
-                    <?php }else {?>
-                        <button class="boutton" onclick="supprimerReservation()">Supprimer la réservation</button>
-                    <?php }?>
-                    </div>
-                    <?php
-                    if ($_SESSION['id']==$numclient) {?>
-                    <p>Logement reservé le <span id="dateResa"><?= $dateResa ?></span></p>
-                    <?php } ?>
-                </div>
-            </div>
-        </div>
-    </div>
-    <?php include($_SERVER['DOCUMENT_ROOT'] . '/src/php/footer.php'); ?>
-    </body>
-    <script>
-            function supprimerReservation() {
-                <?php
-                    // Utilisation des valeurs PHP dans le script JavaScript
-                    echo "var resaEnCours = " . json_encode($resa_en_cours) . ";\n";
-                    echo "var numReservation = " . json_encode($numReservation) . ";\n";
-                ?>
-
-        if (!resaEnCours) {
-            // Affiche une boîte de dialogue d'avertissement
-            Swal.fire({
-                title: "Êtes-vous sûr de vouloir supprimer cette Réservation ?",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonText: "Oui, je confirme",
-                cancelButtonText: "Annuler",
-            })
-            .then((result) => {
-                if (result.value) {
-                    //Changer l'url pour la suppression
-                    window.location.href = "/src/php/reservation/supprimerResaDB.php?numReservation=" + numReservation;
-
-                }
-            });
-        } else {
-            // Affichez un message à l'utilisateur si des réservations sont en cours
-            Swal.fire({
-                title: "Vous ne pouvez pas supprimé cette réservation, la réservation est en cours",
-                icon: "error",
-            });        }
-    }
-<?php } else { ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Erreur 404</title>
+    <link href="/src/styles/details_reservation.css" rel="stylesheet" type="text/css">
     <link href="/src/styles/styles.css" rel="stylesheet" type="text/css">
-    <link href="/src/styles/404.css" rel="stylesheet" type="text/css">
     <link rel="icon" href="/public/logos/logo-black.svg">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/src/js/detailsReservation.js"></script>
+    <title>Détails de la réservations</title>
+ 
 </head>
-<body>
 <?php include($_SERVER['DOCUMENT_ROOT'] . '/src/php/header.php'); ?>
-    <div class="wrapper">
-    <video autoplay playsinline muted loop preload poster="http://i.imgur.com/xHO6DbC.png">
-        <source src="/public/videos/video-bretagne.mp4" />
-    </video>
-    <div class="container">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 285 80" preserveAspectRatio="xMidYMid slice">
-            <defs>
-                <mask id="mask" x="0" y="0" width="100%" height="100%">
-                    <rect x="0" y="0" width="100%" height="100%" />
-                    <!-- Texte principal -->
-                    <text x="50%" y="50%" text-anchor="middle" alignment-baseline="middle" font-family="NoirPro" font-weight="200" text-transform="uppercase" font-size="20">
-                        ALHaIZ Breizh
-                    </text>
-                </mask>
-            </defs>
-            <!-- Rectangle pour masquer le texte principal -->
-            <rect x="0" y="0" width="100%" height="100%" mask="url(#mask)" />
-        </svg>
-        <!-- Lien vers la page d'accueil avec un message d'erreur -->
-        <a class="lien" href="/">
-            <div>
-                Cette page est inexistante. Cliquez ici pour retourner à l'accueil.
+<body>
+    <div class="carte">
+        <div style="height: 75px"></div>
+        <div>
+            <div id="titrephoto">
+                <div id="photo">
+                    <figure>
+                        <img class="imgLogement" src="<?= $cheminPhoto ?>" alt="Photo du logement"/>
+                    </figure>
+                </div>
+                </div>
+                <div id="infosContainer">
+                <div id="titreLogement" >
+                                <h1> <?= $titreLogement ?></h1>
+                            </div>
+                    <div class="container" id="localisationEtat">
+                            <div id="localisation">
+                                <img src="../../../public/icons/markerMap.svg" alt="logo" style="max-width: 50px; max-height: 50px;">
+                                <h2><?= $localisationDetail ?>, <?= $localisation?></h2>
+                            </div>
+                            <div id="nbPersonne" class="center"> <img src="../../../public/icons/nb_personnes.svg" alt="nbPersonne" style="max-width: 48px; max-height: 48px;"> <h1><?= $nbPersonnes  ?> </h1></div>
+                        </div>
+                        <div id="dateDiv">
+                            <h2 id="date"> Arrivée : <span id="dateArr"><?= $dateArr ?></span> <br> Départ : <span id="dateDep"><?= $dateDep ?></span></h2>
+                        </div>
+                        <div id="etatDevis" >
+                        <a href='' download='devis.pdf'><img class="recu" src="/public/icons/contract.svg" alt="icon devis" style="max-width: 48px; max-height: 48px;"></a>
+                            <?php
+                            if ($_SESSION['id']==$numclient) {
+                                echo "<h2>Devis reçu le <span id='dateDevis'>$dateDevis</span></h2></div>";
+                            }
+                            else {
+                                echo "<h2>Demande de devis reçue le $dateResa</h2></div>";
+                            }
+                            ?>
+
+                        <div id="prixDiv">
+                            <h2>Total :<span id="prixSpan"><?= $prixTotal ?></span>€</h2>
+                        </div>
+                        <div class="container" style="flex-direction: column; align-items: end;">
+                            <div id="annulerAccepter">
+                                <?php
+                                    if ($_SESSION['id']==$numclient) {?>
+
+                                    <button class="boutton" onclick="confirmationValiderPopUp()">Accepter le devis et payer</button>
+                                    <button class="boutton" onclick="confirmationAnnulerPopUp(<?php echo $numReservation; ?>, '<?php echo $dateArr; ?>')">Annuler ma réservation</button>
+                                <?php }else {?>
+                                    <button class="boutton" onclick="supprimerReservation()">Supprimer la réservation</button>
+                                <?php }?>
+                            </div>
+                            <?php
+                            if ($_SESSION['id']==$numclient) {?>
+                            <p>Logement reservé le <span id="dateResa"><?= $dateResa ?></span></p>
+                            <?php } ?>
+                        
+                        </div>
+                    </div>
+                </div>
             </div>
-        </a>
-    </div>
-</div>
+        </div>
+        <?php include($_SERVER['DOCUMENT_ROOT'] . '/src/php/footer.php'); ?>
 </body>
-<?php }?>
+<script>
+        function supprimerReservation() {
+            <?php
+                // Utilisation des valeurs PHP dans le script JavaScript
+                echo "var resaEnCours = " . json_encode($resa_en_cours) . ";\n";
+                echo "var numReservation = " . json_encode($numReservation) . ";\n";
+            ?>
+
+    if (!resaEnCours) {
+        // Affiche une boîte de dialogue d'avertissement
+        Swal.fire({
+            title: "Êtes-vous sûr de vouloir supprimer cette Réservation ?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Oui, je confirme",
+            cancelButtonText: "Annuler",
+        })
+        .then((result) => {
+            if (result.value) {
+                //Changer l'url pour la suppression
+                window.location.href = "/src/php/reservation/supprimerResaDB.php?numReservation=" + numReservation;
+
+            }
+        });
+    } else {
+        // Affichez un message à l'utilisateur si des réservations sont en cours
+        Swal.fire({
+            title: "Vous ne pouvez pas supprimé cette réservation, la réservation est en cours",
+            icon: "error",
+        });        }
+}
+
 </script>
 </html>
