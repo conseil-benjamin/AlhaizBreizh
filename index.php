@@ -194,11 +194,13 @@
         </div>
 
         <?php include $_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'; ?>
-        <script src="/src/js/side.js"></script>
+        <script src="/src/js/loading.js"></script>
         <script src="/src/js/accueilScroll.js"></script>
         <script>
             var adresses = <?php echo json_encode($adresses); ?>;
+            var adaptFilter = false;
         </script>
+        <script src="/src/js/side.js" defer></script>
         <script type="module" src="/src/js/map-accueil.js" defer></script>
     </body>
 </html>

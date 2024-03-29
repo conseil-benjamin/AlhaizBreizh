@@ -302,13 +302,6 @@
 .logement:hover{
     filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.75));
     transform: translateY(-5px);
-    animation: anim-logement-hover 3s infinite linear;
-}
-
-@keyframes anim-logement-hover {
-    50% {
-        filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.75));
-    }  
 }
 
 @media screen and (max-width: 760px) {

@@ -160,7 +160,6 @@ function trierLogements(liste) {
 
 //Application des filtres
 async function enfer() {
-    console.log("hell");
     const promises = [];
 
     for (let cle in charlie) {
@@ -175,19 +174,25 @@ async function enfer() {
             const result2 = results[i + 1];
             const cle = i / 2;
 
-            if (
-                filtre_nb(charlie[cle].innerHTML) &&
-                filtre_max(charlie[cle].innerHTML) &&
-                filtre_min(charlie[cle].innerHTML) &&
-                filtre_recherche(charlie[cle].innerHTML) &&
-                filtre_type(charlie[cle].innerHTML) &&
-                filtre_map(charlie[cle])&&
-                result1 &&
-                result2
-            ) {
+            let filtreMap = filtre_map(charlie[cle]);
+
+            if (!filtreMap) {
+                charlie[cle].style.display = "none";
+                continue;
+            }
+
+            let filtreNb = filtre_nb(charlie[cle].innerHTML);
+            let filtreMax = filtre_max(charlie[cle].innerHTML);
+            let filtreMin = filtre_min(charlie[cle].innerHTML);
+            let filtreRecherche = filtre_recherche(charlie[cle].innerHTML);
+            let filtreType = filtre_type(charlie[cle].innerHTML);
+
+            if (filtreNb && filtreMax && filtreMin && filtreRecherche && filtreType && result1 && result2) {
                 charlie[cle].style.display = "flex";
+                charlie[cle].classList.remove("filtredefaut");
             } else {
                 charlie[cle].style.display = "none";
+                charlie[cle].classList.add("filtredefaut");
             }
         }
     } catch (prob) {
