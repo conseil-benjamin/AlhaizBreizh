@@ -7,7 +7,7 @@ function afficherCroix(image) {
 }
 
 function supprimerPhoto(numero) {
-    // Confirmation de suppression
+    // Confirme la suppression
     Swal.fire({
         icon: 'warning',
         title: 'Confirmation de suppression',
@@ -17,30 +17,43 @@ function supprimerPhoto(numero) {
         cancelButtonText: 'Annuler',
     }).then((result) => {
         if (result.isConfirmed) {
-            // Envoi d'une requête Fetch pour la suppression
-            fetch('supprimerImage.php?nomPhoto=' + numero, {
-                method: 'DELETE',
-            }).then((response) => {
-                if (response.status === 200) {
-                    // Suppression de l'image du DOM
-                    var imageContainer = document.getElementsByClassName('photoContainer')[numero - 1];
-                    imageContainer.parentNode.removeChild(imageContainer);
-                    // Affichage d'un message de succès
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Photo supprimée avec succès.',
-                        showConfirmButton: false,
-                        timer: 2000
-                    });
-                } else {
-                    // Affichage d'un message d'erreur
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Échec de la suppression de la photo.',
-                        text: 'Veuillez réessayer ultérieurement.',
-                    });
-                }
-            });
+            // Compte nb photos
+            var nbPhotos = document.getElementsByClassName('photoContainer').length;
+            //Si y'a qu'une photo on affiche un message d'erreur
+            if (nbPhotos === 1) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Suppression impossible',
+                    text: 'Un logement doit avoir au minimum une photo.',
+                });
+            } else {
+                fetch('supprimerImage.php?nomPhoto=' + numero + '&numLogement=' + sessionStorage.getItem('num_logement'), {
+                    method: 'DELETE',
+                }).then((response) => {
+                    if (response.status === 200) {
+                        // Suppression de l'image du DOM
+                        var imageContainer = document.getElementsByClassName('photoContainer')[numero - 1];
+                        imageContainer.parentNode.removeChild(imageContainer);
+                        // pop up succès
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Photo supprimée avec succès.',
+                            showConfirmButton: false,
+                            timer: 2000
+                        });
+                    } else {
+                        console.error(response.status, response.statusText);
+
+                        //pop up erreur
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Échec de la suppression de la photo.',
+                            text: 'Veuillez réessayer ultérieurement.',
+                        });
+                    }
+                });
+            }
         }
     });
 }
+
