@@ -126,7 +126,7 @@ $dateDuJour = $date->format('Y-m-d');
                 </div>
                 </div>
                 <div id="infosContainer">
-                <div id="titreLogement" >
+                    <div id="titreLogement" >
                                 <h1> <?= $titreLogement ?></h1>
                             </div>
                     <div class="container" id="localisationEtat">
@@ -168,8 +168,9 @@ $dateDuJour = $date->format('Y-m-d');
                             if ($_SESSION['id']==$numclient) {?>
                             <p>Logement reservé le <span id="dateResa"><?= $dateResa ?></span></p>
                             <?php } ?>
-                        
                         </div>
+                        
+                    
                     </div>
                 </div>
             </div>
