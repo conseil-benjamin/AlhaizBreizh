@@ -60,12 +60,12 @@ $pdo = null;
         }
         echo '<ul>';
         foreach ($clesIcal as $value) {
-            echo '<li>'.$value.'</li></ul>';
+            echo '<li>'.$value.'</li>';
             echo '<hr>';
         }
         echo '</ul>'
         ?>
-        <form id="aboForm" enctype="application/x-www-form-urlencoded" action="./addAbo.php" method="get">
+        <form id="aboForm" enctype="application/x-www-form-urlencoded" action="/src/php/profil/ical/addAbo.php" method="get">
             <div id="dateAbonnement">
                 <label for="debut">
                     S'abonner du :
@@ -95,11 +95,14 @@ $pdo = null;
                     ?>
                 </ul>
             </div>
-            <button type="submit" class="boutton" >test</button>
+        </form>
+        <form id="rmForm" action="/src/php/profil/ical/rmAbo.php">
+            <label>
+                <input name="token" id="rmFormInput" type="text"/>
+            </label>
         </form>
         <button class="boutton" id="aboBtn"> S'abonner </button>
     </div>
-    <!--<a id="addButton" class="boutton"><img src="/public/icons/plus.svg" alt="Ajouter"></a>-->
     <div id="options">
         <a class="boutton" href="/src/php/profil/profil.php">Retour</a>
     </div>
@@ -108,4 +111,5 @@ $pdo = null;
 </body>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="/src/js/profil/cal/addCal.js"></script>
+<script src="/src/js/profil/cal/copyRemoveCal.js"></script>
 </html>

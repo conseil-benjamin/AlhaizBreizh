@@ -11,6 +11,20 @@
     border-radius: 0;
 }
 
+.monprofil #info ul {
+    display: block !important;
+}
+
+.monprofil #info li{
+    transition: all 0.3s ease;
+}
+
+.monprofil #info li:hover{
+    cursor: pointer;
+    scale: 1.1;
+    filter: drop-shadow(0px 0px 5px #000);
+}
+
 h2 {
     margin: 4vh auto;
 
@@ -55,4 +69,8 @@ input[type="date"] {
 #aboBtn {
     margin: auto auto 2em;
     background-color: var(--col6);
+}
+
+#rmForm {
+    display: none;
 }
