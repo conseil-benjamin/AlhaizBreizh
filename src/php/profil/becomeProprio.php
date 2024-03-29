@@ -38,20 +38,36 @@
                 <input class="textfield" type="text" name="ibn8" size="60" placeholder="123" maxlength="3">
                 </div>
 
-            <div class="typeLogementDiv">
+            <div class="langues">
                     <div>
                         <label for="langue">Langue (*)</label>
                         <select class="textfield" id="languesparlees" name="languesparlees">
                         <option>Français</option>
                         <option>Anglais</option>
+                        <option>Breton</option>
+                        <option>Espagnol</option>
+                        <option>Italien</option>
+                        <option>Allemand</option>
+                        <option>Mandarin</option>
+                        <option>Hindi</option>
+                        <option>Japonnais</option>
+                        <option>Arabe</option>
+                        <option>Russe</option>
+                        <option>Ukrénien</option>
+                        <option>Polonais</option>
+                        <option>Portugais</option>
                         </select>
                     </div>
-                </div>
+            </div>
+            <div class="langages">
+            <label for="langues" class="boutton" id="add_lg">Ajouter une langue</label>
+            </div>
         </div>
         <button class="creerAnnonce boutton" type="submit" id="creerAnnonce">Devenir Proriétaire</button>     
     </div>
     </div>
     </form>
 </body>
+<script src="/src/js/profil/ajoutLangues.js"></script>
 <?php include '../footer.php'; ?>
 </html>

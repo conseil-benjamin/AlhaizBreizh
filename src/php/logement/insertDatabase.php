@@ -46,7 +46,8 @@ if (isset($_SESSION['id'])) {
             array_push($installations, $hollow);
         }
         $i=$i+1;
-        $hollow= htmlspecialchars(strip_tags($_POST['InstallDispo'.$i+1]), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $hollow = $_POST['InstallDispo'.$i+1];
+        //$hollow= htmlspecialchars(strip_tags($_POST['InstallDispo'.$i+1]), ENT_QUOTES | ENT_HTML5, 'UTF-8');
     }
 
     //EQUIPEMENT
@@ -60,21 +61,33 @@ if (isset($_SESSION['id'])) {
             array_push($equipements, $equipementElement);
         }
         $j=$j+1;
-        $equipementElement=htmlspecialchars(strip_tags($_POST['equipement'.$i+1]), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $equipementElement= $_POST['equipement'.$i+1];
+        //$equipementElement=htmlspecialchars(strip_tags($_POST['equipement'.$i+1]), ENT_QUOTES | ENT_HTML5, 'UTF-8');
     }
 
     //SERVICE
 
     $services=[];
+    $prices=[];
     $serviceElement=$_POST['service'];
+    $servicePrix=$_POST['prixService'];
     $k=0;
 
     while (isset($serviceElement)){
         if (!($serviceElement=="")){
             array_push($services, $serviceElement);
+            if ($servicePrix==""){
+                $servicePrix=0;
+            }
+            else{
+                $servicePrix=floatval($servicePrix);
+            }
+            array_push($prices, $servicePrix);
         }
         $k=$k+1;
-        $serviceElement=htmlspecialchars(strip_tags($_POST['service'.$k+1]), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $serviceElement=$_POST['service'.$k+1];
+        //$serviceElement=htmlspecialchars(strip_tags($_POST['service'.$k+1]), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $servicePrix=$_POST['prixService'.$k+1];
     }
 
     //CHAMBRES
@@ -135,38 +148,33 @@ if (isset($_SESSION['id'])) {
             $id_logem = $pdo->lastInsertId();
 
             //CHAMBRES
+            $numChambre =0;
             foreach ($chambres as $key => $value){
-                $query = "SELECT numChambre FROM ldc.Chambre WHERE nbLitsDoubles = :nombreDeLitsDoubles AND nblitssimples = :nblitssimples";
+                // Préparer la requête SQL
+                $query = "INSERT INTO ldc.Chambre (numchambre, nbLitsSimples, nbLitsDoubles) VALUES (:numchambre, :nbLitsSimples, :nbLitsDoubles)";
                 $statement = $pdo->prepare($query);
-                $statement->bindParam(':nombreDeLitsDoubles', $value[1], PDO::PARAM_INT);
-                $statement->bindParam(':nblitssimples', $value[0], PDO::PARAM_INT);
+
+                // Lier les paramètres
+                $statement->bindParam(':numchambre', $key, PDO::PARAM_INT);
+                $statement->bindParam(':nbLitsSimples', $value[0], PDO::PARAM_INT);
+                $statement->bindParam(':nbLitsDoubles', $value[1], PDO::PARAM_INT);
+
+                // Exécuter la requête
                 $statement->execute();
-                $result = $statement->fetch(PDO::FETCH_ASSOC);
-                if ($result) {
-                   $numChambre =  $result['numChambre'];
-                } else {
-                    // Préparer la requête SQL avec une colonne auto-incrémentée
-                    $query = "INSERT INTO ldc.Chambre (nbLitsSimples, nbLitsDoubles) VALUES (:nbLitsSimples, :nbLitsDoubles)";
 
-                    // Préparer la requête
-                    $statement = $pdo->prepare($query);
+                echo "artichaud";
 
-                    // Lier les paramètres
-                    $statement->bindParam(':nbLitsSimples', $value[0], PDO::PARAM_INT);
-                    $statement->bindParam(':nbLitsDoubles', $value[1], PDO::PARAM_INT);
+                // Obtenir le dernier ID inséré
+                $numChambre = $pdo->lastInsertId();
 
-                    // Exécuter la requête
-                    $statement->execute();
-                    $numChambre = $pdo->lastInsertId();
-                }
-                $stmtChambre = $pdo->prepare(
-                    "INSERT INTO ldc.LogementChambre (numChambre,numlogement) VALUES (?, ?)"
-                );
-                $stmtChambre->bindParam(1, $numChambre);
-                $stmtChambre->bindParam(2, $id_logem);
-                print_r($numChambre);
-                print_r($id_logem);
-                $stmtChambre->execute();
+                echo "canard";
+                // $stmtChambre = $pdo->prepare(
+                //     "INSERT INTO ldc.LogementChambre (numChambre,numlogement) VALUES (?, ?)");
+                // $stmtChambre->bindParam(1, $numChambre);
+                // $stmtChambre->bindParam(2, $id_logem);
+                // print_r($numChambre);
+                // print_r($id_logem);
+                // $stmtChambre->execute();
             }
             //INSTALLATIONS
             foreach($installations as $key => $value){
@@ -189,21 +197,23 @@ if (isset($_SESSION['id'])) {
                 $stmtEquipement->bindParam(3, $value);
                 $stmtEquipement->execute();
             }
-    
+
+            //SERVICES    
             foreach($services as $key => $value){
                 $stmtServcie = $pdo->prepare(
-                    "INSERT INTO ldc.service (numlogement, numserv, nom) VALUES (?, ?, ?)"
+                    "INSERT INTO ldc.service (numlogement, numserv, nom, prix) VALUES (?, ?, ?, ?)"
                 );
                 $stmtServcie->bindParam(1, $id_logem);
                 $stmtServcie->bindParam(2, $key);
                 $stmtServcie->bindParam(3, $value);
+                $stmtServcie->bindParam(4, $prices[$key]);
                 $stmtServcie->execute();
             }
 
 
             //Création Calendrier
-            $stmt=$pdo->prepare("INSERT INTO Calendrier (numCal,numLogement)VALUES($id_logem,$id_logem)");
-            $stmt->execute();
+/*             $stmt=$pdo->prepare("INSERT INTO Calendrier (numCal,numLogement)VALUES($id_logem,$id_logem)");
+            $stmt->execute(); */
 
             if ($stmtChambre->affected_rows < 1) {
                 ?>
@@ -228,7 +238,7 @@ if (isset($_SESSION['id'])) {
             }
 
 } catch (PDOException $e) {
-    //echo "Erreur : " . $e->getMessage();
+    echo "Erreur : " . $e->getMessage();
 }
 
 $pdo = null;
@@ -254,10 +264,10 @@ if (!is_dir($nom_dossier)){
             showConfirmButton: false,
             timer: 2000
         });
-
+/* 
     setTimeout(() => {
          window.location.href = '/src/php/logement/mesLogements.php';
-}, 2000);
+}, 2000); */
 </script>
 <?php
 exit;

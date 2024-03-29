@@ -1,4 +1,4 @@
-<?php 
+<?php
     require_once("./src/php/chargerLogements.php");
     //connexion à la base de donnée
     try {
