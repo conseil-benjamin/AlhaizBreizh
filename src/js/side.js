@@ -221,31 +221,32 @@ function testAucunLogementVisible() {
 //Gestion de l'apprition du sidemenu
 
 let replier = true
+let sidebar = document.getElementById('sidebar');
+let menuBtn = document.getElementById('menu-btn');
 
 function abime() { //Degage le sidemenu sur la gauche
-    let sidebar = document.getElementById('sidebar');
     if (sidebar.style.left === "0px") {
         sidebar.style.left = "-30em";
+        menuBtn.style.transform = "translateX(0px)";
         replier = !replier
     }
 }
 
-document.getElementById('menu-btn').addEventListener('click', function () {
-    let sidebar = document.getElementById('sidebar');
+function clickButtonSidebar() {
     if (replier) {
-      sidebar.style.left = "0";
-      replier = !replier
+        sidebar.style.left = "0";
+        menuBtn.style.transform = "translateX(3em)";
+        replier = !replier
     } else {
         sidebar.style.left = "-30em";
+        menuBtn.style.transform = "translateX(0px)";
         replier = !replier
     }
-  });
+}
+document.getElementById('menu-btn').addEventListener('click', clickButtonSidebar);
 
 document.body.addEventListener('click', function (event) {
-    let sidebar = document.getElementById('sidebar');
-    let menuBtn = document.getElementById('menu-btn');
-
-    if (event.target !== sidebar && !sidebar.contains(event.target) && event.target !== menuBtn) {
+    if (event.target !== sidebar && !sidebar.contains(event.target) && event.target !== menuBtn && !menuBtn.contains(event.target)) {
         abime();
     }
 });

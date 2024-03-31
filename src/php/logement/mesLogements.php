@@ -1,5 +1,12 @@
 <?php 
-    require_once("../chargerMesLogements.php")
+    require_once("../chargerMesLogements.php");
+
+    if (isset($_GET['tri'])){
+        $tri=$_GET['tri'];
+    }
+    else{
+        $tri=null;
+    }
 ?>
 <!DOCTYPE html>
 <html lang="fr-fr">
@@ -20,51 +27,51 @@
                 <div>
                     <div class="menu_filtre">
                         <div id="sidebar">
-                            <img id="suppr" src="../../../public/icons/supprimer.png" alt="Icône Supprimer" onclick="abime()">
-                            <div class="menu_tri">
-                                <?php
-                                    if (isset($_GET['tri'])){
-                                        $tri=$_GET['tri'];
-                                    }
-                                    else{
-                                        $tri=null;
-                                    }
-                                ?>
-                                <button class="boutton">Trier</button>
-                                <div class="menu_deroulant">
-                                    <ul>
-                                        <a class="item_tri select" onclick="num(event)">Ancienneté (Ordre décroissant)</a>
-                                        <a  class="item_tri" onclick="unnum(event)">Ancienneté (Ordre décroissant)</a>
-                                        <a  class="item_tri" onclick="tarif(event)">Tarif (Ordre croissant)</a>
-                                        <a  class="item_tri" onclick="untarif(event)">Tarif (Ordre décroissant)</a>
-                                        <a  class="item_tri" onclick="notes(event)">Notes</a>
-                                        <a  class="item_tri" href="index.php?tri=avis#logements">Avis positifs</a>
-                                    </ul>
-                                </div>
+                            <div class="filtrer-trier">
+                                <h1>Filtrer et Trier</h1>
+                                <img id="suppr" src="/public/icons/croix.svg" alt="Fermer" onclick="abime()">
                             </div>
-
-                            <input id="side_recherche" class="textfield" type="text" placeholder="Rechercher..">
-                            <h2>Ville</h2>
-                            <select id="side_ville">
-                                <option value="">---</option>
-                                <?php
-                                    $tab=[];
-                                    foreach ($logements as $logement) {
-                                        $ville = $logement[4];
-                                        if (!in_array($ville,$tab)){
-                                            echo "<option value=\"{$logement[4]}\">{$logement[4]}</option>";
-                                            $tab[]=$ville;
+                            <div class="group-tri-recherche">
+                                <div class="menu_tri">
+                                    <button class="boutton">Trier</button>
+                                    <div class="menu_deroulant">
+                                        <ul>
+                                            <a class="item_tri select" onclick="num(event)"><li>Ancienneté (Ordre décroissant)</li></a>
+                                            <a  class="item_tri" onclick="unnum(event)"><li>Ancienneté (Ordre décroissant)</li></a>
+                                            <a  class="item_tri" onclick="tarif(event)"><li>Tarif (Ordre croissant)</li></a>
+                                            <a  class="item_tri" onclick="untarif(event)"><li>Tarif (Ordre décroissant)</li></a>
+                                            <a  class="item_tri" onclick="notes(event)"><li>Notes</li></a>
+                                            <a  class="item_tri" href="index.php?tri=avis#logements"><li>Avis positifs</li></a>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <input id="side_recherche" class="textfield" type="text" placeholder="Rechercher..">
+                            </div>
+                            <div>
+                                <h2>Ville</h2>
+                                <select id="side_ville" class="textfield">
+                                    <option value="">---</option>
+                                    <?php
+                                        $tab=[];
+                                        foreach ($logements as $logement) {
+                                            $ville = $logement[4];
+                                            if (!in_array($ville,$tab)){
+                                                echo "<option value=\"{$logement[4]}\">{$logement[4]}</option>";
+                                                $tab[]=$ville;
+                                            }
                                         }
-                                    }
-                                ?>
-                            </select>
-                            <h2>Type du logement</h2>
-                                <select id="side_type">
+                                    ?>
+                                </select>
+                            </div>
+                            <div>
+                                <h2>Type du logement</h2>
+                                <select id="side_type" class="textfield">
                                     <option value="">---</option>
                                     <option value="appartement">Appartement</option>
                                     <option value="maison">Maison</option>
                                     <option value="villa">Villa</option>
                                 </select>
+                            </div>
                         </div>
 
                         <button id="menu-btn" class="boutton">Filtrer et Trier</button>

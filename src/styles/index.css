@@ -122,6 +122,7 @@
 /*Content*/
 
 #logements{
+    position: relative;
     min-height: 100vh;
     margin-bottom: calc(100vh - 200px);
     background-color: #fff;
@@ -168,6 +169,7 @@
     padding: 2em;
     min-height: inherit;
     margin-left: 3em;
+    transform: translateY(-100px);
 }
 
 #contenur_logements a:hover{
@@ -334,6 +336,34 @@
     width: 100%;
 }
 
+#menu-btn{
+    position: sticky;
+    top: 50%;
+    left: 0;
+    display: block;
+    background-color: var(--col6);
+    padding: 1em;
+    border-radius: 0;
+    width: auto;
+    height: auto;
+    max-width: 100px;
+    max-height: 100px;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    z-index: 2;
+}
+
+#menu-btn:hover{
+    scale: 1.1;
+    filter: none;
+    width: 110px;
+}
+
+#menu-btn img{
+    height: 100%;
+    width: 100%;
+    filter: invert(1);
+}
 /*Carte logements*/
 .map{
     position: sticky;

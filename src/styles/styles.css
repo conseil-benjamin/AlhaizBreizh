@@ -414,6 +414,7 @@ h1, h2, h3{
     background-color: #627099;
     display: none;
     left:10%;
+    top: 138px;
     z-index:99;
 }
 
@@ -449,35 +450,58 @@ h1, h2, h3{
 }
 
 #sidebar {
-    height: 100vh;
-    width: 20em;
+    height: calc(100% - 75px - 2em);
+    overflow: auto;
+    min-width: 20em;
+    width: auto;
     position: fixed;
-    top: -5px;
+    top: 75px;
     left: -30em;
     background-color: var(--col2);
-    overflow-x: hidden;
     transition: 0.5s;
-    padding-top: 60px;
-    padding-left:2em;
-    padding-right:2em;
+    padding: 1em 2em;
     color: var(--col5);
     z-index: 90;
-    margin-top:5em;
+    min-height: 0;
     filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.75));
-  }
+}
 
-#sidebar > h2 {
-    padding: 10px 15px;
-    text-decoration: none;
-    color: #818181;
-    display: block;
-    transition: 0.3s;
-    padding-left:0em;
-  }
+#sidebar > div{
+    margin-bottom: 1em;
+}
 
-.hell{
-    display:flex;
-    justify-content: space-around;
+#sidebar > div > div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    gap: 1em;
+}
+
+#sidebar > div > h2{
+    border-bottom: var(--col1) 2px solid;
+    color: var(--col1);
+    margin-bottom: .5em;
+}
+
+#sidebar > .group-tri-recherche,
+#sidebar > .filtrer-trier{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#sidebar > .filtrer-trier{
+    color: var(--col1);
+    border-bottom: var(--col1) 2px solid;
+    margin-bottom: 2em;
+}
+
+#sidebar > .filtrer-trier > img{
+    height: 1em;
+    width: 1em;
+    cursor: pointer;
 }
 
 #sidebar > .number{
@@ -493,6 +517,10 @@ h1, h2, h3{
 
 #sidebar > [type="checkbox"]{
     size:5em;
+}
+
+.menu_tri .boutton{
+    background-color: var(--col6);
 }
 
 /*Options de filtre*/
@@ -517,27 +545,6 @@ h1, h2, h3{
     height: 100%;
     width: 100%;
 }
-
-.menu_tri {
-    margin-bottom:2em;
-}
-
-#side_recherche{
-    margin-bottom:2em;
-}
-
-h2 + * {
-    margin-bottom: 1em;
-}
-
-#suppr{
-    cursor:pointer;
-    margin-top:-5em;
-    margin-bottom:1em;
-}
-
-
-
 
 /*****************************************************/
 /*Page d'erreur*/
