@@ -80,8 +80,11 @@
         <div id="titre">
             <h1>Envie de découvrir la Bretagne ?</h1>
             <p>Nous avons tout pour vous mettre ALHaIZ</p>
+            <a href="#logements" class="boutton" id="see-logements"><img src="/public/icons/arrow.svg">Voir les logements</a>
         </div>
-
+        <div id="wave1">
+            <img src="/public/icons/wave-white.svg">  
+        </div>     
         <div id="logements">
             <h2>Les logements</h2>
             <div id="sidebar">
@@ -195,13 +198,19 @@
                 <button id="bouttonMap" class="boutton"><img src="/public/icons/map.svg" alt="Carte"></button>
             </div>
         </div>
-
+        <img src="/public/icons/wave-white.svg" id="wave2">       
         <?php include $_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'; ?>
         <script src="/src/js/loading.js"></script>
         <script src="/src/js/accueilScroll.js"></script>
         <script>
             var adresses = <?php echo json_encode($adresses); ?>;
             var adaptFilter = false;
+
+            let seeLogements = document.getElementById("see-logements");
+            seeLogements.addEventListener("click", function() {
+                event.preventDefault();
+                document.getElementById("logements").scrollIntoView({behavior: "smooth"});
+            });
         </script>
         <script src="/src/js/side.js" defer></script>
         <script type="module" src="/src/js/map-accueil.js" defer></script>

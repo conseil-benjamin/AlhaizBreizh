@@ -53,6 +53,88 @@ h1, h2, h3{
     font-family: "NoirPro", Arial, sans-serif;
 }
 
+/*Custom animations*/
+@keyframes fade-in-out-logement {
+    from {
+        opacity: 0;
+        scale: 1;
+        transform: translateY(100px);
+    }
+    10% {
+        opacity: 0.8;
+        transform: translateY(0);
+    }
+    50% {
+        opacity: 1;
+        scale: 1.1;
+    }
+    90% {
+        opacity: 0.8;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        scale: 1;
+        transform: translateY(-100px);
+    }
+}
+
+@keyframes fade-in-out {
+    from {
+        opacity: 0;
+        transform: translateY(100px);
+    }
+    10% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    50% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-100px);
+    }
+}
+
+@keyframes opacity-fade-out {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-100px);
+    }
+}
+
+@keyframes opacity-fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes click-on-me {
+    from {
+        filter: none;
+    }
+    50% {
+        filter: drop-shadow(0px 0px 10px rgba(101, 227, 255, 0.75));
+    }
+    to {
+        filter: none;
+    }
+}
+
 /*Custom scrollbar*/
 /* width */
 ::-webkit-scrollbar {
@@ -370,6 +452,8 @@ h1, h2, h3{
     height: fit-content;
     width: 100vw;
     color: #fff;
+    animation: pop-in linear;
+    animation-timeline: view(75% 0);
 }
 
 #footer > img{

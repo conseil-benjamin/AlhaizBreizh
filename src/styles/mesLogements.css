@@ -106,6 +106,8 @@
     filter: drop-shadow(0px 0px 1px #00000033);
     margin-bottom: 1em;
     transition: all .5s ease-in-out;
+    animation: opacity-fade-in linear;
+    animation-timeline: view(75% 0);
 }
 
 #content .logement:hover{
