@@ -198,6 +198,24 @@ async function enfer() {
     } catch (prob) {
         console.error("Ca marche pas", prob);
     }
+
+    testAucunLogementVisible();
+}
+
+function testAucunLogementVisible() {
+    //Afficher un message si aucun logement n'est visible
+    let texteAucunLogementVisible = document.getElementById('aucunLogementVisible');
+    let aucunLogementVisible = true;
+    document.querySelectorAll('.logement').forEach(logement => {
+        if ((logement.classList.contains('filtremap') === false) && (logement.classList.contains('filtredefaut') === false)){
+            aucunLogementVisible = false;
+        }
+    });
+    if (aucunLogementVisible) {
+        texteAucunLogementVisible.style.display = "block";
+    } else {
+        texteAucunLogementVisible.style.display = "none";
+    }
 }
 
 //Gestion de l'apprition du sidemenu

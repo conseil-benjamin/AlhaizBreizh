@@ -37,7 +37,7 @@ bouttonOpenMap.addEventListener('click', function() {
 
 //Boutton pour cacher la carte
 function closeMap() {
-
+    
     adaptMarkersOnZoomAndMove();
 
     mapDiv.style.transform = "translate(200%, 100%)";
@@ -170,23 +170,6 @@ function adaptMarkersOnZoomAndMove(){
         }
     });
     enfer();
-    testAucunLogementVisible();
-}
-
-function testAucunLogementVisible() {
-    //Afficher un message si aucun logement n'est visible
-    var aucunLogementVisible = true;
-    Object.keys(coordonnees).forEach(id => {
-        let logement = document.getElementById('logement'+id);
-        if (logement.style.display === "flex") {
-            aucunLogementVisible = false;
-        }
-    });
-    if (aucunLogementVisible) {
-        document.getElementById('aucunLogementVisible').style.display = "block";
-    } else {
-        document.getElementById('aucunLogementVisible').style.display = "none";
-    }
 }
 
 function adaptMarkersVisibilityOnFilters() {

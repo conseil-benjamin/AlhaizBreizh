@@ -144,7 +144,7 @@
                 </div>
             </div>
             <div id="aucunLogementVisible">
-                <h2>Aucun logement n'est visible sur la carte :/</h2>
+                <h2>Aucun logement n'est visible sur la carte<br>ou votre recherche ne correpond à aucun logement :/</h2>
             </div>
             <div id="conteneur_logements">
 
@@ -166,7 +166,7 @@
                         $prix = $logement[3] ?>
     
                         <div class="logement" id="logement<?php echo $logement[0] ?>">
-                            <a href="<?php echo $lien ?>"><img src="<?php echo $img ?>"></a> <!-- Image du logement -->
+                            <a href="<?php echo $lien ?>"><img src="<?php echo $img ?>" alt="Image du logement: <?= $titre ?>"></a> <!-- Image du logement -->
                             <div data-information=<?php echo $logement[7]?> >
                             <button type="button"><img src="/public/icons/heart_white.svg"></button> <!-- Coeur pour liker -->
                                 <?php if ($logement[6]!=NULL){ //Verifie que le logement a recu au moins une note?>                                
