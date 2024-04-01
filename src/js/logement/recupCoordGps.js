@@ -18,7 +18,6 @@ export async function recupCoordGps(adresse, idLogement = null, approximation = 
                 }
             });
             const data = await response.json();
-            console.log(data);
             if (data[0]) {
                 coordX = data[0].lat;
                 coordY = data[0].lon;
