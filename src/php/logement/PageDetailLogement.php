@@ -601,8 +601,9 @@ if (!isset($liste_langue_parle)) {
         }; ?>  
         <script src="/src/js/carrousel.js"></script>      
         <script>
-            var localisation = <?php echo json_encode($localisation.' '.$localisation_speci); ?>;
-            var estProprio = <?php echo json_encode(isset($_SESSION['id']) && $_SESSION['id'] == $proprio); ?>;
+            var ville = <?= json_encode($localisation); ?>;
+            var rue = <?= json_encode($localisation_speci); ?>;
+            var estProprio = <?= json_encode(isset($_SESSION['id']) && $_SESSION['id'] == $proprio); ?>;
         </script>
         <script type="module" src="/src/js/logement/map.js"></script>
         <script>

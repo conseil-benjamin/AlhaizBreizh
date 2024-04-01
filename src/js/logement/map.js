@@ -17,25 +17,26 @@ var pin = L.icon({
     popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
 });
 
-import {recupCoordGps, appoximationCoord} from '/src/js/logement/recupCoordGps.js';
+import {recupCoordGps} from '/src/js/logement/recupCoordGps.js';
 async function fetchCoordinates() {
+    ville = ville.replace(/ /g, '-');
+    rue = rue.replace(/ /g, '-');
+    let localisation = ville + '+' + rue;
+    var [coordX, coordY] = [null, null];
 
-    localisation = localisation.replace(/ /g, '-');
-    var [coordX, coordY] = await recupCoordGps(localisation);
-    console.log(coordX, coordY);
-    if (coordX == null || coordY == null) {
-        console.log("Coordonnées introuvables");
-        console.log(localisation);
-        localisation = localisation.split('-')[0];
-        [coordX, coordY] = await recupCoordGps(localisation);
+    if (estProprio) { //Si propriétaire
+        [coordX, coordY] = await recupCoordGps(localisation, null, false);
+    } else { //Si visiteur
+        [coordX, coordY] = await recupCoordGps(localisation, null, true);
+        localisation = ville;
     }
 
-    //On récupère seulement le nom de la ville
-    localisation = localisation.split('-')[0];
-
-    if (!estProprio){
-        [coordX, coordY] = appoximationCoord(coordX, coordY);
+    if (coordX == null || coordY == null) { //Si erreur prendre les coordonnées de la ville
+        [coordX, coordY] = await recupCoordGps(ville);
     }
+
+    localisation = localisation.replace('+', ', ');
+    localisation = localisation.replace(/-/g, ' ');
 
     let map = L.map('map', {
         center: [coordX, coordY-100],
@@ -73,7 +74,7 @@ async function fetchCoordinates() {
         });
     }
 
-    drawTownBoundary(localisation);
+    drawTownBoundary(ville);
 }
 
 fetchCoordinates();
