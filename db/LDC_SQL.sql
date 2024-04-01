@@ -295,7 +295,6 @@ ALTER TABLE FavorisClient ADD CONSTRAINT favorisclient_logement_fk FOREIGN KEY (
 ALTER TABLE FavorisClient ADD CONSTRAINT favorisclient_client_fk FOREIGN KEY (idCompte) REFERENCES Client(idCompte);
 ALTER TABLE AvisClient ADD CONSTRAINT avisclient_client_fk FOREIGN KEY (idCompte) REFERENCES Client(idCompte);
 ALTER TABLE AvisClient ADD CONSTRAINT avisclient_avis_fk FOREIGN KEY (idAvis) REFERENCES Avis(numAvis);
-ALTER TABLE AvisLogement ADD CONSTRAINT avislogement_client_fk FOREIGN KEY (idClient) REFERENCES Client(idCompte);
 ALTER TABLE LogementProprio ADD CONSTRAINT logementproprio_logement_fk FOREIGN KEY (numLogement) REFERENCES Logement(numLogement);
 ALTER TABLE LogementProprio ADD CONSTRAINT logementproprio_proprietaire_fk FOREIGN KEY (idCompte) REFERENCES Proprietaire(idCompte);
 ALTER TABLE APIkey ADD CONSTRAINT apikey_proprio_fk1 FOREIGN KEY (id_proprio) REFERENCES Proprietaire (idcompte);
@@ -333,6 +332,7 @@ VALUES
     ('Quentin', 'Dupond', 'Quentin.Dupond@free.fr', '987654321', 'photo1.jpg', 'Monsieur', '123 Rue des lilas',
      'quendpd', '1234', '15-01-1997', 4.4);
 
+ALTER TABLE AvisLogement ADD CONSTRAINT avislogement_client_fk FOREIGN KEY (idClient) REFERENCES Client(idCompte);
 
 -- Insertion de données dans la table Message
 INSERT INTO Message (destinataire, expediteur, dateExpedition, contenu)
