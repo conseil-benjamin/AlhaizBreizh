@@ -89,14 +89,22 @@
     }
 }
 
+#footer{
+    animation: pop-in linear;
+    animation-timeline: view(0 75%);
+}
+
 /********************************************/
 /*Titre*/
 
 #titre{
-    display: block;
+    display: flex;
+    flex-direction: column;
     width: 100%;
     height: 100px;
     text-align: center;
+    align-items: center;
+    justify-content: center;
     line-height: 80px;
     font-size: 1.5em;
     font-weight: bold;
@@ -109,6 +117,8 @@
     z-index: 1;
     transition: all 0.5s ease;
     filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.75));
+    animation: opacity-fade-out linear;
+    animation-timeline: view(0 75%);
 }
 
 @media screen and (max-width: 760px) {
@@ -118,12 +128,55 @@
     }
 }
 
+#see-logements{
+    padding-left: 0;
+    gap: .5em;
+    background-color: var(--col6);
+    z-index: 1;
+    scale: 1;
+    margin-top: 1em;
+    animation: click-on-me infinite 3s ease-in-out;
+}
+
+#see-logements > img{
+    width: 50px;
+    height: 50px;
+    filter: drop-shadow(1px 1px 5px rgba(0, 0, 0, 0.75));
+    rotate: 90deg;
+}
+
+#see-logements:hover{
+    scale: 1.1;
+}
+
+#wave1{
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 100%;
+}
+
+#wave1 > svg{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+
+#wave2{
+    margin-bottom: calc(100vh - 750px);
+    rotate: 180deg;
+    width: 100%;
+}
+
 /********************************************/
 /*Content*/
 
 #logements{
+    position: relative;
     min-height: 100vh;
-    margin-bottom: calc(100vh - 200px);
     background-color: #fff;
 }
 
@@ -168,11 +221,14 @@
     padding: 2em;
     min-height: inherit;
     margin-left: 3em;
+    transform: translateY(-100px);
 }
 
 #contenur_logements a:hover{
     filter: none;
     border: none;
+    animation: fade-in-out linear;
+    animation-timeline: view(20% 20%);
 }
 /*Une carte logement*/
 .logement{
@@ -189,9 +245,12 @@
     border: 1px solid #000;
     border-radius: 15px;
     transition: all 0.5s ease;
-    scale: 1.1;
+    opacity: 0;
+    scale: 1;
     margin-right: 3em;
     margin-bottom: 3em;
+    animation: fade-in-out-logement linear;
+    animation-timeline: view(20% 0);
 }
 
 .logement > a{
@@ -302,13 +361,6 @@
 .logement:hover{
     filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.75));
     transform: translateY(-5px);
-    animation: anim-logement-hover 3s infinite linear;
-}
-
-@keyframes anim-logement-hover {
-    50% {
-        filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.75));
-    }  
 }
 
 @media screen and (max-width: 760px) {
@@ -341,6 +393,34 @@
     width: 100%;
 }
 
+#menu-btn{
+    position: sticky;
+    top: 50%;
+    left: 0;
+    display: block;
+    background-color: var(--col6);
+    padding: 1em;
+    border-radius: 0;
+    width: auto;
+    height: auto;
+    max-width: 100px;
+    max-height: 100px;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    z-index: 2;
+}
+
+#menu-btn:hover{
+    scale: 1.1;
+    filter: none;
+    width: 110px;
+}
+
+#menu-btn img{
+    height: 100%;
+    width: 100%;
+    filter: invert(1);
+}
 /*Carte logements*/
 .map{
     position: sticky;

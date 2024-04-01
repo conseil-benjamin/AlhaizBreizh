@@ -7,6 +7,7 @@ mapDiv.style.display = "none";
 var chargementDiv = mapDiv.querySelector('.chargement-carte');
 var texteChargement = chargementDiv.querySelector('p');
 var loadingComplete = document.querySelector(".map > h2");
+var pins = [];
 var coordonnees = [];
 
 var bretagne = [48.202047, -3.832382];
@@ -16,6 +17,9 @@ var mapY = bretagne[1];
 //Boutton pour afficher la carte
 let bouttonOpenMap = document.getElementById('bouttonMap');
 bouttonOpenMap.addEventListener('click', function() {
+
+    markers = allMarkers;
+
     mapDiv.style.display = "block";
     if (loadingComplete.style.left === "1em") {
         loadingComplete.style.display = "none";
@@ -27,22 +31,29 @@ bouttonOpenMap.addEventListener('click', function() {
         mapDiv.style.transform = "translateY(0) translateX(0)";
         document.body.style.overflow = "hidden";
         map.invalidateSize();
+        adaptMarkersVisibilityOnFilters();
     }, 100);
 });
 
 //Boutton pour cacher la carte
-let bouttonCloseMap = document.getElementById('bouttonCloseMap');
-bouttonCloseMap.addEventListener('click', function() {
+function closeMap() {
+    
+    adaptMarkersOnZoomAndMove();
 
     mapDiv.style.transform = "translate(200%, 100%)";
 
     setTimeout(() => {
         mapDiv.style.display = "none";
+        adaptMarkersVisibilityOnFilters();
     }, 500);
     
     document.body.style.overflowY = "auto";
     document.getElementById('logements').scrollIntoView();
-});
+}
+
+document.getElementById('bouttonCloseMap').addEventListener('click', closeMap);
+//Si clic sur logements fermer la carte
+document.querySelector("#header > nav > ul > a").addEventListener("click", closeMap);
 
 /*******************************************************/
 /*Initialisation de la carte*/
@@ -88,6 +99,8 @@ var markers = L.markerClusterGroup({
 	}
 });
 
+var allMarkers = markers;
+
 /*******************************************************/
 /*Récupérer les coordonnees des logements*/
 import {recupCoordGps} from '/src/js/logement/recupCoordGps.js';
@@ -122,11 +135,12 @@ async function fetchCoordinates() {
                     }
                 });
             });
+
+            pins.push(marker);
         }
         i++;   
     }
     chargementDiv.style.display = "none";
-
     loadingComplete.style.display = "block";
     setTimeout(() => {
         loadingComplete.style.left = "1em";
@@ -151,45 +165,33 @@ function adaptMarkersOnZoomAndMove(){
         let logement = document.getElementById('logement'+id);
         if(point.x < 0 || point.y < 0 || point.x > size.x || point.y > size.y) {
             logement.classList.add('filtremap');
-            logement.style.display = "none";
         } else {
             logement.classList.remove('filtremap');
-            logement.style.display = "flex";
         }
     });
     enfer();
 }
 
-function testAucunLogementVisible() {
-    //Afficher un message si aucun logement n'est visible
-    var aucunLogementVisible = true;
-    Object.keys(coordonnees).forEach(id => {
-        let logement = document.getElementById('logement'+id);
-        if (logement.style.display === "flex") {
-            aucunLogementVisible = false;
+function adaptMarkersVisibilityOnFilters() {
+
+    for (let marker of pins) {
+        let id = marker._popup._content.split('numLogement=')[1].split('\'')[0];
+        if (isLogementFiltered(id)) {
+            markers.removeLayer(marker);
+        } else {
+            markers.addLayer(marker); 
         }
-    });
-    if (aucunLogementVisible) {
-        document.getElementById('aucunLogementVisible').style.display = "block";
-    } else {
-        document.getElementById('aucunLogementVisible').style.display = "none";
     }
 }
 
-map.on('moveend', function() {
-    adaptMarkersOnZoomAndMove();
-    testAucunLogementVisible();
-});
-
-map.on('zoomend', function() {  
-    adaptMarkersOnZoomAndMove();
-    testAucunLogementVisible();
-});
+function isLogementFiltered(id){
+    return document.getElementById('logement'+id).classList.contains('filtredefaut');
+}
 
 fetchCoordinates();
 
 /*******************************************************/
-/*Resset la vue sur la carte*/
+/*Reset la vue sur la carte*/
 
 let bouttonResetMap = document.getElementById('bouttonResetMap');
 bouttonResetMap.addEventListener('click', function() {
@@ -199,5 +201,9 @@ bouttonResetMap.addEventListener('click', function() {
 /*******************************************************/
 
 window.addEventListener('resize', function(){
+    map.invalidateSize();
+});
+
+window.addEventListener('reset', function(){
     map.invalidateSize();
 });

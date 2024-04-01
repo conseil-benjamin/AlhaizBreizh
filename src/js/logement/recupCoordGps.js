@@ -8,10 +8,7 @@ export async function recupCoordGps(adresse, idLogement = null, approximation = 
         [coordX, coordY] = await recupCoordGpsBDD(idLogement);
     }
 
-    console.log(coordX, coordY);
-
     if (coordX == null || coordY == null){
-        console.log("Coordonnées non trouvées dans la BDD, requête à l'API en cours...");
         try {
             const url = `https://nominatim.openstreetmap.org/search?q=${adresse}&format=json&polygon=1&addressdetails=1`;
             const response = await fetch(url, {
