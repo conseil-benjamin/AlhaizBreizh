@@ -151,7 +151,7 @@
 
 #wave1{
     position: absolute;
-    bottom: -8px;
+    bottom: -20px;
     left: 0;
     width: 100%;
 }
@@ -169,6 +169,8 @@
     margin-bottom: calc(100vh - 750px);
     rotate: 180deg;
     width: 100%;
+    z-index: -1;
+    transform: translateY(10px);
 }
 
 /********************************************/
@@ -542,6 +544,7 @@
     flex-direction: row;
     justify-content: end;
     width: 100%;
+    z-index: 1;
 }
 
 #logements .bandeau .boutton{
