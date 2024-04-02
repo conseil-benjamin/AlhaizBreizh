@@ -295,6 +295,7 @@ ALTER TABLE FavorisClient ADD CONSTRAINT favorisclient_logement_fk FOREIGN KEY (
 ALTER TABLE FavorisClient ADD CONSTRAINT favorisclient_client_fk FOREIGN KEY (idCompte) REFERENCES Client(idCompte);
 ALTER TABLE AvisClient ADD CONSTRAINT avisclient_client_fk FOREIGN KEY (idCompte) REFERENCES Client(idCompte);
 ALTER TABLE AvisClient ADD CONSTRAINT avisclient_avis_fk FOREIGN KEY (idAvis) REFERENCES Avis(numAvis);
+ALTER TABLE AvisLogement ADD CONSTRAINT avislogement_client_fk FOREIGN KEY (idClient) REFERENCES Client(idCompte);
 ALTER TABLE LogementProprio ADD CONSTRAINT logementproprio_logement_fk FOREIGN KEY (numLogement) REFERENCES Logement(numLogement);
 ALTER TABLE LogementProprio ADD CONSTRAINT logementproprio_proprietaire_fk FOREIGN KEY (idCompte) REFERENCES Proprietaire(idCompte);
 ALTER TABLE APIkey ADD CONSTRAINT apikey_proprio_fk1 FOREIGN KEY (id_proprio) REFERENCES Proprietaire (idcompte);
@@ -311,15 +312,6 @@ VALUES
     ('Elle a offert à ma propre personne un très bon jus de pomme et je suis tellement ému par rapport à ça !', 4.5),
     ('Personne très mal élévée', 1.0);
 
-INSERT INTO AvisLogement (contenuAvis, nbEtoiles, idClient, idLogement)
-VALUES
-    ('Un véritable havre de paix ! Ce logement est niché dans un quartier calme et résidentiel, offrant une atmosphère paisible et relaxante.', 4.0, 1, 1),
-    ('Un bijou architectural ! Cette maison unique allie élégance et fonctionnalité à la perfection. Les espaces de vie spacieux et lumineux sont idéaux pour se détendre en famille ou pour recevoir des invités.', 2.0, 2, 1),
-    ('Une escapade romantique ! Niché dans un cadre pittoresque, ce chalet rustique offre une retraite romantique parfaite pour les couples.', 1.5, 2, 2),
-    ('Un appartement moderne avec une touche d''histoire ! Situé dans un bâtiment historique rénové, cet appartement combine le charme du passé avec le confort contemporain. ', 1.5, 2, 3),
-    ('Un appartement moderne avec une touche d''histoire ! Situé dans un bâtiment historique rénové, cet appartement combine le charme du passé avec le confort contemporain. ', 1.5, 3, 1),
-    ('', 1.5, 3, 1);
-
 -- Insertion de données dans la table Client
 INSERT INTO Client (firstName, lastName, mail, numeroTel, photoProfil, civilite, adressePostale, pseudoCompte, motDePasse, dateNaissance, notationMoyenne)
 VALUES
@@ -332,7 +324,14 @@ VALUES
     ('Quentin', 'Dupond', 'Quentin.Dupond@free.fr', '987654321', 'photo1.jpg', 'Monsieur', '123 Rue des lilas',
      'quendpd', '1234', '15-01-1997', 4.4);
 
-ALTER TABLE AvisLogement ADD CONSTRAINT avislogement_client_fk FOREIGN KEY (idClient) REFERENCES Client(idCompte);
+INSERT INTO AvisLogement (contenuAvis, nbEtoiles, idClient, idLogement)
+VALUES
+    ('Un véritable havre de paix ! Ce logement est niché dans un quartier calme et résidentiel, offrant une atmosphère paisible et relaxante.', 4.0, 1, 1),
+    ('Un bijou architectural ! Cette maison unique allie élégance et fonctionnalité à la perfection. Les espaces de vie spacieux et lumineux sont idéaux pour se détendre en famille ou pour recevoir des invités.', 2.0, 2, 1),
+    ('Une escapade romantique ! Niché dans un cadre pittoresque, ce chalet rustique offre une retraite romantique parfaite pour les couples.', 1.5, 2, 2),
+    ('Un appartement moderne avec une touche d''histoire ! Situé dans un bâtiment historique rénové, cet appartement combine le charme du passé avec le confort contemporain. ', 1.5, 2, 3),
+    ('Un appartement moderne avec une touche d''histoire ! Situé dans un bâtiment historique rénové, cet appartement combine le charme du passé avec le confort contemporain. ', 1.5, 3, 1),
+    ('', 1.5, 3, 1);
 
 -- Insertion de données dans la table Message
 INSERT INTO Message (destinataire, expediteur, dateExpedition, contenu)
