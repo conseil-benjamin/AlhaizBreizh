@@ -42,9 +42,6 @@
                     <div>
                         <label for="langue">Langue (*)</label>
                         <select class="textfield" id="languesparlees" name="languesparlees">
-                            <?php
-                            for(int i=0;i++;i<)
-                            ?>
                         <option>Français</option>
                         <option>Anglais</option>
                         <option>Breton</option>
