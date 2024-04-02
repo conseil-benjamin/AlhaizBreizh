@@ -121,7 +121,7 @@ $dateDuJour = $date->format('Y-m-d');
             <div id="titrephoto">
                 <div id="photo">
                 <figure>
-                    <a href="/src/php/logement/PageDetailLogement.php?numLogement=<?php echo $reservation['numlogement'] ?>">  <img class="imgLogement" src="<?= $cheminPhoto ?>" alt="Photo du logement"/>
+                    <a href="/src/php/logement/PageDetailLogement.php?numLogement=<?php echo $reservation['numlogement'] ?>">  <img class="imgLogement" src="<?= $cheminPhoto ?>" alt="Photo du logement"/> </a>
                 </figure>
                 </div>         
                 </div>
