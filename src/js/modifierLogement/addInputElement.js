@@ -249,6 +249,21 @@ document.addEventListener("DOMContentLoaded", function () {
     newElement.setAttribute("name", name);
     newElement.setAttribute("id", name);
 
+    if (placeholder === "Service disponible"){
+      nouvElem = document.createElement("label");
+      nouvElem.textContent="Prix";
+      ntElem = document.createElement("input");
+      ntElem.setAttribute("type","number");
+      ntElem.setAttribute("id","prixService"+ nbServices);
+      ntElem.setAttribute("name","prixService");
+      ntElem.setAttribute("min","0");
+      let nn = newElement;
+      newElement = document.createElement("div");
+      newElement.appendChild(nn);
+      newElement.appendChild(nouvElem);
+      newElement.appendChild(ntElem);
+    }
+
     const iconSupprimer = document.createElement("img");
     iconSupprimer.src = "/public/icons/supprimer.svg";
     iconSupprimer.alt = "Icone supprimer";
@@ -313,6 +328,7 @@ document.addEventListener("DOMContentLoaded", function () {
       valeur
     );
     servicesElement.appendChild(inputPlusIconeSupprimer);
+
   }
   addService.addEventListener("click", function () {
     InitiServic("");

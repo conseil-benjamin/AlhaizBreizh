@@ -130,15 +130,6 @@ h1 {
   line-height: 100%;
   flex-direction: row;
   margin-top: 1em;
-  width: 96%;
-}
-
-.inputPlusIconeSupprimer > .textfield {
-  width: 100%;
-}
-
-.premierElem {
-  width: calc(96% - 55px) !important;
 }
 
 .litsElement .inputPlusIconeSupprimer  {
@@ -188,51 +179,6 @@ h1 {
   margin: auto;
   width: 60%;
 }
-
-.propr{
-  display: flex;
-  flex-direction: line;
-}
-
-/********************************/
-/*Photos*/
-
-.listePhotos {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: inherit;
-}
-
-.photo{
-  margin: 1em;
-  position: relative;
-  display: inline-block;
-}
-
-.photo img{
-  width: 150px;
-  height: 150px;
-  border : 1px solid var(--col5);
-}
-
-.photo img:hover{
-  cursor: pointer;
-  filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.5));
-  transition: all 0.5s ease;
-}
-
-.croix {
-  display: none;
-  position: absolute;
-  cursor: pointer;
-  bottom: 0;
-  right: 0;
-  background-color: var(--col6);
-  padding: 5px;
-  border-radius: 0;
-  border-top-left-radius: 25px;
-}
-
 
 /********************************/
 /*Bouttons*/

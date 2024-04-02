@@ -137,7 +137,8 @@ CREATE TABLE Reservation (
     dateFin DATE,
     dateDevis DATE,
     nbJours INTEGER,
-    optionAnnulation VARCHAR(255)
+    optionAnnulation VARCHAR(255),
+    etatReservation VARCHAR(255)
 );
 
 -- Table Devis
@@ -178,9 +179,10 @@ CREATE TABLE Plage (
 CREATE TABLE Proprietaire (
     idCompte SERIAL NOT NULL PRIMARY KEY,
     pieceIdentite BOOLEAN,
-    RIB VARCHAR(30),
+    RIB VARCHAR(34),
     languesParlees VARCHAR(100),
-    messageType VARCHAR(300)
+    messageType VARCHAR(300),
+    src_pi VARCHAR(300)
 );
 
 -- Table Tarification
@@ -470,10 +472,12 @@ INSERT INTO LogementChambre(numLogement,numChambre) VALUES (29,1);
 INSERT INTO LogementChambre(numLogement,numChambre) VALUES (30,3);
 
 -- Insertion de données dans la table Reservation
-INSERT INTO Reservation (numClient, numLogement, dateReservation, nbPersonnes, dateDebut, dateFin, dateDevis, nbJours, optionAnnulation)
+INSERT INTO Reservation (numClient, numLogement, dateReservation, nbPersonnes, dateDebut, dateFin, dateDevis, nbJours, optionAnnulation, etatReservation)
 VALUES
-    (1, 2, '2023-10-18', 2, '2023-11-01', '2023-11-07', '2023-10-15', 7, 'Stricte'),
-    (2, 1, '2023-10-20', 3, '2023-11-05', '2023-11-10', '2023-10-16', 6, 'Flexible');
+    (1, 2, '2023-10-18', 2, '2023-11-01', '2023-11-07', '2023-10-15', 7, 'Stricte', 'Annulée'),
+    (1, 5, '2023-10-19', 2, '2023-11-04', '2023-11-22', '2023-10-25', 7, 'Stricte', 'Validée'),
+    (2, 1, '2023-10-20', 3, '2023-11-05', '2023-11-10', '2023-10-16', 6, 'Flexible', 'Validée'),
+    (1, 10, '2023-10-20', 3, '2024-11-05', '2024-11-10', '2023-10-16', 6, 'Flexible', 'En attente de validation');
 
 -- Insertion de données dans la table Devis
 INSERT INTO Devis (nbPersonnes, numReservation, numLogement, dateDebut, dateFin, dateDevis, dateValid, optionAnnulation, dureeDelaisAcceptation)

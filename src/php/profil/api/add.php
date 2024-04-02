@@ -10,7 +10,7 @@ if ($_SESSION['proprio'] != true){
     do {
         $newApiKey = bin2hex(random_bytes(25));
         $droits = $_GET['rights'];
-        $droitsAutorises = array('R', 'RU');
+        $droitsAutorises = array('R', 'RU', 'D');
         if (!in_array($droits, $droitsAutorises)){
             header('Location: /src/php/profil/api/index.php');
             exit();

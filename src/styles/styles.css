@@ -497,9 +497,10 @@ h1, h2, h3{
     color:white;
     background-color: #627099;
     display: none;
-    left:10%;
-    top: 138px;
+    left: 10%;
+    top: 90px;
     z-index:99;
+    margin-top:3em;
 }
 
 .boutton:hover + .menu_deroulant {
@@ -586,11 +587,6 @@ h1, h2, h3{
     height: 1em;
     width: 1em;
     cursor: pointer;
-}
-
-#sidebar > .number{
-    color:pink;
-    width:25px;
 }
 
 #sidebar > #valid_case{

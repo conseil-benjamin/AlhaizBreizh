@@ -15,7 +15,7 @@ if (isset($_SESSION['id'])) {
         $logements = array();
         try {
             $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');
-            $stmt = $pdo->prepare("SELECT DISTINCT numLogement,libelle,dateDebut,dateFin,Reservation.numClient,Client.pseudoCompte,proprio,numReservation,     proprio.firstName as prenom_proprio,
+            $stmt = $pdo->prepare("SELECT DISTINCT numLogement,libelle,dateDebut,dateFin, etatReservation, Reservation.numClient,Client.pseudoCompte,proprio,numReservation, proprio.firstName as prenom_proprio,
             proprio.lastName as nom_proprio, ville FROM ldc.Reservation NATURAL JOIN ldc.Logement inner JOIN ldc.Client on ldc.Reservation.numClient=idCompte INNER JOIN
             ldc.Client as proprio ON proprio.idCompte = Logement.proprio WHERE Client.idCompte = $id;");
 
@@ -24,7 +24,6 @@ if (isset($_SESSION['id'])) {
             while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
                 $logements[] = $row;
             }
-
             $pdo = null;
         } catch (PDOException $e) {
             $logements = array();
@@ -66,7 +65,7 @@ if (isset($_SESSION['id'])) {
                 <rect x="0" y="0" width="100%" height="100%" mask="url(#mask)" />
             </svg>
             <!-- Lien vers la page d'accueil avec un message d'erreur -->
-            <a class="lien" href="/accueil" target="_blank">
+            <a class="lien" href="/index.php" target="_blank">
                 <div>
                     Cette page est inexistante. Cliquez ici pour retourner à l'accueil.
                 </div>
@@ -133,12 +132,36 @@ $reservations = obtenirLogementsProprio($_SESSION['id']);
                     <div>
                         <h2><?php echo $reservation[1]; ?></h2>
                         <a href="/src/php/afficherPlageDispo.php?dateDebut=<?php echo $reservation[2] ?>&dateFin=<?php echo $reservation[3] ?>">
+                        <?php
+                        $etatReservation = $reservation[4];
+                        ?>
                             <h4><?php echo $reservation[2]; ?></h4>
                             <h4><?php echo $reservation[3]; ?></h4>
+                            <?php 
+                                if ($etatReservation == "En attente de validation"){
+                                    ?>
+                                    <h4><?= $etatReservation; ?></h4>
+                                    <?php
+                                } else if ($etatReservation == "Annulée"){
+                                    ?>
+                                    <div style="display: flex; align-items: center; background-color: #FCE8E8; width: 6em; border-radius: 5px; padding: 0.3em; margin: 0.3em 0 0 0">
+                                        <i class="fas fa-ban"></i>                                    
+                                        <h4 style="margin: 0 0 0 0.5em;"><?= $etatReservation; ?></h4>
+                                    </div>
+                                    <?php
+                                } else if ($etatReservation == "Validée"){
+                                    ?>
+                                    <div style="display: flex; align-items: center; background-color: #DCF5D3; width: 6em; border-radius: 5px; padding: 0.3em; margin: 0.3em 0 0 0">
+                                        <i class="fas fa-check"></i>
+                                        <h4 style="margin: 0 0 0 0.5em;"><?= $etatReservation; ?></h4>
+                                    </div>
+                                    <?php
+                                }
+                            ?>
+                            
                         </a>
                         <a href="/src/php/profil/profil.php?user=<?php echo $reservation[6] ?>">
                             <div class="profile">
-                                <p><?php echo "$reservation[8]"." $reservation[9]"; ?></p>
                             </div>
                         </a>
                         <nav style="display: flex; align-items: center;">
@@ -156,10 +179,11 @@ $reservations = obtenirLogementsProprio($_SESSION['id']);
                             }
                             $currentDate = date('Y-m-d');
                             $stmt = $pdo->prepare("SELECT idClient FROM ldc.AvisLogement WHERE idClient = :idClient AND idLogement = :idLogement");
-                            $stmt->bindParam(':idClient', $reservation[4]);
+                            $stmt->bindParam(':idClient', $reservation[5]);
                             $stmt->bindParam(':idLogement', $reservation[0]);
                             $stmt->execute();
                             $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                            $idclient = $result['idClient'];
                             if ($result) {
                                 ?>
                                 <nav style="display: flex; justify-content: center; align-items: center; margin: 0 0 1em 1em;">
@@ -167,8 +191,7 @@ $reservations = obtenirLogementsProprio($_SESSION['id']);
                                     <span style="margin: 0.5em;">Avis posté</span>
                                 </nav>
                                 <?php
-                            } else if($currentDate < $reservation[3]){
-                            } else {
+                            } else if ($currentDate > $reservation[3] && $etatReservation == "Validée"){
                                 echo "<button class='boutton' onclick='deposerAvis($reservation[0])'>Laisser un avis</button>";
                             }
                             ?>

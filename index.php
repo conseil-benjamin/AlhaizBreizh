@@ -1,4 +1,4 @@
-<?php 
+<?php
     require_once("./src/php/chargerLogements.php");
     //connexion à la base de donnée
     try {
@@ -174,11 +174,11 @@
                         <div class="logement" id="logement<?php echo $logement[0] ?>">
                             <a href="<?php echo $lien ?>"><img src="<?php echo $img ?>" alt="Image du logement: <?= $titre ?>"></a> <!-- Image du logement -->
                             <div data-information=<?php echo $logement[7]?> >
-                            <button type="button"><img src="/public/icons/heart_white.svg"></button> <!-- Coeur pour liker -->
+                            <button type="button" class="like"><img src="/public/icons/heart_white.svg"></button> <!-- Coeur pour liker -->
                                 <?php if ($logement[6]!=NULL){ //Verifie que le logement a recu au moins une note?>                                
                                 <div id="rating"><img src="/public/icons/star_fill.svg"><?php echo $logement[6]; ?></div> <!-- Notation -->
                                 <?php } ?>
-                            </div>   
+                            </div>
                             <a id="description" href="<?php echo $lien ?>"><div id="resultat"> 
                                 <h3 class="titre-logement"><?php echo $titre ?></h3> <!-- Titre du logement -->
                                 <div><img src="/public/icons/nb_personnes.svg"><p class="nb-pers"><?php echo $nombre_personnes ?> personnes</p></div> <!-- Nombre de personnes -->
@@ -200,9 +200,19 @@
         </div>
         <img src="/public/icons/wave-white.svg" id="wave2">       
         <?php include $_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'; ?>
-        <script src="/src/js/loading.js"></script>
+        <script src="/src/js/side.js"></script>
         <script src="/src/js/accueilScroll.js"></script>
         <script>
+
+            //Vérifier si le navigateur connait la fonction css view()
+            if (!CSS.supports('animation-timeline', 'view()')) {
+                let logements = document.querySelectorAll(".logement");
+                for (let i = 0; i < logements.length; i++) {
+                    logements[i].style.opacity = "1";
+                    logements[i].style.scale = "1.1";
+                }
+            }
+
             var adresses = <?php echo json_encode($adresses); ?>;
             var adaptFilter = false;
 
