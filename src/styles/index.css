@@ -253,6 +253,14 @@
     animation-timeline: view(20% 0);
 }
 
+@media (prefers-reduced-motion: reduce) {
+    .logement{
+        animation: none;
+        opacity: 1;
+        scale: 1.1;
+    }
+}
+
 .logement > a{
     display: block;
     height: 50%;
