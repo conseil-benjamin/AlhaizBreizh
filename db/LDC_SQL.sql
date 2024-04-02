@@ -178,9 +178,10 @@ CREATE TABLE Plage (
 CREATE TABLE Proprietaire (
     idCompte SERIAL NOT NULL PRIMARY KEY,
     pieceIdentite BOOLEAN,
-    RIB VARCHAR(30),
+    RIB VARCHAR(34),
     languesParlees VARCHAR(100),
-    messageType VARCHAR(300)
+    messageType VARCHAR(300),
+    src_pi VARCHAR(300)
 );
 
 -- Table Tarification

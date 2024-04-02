@@ -80,6 +80,18 @@ function notes(event){ // A TESTER
     })
 }
 
+function reset(){
+    console.log("die");
+    document.getElementById('side_nb').value='';
+    document.getElementById('side_max').value='';
+    document.getElementById('side_min').value='';
+    document.getElementById('side_recherche').value='';
+    document.getElementById('side_type').value='';
+    document.getElementById('side_arrive').value='';
+    document.getElementById('side_depart').value='';
+    enfer();
+}
+
 function trierLogements(liste) {
     let cont=document.getElementById("conteneur_logements");
     cont.innerHTML="";

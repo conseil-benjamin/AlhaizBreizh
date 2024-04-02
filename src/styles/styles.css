@@ -500,6 +500,7 @@ h1, h2, h3{
     left:10%;
     top: 138px;
     z-index:99;
+    margin-top:3em;
 }
 
 .boutton:hover + .menu_deroulant {
@@ -588,11 +589,6 @@ h1, h2, h3{
     cursor: pointer;
 }
 
-#sidebar > .number{
-    color:pink;
-    width:25px;
-}
-
 #sidebar > #valid_case{
     display:flex;
     align-items: center;
@@ -629,6 +625,27 @@ h1, h2, h3{
     height: 100%;
     width: 100%;
 }
+
+.menu_tri {
+    margin-bottom:2em;
+}
+
+#side_recherche{
+    margin-bottom:2em;
+}
+
+h2 + * {
+    margin-bottom: 1em;
+}
+
+#suppr{
+    cursor:pointer;
+    margin-top:-5em;
+    margin-bottom:1em;
+}
+
+
+
 
 /*****************************************************/
 /*Page d'erreur*/
