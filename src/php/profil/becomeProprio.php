@@ -23,25 +23,28 @@
         <div class="container-left">
             <label for="photos">Validation d'identité</label>
             <label for="photos" class="boutton">Ajouter photos</label>
-            <input type="file" id="photos" name="photos" accept=".jpg, .jpeg, .png" multiple onchange="afficherNomsPhotos()">
+            <input type="file" id="photos" name="photos" accept=".jpg, .jpeg, .png" multiple onchange="afficherNomsPhotos()" required>
             <div id="photosName"></div>
 
             <label for="iban0">IBAN (*)</label>
             <div class="propr">
-                <input class="textfield" type="text" name="ibn1" size="60" placeholder="FR00" maxlength="4">
-                <input class="textfield" type="text" name="ibn2" size="60" placeholder="1234" maxlength="4">
-                <input class="textfield" type="text" name="ibn3" size="60" placeholder="1234" maxlength="4">
-                <input class="textfield" type="text" name="ibn4" size="60" placeholder="1234" maxlength="4">
-                <input class="textfield" type="text" name="ibn5" size="60" placeholder="1234" maxlength="4">
-                <input class="textfield" type="text" name="ibn6" size="60" placeholder="1234" maxlength="4">
-                <input class="textfield" type="text" name="ibn7" size="60" placeholder="1234" maxlength="4">
-                <input class="textfield" type="text" name="ibn8" size="60" placeholder="123" maxlength="3">
+                <input class="textfield" type="text" name="ibn1" size="60" placeholder="FR00" maxlength="4" required>
+                <input class="textfield" type="text" name="ibn2" size="60" placeholder="1234" maxlength="4" required>
+                <input class="textfield" type="text" name="ibn3" size="60" placeholder="1234" maxlength="4" required>
+                <input class="textfield" type="text" name="ibn4" size="60" placeholder="1234" maxlength="4" required>
+                <input class="textfield" type="text" name="ibn5" size="60" placeholder="1234" maxlength="4" required>
+                <input class="textfield" type="text" name="ibn6" size="60" placeholder="1234" maxlength="4" required>
+                <input class="textfield" type="text" name="ibn7" size="60" placeholder="1234" maxlength="4" required>
+                <input class="textfield" type="text" name="ibn8" size="60" placeholder="123" maxlength="3" required>
                 </div>
 
             <div class="langues">
                     <div>
                         <label for="langue">Langue (*)</label>
                         <select class="textfield" id="languesparlees" name="languesparlees">
+                            <?php
+                            for(int i=0;i++;i<)
+                            ?>
                         <option>Français</option>
                         <option>Anglais</option>
                         <option>Breton</option>

@@ -106,7 +106,7 @@ CREATE TABLE Chambre (
     numChambre    SERIAL NOT NULL ,
     nbLitsSimples INTEGER,
     nbLitsDoubles INTEGER,
-    PRIMARY KEY (numChambre,nbLitsSimples)
+    PRIMARY KEY (numChambre)
 );
 
 CREATE TABLE LogementChambre

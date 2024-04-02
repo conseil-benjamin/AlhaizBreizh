@@ -151,11 +151,10 @@ if (isset($_SESSION['id'])) {
             $numChambre =0;
             foreach ($chambres as $key => $value){
                 // Préparer la requête SQL
-                $query = "INSERT INTO ldc.Chambre (numchambre, nbLitsSimples, nbLitsDoubles) VALUES (:numchambre, :nbLitsSimples, :nbLitsDoubles)";
+                $query = "INSERT INTO ldc.Chambre (nbLitsSimples, nbLitsDoubles) VALUES (:nbLitsSimples, :nbLitsDoubles)";
                 $statement = $pdo->prepare($query);
 
                 // Lier les paramètres
-                $statement->bindParam(':numchambre', $key, PDO::PARAM_INT);
                 $statement->bindParam(':nbLitsSimples', $value[0], PDO::PARAM_INT);
                 $statement->bindParam(':nbLitsDoubles', $value[1], PDO::PARAM_INT);
 
@@ -167,14 +166,14 @@ if (isset($_SESSION['id'])) {
                 // Obtenir le dernier ID inséré
                 $numChambre = $pdo->lastInsertId();
 
-                echo "canard";
-                // $stmtChambre = $pdo->prepare(
-                //     "INSERT INTO ldc.LogementChambre (numChambre,numlogement) VALUES (?, ?)");
-                // $stmtChambre->bindParam(1, $numChambre);
-                // $stmtChambre->bindParam(2, $id_logem);
-                // print_r($numChambre);
-                // print_r($id_logem);
-                // $stmtChambre->execute();
+                echo $numChambre;
+                 $stmtChambre = $pdo->prepare(
+                     "INSERT INTO ldc.LogementChambre (numChambre,numlogement) VALUES (?, ?)");
+                 $stmtChambre->bindParam(1, $numChambre);
+                 $stmtChambre->bindParam(2, $id_logem);
+                 print_r($numChambre);
+                 print_r($id_logem);
+                 $stmtChambre->execute();
             }
             //INSTALLATIONS
             foreach($installations as $key => $value){
