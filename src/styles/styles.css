@@ -626,27 +626,6 @@ h1, h2, h3{
     width: 100%;
 }
 
-.menu_tri {
-    margin-bottom:2em;
-}
-
-#side_recherche{
-    margin-bottom:2em;
-}
-
-h2 + * {
-    margin-bottom: 1em;
-}
-
-#suppr{
-    cursor:pointer;
-    margin-top:-5em;
-    margin-bottom:1em;
-}
-
-
-
-
 /*****************************************************/
 /*Page d'erreur*/
 
