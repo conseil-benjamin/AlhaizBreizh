@@ -124,6 +124,7 @@ $dateDuJour = $date->format('Y-m-d');
                         <img class="imgLogement" src="<?= $cheminPhoto ?>" alt="Photo du logement"/>
                     </figure>
                 </div>
+                
                 </div>
                 <div id="infosContainer">
                     <div id="titreLogement" >
@@ -168,7 +169,9 @@ $dateDuJour = $date->format('Y-m-d');
                             if ($_SESSION['id']==$numclient) {?>
                             <p>Logement reservé le <span id="dateResa"><?= $dateResa ?></span></p>
                             <?php } ?>
+                            
                         </div>
+                        
                         
                     
                     </div>
