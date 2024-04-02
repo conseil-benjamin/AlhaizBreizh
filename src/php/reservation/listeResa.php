@@ -183,6 +183,7 @@ $reservations = obtenirLogementsProprio($_SESSION['id']);
                             $stmt->bindParam(':idLogement', $reservation[0]);
                             $stmt->execute();
                             $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                            $idclient = $result['idClient'];
                             if ($result) {
                                 ?>
                                 <nav style="display: flex; justify-content: center; align-items: center; margin: 0 0 1em 1em;">
