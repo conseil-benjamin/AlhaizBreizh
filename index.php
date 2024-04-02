@@ -203,6 +203,16 @@
         <script src="/src/js/loading.js"></script>
         <script src="/src/js/accueilScroll.js"></script>
         <script>
+
+            //Vérifier si le navigateur connait la fonction css view()
+            if (!CSS.supports('animation-timeline', 'view()')) {
+                let logements = document.querySelectorAll(".logement");
+                for (let i = 0; i < logements.length; i++) {
+                    logements[i].style.opacity = "1";
+                    logements[i].style.scale = "1.1";
+                }
+            }
+
             var adresses = <?php echo json_encode($adresses); ?>;
             var adaptFilter = false;
 
