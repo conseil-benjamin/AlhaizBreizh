@@ -431,6 +431,68 @@ footer{
 }
 
 /*****************************************************/
+/*Avis sur le logement*/
+
+.commentaires {
+  margin: 2em 0 2em 4em;
+}
+
+.commentaires > h4 {
+  margin: 0 0 0 1em;
+}
+.div-avis {
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  width: 50%;
+  margin: 1em 1em 0 1em;
+  padding: 1em;
+  background-color: var(--col4);
+  color: var(--col2);
+}
+
+.header-avis-logement-main {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-avis-logement-left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.header-avis-logement-left > p {
+  margin: 0 0 0 1em;
+}
+
+.header-avis-left > .notation-logement-commentaire {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-avis-logement-left > a > img {
+  border-radius: 50px;
+}
+
+@media screen and (max-width: 250px) {
+  .header-avis-logement-main {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .commentaires {
+    margin: 2em 1em 2em 1em;
+  }
+  .div-avis {
+    width: 90%;
+  }
+}
 
 footer{
     background-color: var(--col2);
