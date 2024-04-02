@@ -497,8 +497,8 @@ h1, h2, h3{
     color:white;
     background-color: #627099;
     display: none;
-    left:10%;
-    top: 138px;
+    left: 10%;
+    top: 90px;
     z-index:99;
     margin-top:3em;
 }
@@ -625,27 +625,6 @@ h1, h2, h3{
     height: 100%;
     width: 100%;
 }
-
-.menu_tri {
-    margin-bottom:2em;
-}
-
-#side_recherche{
-    margin-bottom:2em;
-}
-
-h2 + * {
-    margin-bottom: 1em;
-}
-
-#suppr{
-    cursor:pointer;
-    margin-top:-5em;
-    margin-bottom:1em;
-}
-
-
-
 
 /*****************************************************/
 /*Page d'erreur*/
