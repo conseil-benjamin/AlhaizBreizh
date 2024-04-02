@@ -23,8 +23,8 @@ main p{
     align-items: center;
 }
 
-#icone{
-    width: 30px;
+#icone, .icone{
+  width: 30px;
 }
 
 footer{
@@ -434,28 +434,43 @@ footer{
 /*Avis sur le logement*/
 
 .commentaires {
-  margin: 2em 0 2em 4em;
+  margin: 2em 5%;
 }
 
-.commentaires > h4 {
-  margin: 0 0 0 1em;
+.commentaires > h2 {
+  margin: 1em;
 }
+
+.commentaires > div{
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+}
+
 .div-avis {
   display: flex;
   flex-direction: column;
   border-radius: 10px;
   width: 50%;
-  margin: 1em 1em 0 1em;
   padding: 1em;
   background-color: var(--col4);
   color: var(--col2);
+  transition: all 0.5s ease;
+}
+
+.div-avis:hover{
+  filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.5));
+}
+
+.div-avis .icone {
+  margin-right: .5em;
 }
 
 .header-avis-logement-main {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  border-bottom: 1px solid var(--col2);
 }
 
 .header-avis-logement-left {

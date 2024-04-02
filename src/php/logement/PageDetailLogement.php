@@ -520,7 +520,8 @@ if (!isset($liste_langue_parle)) {
             </section>
 
            <section class="commentaires">
-                <h4>Avis sur le logement</h4>
+                <h2>Avis sur le logement</h2>
+                <div>
                 <?php 
                     $getAvis = $pdo->prepare("SELECT * FROM ldc.AvisLogement WHERE idLogement = $numLogement");
                     $getAvis->execute();
@@ -533,7 +534,6 @@ if (!isset($liste_langue_parle)) {
                     $getNameClient->execute();
                     while ($inner_row = $getNameClient->fetch(PDO::FETCH_ASSOC)) {
                         $pseudoClient = isset($inner_row['pseudocompte']) ? $inner_row['pseudocompte'] : null;
-                        echo $nomClient;
                     }
                     ?>
                     <div class="div-avis">
@@ -549,7 +549,7 @@ if (!isset($liste_langue_parle)) {
                             <p><?php echo $pseudoClient?></p>
                         </div>
                         <div class="notation-logement-commentaire">
-                            <p><img src="/public/icons/star_fill.svg" id="icone" alt="icone etoile"><?php echo $nbEtoiles?></p>
+                            <p><img src="/public/icons/star_fill.svg" class="icone" alt="icone etoile"><?php echo $nbEtoiles?></p>
                         </div>
                         </div>
                         <p><?php echo $contenusAvis?></p>
@@ -564,6 +564,7 @@ if (!isset($liste_langue_parle)) {
                     <?php
                 }                    
                 ?>
+                </div>
             </section>
             </main>
             <?php
