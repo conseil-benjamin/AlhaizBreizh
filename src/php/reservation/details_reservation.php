@@ -120,11 +120,10 @@ $dateDuJour = $date->format('Y-m-d');
         <div>
             <div id="titrephoto">
                 <div id="photo">
-                    <figure>
-                        <img class="imgLogement" src="<?= $cheminPhoto ?>" alt="Photo du logement"/>
-                    </figure>
-                </div>
-                
+                <figure>
+                    <a href="/src/php/logement/PageDetailLogement.php?numLogement=<?php echo $reservation['numlogement'] ?>">  <img class="imgLogement" src="<?= $cheminPhoto ?>" alt="Photo du logement"/>
+                </figure>
+                </div>         
                 </div>
                 <div id="infosContainer">
                     <div id="titreLogement" >
