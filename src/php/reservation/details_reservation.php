@@ -112,8 +112,8 @@ $dateDuJour = $date->format('Y-m-d');
 <?php include($_SERVER['DOCUMENT_ROOT'] . '/src/php/header.php'); ?>
 <body>
     <div class="carte">
-        <div style="height: 75px"></div>
-        <div>
+        <div></div>
+        <div class="main-div-details-logement">
             <div id="titrephoto">
                 <div id="photo">
                 <figure>
