@@ -91,7 +91,6 @@ try {
 // Gestion de la suppresion du logement
 
 $resa_en_cours = false;
-
 $date = new DateTime();
 $dateDuJour = $date->format('Y-m-d');
  if ($dateDep > $dateDuJour) {
@@ -154,13 +153,16 @@ $dateDuJour = $date->format('Y-m-d');
                         <div class="container" style="flex-direction: column; align-items: end;">
                             <div id="annulerAccepter">
                                 <?php
-                                echo $etatReservation;
                                     if ($_SESSION['id']== $numclient && $etatReservation == "Validée") {?>
                                     <button class="boutton" onclick="confirmationValiderPopUp()">Accepter le devis et payer</button>
                                     <button class="boutton" onclick="confirmationAnnulerPopUp(<?php echo $numReservation; ?>, '<?php echo $dateArr; ?>')">Annuler ma réservation</button>
-                                <?php }else {?>
-                                    <button class="boutton" onclick="supprimerReservation()">Supprimer la réservation</button>
-                                <?php }?>
+                                <?php }else if ($_SESSION['id'] !== $numclient && $etatReservation == "En attente de validation") {?>
+                                    <button class="boutton" onclick="accepterReservation()">Accepter demande réservation</button>
+                                    <button class="boutton" onclick="supprimerReservation()">Refuser la réservation</button>
+                                <?php } else if ($_SESSION['id'] !== $numclient && $etatReservation == "Validée") {
+                                    echo "En attente de paiement";
+                                }
+                                ?>
                             </div>
                             <?php
                             if ($_SESSION['id']==$numclient) {?>
@@ -195,7 +197,6 @@ $dateDuJour = $date->format('Y-m-d');
             if (result.value) {
                 //Changer l'url pour la suppression
                 window.location.href = "/src/php/reservation/supprimerResaDB.php?numReservation=" + numReservation;
-
             }
         });
     } else {
@@ -206,5 +207,23 @@ $dateDuJour = $date->format('Y-m-d');
         });        }
 }
 
+function accepterReservation() {
+            <?php
+                echo "var numReservation = " . json_encode($numReservation) . ";\n";
+            ?>
+
+        Swal.fire({
+            title: "Êtes-vous sûr de vouloir accecpter cette réservation ?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Oui, je confirme",
+            cancelButtonText: "Annuler",
+        })
+        .then((result) => {
+            if (result.value) {
+                window.location.href = "/src/php/reservation/accepterResa.php?numReservation=" + numReservation;
+            }
+        });
+    }
 </script>
 </html>
