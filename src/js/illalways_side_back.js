@@ -1,5 +1,11 @@
 let charlie=Array.from(document.getElementsByClassName("logement"));
 
+async function chargerAvis() {
+    let rep =  await fetch("/src/php/chargerAvisLogement.php?json=1")
+    let dataJson = await rep.json()
+    return dataJson;
+}
+
 async function chargerLogements() {
     let rep =  await fetch("/src/php/chargerResa.php?json=1")
     let dataJson = await rep.json()
@@ -24,7 +30,6 @@ function num(event){
         logements.sort(function(a, b) {
             return b[6]-a[6];
         });
-        console.log(logements);
         trierLogements(logements);
     })
 }
@@ -88,9 +93,7 @@ function trierLogements(liste) {
     let cont=document.getElementById("logements");
     cont.innerHTML="";
 
-    liste.forEach(function (logement) {
-        console.log(logement);
-
+    liste.forEach(async function (logement) {
         //C'est parti pour recreer toutes les etiquettes de logement
         let logementDiv = document.createElement('div');
         logementDiv.className = 'logement';
@@ -144,6 +147,21 @@ function trierLogements(liste) {
         voir.href="/src/php/reservation/details_reservation.php?numReservation="+logement[7];
         voir.append("Voir Réservation");
         boutons.appendChild(voir);
+
+        result= await chargerAvis();
+        console.log(result)
+        
+        if (result){
+            let nav = document.createElement('nav');
+            nav.style="display: flex; justify-content: center; align-items: center; margin: 0 0 1em 1em;";
+            let i = document.createElement('i');
+            i.className='fas fa-check';
+            let span = document.createElement('span');
+            span.style="margin: 0.5em;";
+            span.innerHTML = "Avis posté";
+            nav.appendChild(i);
+            nav.appendChild(span);
+        }
 
         res.appendChild(boutons);
         logementDiv.appendChild(res);
