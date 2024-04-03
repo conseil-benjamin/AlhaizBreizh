@@ -75,10 +75,6 @@ body {
     padding-bottom: 2em;
 }
 
-body {
-    background-color: var(--col2);
-}
-
 fieldset {
     display: flex;
     justify-content: center;
@@ -91,11 +87,6 @@ fieldset a {
     width: max-content;
     border-bottom: 1px solid var(--col4);
     transform: matrix(1, 0, 0, 1, 0, 0);
-}
-
-body {
-    padding-left: 10px;
-    padding-right: 10px;
 }
 
 #contactPropio button {
