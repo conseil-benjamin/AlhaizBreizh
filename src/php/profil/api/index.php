@@ -12,7 +12,7 @@
     }
 
     //Récupérer les clés API du propriétaire
-    $droits = array('R' => 'Lecture', 'RU' => 'Lecture et update');
+    $droits = array('R' => 'Lecture', 'RU' => 'Lecture et update', 'D' => 'Disponibilité');
     $clesAPI = array();
 
     $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');

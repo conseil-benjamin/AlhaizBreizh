@@ -134,19 +134,27 @@ document.addEventListener("DOMContentLoaded", function () {
   /**
    * * Fonction permettant d'afficher le nom de tous les fichiers sÃ©lectioner par le propriÃ©taire.
    */
+  /*
   function afficherNomsPhotos() {
     const photos = input.files;
 
     for (let i = 0; i < photos.length; i++) {
-      const nomPhoto = photos[i].name;
-      let photo = document.createElement("p");
-      photo.textContent = "Photo n°" + (i + 1) + ":" + nomPhoto;
-      divNomsPhotos.appendChild(photo);
-    }
+        const nomPhoto = photos[i].name;
+        const imgElement = document.createElement('img');
+        imgElement.src = URL.createObjectURL(photos[i]);
+    
+        // Créer un élément "li" pour chaque image
+        const liElement = document.createElement('li');
+        liElement.appendChild(imgElement);
+    
+        // Ajouter l'élément "li" à la listePhotos
+        document.getElementById('listePhotos').appendChild(liElement);
+    }    
+
   }
 
-  input.addEventListener("change", afficherNomsPhotos);
-
+  input.addEventListener("change", afficherNomsPhotos);*/
+  
   /**
    * * Si rÃ©glement pas acceptÃ©, bouton creerAnnonce dÃ©sactivÃ©
    */
