@@ -15,9 +15,13 @@ $stmt = $pdo->prepare("DELETE FROM ldc.photoscomplementaireslogement WHERE numLo
 $stmt->execute();
 $stmt = $pdo->prepare("DELETE FROM ldc.reservation WHERE numLogement=$numLogement");
 $stmt->execute();
+/*
 $stmt = $pdo->prepare("DELETE FROM ldc.plagededisponibilite WHERE numcal IN (SELECT numcal FROM ldc.calendrier WHERE numLogement = $numLogement)");
 $stmt->execute();
 $stmt = $pdo->prepare("DELETE FROM ldc.plageindisponibilite WHERE numcal IN (SELECT numcal FROM ldc.calendrier WHERE numLogement = $numLogement)");
+$stmt->execute();
+*/
+$stmt = $pdo->prepare("DELETE FROM ldc.plage WHERE numCal IN (SELECT numCal FROM ldc.calendrier WHERE numLogement=$numLogement)");
 $stmt->execute();
 $stmt = $pdo->prepare("DELETE FROM ldc.calendrier WHERE numLogement=$numLogement");
 $stmt->execute(); 
@@ -25,7 +29,6 @@ $stmt = $pdo->prepare("DELETE FROM ldc.favorisclient WHERE numLogement=$numLogem
 $stmt->execute();  /*
 $stmt = $pdo->prepare("DELETE FROM ldc.AvisLogement WHERE numLogement=$numLogement");
 $stmt->execute(); */
-$stmt->execute();
 $stmt = $pdo->prepare("DELETE FROM ldc.logement WHERE numLogement=$numLogement");
 $stmt->execute(); 
 $stmt = $pdo->prepare("DELETE FROM ldc.tarification WHERE numDevis IN (SELECT numDevis FROM ldc.devis WHERE numLogement=$numLogement)");
