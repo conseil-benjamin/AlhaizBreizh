@@ -20,7 +20,7 @@
             <div>
                 <h2>ALHaIZ Breizh</h2>
                 <ul>
-                    <li><a href="">Qui sommes-nous</a></li>
+                    <li><a href="/src/php/propos.php">Qui sommes-nous</a></li>
                     <li><a href="/src/php/mentions_legales.php#CGU">Conditions générales d'utilisation</a></li>
                     <li><a href="/src/php/mentions_legales.php">Mentions légales</a></li>
                 </ul>
