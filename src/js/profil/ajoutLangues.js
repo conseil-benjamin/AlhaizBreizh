@@ -1,6 +1,9 @@
 let langues=[]
 let mech =document.getElementById('add_lg')
 mech.addEventListener('click', function() {
+    let optionToRemove = document.querySelector('#languesparlees option[value="' + selectedLanguage + '"]');
+    optionToRemove.remove();
+
     let contenu = document.getElementById('languesparlees').value
     const divElement = document.createElement('div');
     divElement.classList.add('inputplusLangue');
