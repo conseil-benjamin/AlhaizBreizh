@@ -116,6 +116,74 @@ $reservations = obtenirLogementsProprio($_SESSION['id']);
     <h2>Mes réservations</h2>
     <div id="options">
         <div>
+            <div class="menu_filtre">
+                <div id="sidebar">
+                    <div class="filtrer-trier">
+                        <h1>Filtrer et Trier</h1>
+                        <img id="suppr" src="/public/icons/croix.svg" alt="Fermer" onclick="abime()">
+                    </div>
+                    <div class="group-tri-recherche">
+                        <div class="menu_tri">
+                            <button class="boutton">Trier</button>
+                            <div class="menu_deroulant">
+                                <ul>
+                                    <a class="item_tri select" onclick="num(event)"><li>Date de Réservation (Ordre décroissant)</li></a>
+                                    <a  class="item_tri" onclick="unnum(event)"><li>Date de Réservation (Ordre décroissant)</li></a>
+                                    <a  class="item_tri" onclick="date(event)"><li>Date de Séjour (Ordre croissant)</li></a>
+                                    <a  class="item_tri" onclick="undate(event)"><li>Date de Séjour (Ordre décroissant)</li></a>
+                                    <a  class="item_tri" onclick="tarif(event)"><li>Tarif (Ordre croissant)</li></a>
+                                    <a  class="item_tri" onclick="untarif(event)"><li>Tarif (Ordre décroissant)</li></a>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <input id="side_recherche" class="textfield" type="text" placeholder="Rechercher..">
+                    </div>
+                    <div>
+                        <h2>Plage de séjour</h2>
+                        <div class="hell">
+                            <div class="select_filtr">
+                                <p>Date d'arrivée</p>
+                                <input class="input1 textfield" id="side_arrive" name="date_arrive" placeholder="JJ/MM/YYYY" type="date">
+                            </div>
+                            <div class="select_filtr">
+                                <p>Date de départ</p>
+                                <input class="input1 textfield" id="side_depart" name="date_depart" placeholder="JJ/MM/YYYY" type="date">
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h2>Ville</h2>
+                        <select id="side_ville" class="textfield">
+                            <option value="">---</option>
+                            <?php
+                                $tab=[];
+                                foreach ($reservations as $reservatio) {
+                                    $ville = $reservatio[11];
+                                    if (!in_array($ville,$tab)){
+                                        echo "<option value=\"{$reservatio[11]}\">{$reservatio[11]}</option>";
+                                        $tab[]=$ville;
+                                    }
+                                }
+                            ?>
+                        </select>
+                    </div>
+                    <div>
+                        <h2>Type du logement</h2>
+                        <select id="side_type" class="textfield">
+                            <option value="">---</option>
+                            <option value="appartement">Appartement</option>
+                            <option value="maison">Maison</option>
+                            <option value="villa">Villa</option>
+                        </select>
+                    </div> 
+                </div>
+                <button id="menu-btn" class="boutton">Filtrer et Trier</button>
+            </div>
+        </div>
+    </div>
+    <div id="options">
+        <div>
             <input class="textfield" type="text" placeholder="Rechercher..">
             <button class="boutton">Filtrer</button>
             <button class="boutton">Trier</button>
@@ -375,6 +443,7 @@ $reservations = obtenirLogementsProprio($_SESSION['id']);
         }
     }
 </script>
+<script src="/src/js/illalways_side_back.js"></script>
 
 </body>
 </html>
