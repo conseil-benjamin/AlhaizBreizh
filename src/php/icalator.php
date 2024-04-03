@@ -1,3 +1,7 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//hacksw/handcal//NONSGML v1.0//EN
+CALSCALE:GREGORIAN
 <?php
 $tabIdLog = array();
 
@@ -27,16 +31,6 @@ if (sizeof($tokenLogData) > 0) {
 else {
     die();
 }*/
-
-print_r($tokenData);
-print_r($tabIdLog);
-/*******/
-/* Il faut recup les dates de l'abo, ensuite, on regarde dans la table reservation les réservations qui débute dans la plage
-si elles se terminent après, osef
-Ensuite, on regarde dans la plage de dispo et on regarde les plages d'indispo
-A voir comment c'est au niveau de la BDD
-Il faut surment ajouter dans le calendrier les Resa plus que juste indispo
-
 
 /*******/
 
@@ -84,19 +78,15 @@ foreach ($plagesIndisponibilite as $plage) {
 }
 foreach ($evenementsI as $event) {
 ?>
-BEGIN:VCALENDAR
-VERSION:2.0
-PRODID:-//hacksw/handcal//NONSGML v1.0//EN
-CALSCALE:GREGORIAN
 BEGIN:VEVENT
 X-WR-TIMEZONE:Europe/Paris
 DTSTART:<?=date('Ymd',strtotime($event['start']))."T".date('His',strtotime($event['start']))."Z\n" ?>
 DTEND:<?= date('Ymd', strtotime($event['end']))."T".date('His', strtotime( $event['end']))."Z\n" ?>
 UID:<?= uniqid() . "\n" ?>
-DTSTAMP:<?= date("Ymd",time()) . "\n" ?>
+DTSTAMP:<?=   gmdate('Ymd').'T'. gmdate('His') . "Z"."\n" ?>
 LOCATION:<?= "Localisation\n" ?>
 SUMMARY:<?= "Logement ".$event['title'] ."\n" ?>
 DESCRIPTION:<?= "Logement ".$event['title'] ."\n" ?>
 END:VEVENT
-END:VCALENDAR
 <?php }} ?>
+END:VCALENDAR
