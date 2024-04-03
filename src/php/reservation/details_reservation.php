@@ -151,7 +151,7 @@ $dateDuJour = $date->format('Y-m-d');
                         <div id="annulerAccepter">
                             <?php
                                 if ($_SESSION['id']== $numclient && $etatReservation == "Validée") {?>
-                                <button class="boutton" onclick="confirmationValiderPopUp()">Accepter le devis et payer</button>
+                                <button class="boutton" onclick="confirmerSuccesPopUp()">Accepter le devis et payer</button>
                                 <button class="boutton" onclick="confirmationAnnulerPopUp(<?php echo $numReservation; ?>, '<?php echo $dateArr; ?>')">Annuler ma réservation</button>
                             <?php }else if ($_SESSION['id'] !== $numclient && $etatReservation == "En attente de validation") {?>
                                 <button class="boutton" onclick="accepterReservation()">Accepter demande réservation</button>
