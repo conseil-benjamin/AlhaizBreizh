@@ -1,5 +1,6 @@
 <?php
 session_start();
+error_reporting(E_ALL & ~E_WARNING);
 if (isset($_SESSION["id"])) {
         $nom = $_SESSION["nom_bien"];
         $nbNuit = $_POST["date_arrivee"];

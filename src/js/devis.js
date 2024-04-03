@@ -13,7 +13,7 @@ const PRIX = parseFloat(prixHTMLelement.innerText.replace(",", "."))
 const NBNUIT = parseInt(nbNuitHTMLelement.innerText, 10)
 const AUJ = new Date();
 const DATEFORMAT_ARR = formaterDate(AUJ,1);
-const DATEFORMAT_DEP = formaterDate(AUJ,NBNUIT + 6)
+const DATEFORMAT_DEP = formaterDate(AUJ,NBNUIT + 1)
 
 inputDateArivee.min = DATEFORMAT_ARR
 inputDateArivee.value = DATEFORMAT_ARR
@@ -178,7 +178,7 @@ function notifErr() {
  */
 function notifSuccess() {
     swal({
-        title: "Votre demande de devis à bien été envoyer",
+        title: "Votre demande de devis à bien été envoyée !",
         text: "Le propriétaire va maintenant y répondre dans les plus bref délais",
         icon: "success",
         button : "Revenir à l\'acceuil"
