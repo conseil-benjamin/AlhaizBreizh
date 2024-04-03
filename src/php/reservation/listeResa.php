@@ -182,14 +182,17 @@ $reservations = obtenirLogementsProprio($_SESSION['id']);
                     </div>
                 </div>
             </div>
+
     <div id="logements">
         <?php
         if (count($reservations) === 0) { ?>
             <h3>Vous n'avez aucune réservation pour le moment :/</h3> <?php
         } else {
-            foreach ($reservations as $reservation){ ?>
+            foreach ($reservations as $reservation){ 
+                print_r($reservation);?>
+            
                 <div class="logement">
-                    <img src="/public/img/logements/<?php echo $reservation[0]; ?>/1.png" alt="Photo du logement">
+                <img src="/public/img/logements/<?php echo $reservation[0]; ?>/1.png" alt="Photo du logement" place=<?php echo $reservation[11];?> data-information=<?php echo $reservation[12]; ?>>
                     <div>
                         <h2><?php echo $reservation[1]; ?></h2>
                         <a href="/src/php/afficherPlageDispo.php?dateDebut=<?php echo $reservation[2] ?>&dateFin=<?php echo $reservation[3] ?>">
@@ -226,7 +229,7 @@ $reservations = obtenirLogementsProprio($_SESSION['id']);
                             </div>
                         </a>
                         <nav style="display: flex; align-items: center;">
-                            <a class="boutton" href="/src/php/reservation/details_reservation.php?numReservation=<?php echo $reservation[7]?>">Voir Réservation</a>
+                            <a class="boutton" href="/src/php/reservation/details_reservation.php?numReservation=<?php echo $reservation[8]?>">Voir Réservation</a>
                             <?php
                             // Convertir la date de fin de la réservation en objet DateTime
                             $dateFinReservation = new DateTime($reservation[3]);
