@@ -54,8 +54,8 @@ try {
         VALUES(:nb_personne, :numReservation, :numLogement, :sqlDateArr, :sqlDateDep, :EPOCH, :EPOCH, :optionAnnulation, :dureeDelaisAcceptation)"
     );
     $insertResa = $pdo->prepare(
-        "INSERT INTO ldc.reservation(numclient, numlogement, datereservation, nbpersonnes, datedebut, datefin, datedevis, nbjours, optionannulation) 
-        VALUES (:numClient,:numLogement,:dateResa,:nbPersonne,:sqlDateArr, :sqlDateDep, :EPOCH,:nbJour,'')"
+        "INSERT INTO ldc.reservation(numclient, numlogement, datereservation, nbpersonnes, datedebut, datefin, datedevis, nbjours, optionannulation, etatReservation) 
+        VALUES (:numClient,:numLogement,:dateResa,:nbPersonne,:sqlDateArr, :sqlDateDep, :EPOCH,:nbJour,'', 'En attente de validation')"
     );
     $insertTarif = $pdo->prepare(
         "INSERT INTO ldc.tarification(numdevis, tarifnuitees, chargesht, soustotalht, soustotalttc, fraisserviceplateformeht, fraisserviceplateformettc, taxesejour, total) 
