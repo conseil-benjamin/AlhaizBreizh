@@ -115,83 +115,81 @@ $reservations = obtenirLogementsProprio($_SESSION['id']);
 <div id="content">
     <h2>Mes réservations</h2>
     <div id="options">
-                <div>
-                    <div class="menu_filtre">
-                        <div id="sidebar">
-                            <div class="filtrer-trier">
-                                <h1>Filtrer et Trier</h1>
-                                <img id="suppr" src="/public/icons/croix.svg" alt="Fermer" onclick="abime()">
-                            </div>
-                            <div class="group-tri-recherche">
-                                <div class="menu_tri">
-                                    <button class="boutton">Trier</button>
-                                    <div class="menu_deroulant">
-                                        <ul>
-                                            <a class="item_tri select" onclick="num(event)"><li>Date de Réservation (Ordre décroissant)</li></a>
-                                            <a  class="item_tri" onclick="unnum(event)"><li>Date de Réservation (Ordre décroissant)</li></a>
-                                            <a  class="item_tri" onclick="date(event)"><li>Date de Séjour (Ordre croissant)</li></a>
-                                            <a  class="item_tri" onclick="undate(event)"><li>Date de Séjour (Ordre décroissant)</li></a>
-                                            <a  class="item_tri" onclick="tarif(event)"><li>Tarif (Ordre croissant)</li></a>
-                                            <a  class="item_tri" onclick="untarif(event)"><li>Tarif (Ordre décroissant)</li></a>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <input id="side_recherche" class="textfield" type="text" placeholder="Rechercher..">
-                            </div>
-                            <div>
-                                <h2>Plage de séjour</h2>
-                                <div class="hell">
-                                    <div class="select_filtr">
-                                        <p>Date d'arrivée</p>
-                                        <input class="input1 textfield" id="side_arrive" name="date_arrive" placeholder="JJ/MM/YYYY" type="date">
-                                    </div>
-                                    <div class="select_filtr">
-                                        <p>Date de départ</p>
-                                        <input class="input1 textfield" id="side_depart" name="date_depart" placeholder="JJ/MM/YYYY" type="date">
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <h2>Ville</h2>
-                                <select id="side_ville" class="textfield">
-                                    <option value="">---</option>
-                                    <?php
-                                        $tab=[];
-                                        foreach ($reservations as $reservatio) {
-                                            $ville = $reservatio[11];
-                                            if (!in_array($ville,$tab)){
-                                                echo "<option value=\"{$reservatio[11]}\">{$reservatio[11]}</option>";
-                                                $tab[]=$ville;
-                                            }
-                                        }
-                                    ?>
-                                </select>
-                            </div>
-                            <div>
-                                <h2>Type du logement</h2>
-                                <select id="side_type" class="textfield">
-                                    <option value="">---</option>
-                                    <option value="appartement">Appartement</option>
-                                    <option value="maison">Maison</option>
-                                    <option value="villa">Villa</option>
-                                </select>
-                            </div> 
-                        </div>
-                        <button id="menu-btn" class="boutton">Filtrer et Trier</button>
+        <div>
+            <div class="menu_filtre">
+                <div id="sidebar">
+                    <div class="filtrer-trier">
+                        <h1>Filtrer et Trier</h1>
+                        <img id="suppr" src="/public/icons/croix.svg" alt="Fermer" onclick="abime()">
                     </div>
-                </div>
-            </div>
+                    <div class="group-tri-recherche">
+                        <div class="menu_tri">
+                            <button class="boutton">Trier</button>
+                            <div class="menu_deroulant">
+                                <ul>
+                                    <a class="item_tri select" onclick="num(event)"><li>Date de Réservation (Ordre décroissant)</li></a>
+                                    <a  class="item_tri" onclick="unnum(event)"><li>Date de Réservation (Ordre décroissant)</li></a>
+                                    <a  class="item_tri" onclick="date(event)"><li>Date de Séjour (Ordre croissant)</li></a>
+                                    <a  class="item_tri" onclick="undate(event)"><li>Date de Séjour (Ordre décroissant)</li></a>
+                                    <a  class="item_tri" onclick="tarif(event)"><li>Tarif (Ordre croissant)</li></a>
+                                    <a  class="item_tri" onclick="untarif(event)"><li>Tarif (Ordre décroissant)</li></a>
+                                </ul>
+                            </div>
+                        </div>
 
+                        <input id="side_recherche" class="textfield" type="text" placeholder="Rechercher..">
+                    </div>
+                    <div>
+                        <h2>Plage de séjour</h2>
+                        <div class="hell">
+                            <div class="select_filtr">
+                                <p>Date d'arrivée</p>
+                                <input class="input1 textfield" id="side_arrive" name="date_arrive" placeholder="JJ/MM/YYYY" type="date">
+                            </div>
+                            <div class="select_filtr">
+                                <p>Date de départ</p>
+                                <input class="input1 textfield" id="side_depart" name="date_depart" placeholder="JJ/MM/YYYY" type="date">
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h2>Ville</h2>
+                        <select id="side_ville" class="textfield">
+                            <option value="">---</option>
+                            <?php
+                                $tab=[];
+                                foreach ($reservations as $reservatio) {
+                                    $ville = $reservatio[11];
+                                    if (!in_array($ville,$tab)){
+                                        echo "<option value=\"{$reservatio[11]}\">{$reservatio[11]}</option>";
+                                        $tab[]=$ville;
+                                    }
+                                }
+                            ?>
+                        </select>
+                    </div>
+                    <div>
+                        <h2>Type du logement</h2>
+                        <select id="side_type" class="textfield">
+                            <option value="">---</option>
+                            <option value="appartement">Appartement</option>
+                            <option value="maison">Maison</option>
+                            <option value="villa">Villa</option>
+                        </select>
+                    </div> 
+                </div>
+                <button id="menu-btn" class="boutton">Filtrer et Trier</button>
+            </div>
+        </div>
+    </div>
     <div id="logements">
         <?php
         if (count($reservations) === 0) { ?>
             <h3>Vous n'avez aucune réservation pour le moment :/</h3> <?php
         } else {
             foreach ($reservations as $reservation){ ?>
-            
                 <div class="logement">
-                <img src="/public/img/logements/<?php echo $reservation[0]; ?>/1.png" alt="Photo du logement" place=<?php echo $reservation[11];?> data-information=<?php echo $reservation[12]; ?>>
+                    <img src="/public/img/logements/<?php echo $reservation[0]; ?>/1.png" alt="Photo du logement">
                     <div>
                         <h2><?php echo $reservation[1]; ?></h2>
                         <a href="/src/php/afficherPlageDispo.php?dateDebut=<?php echo $reservation[2] ?>&dateFin=<?php echo $reservation[3] ?>">
@@ -227,6 +225,7 @@ $reservations = obtenirLogementsProprio($_SESSION['id']);
                             <div class="profile">
                             </div>
                         </a>
+                        <div></div>
                         <nav style="display: flex; align-items: center;">
                             <a class="boutton" href="/src/php/reservation/details_reservation.php?numReservation=<?php echo $reservation[8]?>">Voir Réservation</a>
                             <?php
@@ -237,7 +236,7 @@ $reservations = obtenirLogementsProprio($_SESSION['id']);
                             // Vérifier si la date de fin est passée
                             if ($dateFinReservation < $dateActuelle) {
                                 ?>
-                                <a class="boutton" href="/src/php/reservation/supprimerResaDB.php?numReservation=<?php echo $reservation[8]; ?>">Supprimer</a>
+                                <a class="boutton" href="/src/php/reservation/supprimerResaDB.php?numReservation=<?php echo $reservation[7]; ?>">Supprimer</a>
                                 <?php
                             }
                             $currentDate = date('Y-m-d');
@@ -246,17 +245,14 @@ $reservations = obtenirLogementsProprio($_SESSION['id']);
                             $stmt->bindParam(':idLogement', $reservation[0]);
                             $stmt->execute();
                             $result = $stmt->fetch(PDO::FETCH_ASSOC);
-                            if ($result) {
-                                ?>
+                            if ($result !== false){ ?>
                                 <nav style="display: flex; justify-content: center; align-items: center; margin: 0 0 1em 1em;">
                                     <i class='fas fa-check'></i>
                                     <span style="margin: 0.5em;">Avis posté</span>
-                                </nav>
-                                <?php
+                                </nav> <?php
                             } else if ($currentDate > $reservation[3] && $etatReservation == "Validée"){
                                 echo "<button class='boutton' onclick='deposerAvis($reservation[0])'>Laisser un avis</button>";
-                            }
-                            ?>
+                            }?>
                         </nav>
                     </div>
                 </div>

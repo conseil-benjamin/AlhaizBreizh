@@ -16,7 +16,7 @@
             <a href="/src/php/reservation/listeResa.php">
                 <li>Réservations</li>
             </a>
-            <a href=""><li>À propos</li></a>
+            <a href="/src/php/propos.php"><li>À propos</li></a>
         </ul>
     </nav>
     <?php

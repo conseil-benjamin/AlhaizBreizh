@@ -22,13 +22,13 @@ export async function recupCoordGps(adresse, idLogement = null, approximation = 
                 coordX = data[0].lat;
                 coordY = data[0].lon;
 
+                if (approximation) {
+                    [coordX, coordY] = appoximationCoord(coordX, coordY);
+                }
+
                 //Enregistrer les coordonnées dans la BDD
                 if (idLogement) {
                     await saveCoordGpsBDD(idLogement, coordX, coordY);
-                }
-
-                if (approximation) {
-                    [coordX, coordY] = appoximationCoord(coordX, coordY);
                 }
             }
         } catch (e) {
@@ -95,8 +95,11 @@ export async function recupAllCoordGps(adresses, approximation = false) {
 }
 
 export function appoximationCoord(coordX, coordY) {
-    const random = Math.floor(Math.random() * 19 - 9) / 1000;
-    coordX = parseFloat(coordX) + random;
-    coordY = parseFloat(coordY) + random;
-    return [coordX.toFixed(6), coordY.toFixed(6)];
+    //Approximation des coordonnées GPS à 1km près
+    coordX = parseFloat(coordX);
+    coordY = parseFloat(coordY);
+    let random = Math.random() * 0.01;
+    coordX += random;
+    coordY += random;
+    return [coordX, coordY];
 }

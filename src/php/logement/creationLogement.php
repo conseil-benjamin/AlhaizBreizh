@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="/src/styles/styleCreationLogement.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/src/js/modifierLogement/addInputElement.js"></script>
+    <script src="/src/js/modifierLogement/suppressionImage.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="icon" href="/public/logos/logo-black.svg">
 
@@ -26,9 +27,11 @@
                 <input class="textfield" type="text" id="title" name="title" size="60" placeholder="Titre" maxlength="100">
                 <label for="description">Description de l'annonce (*)</label>
                 <textarea class="textfield" name="description" id="description" cols="56" rows="20" placeholder="Description" maxlength="500"></textarea>
-                <label for="photos" class="boutton">Ajouter photos</label>
-                <input type="file" id="photos" name="photos" accept=".jpg, .jpeg, .png" multiple onchange="afficherNomsPhotos()">
-                <div id="photosName"></div>
+                <label for="photos" class="boutton">Ajouter des photos</label>
+                <input type="file" id="photos" name="photos[]" accept=".jpg, .jpeg, .png" multiple onchange="previewImage()">
+                <div class="listePhotos"></div>
+
+
                 <div class="typeLogementDiv">
                     <div>
                         <label for="typeLogement">Type de logement (*)</label>
@@ -48,8 +51,8 @@
                 <div class="servicesElement">
                     <label for="services">Services disponibles</label>
                     <input class="textfield" type="text" id="service" name="service" placeholder="Service disponible" size="60" maxlength="100">
-                    <label for="prixService">Prix :</label>
-                    <input type="number" id="prixService" name="prixService" min="0"/>
+                    <label for="prixService">Prix du service :</label>
+                    <input class="textfield" type="number" id="prixService" name="prixService" min="0"/>
                 </div>
                 <button class="addButton boutton" id="btnServices" type="button">Ajouter services disponibles</button>
                 <div class="chambresElement">

@@ -118,9 +118,8 @@
                     <label for="description">Description de l'annonce (*)</label>
                     <textarea class="textfield" name="description" id="description" cols="46" rows="20" placeholder="Description" maxlength="500" required><?php echo $description; ?></textarea>
                     
-                    <label for="photos" class="boutton">Ajouter photos</label>
-                    <input class="textfield" type="file" id="photos" name="photos[]" accept=".jpg, .jpeg, .png" multiple onchange="afficherNomsPhotos()">
-                    <div id="photosName"></div>
+                    <label for="photos" class="boutton">Ajouter des photos</label>
+                    <input type="file" id="photos" name="photos[]" accept=".jpg, .jpeg, .png" multiple onchange="previewImage()">
 
                     <label>Photo(s) actuelle(s) : </label>
                     <div class="listePhotos">

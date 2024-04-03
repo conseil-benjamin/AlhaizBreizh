@@ -104,6 +104,23 @@ CREATE TABLE Logement (
     coordY DOUBLE PRECISION
 );
 
+-- Table Abonnement Ical
+CREATE TABLE tokenICal (
+    token      VARCHAR(50) NOT NULL PRIMARY KEY,
+    id_proprio integer     NOT NULL,
+    date_debut text        NOT NULL,
+    date_fin   text        NOT NULL
+
+);
+
+CREATE TABLE logements_tokenIcal (
+    id           SERIAL NOT NULL PRIMARY KEY,
+    token        VARCHAR    NOT NULL,
+    num_logement INT    NOT NULL,
+    CONSTRAINT fk_token FOREIGN KEY (token) REFERENCES tokenICal (token),
+    CONSTRAINT fk_logements FOREIGN KEY (num_logement) REFERENCES Logement(numLogement)
+);
+
 CREATE TABLE Chambre (
     numChambre    SERIAL NOT NULL ,
     nbLitsSimples INTEGER,
@@ -576,22 +593,23 @@ VALUES
 (6, 1, 'Alarme'),
 (6, 2, 'Caméra de surveillance');
 
-INSERT INTO Service (numLogement, numServ, nom)
+INSERT INTO Service (numLogement, numServ, nom, prix)
 VALUES
-(1, 1, 'Wifi'),
-(1, 2, 'Accès lave-linge'),
-(2, 1, 'Wifi'),
-(2, 2, 'Accès lave-linge'),
-(2, 3, 'Accès parking'),
-(3, 1, 'Wifi'),
-(3, 2, 'Accès lave-linge'),
-(3, 3, 'Accès piscine'),
-(4, 1, 'Wifi'),
-(4, 2, 'Accès lave-linge'),
-(4, 3, 'Accès sauna'),
-(5, 1, 'Wifi'),
-(5, 2, 'Accès lave-linge'),
-(5, 3, 'Accès jacuzzi'),
-(6, 1, 'Wifi'),
-(6, 2, 'Accès lave-linge'),
-(6, 3, 'Accès salle de sport');
+(1, 1, 'Wifi', 10.0),
+(1, 2, 'Accès lave-linge', 15.0),
+(2, 1, 'Wifi', 10.0),
+(2, 2, 'Accès lave-linge', 15.0),
+(2, 3, 'Accès parking', 20.0),
+(3, 1, 'Wifi', 5.0),
+(3, 2, 'Accès lave-linge', 10.0),
+(3, 3, 'Accès piscine', 30.0),
+(4, 1, 'Wifi', 12.0),
+(4, 2, 'Accès lave-linge', 25.0),
+(4, 3, 'Accès sauna', 40.0),
+(5, 1, 'Wifi', 5.0),
+(5, 2, 'Accès lave-linge', 5.0),
+(5, 3, 'Accès jacuzzi', 25.0),
+(6, 1, 'Wifi', 5.0),
+(6, 2, 'Accès lave-linge', 5.0),
+(6, 3, 'Accès salle de sport', 5.0);
+

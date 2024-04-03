@@ -1,0 +1,120 @@
+.corps{
+    display: block;
+    padding: 3em;
+    padding-top: calc(75px + 1em);
+    padding-bottom: 0;
+}
+
+.corps h2{
+    margin: 1em;
+    margin-top: 8px;
+    margin-left: 0;
+}
+
+.corps p{
+    margin: 1em;
+    margin-bottom: 0;
+}
+
+.corps ul{
+    list-style-type: disc;
+}
+
+.corps li{
+    padding: 3px;
+    margin-left: 3em;
+}
+
+/* Style de la page à propos */
+main{
+    position: absolute;
+    display: block;
+    top: 0;
+    padding-top: 75px;
+    height: fit-content;
+    opacity: 0.8;
+    
+}
+
+.quiNOus{
+    text-align: center;
+    align-items: center;
+    padding: 75px;
+    color:var(--col5) ;
+    top: 0;
+    background-color: var(--col2);
+}
+
+.quiNOus h1{
+    font-size: 2.5em;
+}
+
+.association{
+    display: flex;
+    flex-direction: row;
+    background-color: var(--col1);
+    color: #fff;
+    padding: 4em;
+    align-items: center;
+}
+
+.association > div {
+    flex: 1;
+    text-align: justify;
+}
+
+.association img {
+    flex: 1;
+    height: 200px; 
+}
+
+.secteur{
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    align-items: center;
+    background-color: #fff;
+    padding: 4em;
+    color:var(--col1) ;
+}
+
+video{
+    width: 75%;
+    height: auto;
+}
+
+.secteur > div {
+    flex: 1;
+    text-align: justify;
+}
+
+main h2{
+    margin: 1em;
+    margin-top: 8px;
+    margin-left: 0;
+}
+
+footer{
+    padding-top: 50em;
+    bottom: 0;
+}
+
+.eco{
+    background-color: var(--col1);
+    color: #fff;
+    padding: 4em;
+    align-items: center;
+}
+
+
+#fin {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    align-items: center;
+    padding: 4em;
+    color:var(--col1) ;
+    font: bold;
+    
+    background-image: linear-gradient(to bottom,var(--col2), rgba(215, 240, 255, 0.0)); 
+}

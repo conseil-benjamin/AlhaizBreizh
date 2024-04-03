@@ -36,7 +36,7 @@
                                     <button class="boutton">Trier</button>
                                     <div class="menu_deroulant">
                                         <ul>
-                                            <a class="item_tri select" onclick="num(event)"><li>Ancienneté (Ordre décroissant)</li></a>
+                                            <a class="item_tri select" onclick="num(event)"><li>Ancienneté (Ordre croissant)</li></a>
                                             <a  class="item_tri" onclick="unnum(event)"><li>Ancienneté (Ordre décroissant)</li></a>
                                             <a  class="item_tri" onclick="tarif(event)"><li>Tarif (Ordre croissant)</li></a>
                                             <a  class="item_tri" onclick="untarif(event)"><li>Tarif (Ordre décroissant)</li></a>
@@ -106,6 +106,7 @@
                 ?>
             </div>
         </div>
+        <script src="/src/js/pressEnter.js"></script>
         <script src="/src/js/side_bis.js"></script>
         <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'); ?>
     </body>

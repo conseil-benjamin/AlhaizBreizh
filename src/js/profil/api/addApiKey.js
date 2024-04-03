@@ -10,6 +10,7 @@ addButton.addEventListener('click', function (e) {
         inputOptions: {
           'R': 'Lecture',
           'RU': 'Lecture et update',
+          'D': 'Disponibilité'
         },
         inputPlaceholder: 'Sélectionner les droits',
         showCancelButton: true,

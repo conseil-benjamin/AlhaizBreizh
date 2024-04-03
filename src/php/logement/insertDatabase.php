@@ -1,6 +1,13 @@
 <?php 
     session_start(); 
     error_reporting(E_ALL & ~E_WARNING);
+    if (isset($_SESSION['id'])) {
+        $id = $_SESSION['id'];
+    } else{
+        header('Location: /src/php/connexion/connexion.php');
+        exit;
+    }
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,11 +20,6 @@
 <body>
 <?php  
 
-if (isset($_SESSION['id'])) {
-    $id = $_SESSION['id'];
-} else{
-}
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $title = htmlspecialchars(strip_tags($_POST['title']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
         $description = htmlspecialchars(strip_tags($_POST['description']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
@@ -26,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $surface = htmlspecialchars(strip_tags($_POST['surface']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
         $natureLogement = htmlspecialchars(strip_tags($_POST['natureLogement']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
         $photos = $_POST['photos']; // No filtering required for $_POST['photos']
-        $lits = htmlspecialchars(strip_tags($_POST['lits']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $lits = isset($_POST['lits']) ? htmlspecialchars(strip_tags($_POST['lits']), ENT_QUOTES | ENT_HTML5, 'UTF-8') : '';
         $adresse = htmlspecialchars(strip_tags($_POST['adresse']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
         $cp = htmlspecialchars(strip_tags($_POST['cdPostal']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
         $ville = htmlspecialchars(strip_tags($_POST['ville']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
@@ -161,18 +163,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Exécuter la requête
                 $statement->execute();
 
-                echo "artichaud";
-
                 // Obtenir le dernier ID inséré
                 $numChambre = $pdo->lastInsertId();
 
-                echo $numChambre;
                  $stmtChambre = $pdo->prepare(
                      "INSERT INTO ldc.LogementChambre (numChambre,numlogement) VALUES (?, ?)");
                  $stmtChambre->bindParam(1, $numChambre);
                  $stmtChambre->bindParam(2, $id_logem);
-                 print_r($numChambre);
-                 print_r($id_logem);
                  $stmtChambre->execute();
             }
             //INSTALLATIONS
@@ -248,8 +245,10 @@ $nbPhotos = count(glob($nom_dossier . "/*.png"));
 
 if (!is_dir($nom_dossier)){
     if (mkdir($nom_dossier)) {
-        $url = $nom_dossier . "/" . ($nbPhotos + 1) . ".png";
-        move_uploaded_file($_FILES['photos']['tmp_name'], $url);
+        for ($i = 0; $i < count($_FILES['photos']['tmp_name']); $i++) {
+            $url = $nom_dossier . "/" . ($nbPhotos + $i + 1) . ".png";
+            move_uploaded_file($_FILES['photos']['tmp_name'][$i], $url);
+        }
     }
 }
 
@@ -263,10 +262,9 @@ if (!is_dir($nom_dossier)){
             showConfirmButton: false,
             timer: 2000
         });
-/* 
     setTimeout(() => {
-         window.location.href = '/src/php/logement/mesLogements.php';
-}, 2000); */
+        window.location.href = '/src/php/logement/mesLogements.php';
+    }, 2000);
 </script>
 <?php
 exit;

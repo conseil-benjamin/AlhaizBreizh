@@ -1,245 +1,229 @@
-#localisation{
-    display: flex;
+#localisation {
+  display: flex;
 }
 
-#nbPersonne{
-    display: flex;
-    align-items: center;
-
-
+#localisation > h2 {
+  margin: 0 0 0 0.5em;
 }
 
-#etatDevis{
-    max-width: 400px;
-    width: auto;
-    height: auto;
-    display: flex;
-    padding: 2%;
-    align-items: center;
+#nbPersonne {
+  display: flex;
+  align-items: center;
+  margin: 0.7em 0 0.7em 0;
 }
 
-#titreLogement{
-    font-size: 2em;
-    font-weight: bold;
-    display: flex;
-   
+#etatDevis {
+  max-width: 400px;
+  width: auto;
+  height: auto;
+  display: flex;
+  padding: 2%;
+  align-items: center;
 }
+
+#titreLogement {
+  font-size: 2em;
+  font-weight: bold;
+  display: flex;
+  margin: 0 0 2em 0;
+}
+
 body {
-    margin-top: 100px;
-    background-color: var(--col2);
+  margin-top: 100px;
+  background-color: var(--col2);
 }
 
+.imgLogement {
+  max-width: 800px;
+  max-height: 500px;
+}
 
-#photo{
+#titrephoto {
+  float: left;
+  max-height: 80vh;
+}
+
+.carte {
+  background: #ffffff;
+  height: 100%;
+}
+
+#photo {
     transition: all 0.5s ease;
+    display: flex;
+    margin-right: 1em;
+    width: 100%;
     height: 100%;
+}
+
+#photo .imgLogement {
+    width: 100%;
+    height: 100%;
+    min-width: 100%;
     object-fit: cover;
-    float: left;
-}
-.imgLogement{
-   max-width: 1280px;
 }
 
-#titrephoto{
-    float: left;
-}
-
-#infosContainer{
-    height: 100%;
-    float: right;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    gap: 1em;
-    margin-top: 2em;
-    margin-left: 2em;
-    margin-right: 2em;
-}
-
-.carte{
-    display: flex;
-    flex-direction: row;
-    background: #FFFFFF;
-}
-
-body {
-    background-color: var(--col2);
+#infosContainer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  padding-top: 2em;
+  padding-bottom: 2em;
 }
 
 fieldset {
-    display: flex;
-    justify-content: center;
-    color: var(--col4);
-    border-style: none;
-    margin-top: 5px;
+  display: flex;
+  justify-content: center;
+  color: var(--col4);
+  border-style: none;
+  margin-top: 5px;
 }
 
 fieldset a {
-    width: max-content;
-    border-bottom: 1px solid var(--col4);
-    transform: matrix(1, 0, 0, 1, 0, 0);
+  width: max-content;
+  border-bottom: 1px solid var(--col4);
+  transform: matrix(1, 0, 0, 1, 0, 0);
 }
 
-
-body {
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-#contactPropio  button {
-    background: var(--col5);
-    border-radius: 30px;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 24px;
-    text-align: center;
-    color: white;
-    width: 40%;
+#contactPropio button {
+  background: var(--col5);
+  border-radius: 30px;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  text-align: center;
+  color: white;
+  width: 40%;
 }
 
 #contactPropio {
-    display: flex;
-    flex-direction: column;
-    margin-top: 5vh;
+  display: flex;
+  flex-direction: column;
+  margin-top: 5vh;
 }
 
 #carteProprio > div {
-    border: 2px solid #333;
-    display: inline-block;
-    margin-right: 20px;
+  border: 2px solid #333;
+  display: inline-block;
+  margin-right: 20px;
 }
 
 #carteProprio {
-    display: flex;
-    align-items: center;
-    width: 45vw;
-    margin-bottom: 2vh;
-
+  display: flex;
+  align-items: center;
+  width: 45vw;
+  margin-bottom: 2vh;
 }
 
-#carteProprio  img {
-    width: 65px;
-    height: 65px;
-    background: #D9D9D9;
+#carteProprio img {
+  width: 65px;
+  height: 65px;
+  background: #d9d9d9;
 }
 
 #annulerAccepter > button {
-    height: 82px;
-    background: var(--col3);
-    border-radius: 10px;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 24px;
-    text-align: center;
-    color: black;
-    margin: 2%;
-
+  height: 82px;
+  background: var(--col3);
+  border-radius: 10px;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  text-align: center;
+  color: black;
+  margin: 2%;
 }
 
 #annulerAccepter {
-    display: flex;
-    align-items: center;
-    width: 100%;
-   
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
 
 #etatResa {
-    width: 10vw;
-    background: var(--col4);
-    border-radius: 10px;
-    padding: 20px 10px;
-    color: #FFFFFF;
+  width: 10vw;
+  background: var(--col4);
+  border-radius: 10px;
+  padding: 20px 10px;
+  color: #ffffff;
 }
 
 #dateDiv {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 1em 0;
+}
+
+#dateDiv > h2 {
+  margin: 0.3em 0 0 0;
 }
 
 .recu {
-    padding: 5px;
-    align-items: center;
-    border-radius: 10%;
-    margin-right: 3px;
+  padding: 5px;
+  align-items: center;
+  border-radius: 10%;
+  margin-right: 3px;
 }
 
-#etatDevis{
-    background: var(--col5);
+#prixSpan {
+  margin: 1em 0 0 0;
+}
+
+#etatDevis {
+  background: var(--col5);
 }
 
 .enattente {
-    background-color: var(--col4);
-    color: white;
+  background-color: var(--col4);
+  color: white;
 }
 
 #etatDevis h2 {
-    font-weight: normal;
-    font-size: 1.6em;
+  font-weight: normal;
+  font-size: 1.6em;
 }
 
 #autreInfo > * {
-    margin-top: 5%;
+  margin-top: 5%;
 }
 
 .gris {
-    opacity: 0.5;
+  opacity: 0.5;
 }
 
 #contactLien {
-    background: var(--col5);
-    border-radius: 30px;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 24px;
-    text-align: center;
-    color: white;
-    width: 40%;
-    padding: 5px;
+  background: var(--col5);
+  border-radius: 30px;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  text-align: center;
+  color: white;
+  width: 40%;
+  padding: 5px;
 }
 
-/********/
-/* Media Queries */
-/********/
+@media (max-width: 1200px) {
+  .main-div-details-logement {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .carte {
+    flex-direction: column;
+  }
+  .imgLogement {
+    margin-right: 0;
+  }
 
-@media screen and (max-width: 926px) {
-    #infosContainer {
-        flex-direction: column;
-    }
+  #infosContainer {
+    padding: 1em;
+  }
 
-    #annulerAccepter > button {
-        width: 35vw;
-    }
-    #prixDiv  {
-        display: flex;
-        justify-content: space-between;
-    }
-
-    #etatDevis {
-        width: 90vw;
-    }
-
-    #localisation {
-        width: 60vw;
-    }
-
-    #etatResa {
-        width: 20vw;
-    }
-
-    #nbPersonne {
-        width: 25vw;
-    }
-
-    #contactPropio {
-        flex-direction: row;
-        align-items: center;
-    }
-
-    figure {
-        max-width: 100%;
-    }
+  #contactPropio button {
+    width: 100%;
+  }
 }

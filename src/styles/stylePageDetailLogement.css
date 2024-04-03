@@ -72,7 +72,12 @@ footer{
   flex: 0 0 75%;
   height: 100%;
   flex-direction: column;
+  text-align: center;
   transition: all 0.5s ease;
+}
+
+#options-images > h2{
+  margin-top: 20%;
 }
 
 /*Div contenant les infos à droite des images*/
@@ -438,28 +443,30 @@ footer{
 }
 
 .commentaires > h2 {
-  margin: 1em;
+    margin: 1em;
 }
 
 .commentaires > div{
-  display: flex;
-  flex-direction: row;
-  gap: 1em;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1em;
+    margin: 1em;
 }
 
 .div-avis {
-  display: flex;
-  flex-direction: column;
-  border-radius: 10px;
-  width: 50%;
-  padding: 1em;
-  background-color: var(--col4);
-  color: var(--col2);
-  transition: all 0.5s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    background-color: var(--col4);
+    color: #fff;
+    padding: 1em;
+    border-radius: 25px;
+    transition: all 0.5s ease;
 }
 
 .div-avis:hover{
-  filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.75));
 }
 
 .div-avis .icone {
@@ -469,7 +476,9 @@ footer{
 .header-avis-logement-main {
   display: flex;
   flex-direction: row;
+  align-items: center;
   justify-content: space-between;
+  gap: 1em;
   border-bottom: 1px solid var(--col2);
 }
 
@@ -481,12 +490,6 @@ footer{
 
 .header-avis-logement-left > p {
   margin: 0 0 0 1em;
-}
-
-.header-avis-left > .notation-logement-commentaire {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
 .header-avis-logement-left > a > img {

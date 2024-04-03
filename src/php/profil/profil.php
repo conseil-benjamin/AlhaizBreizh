@@ -246,6 +246,7 @@
                 if ($page_personnelle && $page_proprio){ ?>
                     <a class="boutton" href="./api"><img src="/public/icons/clef.svg" alt="">Mes clés API</a> <?php
                 } ?>
+            <a class="boutton" href="./ical"><img src="/public/icons/calendar.svg" alt="Icon de calendrier">Abonnement Ical</a>
             <a class="boutton" href="/src/php/connexion/login.php?deconnexion"><img id="img-disconnect" src="/public/icons/forward.svg" alt="">Déconnexion</a>
         </div>
 
@@ -374,7 +375,6 @@
             <div id="logements">
                 <h2>Logements de <?php echo $infos['Pseudo']; ?></h2>
                 <div id="logement-container">
-                <div id="logement-ligne">
                 <?php
                     /*Créations de carte pour chaque logements*/
 
@@ -409,7 +409,6 @@
                         $nb_logements_inactifs++;
                     }
                 } 
-                ?></div> <?php
                 if ($nb_logements_inactifs == count($logements)){ ?>
                     <h3>Aucun logement pour le moment</h3><?php
                 } ?>

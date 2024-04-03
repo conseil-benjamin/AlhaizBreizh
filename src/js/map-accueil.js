@@ -59,11 +59,13 @@ document.querySelector("#header > nav > ul > a").addEventListener("click", close
 /*Initialisation de la carte*/
 
 //Map avec leaftlet
+let layerList = [];
 let bzhLayer = L.tileLayer('https://tile.openstreetmap.bzh/br/{z}/{x}/{y}.png');
-
 let osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
-
 let topoLayer = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png');
+layerList.push(["Bretonne", bzhLayer]);
+layerList.push(["OpenStreetMap", osmLayer]);
+layerList.push(["Topographic", topoLayer]);
 
 let baseMaps = {
     "Bretonne": bzhLayer,
@@ -71,8 +73,13 @@ let baseMaps = {
     "Topographic": topoLayer
 };
 
+if (!baseMaps.hasOwnProperty(localStorage.getItem('layer'))){
+    console.log("Layer non trouvé");
+    localStorage.setItem('layer', 'Bretonne');
+}
+
 let map = L.map('map', {
-    layers: [bzhLayer], // set the default layer
+    layers: [layerList.find(layer => layer[0] === localStorage.getItem('layer'))[1]],
     closePopupOnClick: false,
     zoom: 9,
     invalidateSize: true,
@@ -82,7 +89,7 @@ let map = L.map('map', {
 map.setView([mapX, mapY], 8);
 L.control.layers(baseMaps).addTo(map); // Add the layer control to the map
 
-var pin = L.icon({
+var pinIcon = L.icon({
     iconUrl: '/public/icons/pin.svg',
     iconSize:     [38, 95], // size of the icon
     iconAnchor:   [20, 80], // point of the icon which will correspond to marker's location
@@ -95,7 +102,7 @@ var markers = L.markerClusterGroup({
     zoomToBoundsOnClick: true,
     disableClusteringAtZoom: 14,
     iconCreateFunction: function() {
-		return pin;
+		return pinIcon;
 	}
 });
 
@@ -108,38 +115,79 @@ async function fetchCoordinates() {
 
     var logements = document.querySelectorAll('.logement');
     let i = 1;
+    let pinsLoaded = false;
+    let pinsStorage = JSON.parse(sessionStorage.getItem('pins'));
 
-    for (let logement of logements) {
-        let id = logement.id.substring(8);
-        let titre = logement.querySelector('.titre-logement').innerText;
-        let personnes = logement.querySelector('.nb-pers').innerText;
-        let localisation = logement.querySelector('.localisation').innerText;
-        let prix = logement.querySelector('.prix').innerText;
-
-        let coords = await recupCoordGps(localisation, id, true);
-
-        texteChargement.innerText = i+"/"+logements.length;
-
-        if (coords[0] != null && coords[1] != null) {
-            coordonnees[id] = coords;
-            let marker = L.marker(coords, {icon: pin})
-            markers.addLayer(marker);
+    //Vérifier si la variable de session pins existe
+    if (sessionStorage.getItem('pins') && (pinsStorage.length === logements.length)){
+        if (pinsStorage.length === logements.length) {
+            for (let pin of pinsStorage) {
+                let marker = L.marker([pin.lat, pin.lng], {icon: pinIcon});
+                marker.bindPopup(pin.popup, {autoClose: false});
+                marker.on('click', closePopupOnClick.bind(null, marker));
+                markers.addLayer(marker);
+                pins.push(marker);
+                coordonnees[i] = [pin.lat, pin.lng];
+                i++;
+            }
             map.addLayer(markers);
-            marker.bindPopup("<h3>"+titre+"</h3>"+personnes+"<br>"+prix+"<br><a href='/src/php/logement/PageDetailLogement.php?numLogement="+id+"'><strong>Voir le Logement</strong></a>", {autoClose: false});
-            
-            //Fermer les popups si on clique sur un autre marker
-            marker.on('click', function() {
-                map.eachLayer(function (layer) {
-                    if (layer instanceof L.Marker && layer.isPopupOpen() && layer !== marker) {
-                        layer.closePopup();
-                    }
-                });
-            });
-
-            pins.push(marker);
         }
-        i++;   
+        pinsLoaded = true;
+        console.log("Pins chargés depuis le sessionStorage");
     }
+    //Sinon, récupérer les coordonnées des logements
+    if ((pinsLoaded == false) || (pinsStorage.length !== logements.length)){  
+        for (let logement of logements) {
+            let id = logement.id.substring(8);
+            let titre = logement.querySelector('.titre-logement').innerText;
+            let personnes = logement.querySelector('.nb-pers').innerText;
+            let localisation = logement.querySelector('.localisation').innerText;
+            let prix = logement.querySelector('.prix').innerText;
+
+            let coords = await recupCoordGps(localisation, id, true);
+
+            texteChargement.innerText = i+"/"+logements.length;
+
+            if (coords[0] != null && coords[1] != null) {
+                coordonnees[id] = coords;
+                let marker = L.marker(coords, {icon: pinIcon})
+                markers.addLayer(marker);
+                map.addLayer(markers);
+                marker.bindPopup("<h3>"+titre+"</h3>"+personnes+"<br>"+prix+"<br><a href='/src/php/logement/PageDetailLogement.php?numLogement="+id+"'><strong>Voir le Logement</strong></a>", {autoClose: false});
+                //Fermer les popups si on clique sur un autre marker
+                marker.on('click', closePopupOnClick.bind(null, marker));
+
+                pins.push(marker);
+            }
+            i++;   
+        }
+        saveStoragePins(pins);
+        console.log("Pins chargés depuis l'API");
+    }
+    loadingMapComplete();
+}
+
+function closePopupOnClick(marker) {
+    map.eachLayer(function (layer) {
+        if (layer instanceof L.Marker && layer.isPopupOpen() && layer !== marker) {
+            layer.closePopup();
+        }
+    });
+}
+
+function saveStoragePins(pins) {
+    let simplePins = pins.map(marker => {
+        return {
+            lat: marker.getLatLng().lat, 
+            lng: marker.getLatLng().lng, 
+            popup: marker.getPopup().getContent()
+        };
+    });
+    
+    sessionStorage.setItem('pins', JSON.stringify(simplePins));
+}
+
+function loadingMapComplete() {
     chargementDiv.style.display = "none";
     loadingComplete.style.display = "block";
     setTimeout(() => {
@@ -163,10 +211,12 @@ function adaptMarkersOnZoomAndMove(){
         let point = map.latLngToContainerPoint(adresse);
         let size = map.getSize();
         let logement = document.getElementById('logement'+id);
-        if(point.x < 0 || point.y < 0 || point.x > size.x || point.y > size.y) {
-            logement.classList.add('filtremap');
-        } else {
-            logement.classList.remove('filtremap');
+        if (logement){
+            if (point.x < 0 || point.y < 0 || point.x > size.x || point.y > size.y) {
+                logement.classList.add('filtremap');
+            } else {
+                logement.classList.remove('filtremap');
+            }
         }
     });
     enfer();
@@ -196,6 +246,13 @@ fetchCoordinates();
 let bouttonResetMap = document.getElementById('bouttonResetMap');
 bouttonResetMap.addEventListener('click', function() {
     map.setView(bretagne, 8);
+});
+
+/*******************************************************/
+/*Sauvegarder en localStorage le layer sélectionné*/
+
+map.on('baselayerchange', function(e) {
+    localStorage.setItem('layer', e.name);
 });
 
 /*******************************************************/

@@ -153,6 +153,7 @@ try {
 
                                             </div>
                                     </a>
+                                    <div></div>
                                     <nav>
                                         <a class="boutton" href="/src/php/reservation/supprimerResaDB.php?numReservation=<?php echo $uneReservation['numreservation']?>">Supprimer</a>
                                         <a class="boutton" href="/src/php/reservation/details_reservation.php?numReservation=<?php echo $uneReservation['numreservation']?>" >Voir Réservation</a>

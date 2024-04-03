@@ -79,9 +79,9 @@ $pdo = null;
              timer: 4000
          });
 
-     /*setTimeout(() => {
+     setTimeout(() => {
           window.location.href = '/src/php/profil/profil.php';
- }, 4000);*/
+ }, 4000);
 </script>
 <?php
 exit;
