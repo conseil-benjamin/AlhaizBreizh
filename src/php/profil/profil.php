@@ -374,7 +374,6 @@
             <div id="logements">
                 <h2>Logements de <?php echo $infos['Pseudo']; ?></h2>
                 <div id="logement-container">
-                <div id="logement-ligne">
                 <?php
                     /*Créations de carte pour chaque logements*/
 
@@ -409,7 +408,6 @@
                         $nb_logements_inactifs++;
                     }
                 } 
-                ?></div> <?php
                 if ($nb_logements_inactifs == count($logements)){ ?>
                     <h3>Aucun logement pour le moment</h3><?php
                 } ?>
