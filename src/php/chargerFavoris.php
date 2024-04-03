@@ -1,6 +1,10 @@
 <?php
     session_start(); 
 
+    if (isset($_GET['json'])){
+        $_POST["json"] = $_GET['json'];
+    }
+
     function obtenirFavoris($idd) {
         $logements = array();
             try {
@@ -8,9 +12,7 @@
                 $stmt = $pdo->prepare("SELECT numlogement FROM ldc.favorisclient WHERE idcompte=$idd");
                 $stmt->execute();
                 while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-                    if ($row[1] == $id){
-                        $logements[] = $row[0];
-                    }
+                    $logements[] = $row[0];
                 }
                 $pdo = null;
             } catch (PDOException $e) {
@@ -41,30 +43,32 @@
         } catch (PDOException $e) {
         }
     }
-
-    if($_POST["json"]==0) {
+    if (isset($_POST["json"])){
+        if($_POST["json"]==0) {
         
-        if (isset($_SESSION['id'])) {
-            $logements = obtenirFavoris($_SESSION['id']);
+            if (isset($_SESSION['id'])) {
+                $logements = obtenirFavoris($_SESSION['id']);
+            }
+            else{
+                $logements= array();
+            }
+            try{
+                $json = json_encode($logements);
+            }
+            catch(Throwable $e){
+                console.log("dfdfd");
+            }
+    
+            echo $json;
         }
-        else{
-            $logements= array();
+        else if ($_POST["json"]==1){
+            addFavoris($_SESSION["id"],$_POST["num"]);
+            $json = json_encode($_POST["num"]);
+            echo $json;
         }
-        try{
-            $json = json_encode($logements);
+        else if($_POST["json"]==2) {
+            deleteFavoris($_SESSION["id"],$_POST["num"]);
         }
-        catch(Throwable $e){
-            console.log("dfdfd");
-        }
+    }
 
-        echo $json;
-    }
-    else if ($_POST["json"]==1){
-        addFavoris($_SESSION["id"],$_POST["num"]);
-        $json = json_encode($_POST["num"]);
-        echo $json;
-    }
-    else if($_POST["json"]==2) {
-        deleteFavoris($_SESSION["id"],$_POST["num"]);
-    }
-    ?>
+?>

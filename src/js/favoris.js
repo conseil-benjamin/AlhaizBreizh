@@ -26,8 +26,6 @@ async function delFavoris(nb) {
     console.log("test");
 }
 
-
-
 function fav() {
     let likes = document.getElementsByClassName('like');
     Array.from(likes).forEach(elem => {

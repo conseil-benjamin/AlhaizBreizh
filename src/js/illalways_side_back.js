@@ -187,7 +187,7 @@ function trierLogements(liste) {
 
             // Ajout du conteneur au document
             aa.appendChild(annuleContainer);
-        } else if (etatReservation === "Validée") {
+        } else if (etatReservation === "Confirmée") {
             // Création d'un conteneur pour l'état "Validée"
             var valideContainer = document.createElement('div');
             valideContainer.style="display: flex; align-items: center; background-color: #DCF5D3; width: 6em; border-radius: 5px; padding: 0.3em; margin: 0.3em 0 0 0";
@@ -196,6 +196,20 @@ function trierLogements(liste) {
             var checkIcon = document.createElement('i');
             checkIcon.classList.add('fas', 'fa-check');
             valideContainer.appendChild(checkIcon);
+
+            // Ajout de l'état "Validée"
+            var valideText = document.createElement('h4');
+            valideText.textContent = etatReservation;
+            valideText.style="margin: 0 0 0 0.5em;";
+            valideContainer.appendChild(valideText);
+
+            // Ajout du conteneur au document
+            aa.appendChild(valideContainer);
+        }
+        else if (etatReservation === "Acceptée") {
+            // Création d'un conteneur pour l'état "Validée"
+            var valideContainer = document.createElement('div');
+            valideContainer.style="display: flex; align-items: center; width: 6em; border-radius: 5px; padding: 0.3em; margin: 0.3em 0 0 0";
 
             // Ajout de l'état "Validée"
             var valideText = document.createElement('h4');
@@ -224,7 +238,6 @@ function trierLogements(liste) {
         result= await chargerAvis(logement[6],logement[0]);
 
         if (result){
-            console.log("test")
             let nav = document.createElement('nav');
             nav.style="display: flex; justify-content: center; align-items: center; margin: 0 0 1em 1em;";
             let i = document.createElement('i');

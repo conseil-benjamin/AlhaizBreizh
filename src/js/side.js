@@ -11,14 +11,28 @@ async function chargerAvis() {
     let dataJson = await rep.json()
     return dataJson
 }
-
 async function chargerFavoris() {
-    let rep =  await fetch("/src/php/chargerFavoris.php?json=0")
-    let dataJson = await rep.json()
-    console.log(dataJson)
+    let rep =  await fetch("/src/php/chargerFavoris.php", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+            json: 0
+        })
+    });
+
+    if (!rep.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    if (rep.headers.get('content-length') === '0') {
+        return [null, null];
+    }
+
+    let dataJson = await rep.json();
+    console.log(dataJson);
     return dataJson
 }
-
 
 function switchClass(event){
     boutons=Array.from(document.getElementsByClassName("item_tri"));

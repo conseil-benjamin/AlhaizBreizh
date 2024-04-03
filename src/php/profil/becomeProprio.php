@@ -12,6 +12,7 @@
 
     <title>Creation Logement</title>
 </head>
+<?php $langages=["Français","Anglais","Breton","Espagnol","Italien","Allemand","Mandarin","Hindi","Arabe","Japonnais","Russe","Polonais","Portugais","Ukrenien"]; ?>
 <body>
     <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/header.php'); ?>
     <form id="myForm" method="post" action="insertProprio.php" enctype="multipart/form-data">
@@ -42,20 +43,11 @@
                     <div>
                         <label for="langue">Langue (*)</label>
                         <select class="textfield" id="languesparlees" name="languesparlees">
-                        <option>Français</option>
-                        <option>Anglais</option>
-                        <option>Breton</option>
-                        <option>Espagnol</option>
-                        <option>Italien</option>
-                        <option>Allemand</option>
-                        <option>Mandarin</option>
-                        <option>Hindi</option>
-                        <option>Japonnais</option>
-                        <option>Arabe</option>
-                        <option>Russe</option>
-                        <option>Ukrénien</option>
-                        <option>Polonais</option>
-                        <option>Portugais</option>
+                            <?php for ($i=0;$i<sizeof($langages);$i++){
+                                $test="<option>".$langages[$i]."</option>";
+                                echo $test;
+                            } ?>
+
                         </select>
                     </div>
             </div>
