@@ -53,7 +53,6 @@ try {
     $reservation = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($reservation) {
-        echo "dzq";
         $numclient=$reservation['numclient'];
         $proprio=$reservation['proprio'];
         $prenom_proprio =$reservation['prenom_proprio'];
@@ -153,20 +152,27 @@ $dateDuJour = $date->format('Y-m-d');
                         <div class="container" style="flex-direction: column; align-items: end;">
                             <div id="annulerAccepter">
                                 <?php
-                                    if ($_SESSION['id']== $numclient && $etatReservation == "Validée") {?>
-                                    <button class="boutton" onclick="confirmationValiderPopUp()">Accepter le devis et payer</button>
+                                    if ($_SESSION['id'] == $numclient && $etatReservation == "Acceptée") {?>
+                                    <button class="boutton" onclick="confirmerSuccesPopUp()">Accepter le devis et payer</button>
                                     <button class="boutton" onclick="confirmationAnnulerPopUp(<?php echo $numReservation; ?>, '<?php echo $dateArr; ?>')">Annuler ma réservation</button>
-                                <?php }else if ($_SESSION['id'] !== $numclient && $etatReservation == "En attente de validation") {?>
+                                <?php } else if ($_SESSION['id'] == $numclient && $etatReservation == "En attente de validation"){
+                                        ?>
+                                        <h4 style="margin: 0.5em 0 0 0;">En attente du paiment du client</h4>
+                                        <?php                                
+                                }
+                                else if ($_SESSION['id'] !== $numclient && $etatReservation == "En attente de validation") {?>
                                     <button class="boutton" onclick="accepterReservation()">Accepter demande réservation</button>
-                                    <button class="boutton" onclick="supprimerReservation()">Refuser la réservation</button>
+                                    <button class="boutton" onclick="refuserReservation()">Refuser la réservation</button>
                                 <?php } else if ($_SESSION['id'] !== $numclient && $etatReservation == "Validée") {
-                                    echo "En attente de paiement";
+                                    ?>
+                                    <h4 style="margin: 0.5em 0 0 0;">En attente du paiment du client</h4>
+                                    <?php
                                 }
                                 ?>
                             </div>
                             <?php
                             if ($_SESSION['id']==$numclient) {?>
-                            <p>Logement reservé le <span id="dateResa"><?= $dateResa ?></span></p>
+                            <p style="margin: 0.3em 0 0 0;">Logement reservé le <span id="dateResa"><?= $dateResa ?></span></p>
                             <?php } ?>
                             
                         </div>
@@ -222,6 +228,61 @@ function accepterReservation() {
         .then((result) => {
             if (result.value) {
                 window.location.href = "/src/php/reservation/accepterResa.php?numReservation=" + numReservation;
+            }
+        });
+    }
+
+    function refuserReservation() {
+            <?php
+                echo "var numReservation = " . json_encode($numReservation) . ";\n";
+            ?>
+
+        Swal.fire({
+            title: "Êtes-vous sûr de vouloir refuser cette réservation ?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Oui, je confirme",
+            cancelButtonText: "Annuler",
+        })
+        .then((result) => {
+            if (result.value) {
+                window.location.href = "/src/php/reservation/annulerResa.php?numReservation=" + numReservation;
+            }
+        });
+    }
+
+    function confirmerSuccesPopUp() {
+        <?php
+                echo "var numReservation = " . json_encode($numReservation) . ";\n";
+            ?>
+
+        Swal.fire({
+            title: "Êtes-vous sûr de vouloir payer cette réservation ?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Oui, je confirme",
+            cancelButtonText: "Annuler",
+        }).then((result) => {
+            if (result.value) {
+            window.location.href = "/src/php/reservation/payerResa.php?numReservation=" + numReservation;   
+        }});
+    }
+
+    function confirmationAnnulerPopUp() {
+            <?php
+                echo "var numReservation = " . json_encode($numReservation) . ";\n";
+            ?>
+
+        Swal.fire({
+            title: "Êtes-vous sûr de vouloir annuler cette réservation ?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Oui, je confirme",
+            cancelButtonText: "Annuler",
+        })
+        .then((result) => {
+            if (result.value) {
+                window.location.href = "/src/php/reservation/annulerResa.php?numReservation=" + numReservation;
             }
         });
     }
