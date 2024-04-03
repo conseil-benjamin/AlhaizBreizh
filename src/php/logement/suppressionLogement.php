@@ -1,3 +1,4 @@
+
 <?php
 // supprimer_logement.php
 $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');

@@ -1,10 +1,22 @@
 let charlie=Array.from(document.getElementsByClassName("logement"));
 
-async function chargerAvis() {
-    let rep =  await fetch("/src/php/chargerAvisLogement.php?json=1")
-    let dataJson = await rep.json()
-    return dataJson;
-}
+async function chargerAvis(nb01,nb02) {
+    let rep =  await fetch('/src/php/chargerAvisLogement.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+            json: 1,
+            idcl: nb01,
+            idlog: nb02
+        })
+    });
+    let dataJson = await rep.json();
+    return dataJson; // je vais me foutre en l air si ca marche pas
+} 
+
+
 
 async function chargerLogements() {
     let rep =  await fetch("/src/php/chargerResa.php?json=1")
@@ -124,23 +136,24 @@ function trierLogements(liste) {
 
         res.appendChild(aa);
 
-        let pictprofil = document.createElement('a');
-        pictprofil.href="/src/php/profil/profil.php?user="+logement[6];
-        pictprofil.id='prof';
-        let profil = document.createElement('div');
-        profil.className= 'profile';
-        let imageProf = document.createElement('img');
-        imageProf.src = '/public/img/photos_profil/' + logement[6] + '.png';
-        imageProf.alt='Photo de profil';
-        nomProf = document.createElement('p');
-        nomProf.textContent=logement[8]+" "+logement[9];
-        profil.appendChild(imageProf);
-        profil.appendChild(nomProf);
-        pictprofil.appendChild(profil);
+        // let pictprofil = document.createElement('a');
+        // pictprofil.href="/src/php/profil/profil.php?user="+logement[6];
+        // pictprofil.id='prof';
+        // let profil = document.createElement('div');
+        // profil.className= 'profile';
+        // let imageProf = document.createElement('img');
+        // imageProf.src = '/public/img/photos_profil/' + logement[6] + '.png';
+        // imageProf.alt='Photo de profil';
+        // nomProf = document.createElement('p');
+        // nomProf.textContent=logement[8]+" "+logement[9];
+        // profil.appendChild(imageProf);
+        // profil.appendChild(nomProf);
+        // pictprofil.appendChild(profil);
 
-        res.appendChild(pictprofil);
+        // res.appendChild(pictprofil);
 
         let boutons = document.createElement('nav');
+        boutons.style="display: flex; align-items: center;";
 
         let voir = document.createElement('a');
         voir.classList.add("boutton");
@@ -148,10 +161,70 @@ function trierLogements(liste) {
         voir.append("Voir Réservation");
         boutons.appendChild(voir);
 
-        result= await chargerAvis();
-        console.log(result)
-        
+
+        var etatElement = document.createElement('h4');
+
+        etatReservation=logement[13];
+        etatElement.classList.add('etat-reservation');
+
+        // Définition du contenu en fonction de la valeur de $etatReservation
+        if (etatReservation === "En attente de validation") {
+            etatElement.textContent = etatReservation;
+        } else if (etatReservation === "Annulée") {
+            // Création d'un conteneur pour l'état "Annulée"
+            var annuleContainer = document.createElement('div');
+            annuleContainer.classList.add('etat-annule');
+
+            // Ajout de l'icône "fa-ban"
+            var banIcon = document.createElement('i');
+            banIcon.classList.add('fas', 'fa-ban');
+            annuleContainer.appendChild(banIcon);
+
+            // Ajout de l'état "Annulée"
+            var annuleText = document.createElement('h4');
+            annuleText.textContent = etatReservation;
+            annuleContainer.appendChild(annuleText);
+
+            // Ajout du conteneur au document
+            aa.appendChild(annuleContainer);
+        } else if (etatReservation === "Validée") {
+            // Création d'un conteneur pour l'état "Validée"
+            var valideContainer = document.createElement('div');
+            valideContainer.style="display: flex; align-items: center; background-color: #DCF5D3; width: 6em; border-radius: 5px; padding: 0.3em; margin: 0.3em 0 0 0";
+
+            // Ajout de l'icône "fa-check"
+            var checkIcon = document.createElement('i');
+            checkIcon.classList.add('fas', 'fa-check');
+            valideContainer.appendChild(checkIcon);
+
+            // Ajout de l'état "Validée"
+            var valideText = document.createElement('h4');
+            valideText.textContent = etatReservation;
+            valideText.style="margin: 0 0 0 0.5em;";
+            valideContainer.appendChild(valideText);
+
+            // Ajout du conteneur au document
+            aa.appendChild(valideContainer);
+        }
+        var dateActuelle = new Date();
+        var dateFinReservation = new Date(logement[3]);
+        console.log(dateFinReservation+dateActuelle)
+        if(logement[3]<dateActuelle){
+
+        }
+
+        if (dateFinReservation < dateActuelle) {
+            var lienSupprimer = document.createElement('a');
+            lienSupprimer.classList.add('boutton');
+            lienSupprimer.setAttribute('href', '/src/php/reservation/supprimerResaDB.php?numReservation=' + logement[7]);
+            lienSupprimer.textContent = 'Supprimer';
+            boutons.appendChild(lienSupprimer);
+        }
+
+        result= await chargerAvis(logement[6],logement[0]);
+
         if (result){
+            console.log("test")
             let nav = document.createElement('nav');
             nav.style="display: flex; justify-content: center; align-items: center; margin: 0 0 1em 1em;";
             let i = document.createElement('i');
@@ -161,6 +234,7 @@ function trierLogements(liste) {
             span.innerHTML = "Avis posté";
             nav.appendChild(i);
             nav.appendChild(span);
+            boutons.appendChild(nav);
         }
 
         res.appendChild(boutons);

@@ -237,7 +237,7 @@ $reservations = obtenirLogementsProprio($_SESSION['id']);
                             // Vérifier si la date de fin est passée
                             if ($dateFinReservation < $dateActuelle) {
                                 ?>
-                                <a class="boutton" href="/src/php/reservation/supprimerResaDB.php?numReservation=<?php echo $reservation[7]; ?>">Supprimer</a>
+                                <a class="boutton" href="/src/php/reservation/supprimerResaDB.php?numReservation=<?php echo $reservation[8]; ?>">Supprimer</a>
                                 <?php
                             }
                             $currentDate = date('Y-m-d');
