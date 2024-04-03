@@ -106,6 +106,7 @@
                 ?>
             </div>
         </div>
+        <script src="/src/js/pressEnter.js"></script>
         <script src="/src/js/side_bis.js"></script>
         <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'); ?>
     </body>

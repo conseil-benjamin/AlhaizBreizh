@@ -200,6 +200,7 @@
         </div>
         <img src="/public/icons/wave-white.svg" id="wave2">       
         <?php include $_SERVER['DOCUMENT_ROOT'].'/src/php/footer.php'; ?>
+        <script src="/src/js/pressEnter.js"></script>
         <script src="/src/js/side.js"></script>
         <script src="/src/js/accueilScroll.js"></script>
         <script>

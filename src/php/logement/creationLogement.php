@@ -48,8 +48,8 @@
                 <div class="servicesElement">
                     <label for="services">Services disponibles</label>
                     <input class="textfield" type="text" id="service" name="service" placeholder="Service disponible" size="60" maxlength="100">
-                    <label for="prixService">Prix :</label>
-                    <input type="number" id="prixService" name="prixService" min="0"/>
+                    <label for="prixService">Prix du service :</label>
+                    <input class="textfield" type="number" id="prixService" name="prixService" min="0"/>
                 </div>
                 <button class="addButton boutton" id="btnServices" type="button">Ajouter services disponibles</button>
                 <div class="chambresElement">

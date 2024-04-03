@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $surface = htmlspecialchars(strip_tags($_POST['surface']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
         $natureLogement = htmlspecialchars(strip_tags($_POST['natureLogement']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
         $photos = $_POST['photos']; // No filtering required for $_POST['photos']
-        $lits = htmlspecialchars(strip_tags($_POST['lits']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $lits = isset($_POST['lits']) ? htmlspecialchars(strip_tags($_POST['lits']), ENT_QUOTES | ENT_HTML5, 'UTF-8') : '';
         $adresse = htmlspecialchars(strip_tags($_POST['adresse']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
         $cp = htmlspecialchars(strip_tags($_POST['cdPostal']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
         $ville = htmlspecialchars(strip_tags($_POST['ville']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
@@ -161,12 +161,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Exécuter la requête
                 $statement->execute();
 
-                echo "artichaud";
-
                 // Obtenir le dernier ID inséré
                 $numChambre = $pdo->lastInsertId();
 
-                echo $numChambre;
                  $stmtChambre = $pdo->prepare(
                      "INSERT INTO ldc.LogementChambre (numChambre,numlogement) VALUES (?, ?)");
                  $stmtChambre->bindParam(1, $numChambre);
