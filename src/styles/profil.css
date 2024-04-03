@@ -418,20 +418,10 @@ div.notation img{
     border: 1px solid #000;
     border-radius: 15px;
     transition: all 0.5s ease;
-    opacity: 0;
-    scale: 1;
+    opacity: 1;
+    scale: 1.1;
     margin-right: 3em;
     margin-bottom: 3em;
-    animation: fade-in-out-logement linear;
-    animation-timeline: view(20% 0);
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .profil .logement{
-        animation: none;
-        opacity: 1;
-        scale: 1.1;
-    }
 }
 
 .profil .logement > a{
