@@ -12,8 +12,14 @@
 <body>
     <?php include($_SERVER['DOCUMENT_ROOT'].'/src/php/header.php'); ?>
     <div class="corps">
-        <h1>Mentions Légales</h1><br>
+            <h1>Sommaire</h1>
 
+        <ul>
+            <li><a href="#mentions">Mentions Légales</a></li>
+            <li><a href="#CGV">Conditions Générales de Vente (CGV)</a></li>
+            <li><a href="#CGU">Conditions Générales d'Utilisation (CGU)</a></li>
+        </ul>
+        <h1 id="mentions">Mentions Légales</h1><br>
         <h2>Équipe de développement LDC</h2>
             <p>Editeur du site Web : Lannion Dev Corporation <br>Siège social : Rue Édouard Branly, 22300 Lannion, FRANCE<br>Mail : lannion@dev-corporation.fr<br>Téléphone : 07 95 87 83 85</p>
             <br>
@@ -37,7 +43,7 @@
 
     <br><br>
 
-    <h2>Conditions Générales de Vente (CGV) - </h2>
+    <h1 id="CGV">Conditions Générales de Vente (CGV) - </h1>
 
         <h2>1. Préambule : </h2>
             <p>« Vous » ou « le Client » ou « l'Acheteur » désigne tout utilisateur du présent site qui réserve, commande et/ou achète tous Produits et Services proposés. Le Client ne peut utiliser ce site que s’il est majeur et habilité à signer des contrats qui engagent sa responsabilité. Il sera financièrement responsable de toutes ses utilisations du Site. Les prestations vendues sur le présent site sont réservées aux particuliers. Les groupements et professionnels doivent prendre contact directement avec le Vendeur. <br>
@@ -84,7 +90,7 @@
 
     <br><br>
 
-    <h2>Conditions Générales d'Utilisation (CGU) - Site de Location de Logement </h2>
+    <h1 id="CGU">Conditions Générales d'Utilisation (CGU) - Site de Location de Logement </h1>
 
         <h2>1. Préambule :</h2>
             <p>Les présentes Conditions Générales d'Utilisation (CGU) régissent l'accès et l'utilisation du site internet ALHaiz Breizh, ci-après dénommé le Site, édité par Lannion Dev corporation, ci-après dénommé le "Propriétaire". Tout utilisateur du Site, ci-après dénommé l'"Utilisateur", s'engage à respecter les dispositions des présentes CGU.</p>
