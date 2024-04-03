@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   /* GESTION DES INSTALLATIONS */
     
-  let firstInstall = document.querySelector("#installDispo1");
+  let firstInstall = document.querySelector("#installDispo");
 
   contentInstall = firstInstall.value.split(',');
   if (contentInstall[1]!=null){ //verifie que le contenu existe
@@ -251,8 +251,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (placeholder === "Service disponible"){
       nouvElem = document.createElement("label");
-      nouvElem.textContent="Prix";
+      nouvElem.textContent="Prix du service :";
       ntElem = document.createElement("input");
+      ntElem.classList.add("textfield");
       ntElem.setAttribute("type","number");
       ntElem.setAttribute("id","prixService"+ nbServices);
       ntElem.setAttribute("name","prixService");

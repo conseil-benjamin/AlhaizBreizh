@@ -211,6 +211,7 @@ async function enfer() {
         console.error("Ca marche pas", prob);
     }
 
+    document.getElementById('logements').scrollIntoView();
     testAucunLogementVisible();
 }
 
