@@ -1,9 +1,3 @@
-.logement {
-    margin-bottom: 0;
-    margin-right: 2em;
-    margin-left: 2em;
-}
-
 .content {
     display: flex;
     flex-direction: column;

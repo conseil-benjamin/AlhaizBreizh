@@ -1,6 +1,13 @@
 <?php 
     session_start(); 
     error_reporting(E_ALL & ~E_WARNING);
+    if (isset($_SESSION['id'])) {
+        $id = $_SESSION['id'];
+    } else{
+        header('Location: /src/php/connexion/connexion.php');
+        exit;
+    }
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,11 +19,6 @@
 </head>
 <body>
 <?php  
-
-if (isset($_SESSION['id'])) {
-    $id = $_SESSION['id'];
-} else{
-}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $title = htmlspecialchars(strip_tags($_POST['title']), ENT_QUOTES | ENT_HTML5, 'UTF-8');
