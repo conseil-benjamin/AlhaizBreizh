@@ -163,7 +163,7 @@ $dateDuJour = $date->format('Y-m-d');
                                 else if ($_SESSION['id'] !== $numclient && $etatReservation == "En attente de validation") {?>
                                     <button class="boutton" onclick="accepterReservation()">Accepter demande réservation</button>
                                     <button class="boutton" onclick="refuserReservation()">Refuser la réservation</button>
-                                <?php } else if ($_SESSION['id'] !== $numclient && $etatReservation == "Validée") {
+                                <?php } else if ($_SESSION['id'] !== $numclient && $etatReservation == "Acceptée") {
                                     ?>
                                     <h4 style="margin: 0.5em 0 0 0;">En attente du paiment du client</h4>
                                     <?php
