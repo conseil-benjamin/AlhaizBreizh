@@ -1,0 +1,76 @@
+/********************************/
+/*L'image de clé*/
+.monprofil #titre{
+    justify-content: center;
+    width: 50%;
+}
+
+.monprofil #titre img{
+    object-fit: contain;
+    border: none;
+    border-radius: 0;
+}
+
+.monprofil #info ul {
+    display: block !important;
+}
+
+.monprofil #info li{
+    transition: all 0.3s ease;
+}
+
+.monprofil #info li:hover{
+    cursor: pointer;
+    scale: 1.1;
+    filter: drop-shadow(0px 0px 5px #000);
+}
+
+h2 {
+    margin: 4vh auto;
+
+}
+
+#info > ul {
+    margin: auto;
+}
+
+form {
+    width: 100%;
+}
+
+#listeLogement {
+    background-color: var(--col4);
+    display: flex;
+    justify-content: space-around;
+}
+
+#listeLogement ul {
+    margin-bottom: 2em;
+    margin-top: 1em;
+    display: inline-block !important;
+    text-align: start !important;
+}
+
+#listeLogement ul li {
+    color : white;
+
+}
+
+#listeLogement ul li label {
+    margin-left: 10px;
+}
+
+input[type="date"] {
+    border-style: none;
+    background: transparent;
+    color: white;
+}
+
+#aboBtn {
+    margin: auto auto 2em;
+    background-color: var(--col6);
+}
+
+#rmForm {
+    display: none;
+}
