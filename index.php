@@ -1,5 +1,5 @@
 <?php
-    require_once("./src/php/chargerLogements.php");
+    session_start();
     //connexion à la base de donnée
     try {
         $pdo = include($_SERVER['DOCUMENT_ROOT'] . '/src/php/connect.php');

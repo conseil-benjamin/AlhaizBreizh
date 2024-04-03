@@ -211,10 +211,12 @@ function adaptMarkersOnZoomAndMove(){
         let point = map.latLngToContainerPoint(adresse);
         let size = map.getSize();
         let logement = document.getElementById('logement'+id);
-        if(point.x < 0 || point.y < 0 || point.x > size.x || point.y > size.y) {
-            logement.classList.add('filtremap');
-        } else {
-            logement.classList.remove('filtremap');
+        if (logement){
+            if (point.x < 0 || point.y < 0 || point.x > size.x || point.y > size.y) {
+                logement.classList.add('filtremap');
+            } else {
+                logement.classList.remove('filtremap');
+            }
         }
     });
     enfer();

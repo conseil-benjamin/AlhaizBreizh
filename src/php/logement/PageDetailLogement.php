@@ -44,7 +44,6 @@ if (isset($_GET['numLogement'])) {
 
                 // le nom pour la demande de devis
 
-
                 // Récupération des chambres
                 $numChambre=[];
                 $i=0;
@@ -57,7 +56,6 @@ if (isset($_GET['numLogement'])) {
                     $numChambre[$i][1] = $row[2]; //Doubles
                     $i=$i+1;
                 }
-
                 if ($i > 0) {
                     $nb_chambres = $i;
                 }
@@ -109,6 +107,9 @@ if (isset($_GET['numLogement'])) {
                     $img = '/public/img/logements/'.$numLogement.'/1.png';
                         //Récupérer les images logement
                         $chemin_photos = $_SERVER['DOCUMENT_ROOT'] . '/public/img/logements/' . $numLogement;
+                        if (!is_dir($chemin_photos)) {
+                            mkdir($chemin_photos);
+                        }
                         $liste_photos = scandir($chemin_photos);
                         $nombre_fichiers = 0;
                         foreach ($liste_photos as $fichier) {
@@ -291,10 +292,14 @@ if (!isset($liste_langue_parle)) {
                         // L'utilisateur est connecté et est le propriétaire du logement
                         ?>
                         <div class="proprio">
-                            <p>
-                                Le logement est 
-                                <?php if($etat_logement){ ?>en ligne<div id="icone_en_ligne"> <img id="icone" src="/public/icons/rond_vert.svg"></div>
-                                <?php } else { ?>hors ligne <div id="icone_en_ligne"><img id="icone" src="/public/icons/rond_rouge.svg"></div> <?php } ?>
+                            <p> 
+                                <?php if($etat_logement){ ?>
+                                    <div id="icone_en_ligne"> <img id="icone" src="/public/icons/rond_vert.svg"></div>
+                                    Le logement est en ligne
+                                <?php } else { ?>
+                                    <div id="icone_en_ligne"><img id="icone" src="/public/icons/rond_rouge.svg"></div> 
+                                    Le logement est hors ligne 
+                                <?php } ?>
                             </p>
                             <div>
                                 <?php
@@ -473,7 +478,9 @@ if (!isset($liste_langue_parle)) {
                         </ul>
                         <br>
                         <?php $_SESSION['numLogement']=$numLogement; ?>
-                        <a href="/src/php/calendrier/afficherPlageDispo.php?numLogement=<?php echo $_GET['numLogement'] ?>" class="boutton">Voir les disponibilitées du logement</a>
+                        <a href="/src/php/profil/profil.php?user=<?php echo $proprio ?>">
+
+                        <a href="/src/php/calendrier/afficherPlageDispo.php?numLogement=<?php echo $numLogement ?>" class="boutton">Voir les disponibilitées du logement</a>
                     </section>
                     <?php if ((isset($_SESSION['id']) == false) || ($_SESSION['id'] != $proprio)): ?>
                     <section class="reserve_contact">
@@ -661,8 +668,9 @@ if (!isset($liste_langue_parle)) {
     } else {
         // Affichez un message à l'utilisateur si des réservations sont en cours
         Swal.fire({
-            title: "Vous ne pouvez pas supprimé votre logement, des réservations sont en cours",
-            icon: "error",
+            title: "Vous ne pouvez pas supprimer votre logement",
+            text: "Des réservations sont en cours pour ce logement.",
+            icon: "warning",
         });        }
 }
 

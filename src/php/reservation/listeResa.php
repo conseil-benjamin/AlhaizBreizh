@@ -164,6 +164,7 @@ $reservations = obtenirLogementsProprio($_SESSION['id']);
                             <div class="profile">
                             </div>
                         </a>
+                        <div></div>
                         <nav style="display: flex; align-items: center;">
                             <a class="boutton" href="/src/php/reservation/details_reservation.php?numReservation=<?php echo $reservation[7]?>">Voir Réservation</a>
                             <?php
@@ -183,18 +184,20 @@ $reservations = obtenirLogementsProprio($_SESSION['id']);
                             $stmt->bindParam(':idLogement', $reservation[0]);
                             $stmt->execute();
                             $result = $stmt->fetch(PDO::FETCH_ASSOC);
-                            $idclient = $result['idClient'];
-                            if ($result) {
-                                ?>
-                                <nav style="display: flex; justify-content: center; align-items: center; margin: 0 0 1em 1em;">
-                                    <i class='fas fa-check'></i>
-                                    <span style="margin: 0.5em;">Avis posté</span>
-                                </nav>
-                                <?php
-                            } else if ($currentDate > $reservation[3] && $etatReservation == "Validée"){
-                                echo "<button class='boutton' onclick='deposerAvis($reservation[0])'>Laisser un avis</button>";
+                            if ($result !== false){
+                                $idclient = $result['idClient'];
+                                if ($result) {
+                                    ?>
+                                    <nav style="display: flex; justify-content: center; align-items: center; margin: 0 0 1em 1em;">
+                                        <i class='fas fa-check'></i>
+                                        <span style="margin: 0.5em;">Avis posté</span>
+                                    </nav>
+                                    <?php
+                                }
                             }
-                            ?>
+                            if ($currentDate > $reservation[3] && $etatReservation == "Validée"){
+                                echo "<button class='boutton' onclick='deposerAvis($reservation[0])'>Laisser un avis</button>";
+                            }?>
                         </nav>
                     </div>
                 </div>

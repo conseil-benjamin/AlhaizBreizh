@@ -36,7 +36,7 @@
                                     <button class="boutton">Trier</button>
                                     <div class="menu_deroulant">
                                         <ul>
-                                            <a class="item_tri select" onclick="num(event)"><li>Ancienneté (Ordre décroissant)</li></a>
+                                            <a class="item_tri select" onclick="num(event)"><li>Ancienneté (Ordre croissant)</li></a>
                                             <a  class="item_tri" onclick="unnum(event)"><li>Ancienneté (Ordre décroissant)</li></a>
                                             <a  class="item_tri" onclick="tarif(event)"><li>Tarif (Ordre croissant)</li></a>
                                             <a  class="item_tri" onclick="untarif(event)"><li>Tarif (Ordre décroissant)</li></a>

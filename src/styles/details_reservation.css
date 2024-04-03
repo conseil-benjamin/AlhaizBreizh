@@ -1,15 +1,13 @@
-#localisation{
+#localisation {
     display: flex;
 }
 
-#nbPersonne{
+#nbPersonne {
     display: flex;
     align-items: center;
-
-
 }
 
-#etatDevis{
+#etatDevis {
     max-width: 400px;
     width: auto;
     height: auto;
@@ -18,55 +16,63 @@
     align-items: center;
 }
 
-#titreLogement{
+#titreLogement {
     font-size: 2em;
     font-weight: bold;
     display: flex;
-   
 }
+
 body {
     margin-top: 100px;
     background-color: var(--col2);
 }
 
+.imgLogement {
+    max-width: 800px;
+    max-height: 500px;
+}
 
-#photo{
-    transition: all 0.5s ease;
-    height: 100%;
-    object-fit: cover;
+#titrephoto {
     float: left;
 }
 
-
-.imgLogement{
-   max-width: 1080px;
-   max-height: 100%;
-}
-
-#titrephoto{
-    float: left;
-}
-
-#infosContainer{
-    height: 100%;
-    float: right;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    gap: 1em;
-    margin-top: 2em;
-    margin-left: 2em;
-    margin-right: 2em;
-}
-
-.carte{
+.carte {
     display: flex;
     flex-direction: row;
     background: #FFFFFF;
 }
 
-body {
-    background-color: var(--col2);
+#photo {
+    transition: all 0.5s ease;
+    display: flex;
+    object-fit: cover;
+}
+
+.imgLogement {
+    max-width: 100%;
+    height: auto;
+    margin-right: 1em;
+}
+
+@media (min-width: 768px) {
+    .imgLogement {
+        max-width: 800px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .imgLogement {
+        max-width: 1200px;
+    }
+}
+
+#infosContainer {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    padding-top: 2em;
+    padding-bottom: 2em;
 }
 
 fieldset {
@@ -83,13 +89,7 @@ fieldset a {
     transform: matrix(1, 0, 0, 1, 0, 0);
 }
 
-
-body {
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-#contactPropio  button {
+#contactPropio button {
     background: var(--col5);
     border-radius: 30px;
     font-style: normal;
@@ -118,10 +118,9 @@ body {
     align-items: center;
     width: 45vw;
     margin-bottom: 2vh;
-
 }
 
-#carteProprio  img {
+#carteProprio img {
     width: 65px;
     height: 65px;
     background: #D9D9D9;
@@ -138,14 +137,12 @@ body {
     text-align: center;
     color: black;
     margin: 2%;
-
 }
 
 #annulerAccepter {
     display: flex;
     align-items: center;
     width: 100%;
-   
 }
 
 #etatResa {
@@ -169,7 +166,7 @@ body {
     margin-right: 3px;
 }
 
-#etatDevis{
+#etatDevis {
     background: var(--col5);
 }
 
@@ -204,66 +201,21 @@ body {
     padding: 5px;
 }
 
-/********/
-/* Media Queries */
-/********/
 
-@media screen and (max-width: 926px) {
-    #infosContainer {
+@media (max-width: 768px) {
+    .carte {
         flex-direction: column;
     }
 
-    #annulerAccepter > button {
-        width: 35vw;
-    }
-    #prixDiv  {
-        display: flex;
-        justify-content: space-between;
-    }
-
-    #etatDevis {
-        width: 90vw;
-    }
-
-    #localisation {
-        width: 60vw;
-    }
-
-    #etatResa {
-        width: 20vw;
-    }
-
-    #nbPersonne {
-        width: 25vw;
-    }
-
-    #contactPropio {
-        flex-direction: row;
-        align-items: center;
-    }
-
-    figure {
-        max-width: 100%;
-    }
     .imgLogement {
-        max-width: 100%; /* Permettre à l'image de se réduire */
+        margin-right: 0;
     }
-    
+
     #infosContainer {
-        display: flex; /* Maintenir la disposition flexbox */
-        flex-wrap: wrap; /* Permettre aux éléments de s'enrouler sur les petits écrans */
-    }
-}
-
-
-@media screen and (max-width: 768px) {
-    #infosContainer {
-        flex-direction: column; /* Colonne unique pour les écrans très étroits */
+        padding: 1em; 
     }
 
-    #annulerAccepter button,
     #contactPropio button {
-        width: 100%; /* Pleine largeur pour les boutons sur les petits écrans */
+        width: 100%; 
     }
 }
-
