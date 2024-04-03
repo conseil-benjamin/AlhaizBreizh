@@ -22,7 +22,7 @@
                 <ul>
                     <li><a href="">Qui sommes-nous</a></li>
                     <li><a href="">Conditions générales d'utilisation</a></li>
-                    <li><a href="">Mentions légales</a></li>
+                    <li><a href="/src/php/mentions_legales.php">Mentions légales</a></li>
                 </ul>
             </div>
         </div>
