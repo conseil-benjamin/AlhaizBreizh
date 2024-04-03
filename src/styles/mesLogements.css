@@ -175,6 +175,7 @@
     position: absolute;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: start;
     gap: .5em;
     width: 100%;
@@ -284,8 +285,8 @@
         flex-wrap: wrap;
     }
 
-    #content .logement > div > div {
-        margin-bottom: 5em;
+    #content .logement > div > nav{
+        position: relative;
     }
 
     #content .logement > img, #content .logement > a > img{
