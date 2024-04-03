@@ -123,7 +123,7 @@ $dateDuJour = $date->format('Y-m-d');
                 </div>
                 <div id="infosContainer">
                     <div id="titreLogement" >
-                                <h1> <?= $titreLogement ?></h1>
+                                <h2> <?= $titreLogement ?></h2>
                             </div>
                     <div class="container" id="localisationEtat">
                             <div id="localisation">
@@ -133,7 +133,8 @@ $dateDuJour = $date->format('Y-m-d');
                             <div id="nbPersonne" class="center"> <img src="../../../public/icons/nb_personnes.svg" alt="nbPersonne" style="max-width: 48px; max-height: 48px;"> <h1><?= $nbPersonnes  ?> </h1></div>
                         </div>
                         <div id="dateDiv">
-                            <h2 id="date"> Arrivée : <span id="dateArr"><?= $dateArr ?></span> <br> Départ : <span id="dateDep"><?= $dateDep ?></span></h2>
+                            <h2 id="date"> Arrivée : <span id="dateArr"><?= $dateArr ?></span> </h2>
+                            <h2>Départ : <span id="dateDep"><?= $dateDep ?></span></h2>
                         </div>
                         <div id="etatDevis" >
                         <a href='' download='devis.pdf'><img class="recu" src="/public/icons/contract.svg" alt="icon devis" style="max-width: 48px; max-height: 48px;"></a>
@@ -147,7 +148,7 @@ $dateDuJour = $date->format('Y-m-d');
                             ?>
 
                         <div id="prixDiv">
-                            <h2>Total :<span id="prixSpan"><?= $prixTotal ?></span>€</h2>
+                            <h2 id="prixSpan">Total :<span ><?= $prixTotal ?></span>€</h2>
                         </div>
                         <div class="container" style="flex-direction: column; align-items: end;">
                             <div id="annulerAccepter">
@@ -189,7 +190,6 @@ $dateDuJour = $date->format('Y-m-d');
                 echo "var resaEnCours = " . json_encode($resa_en_cours) . ";\n";
                 echo "var numReservation = " . json_encode($numReservation) . ";\n";
             ?>
-
     if (!resaEnCours) {
         // Affiche une boîte de dialogue d'avertissement
         Swal.fire({
