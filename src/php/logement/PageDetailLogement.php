@@ -44,7 +44,6 @@ if (isset($_GET['numLogement'])) {
 
                 // le nom pour la demande de devis
 
-
                 // Récupération des chambres
                 $numChambre=[];
                 $i=0;
@@ -57,7 +56,6 @@ if (isset($_GET['numLogement'])) {
                     $numChambre[$i][1] = $row[2]; //Doubles
                     $i=$i+1;
                 }
-
                 if ($i > 0) {
                     $nb_chambres = $i;
                 }
@@ -473,7 +471,9 @@ if (!isset($liste_langue_parle)) {
                         </ul>
                         <br>
                         <?php $_SESSION['numLogement']=$numLogement; ?>
-                        <a href="/src/php/calendrier/afficherPlageDispo.php?numLogement=<?php echo $_GET['numLogement'] ?>" class="boutton">Voir les disponibilitées du logement</a>
+                        <a href="/src/php/profil/profil.php?user=<?php echo $proprio ?>">
+
+                        <a href="/src/php/calendrier/afficherPlageDispo.php?numLogement=<?php echo $numLogement ?>" class="boutton">Voir les disponibilitées du logement</a>
                     </section>
                     <?php if ((isset($_SESSION['id']) == false) || ($_SESSION['id'] != $proprio)): ?>
                     <section class="reserve_contact">
