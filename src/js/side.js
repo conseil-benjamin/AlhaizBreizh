@@ -6,6 +6,34 @@ async function chargerLogements() {
     return dataJson
 }
 
+async function chargerAvis() {
+    let rep =  await fetch("/src/php/chargerAvis.php?json=1")
+    let dataJson = await rep.json()
+    return dataJson
+}
+async function chargerFavoris() {
+    let rep =  await fetch("/src/php/chargerFavoris.php", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+            json: 0
+        })
+    });
+
+    if (!rep.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    if (rep.headers.get('content-length') === '0') {
+        return [null, null];
+    }
+
+    let dataJson = await rep.json();
+    console.log(dataJson);
+    return dataJson
+}
+
 function switchClass(event){
     boutons=Array.from(document.getElementsByClassName("item_tri"));
     boutons.forEach(function(em){
@@ -68,16 +96,40 @@ function notes(event){ // A TESTER
         l_logement=[];
         for (let i = 0; i < logements.length; i++) {
             let logement = logements[i];
-            l_logement.push(logement);
             if (logement[6] === null || logement[6] === '') {
                 logement[6] = 2.5;
             }
+            l_logement.push(logement);
         }
         l_logement.sort(function(a, b) {
             return a[6] < b[6] ? -1 : (a[6] > b[6] ? 1 : 0);
         });
         trierLogements(l_logement.reverse());
     })
+}
+
+function avis(event){
+    switchClass(event);
+    chargerLogements().then((value) => {
+        chargerAvis().then((avs) => {
+        logements=value;
+        l_avis=avs;
+        l_logement=[];
+        for (let i = 0; i < logements.length; i++) {
+            let logement = logements[i];
+            logement.push(0);
+            for (let j=0;j<l_avis.length; j++){
+                if ((l_avis[j][0]==logement[0])&&(l_avis[j][1]>=3.0)){
+                    logement[8]=logement[8]+1;
+                }
+            }
+            l_logement.push(logement);
+        }
+        l_logement.sort(function(a, b) {
+            return a[8] < b[8] ? -1 : (a[8] > b[8] ? 1 : 0);
+        });
+        trierLogements(l_logement.reverse());
+    })})
 }
 
 function reset(){
@@ -92,12 +144,12 @@ function reset(){
     enfer();
 }
 
-function trierLogements(liste) {
+async function trierLogements(liste) {
     let cont=document.getElementById("conteneur_logements");
     cont.innerHTML="";
+    marionnette=await chargerFavoris();
 
     liste.forEach(function (logement) {
-
         //C'est parti pour recreer toutes les etiquettes de logement
         let logementDiv = document.createElement('div');
         logementDiv.className = 'logement';
@@ -113,9 +165,19 @@ function trierLogements(liste) {
         let divType = document.createElement('div');
         divType.setAttribute("data-information",logement[11]);
         let boutlike = document.createElement('button');
+        boutlike.className='like';
+        boutlike.type='button';
         let determination = document.createElement('img');
-        determination.src='/public/icons/heart_white.svg';
+        let element = document.querySelector('.shown');
+        if (element !== null){
+            if (marionnette.includes(logement[0])){
+            determination.src='/public/icons/heart_fill.svg';
+        }
+        else{
+            determination.src='/public/icons/heart_white.svg';
+        }
         boutlike.appendChild(determination);
+        }
         //let boutnote = document.createElement('div');
         //boutnote.id="rating";
         //let star = document.createElement('img');
@@ -166,12 +228,15 @@ function trierLogements(liste) {
 
         cont.appendChild(logementDiv);
         charlie=Array.from(document.getElementsByClassName("logement"));
+        
     });
+    fav();
     enfer();
 }
 
 //Application des filtres
 async function enfer() {
+    marionnette=await chargerFavoris();
     const promises = [];
 
     for (let cle in charlie) {
@@ -198,8 +263,9 @@ async function enfer() {
             let filtreMin = filtre_min(charlie[cle].innerHTML);
             let filtreRecherche = filtre_recherche(charlie[cle].innerHTML);
             let filtreType = filtre_type(charlie[cle].innerHTML);
+            let filtreFavoris = filtre_favoris(charlie[cle].innerHTML,marionnette);
 
-            if (filtreNb && filtreMax && filtreMin && filtreRecherche && filtreType && result1 && result2) {
+            if (filtreNb && filtreMax && filtreMin && filtreRecherche && filtreType && filtreFavoris && result1 && result2) {
                 charlie[cle].style.display = "flex";
                 charlie[cle].classList.remove("filtredefaut");
             } else {
@@ -339,6 +405,23 @@ function filtre_map(contenu){
     }
 }
 
+function filtre_favoris(contenu,marionnette) {
+    let puppet = document.getElementById('side_puppet');
+
+        if (puppet.checked) {
+            let nb = contenu.match(/numLogement=(\d+)/);
+            if (marionnette.includes(parseInt(nb[1]))){
+                return true;
+            }
+            else{
+                return false;
+            }
+            
+        } else {
+            return true; 
+        }
+}
+
 function interrogerBDD(num) {
     return new Promise((resolve, reject) => {
         let doc = document.getElementById('side_arrive');
@@ -468,3 +551,4 @@ document.getElementById('side_recherche').addEventListener('input',enfer);
 document.getElementById('side_type').addEventListener('change',enfer);
 document.getElementById('side_arrive').addEventListener('change',enfer);
 document.getElementById('side_depart').addEventListener('change',enfer);
+document.getElementById('side_puppet').addEventListener('change',enfer);

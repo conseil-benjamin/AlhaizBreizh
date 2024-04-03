@@ -16,7 +16,7 @@ if (!isset($_SESSION['id'])) {
 $numReservation=$_GET['numReservation'];
 
 try {
-    $stmt = $pdo->prepare( "SELECT
+    $stmt = $pdo->prepare("SELECT
     Logement.proprio,
     proprio.firstName as prenom_proprio,
     proprio.lastName as nom_proprio,
@@ -45,9 +45,8 @@ try {
     INNER JOIN
         ldc.Client as proprio ON proprio.idCompte = Logement.proprio
     INNER JOIN
-        ldc.Client as client ON client.idCompte = Reservation.numClient
-    WHERE 
-        Reservation.numReservation = $numReservation;");
+        ldc.Client as client ON client.idCompte = Reservation.numClient WHERE Reservation.numReservation = :numReservation");
+    $stmt->bindParam(':numReservation', $numReservation, PDO::PARAM_INT);
     $stmt->execute();
 
     $reservation = $stmt->fetch(PDO::FETCH_ASSOC);

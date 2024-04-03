@@ -11,6 +11,15 @@
         while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
             $logements[] = $row;
         }
+        if (isset($_SESSION['id'])) {
+            $stmt = $pdo->prepare("SELECT numLogement FROM ldc.favorisclient WHERE idcompte = ?");
+            $stmt->bindValue(1, $_SESSION['id'], PDO::PARAM_INT);
+            $stmt->execute();
+            $favoris = array();
+            while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+                $favoris[] = $row[0];
+            }
+          }
 
         $pdo = null;
     } catch (PDOException $e) {
@@ -77,6 +86,7 @@
         <video id="background" autoplay loop muted>
             <source src="/public/videos/video-bretagne.mp4" type="video/mp4">
         </video>
+
         <div id="titre">
             <h1>Envie de découvrir la Bretagne ?</h1>
             <p>Nous avons tout pour vous mettre ALHaIZ</p>
@@ -102,7 +112,7 @@
                                 <a class="item_tri" onclick="tarif(event)"><li>Tarif (Ordre croissant)</li></a>
                                 <a class="item_tri" onclick="untarif(event)"><li>Tarif (Ordre décroissant)</li></a>
                                 <a class="item_tri" onclick="notes(event)"><li>Notes</li></a>
-                                <a class="item_tri" href="index.php?tri=avis#logements"><li>Avis positifs</li></a>
+                                <a class="item_tri" onclick="avis(event)"><li>Avis Positifs</li></a>
                             </ul>
                         </div>
                     </div>
@@ -147,6 +157,14 @@
                         <option value="villa">Villa</option>
                     </select>
                 </div>
+                <div>
+                    <?php if (isset($_SESSION['id'])) { ?>
+                        <input type="checkbox" name="checkbox favoris" id="side_puppet">
+                        <label for="case">Favoris</label>
+                    <?php } else{ ?>
+                        <input type="checkbox" name="checkbox favoris" id="side_puppet" style="display: none;">
+                        <?php } ?>
+                </div>
             </div>
             <div id="aucunLogementVisible">
                 <h2>Aucun logement n'est visible sur la carte<br>ou votre recherche ne correpond à aucun logement :/</h2>
@@ -157,7 +175,6 @@
                 <?php
 
                 /*Créations de carte pour chaque logements*/
-
                 $nb_logements_inactifs = 0;
 
                 foreach ($logements as $logement) {
@@ -174,8 +191,15 @@
                         <div class="logement" id="logement<?php echo $logement[0] ?>">
                             <a href="<?php echo $lien ?>"><img src="<?php echo $img ?>" alt="Image du logement: <?= $titre ?>"></a> <!-- Image du logement -->
                             <div data-information=<?php echo $logement[7]?> >
+
+                            <?php 
+                            if (isset($_SESSION['id'])){
+                            if (in_array($logement[0],$favoris)){ ?>
+                            <button type="button" class="like"><img src="/public/icons/heart_fill.svg"></button> <!-- Coeur pour liker -->
+                            <?php } else { ?>
                             <button type="button" class="like"><img src="/public/icons/heart_white.svg"></button> <!-- Coeur pour liker -->
-                                <?php if ($logement[6]!=NULL){ //Verifie que le logement a recu au moins une note?>                                
+                            <?php }} ?>   
+                            <?php if ($logement[6]!=NULL){ //Verifie que le logement a recu au moins une note?>                                
                                 <div id="rating"><img src="/public/icons/star_fill.svg"><?php echo $logement[6]; ?></div> <!-- Notation -->
                                 <?php } ?>
                             </div>
@@ -223,7 +247,9 @@
                 document.getElementById("logements").scrollIntoView({behavior: "smooth"});
             });
         </script>
+        <script src="/src/js/favoris.js" defer></script>
         <script src="/src/js/side.js" defer></script>
         <script type="module" src="/src/js/map-accueil.js" defer></script>
+        
     </body>
 </html>
