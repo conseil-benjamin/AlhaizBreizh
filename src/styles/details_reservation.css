@@ -36,9 +36,11 @@ body {
     object-fit: cover;
     float: left;
 }
+
+
 .imgLogement{
-   max-width: 1280px;
-   max-height: 800px;
+   max-width: 1080px;
+   max-height: 100%;
 }
 
 #titrephoto{
@@ -243,15 +245,16 @@ body {
     figure {
         max-width: 100%;
     }
-}
-.imgLogement {
-    max-width: 100%; /* Permettre à l'image de se réduire */
+    .imgLogement {
+        max-width: 100%; /* Permettre à l'image de se réduire */
+    }
+    
+    #infosContainer {
+        display: flex; /* Maintenir la disposition flexbox */
+        flex-wrap: wrap; /* Permettre aux éléments de s'enrouler sur les petits écrans */
+    }
 }
 
-#infosContainer {
-    display: flex; /* Maintenir la disposition flexbox */
-    flex-wrap: wrap; /* Permettre aux éléments de s'enrouler sur les petits écrans */
-}
 
 @media screen and (max-width: 768px) {
     #infosContainer {
