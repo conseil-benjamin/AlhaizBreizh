@@ -16,7 +16,7 @@ if (!isset($_SESSION['id'])) {
 $numReservation=$_GET['numReservation'];
 
 try {
-    $stmt = $pdo->prepare("SELECT
+    $stmt = $pdo->prepare( "SELECT
     Logement.proprio,
     proprio.firstName as prenom_proprio,
     proprio.lastName as nom_proprio,
@@ -45,8 +45,9 @@ try {
     INNER JOIN
         ldc.Client as proprio ON proprio.idCompte = Logement.proprio
     INNER JOIN
-        ldc.Client as client ON client.idCompte = Reservation.numClient WHERE Reservation.numReservation = :numReservation");
-    $stmt->bindParam(':numReservation', $numReservation, PDO::PARAM_INT);
+        ldc.Client as client ON client.idCompte = Reservation.numClient
+    WHERE 
+        Reservation.numReservation = $numReservation;");
     $stmt->execute();
 
     $reservation = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -111,60 +112,71 @@ $dateDuJour = $date->format('Y-m-d');
 <?php include($_SERVER['DOCUMENT_ROOT'] . '/src/php/header.php'); ?>
 <body>
     <div class="carte">
-        <div id="titrephoto">
-            <div id="photo">
-            <figure>
-                <a href="/src/php/logement/PageDetailLogement.php?numLogement=<?php echo $reservation['numlogement'] ?>">  <img class="imgLogement" src="<?= $cheminPhoto ?>" alt="Photo du logement"/> </a>
-            </figure>
-            </div>         
-            </div>
-            <div id="infosContainer">
-                <div id="titreLogement" >
-                            <h1> <?= $titreLogement ?></h1>
+        <div></div>
+        <div class="main-div-details-logement">
+            <div id="titrephoto">
+                <div id="photo">
+                <figure>
+                    <a href="/src/php/logement/PageDetailLogement.php?numLogement=<?php echo $reservation['numlogement'] ?>">  <img class="imgLogement" src="<?= $cheminPhoto ?>" alt="Photo du logement"/> </a>
+                </figure>
+                </div>         
+                </div>
+                <div id="infosContainer">
+                    <div id="titreLogement" >
+                                <h2> <?= $titreLogement ?></h2>
+                            </div>
+                    <div class="container" id="localisationEtat">
+                            <div id="localisation">
+                                <img src="../../../public/icons/markerMap.svg" alt="logo" style="max-width: 50px; max-height: 50px;">
+                                <h2><?= $localisationDetail ?>, <?= $localisation?></h2>
+                            </div>
+                            <div id="nbPersonne" class="center"> <img src="../../../public/icons/nb_personnes.svg" alt="nbPersonne" style="max-width: 48px; max-height: 48px;"> <h1><?= $nbPersonnes  ?> </h1></div>
                         </div>
-                <div class="container" id="localisationEtat">
-                        <div id="localisation">
-                            <img src="../../../public/icons/markerMap.svg" alt="logo" style="max-width: 50px; max-height: 50px;">
-                            <h2><?= $localisationDetail ?>, <?= $localisation?></h2>
+                        <div id="dateDiv">
+                            <h2 id="date"> Arrivée : <span id="dateArr"><?= $dateArr ?></span> </h2>
+                            <h2>Départ : <span id="dateDep"><?= $dateDep ?></span></h2>
                         </div>
-                        <div id="nbPersonne" class="center"> <img src="../../../public/icons/nb_personnes.svg" alt="nbPersonne" style="max-width: 48px; max-height: 48px;"> <h1><?= $nbPersonnes  ?> </h1></div>
-                    </div>
-                    <div id="dateDiv">
-                        <h2 id="date"> Arrivée : <span id="dateArr"><?= $dateArr ?></span> <br> Départ : <span id="dateDep"><?= $dateDep ?></span></h2>
-                    </div>
-                    <div id="etatDevis" >
-                    <a href='' download='devis.pdf'><img class="recu" src="/public/icons/contract.svg" alt="icon devis" style="max-width: 48px; max-height: 48px;"></a>
-                        <?php
-                        if ($_SESSION['id']==$numclient) {
-                            echo "<h2>Devis reçu le <span id='dateDevis'>$dateDevis</span></h2></div>";
-                        }
-                        else {
-                            echo "<h2>Demande de devis reçue le $dateResa</h2></div>";
-                        }
-                        ?>
-
-                    <div id="prixDiv">
-                        <h2>Total :<span id="prixSpan"><?= $prixTotal ?></span>€</h2>
-                    </div>
-                    <div class="container" style="flex-direction: column; align-items: end;">
-                        <div id="annulerAccepter">
+                        <div id="etatDevis" >
+                        <a href='' download='devis.pdf'><img class="recu" src="/public/icons/contract.svg" alt="icon devis" style="max-width: 48px; max-height: 48px;"></a>
                             <?php
-                                if ($_SESSION['id']== $numclient && $etatReservation == "Validée") {?>
-                                <button class="boutton" onclick="confirmerSuccesPopUp()">Accepter le devis et payer</button>
-                                <button class="boutton" onclick="confirmationAnnulerPopUp(<?php echo $numReservation; ?>, '<?php echo $dateArr; ?>')">Annuler ma réservation</button>
-                            <?php }else if ($_SESSION['id'] !== $numclient && $etatReservation == "En attente de validation") {?>
-                                <button class="boutton" onclick="accepterReservation()">Accepter demande réservation</button>
-                                <button class="boutton" onclick="supprimerReservation()">Refuser la réservation</button>
-                            <?php } else if ($_SESSION['id'] !== $numclient && $etatReservation == "Validée") {
-                                echo "En attente de paiement";
+                            if ($_SESSION['id']==$numclient) {
+                                echo "<h2>Devis reçu le <span id='dateDevis'>$dateDevis</span></h2></div>";
+                            }
+                            else {
+                                echo "<h2>Demande de devis reçue le $dateResa</h2></div>";
                             }
                             ?>
+
+                        <div id="prixDiv">
+                            <h2 id="prixSpan">Total :<span ><?= $prixTotal ?></span>€</h2>
                         </div>
-                        <?php
-                        if ($_SESSION['id']==$numclient) {?>
-                        <p>Logement reservé le <span id="dateResa"><?= $dateResa ?></span></p>
-                        <?php } ?>
-                        
+                        <div class="container" style="flex-direction: column; align-items: end;">
+                            <div id="annulerAccepter">
+                                <?php
+                                    if ($_SESSION['id'] == $numclient && $etatReservation == "Acceptée") {?>
+                                    <button class="boutton" onclick="confirmerSuccesPopUp()">Accepter le devis et payer</button>
+                                    <button class="boutton" onclick="confirmationAnnulerPopUp(<?php echo $numReservation; ?>, '<?php echo $dateArr; ?>')">Annuler ma réservation</button>
+                                <?php } else if ($_SESSION['id'] == $numclient && $etatReservation == "En attente de validation"){
+                                        ?>
+                                        <h4 style="margin: 0.5em 0 0 0;">En attente du paiment du client</h4>
+                                        <?php                                
+                                }
+                                else if ($_SESSION['id'] !== $numclient && $etatReservation == "En attente de validation") {?>
+                                    <button class="boutton" onclick="accepterReservation()">Accepter demande réservation</button>
+                                    <button class="boutton" onclick="refuserReservation()">Refuser la réservation</button>
+                                <?php } else if ($_SESSION['id'] !== $numclient && $etatReservation == "Acceptée") {
+                                    ?>
+                                    <h4 style="margin: 0.5em 0 0 0;">En attente du paiment du client</h4>
+                                    <?php
+                                }
+                                ?>
+                            </div>
+                            <?php
+                            if ($_SESSION['id']==$numclient) {?>
+                            <p style="margin: 0.3em 0 0 0;">Logement reservé le <span id="dateResa"><?= $dateResa ?></span></p>
+                            <?php } ?>
+                            
+                        </div>
                     </div>
                 </div>
             </div>
