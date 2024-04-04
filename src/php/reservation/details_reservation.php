@@ -162,7 +162,7 @@ $dateDuJour = $date->format('Y-m-d');
                                         <?php                                
                                 }
                                 else if ($_SESSION['id'] !== $numclient && $etatReservation == "En attente de validation") {?>
-                                    <button class="boutton" onclick="accepterReservation()">Accepter demande réservation</button>
+                                    <button class="boutton" onclick="accepterReservation2()">Accepter demande réservation</button>
                                     <button class="boutton" onclick="refuserReservation()">Refuser la réservation</button>
                                 <?php } else if ($_SESSION['id'] !== $numclient && $etatReservation == "Acceptée") {
                                     ?>
@@ -213,7 +213,7 @@ $dateDuJour = $date->format('Y-m-d');
         });        }
 }
 
-function accepterReservation() {
+function accepterReservation2() {
             <?php
                 echo "var numReservation = " . json_encode($numReservation) . ";\n";
             ?>
