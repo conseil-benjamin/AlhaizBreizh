@@ -36,6 +36,7 @@ if (isset($_GET['numLogement'])) {
                     $nb_sdb = isset($row[14]) ? $row[14] : null;
                     $prix = isset($row[15]) ? $row[15] : null;
                     $note = isset($row[16]) ? $row[16] : null;
+                    $note = isset($row[16]) ? $row[16] : null;
                     $_SESSION["nom_bien"] = $titre_offre;
                     $_SESSION["prixNuit"] = $prix;
                     $_SESSION["nbPersonneMax"] = $nb_personnes;

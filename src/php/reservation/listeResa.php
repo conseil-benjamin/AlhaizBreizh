@@ -201,7 +201,7 @@ $reservations = obtenirLogementsProprio($_SESSION['id']);
                             <?php 
                                 if ($etatReservation == "En attente de validation"){
                                     ?>
-                                    <h4><?= $etatReservation; ?></h4>
+                                    <h4 style="margin: 0.3em 0 0 0;"><?= $etatReservation; ?></h4>
                                     <?php
                                 } else if ($etatReservation == "Annulée"){
                                     ?>
@@ -210,16 +210,21 @@ $reservations = obtenirLogementsProprio($_SESSION['id']);
                                         <h4 style="margin: 0 0 0 0.5em;"><?= $etatReservation; ?></h4>
                                     </div>
                                     <?php
-                                } else if ($etatReservation == "Validée"){
+                                } else if ($etatReservation == "Acceptée"){
                                     ?>
-                                    <div style="display: flex; align-items: center; background-color: #DCF5D3; width: 6em; border-radius: 5px; padding: 0.3em; margin: 0.3em 0 0 0">
+                                    <div style="display: flex; align-items: center; background-color: #F5F5F5; width: 6em; border-radius: 5px; padding: 0.3em; margin: 0.3em 0 0 0">
+                                        <h4 style="margin: 0 0 0 0.5em;"><?= $etatReservation; ?></h4>
+                                    </div>
+                                    <?php
+                                } else if ($etatReservation == "Confirmée"){
+                                    ?>
+                                    <div style="display: flex; align-items: center; background-color: #DCF5D3; width: 7.5em; border-radius: 5px; padding: 0.3em; margin: 0.3em 0 0 0">
                                         <i class="fas fa-check"></i>
                                         <h4 style="margin: 0 0 0 0.5em;"><?= $etatReservation; ?></h4>
                                     </div>
                                     <?php
                                 }
                             ?>
-                            
                         </a>
                         <a href="/src/php/profil/profil.php?user=<?php echo $reservation[6] ?>">
                             <div class="profile">
@@ -249,8 +254,9 @@ $reservations = obtenirLogementsProprio($_SESSION['id']);
                                 <nav style="display: flex; justify-content: center; align-items: center; margin: 0 0 1em 1em;">
                                     <i class='fas fa-check'></i>
                                     <span style="margin: 0.5em;">Avis posté</span>
-                                </nav> <?php
-                            } else if ($currentDate > $reservation[3] && $etatReservation == "Validée"){
+                                </nav>
+                                <?php
+                            } else if ($currentDate > $reservation[3] && $etatReservation == "Confirmée"){
                                 echo "<button class='boutton' onclick='deposerAvis($reservation[0])'>Laisser un avis</button>";
                             }?>
                         </nav>

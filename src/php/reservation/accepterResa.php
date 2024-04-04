@@ -3,7 +3,7 @@ $numReservation = $_GET['numReservation'];
 global $pdo;
 include("../connect.php");
 try {
-    $sql = "UPDATE ldc.reservation SET etatReservation = 'Validée' WHERE numReservation = $numReservation";
+    $sql = "UPDATE ldc.reservation SET etatReservation = 'Acceptée' WHERE numReservation = $numReservation";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
 

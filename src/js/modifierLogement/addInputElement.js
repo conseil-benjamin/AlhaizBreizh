@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   /* GESTION DES INSTALLATIONS */
     
-  let firstInstall = document.querySelector("#installDispo1");
+  let firstInstall = document.querySelector("#installDispo");
 
   contentInstall = firstInstall.value.split(',');
   if (contentInstall[1]!=null){ //verifie que le contenu existe
