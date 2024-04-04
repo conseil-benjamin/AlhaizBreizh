@@ -168,8 +168,8 @@ async function trierLogements(liste) {
         boutlike.className='like';
         boutlike.type='button';
         let determination = document.createElement('img');
-        let element = document.querySelector('.shown');
-        if (element !== null){
+        let element = document.querySelector('.compte > p');
+        if (element !== null && element.textContent != 'Se connecter'){
             if (marionnette.includes(logement[0])){
             determination.src='/public/icons/heart_fill.svg';
         }
